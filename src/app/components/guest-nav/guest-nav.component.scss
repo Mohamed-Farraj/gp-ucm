@@ -1,0 +1,16 @@
+@media (max-width: 992px) {
+    .expanded-menu {
+      width: 100% !important;
+      margin-top: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    .buttonPill{
+        border-radius:1000px !important;
+        margin-block: 10px;
+    }
+  }
+
+  nav{
+    background-color: var(--light-parent-color);
+  }

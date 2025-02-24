@@ -5,11 +5,11 @@
   --hover-color: #11bd11;
   --light-color: #f0f3f2;
   --light-base-color: #ffffff;
+  --light-parent-color: #F7F8F8;
+  --light-child-color: #FfFfFf;
   --dark-base-color: #050F27;
   --dark-parent-color: #111B31;
   --dark-child-color: #1B2439;
-  --light-parent-color: #F7F8F8;
-  --light-child-color: #FfFfFf;
 
   --shadow: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
     rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
@@ -20,6 +20,11 @@
 
 body {
   font-family: var(--font-family) !important;
+}
+.my-container
+{
+  width: 90%;
+  margin-inline: auto auto;
 }
 
 .nav-link {
@@ -67,7 +72,7 @@ a:hover {
   background-color: var(--light-color) !important;
 }
 .btn-main {
-  background-color: var(--main-color);
+  background-color: var(--dark-base-color);
   padding: 7px 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -83,7 +88,9 @@ a:hover {
   background-color: #ccc;
 }
 .btn-main:hover {
-  background-color: #11bd11;
+  background-color: var(--dark-child-color);
+  color: #fff;
+
 }
 .nav-spacer
 {
