@@ -25,6 +25,15 @@ body {
 {
   width: 90%;
   margin-inline: auto auto;
+  border-radius: 5rem;
+}
+
+.my-section
+{
+    background-color: var(--light-parent-color);
+    margin-inline: 0;
+    margin-block: 3rem;
+    border-radius: 5rem;
 }
 
 .nav-link {

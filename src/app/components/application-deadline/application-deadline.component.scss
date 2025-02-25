@@ -1,0 +1,37 @@
+section
+{
+    background-color: var(--light-parent-color);
+    margin: 0;
+    border-radius: 5rem;
+}
+.table {
+    border-collapse: separate;
+    border-spacing: 0 15px; /* Vertical spacing between rows */
+}
+
+/* Fix border radius and hover effects */
+.table-hover tbody tr {
+    background: white;
+    transition: all 0.3s ease;
+}
+ td, th {
+    padding:1rem;
+}
+
+.table tbody tr td:first-child,
+.table tbody tr th:first-child,
+.table thead tr th:first-child
+ {
+    border-radius: 100px 0 0 100px;
+}
+
+.table tbody tr td:last-child,
+.table tbody tr th:last-child,
+.table thead tr th:last-child
+ {
+    border-radius: 0 100px 100px 0;
+}
+
+.table-hover tbody tr:hover {
+    transform: translateY(-2px); /* Optional hover lift effect */
+}

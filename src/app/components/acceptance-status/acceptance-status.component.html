@@ -1,5 +1,90 @@
-<section class="d-flex justify-content-center align-items-center"> 
-<form action="">
-    <input type="text" placeholder="ادخل الرقم القومي المراد الاستعلام عنه">
-</form>
-</section>
+<section
+  class=" my-section overflow-hidden mt-5 pt-5 d-flex flex-column justify-content-start align-items-start"
+>
+  <div class="w-100 my-3 bg-light ">
+    <h1 class="p-4 border-bottom">
+      Enter your national Id
+    </h1>
+
+    <div class="form border-bottom d-flex justify-content-around align-items-center flex-wrap p-4">
+      <input
+        [(ngModel)]="studentId"
+        class="form-control rounded-pill w-75 form-control-lg"
+        type="text"
+        placeholder="**********3030"
+        aria-label=".form-control-lg example"
+        (input)="checkvalidty()"
+        (keydown.enter)="ask()"
+        maxlength="14"
+      />
+      @if (!isvalid) {
+        <button (click)="rules()" type="button" class="btn btn-secondary rounded-pill py-2 px-5 " data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Left popover">
+          استعلام
+        </button>
+      }
+      @else {
+        <button (click)="ask()" type="button" class="btn btn-main rounded-pill py-2 px-5 ">
+        استعلام
+      </button>
+    }
+    
+    <div [class.d-none]="hiderule" [class.alert-success]="isvalid" [class.alert-info]="!isvalid" class="alert w-100 mt-4" role="alert">
+      <h3>القواعد</h3>
+      <hr>
+      <div>
+      <span class="ms-2"><i class="fa-solid fa-circle-chevron-left"></i></span>
+      <span>الرقم القومي يجب ان يكون بالانجليزية (123...)</span>
+    </div>
+      <div class="mt-1">
+        <span class="ms-2"><i class="fa-solid fa-circle-chevron-left"></i></span>
+      <span>الرقم القومي يجب ان يكون 14 رقم</span>
+      </div>
+      
+      
+    </div>
+    </div>
+
+
+    <div
+      class="result p-4 d-flex justify-content-center align-items-center flex-wrap"
+      style="min-height: 300px"
+    >
+
+    
+    <div #no class="alert alert-danger rounded-pill text-center w-75" role="alert">
+      @if(!isRejectd){
+        هذا الرقم غير مسجل بالنظام
+      }
+      @else{
+       <h6>{{userN}}</h6> 
+        <h3> قد تم رفض الطلب</h3> 
+      }
+      </div>
+
+      <div #yes class="alert alert-success rounded-pill  text-center w-75" role="alert">
+        <h6>{{userN}}</h6>
+        <h3>تم قبول الطلب </h3>
+      </div>
+
+      <div #pending class="alert alert-warning rounded-pill  text-center w-75" role="alert">
+        <h6>{{userN}}</h6>
+        <h3>
+          لم يستدل عليه
+        </h3>
+      </div>
+
+      <div #cstm class="alert alert-light rounded-pill  text-center w-75" role="alert">
+        <h6>{{userN}}</h6>
+        <h3>
+          {{alertmsg}}
+        </h3>
+      </div>
+
+    </div>
+        
+
+    
+      
+    </div>
+    
+  </section>
