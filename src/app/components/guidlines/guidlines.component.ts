@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { HomeService } from '../../services/guest/home.service';
 
 @Component({
   selector: 'app-guidlines',
@@ -7,6 +9,18 @@ import { Component } from '@angular/core';
   templateUrl: './guidlines.component.html',
   styleUrl: './guidlines.component.scss'
 })
-export class GuidlinesComponent {
+export class GuidlinesComponent implements OnInit {
 
+
+  constructor(private _HomeService:HomeService) { }
+  res:any[] = [];
+
+  ngOnInit():void {
+    this._HomeService.getGuidlines().subscribe(
+      {
+        next: (res) => {console.log(res); this.res = res.data; console.log(this.res);},
+        error: (err) => {console.log(err);},
+      }
+    );
+  }
 }
