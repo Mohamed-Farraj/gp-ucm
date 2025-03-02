@@ -13,4 +13,15 @@
 
   nav{
     background-color: var(--light-parent-color);
+    transition: all 1s ease;
   }
+
+  .scrolled{
+    background-color: transparent !important;
+
+  }
+  .scrolled button{
+    border-radius:1000px !important;
+
+  }
+  .scrolled a{    color: white !important;}

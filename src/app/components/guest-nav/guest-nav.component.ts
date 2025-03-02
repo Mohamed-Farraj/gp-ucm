@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -11,8 +11,17 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class GuestNavComponent {
   isMenuCollapsed = true;
+  @ViewChild('guestNav') el!:ElementRef;
+  @HostListener('window:scroll') onScroll(){
+    if (window.scrollY > 200) {
+      this.el.nativeElement.classList.remove('scrolled', 'additional-class');
 
-  
+  }
+
+  else{
+    this.el.nativeElement.classList.add('scrolled', 'additional-class');
+  }
+}
 toggleMenu() {
 this.isMenuCollapsed = !this.isMenuCollapsed;
 }
