@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../services/guest/home.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-application-deadline',
   standalone: true,
-  imports: [],
+  imports: [NgIf],
   templateUrl: './application-deadline.component.html',
   styleUrl: './application-deadline.component.scss'
 })

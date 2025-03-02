@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../../services/guest/home.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-guidlines',
   standalone: true,
-  imports: [],
+  imports: [NgIf],
   templateUrl: './guidlines.component.html',
   styleUrl: './guidlines.component.scss'
 })
