@@ -1,0 +1,740 @@
+<section class=" bg-main-light container my-5 p-4 rounded-4 " dir="rtl">
+    <div class="title fw-bold border-bottom mb-4">
+      <p>
+        قم باختيار (قدامى/مستجدين) وملء بياناتك ثم الموافقة على الإقرار بالأسفل مع
+        ملاحظة ان الطلاب المستجدين هم طلاب الفرق الأولى أو الاعدادية، الطلاب
+        القدامى هم طلاب مابعد الفرق الأولى أو الاعدادية
+      </p>
+    </div>
+    <div class="mb-3 row border-bottom p-1">
+      <div class="col-sm-2 col-4 m-1">
+        <button type="button" class="btn btn-secondary w-100" 
+        [class.btn-main]="activeButton === 'old'"
+        [class.btn-secondary]="activeButton !== 'old'"
+         (click)="selectStudentType('old')">طلاب قدامى</button>
+      </div>
+      <div class="col-sm-2 col-4 m-1">
+        <button type="button" class="btn btn-secondary w-100"
+        [class.btn-main]="activeButton === 'new'"
+        [class.btn-secondary]="activeButton !== 'new'"
+        (click)="selectStudentType('new')">طلاب مستجـدين</button>
+      </div>
+    </div>
+    <form [formGroup]="AppRequest"  (ngSubmit)="registerSubmit()">
+      <div class="mb-3 row">
+        <label for="ssn" class="col-sm-2 col-form-label"> الرقم القومى</label>
+        <div class="col-sm-4">
+          <input formControlName="nationalId" type="input"  class="form-control" id="ssn"  />
+          @if(AppRequest.get('nationalId')?.errors && AppRequest.get('nationalId')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('nationalId')?.getError('required') ) {
+                <p class="m-0">الرقم القومي مطلوب.</p>
+
+              }
+              @else if (AppRequest.get('nationalId')?.getError('pattern') ) {
+                <p class="m-0"> يجب أن يكون 14 رقم </p>
+              }
+            </div>
+          }
+        </div>
+         <label for="studentNum" class="col-sm-2 col-form-label">
+          كود الطالب
+        </label>
+        <div class="col-sm-4">
+          <input type="input" class="form-control" id="studentNum" />
+        </div>
+        
+      </div>
+      <div class="mb-3 row">
+        <label for="name" class="col-sm-2 col-form-label"> الأسم الاول</label>
+        <div class="col-sm-4">
+          <input
+            formControlName="firstName"
+            type="input"
+            class="form-control"
+            id="name"
+            placeholder="الاسم الاول باللغة العربية"
+          />
+          @if(AppRequest.get('firstName')?.errors && AppRequest.get('firstName')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('firstName')?.getError('required') ) {
+                <p class="m-0"> الاسم الاول مطلوب </p>
+
+              }
+            </div>
+          }
+        </div>
+        <label for="name" class="col-sm-2 col-form-label"> الأسم الثاني</label>
+        <div class="col-sm-4">
+          <input
+          formControlName="lastName"
+            type="input"
+            class="form-control"
+            id="name"
+            placeholder="الاسم الثاني باللغة العربية"
+          />
+          @if(AppRequest.get('lastName')?.errors && AppRequest.get('lastName')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('lastName')?.getError('required') ) {
+                <p class="m-0"> الاسم الثاني مطلوب </p>
+
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="dateOfBirth" class="col-sm-2 col-form-label">
+          تاريخ الميلاد</label
+        >
+        <div class="col-sm-4">
+          <input formControlName="dateOfBirth"
+          type="date" class="form-control" id="dateOfBirth" />
+          @if(AppRequest.get('dateOfBirth')?.errors && AppRequest.get('dateOfBirth')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('dateOfBirth')?.getError('required') ) {
+                <p class="m-0"> *</p>
+
+              }
+            </div>
+          }
+
+        </div>
+        <label for="PlaceOfBirth" class="col-sm-2 col-form-label">
+          محل الميلاد</label
+        >
+        <div class="col-sm-4">
+          <select formControlName="placeOfBirth" class="form-select" dir="ltr" name="" id="PlaceOfBirth">
+            <option value="خارج مصر" title="خارج مصر">خارج مصر </option>
+            <option selected value="القاهره" title="القاهره">القاهره</option>
+            <option value="دمياط"title="دمياط">دمياط</option>
+            <option value="الدقهلية" title="الدقهلية">الدقهلية</option>
+            <option value="الشرقيه" title="الشرقيه">الشرقيه</option>
+            <option value="القليوبيه" title="القليوبيه">القليوبيه</option>
+            <option value="كفرالشيخ" title="كفرالشيخ">كفرالشيخ</option>
+            <option value="الغربيه" title="الغربيه">الغربيه</option>
+            <option value="المنوفيه" title="المنوفيه">المنوفيه</option>
+            <option value="البحيرة" title="البحيرة">البحيرة</option>
+            <option value="الاسماعيلية" title="الاسماعيلية">الاسماعيلية</option>
+            <option value="الاسكندريه" title="الاسكندريه">الاسكندريه</option>
+            <option value="الجيزه" title="الجيزه">الجيزه</option>
+            <option value="الفيوم"title="الفيوم">الفيوم</option>
+            <option value="المنيا" title="المنيا">المنيا</option>
+            <option value="اسيوط" title="اسيوط">اسيوط</option>
+            <option value="سوهاج" title="سوهاج">سوهاج</option>
+            <option value="قنــا" title="قنــا">قنــا</option>
+            <option value="اسوان" title="اسوان">اسوان</option>
+            <option value="الاقصـر" title="الاقصـر">الاقصـر</option>
+            <option value="بورسعيد" title="بورسعيد">بورسعيد</option>
+            <option value="البحر الاحمر" title="البحر الاحمر">البحر الاحمر</option>
+            <option value="الوادي الجديد" title="الوادي الجديد">الوادى الجديد</option>
+            <option value="مرسي مطروح" title="مرسي مطروح">مرسى مطروح</option>
+            <option value="شمال سيناء" title="شمال سيناء">شمال سيناء</option>
+            <option value="جنوب سيناء" title="جنوب سيناء">جنوب سيناء</option>
+            <option value="سيناء" title="سيناء">سيناء</option>
+            <option value="السويس"title="السويس">السويس</option>
+          </select>
+          
+          @if(AppRequest.get('placeOfBirth')?.errors && AppRequest.get('placeOfBirth')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('placeOfBirth')?.getError('required') ) {
+                <p class="m-0"> *</p>
+
+              }
+            </div>
+          }
+
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="gender" class="col-sm-2 col-form-label"> النوع</label>
+        <div class="col-sm-4">
+          <select formControlName="gender" class="form-control form-select" dir="ltr" name="" id="gender">
+            <option value="" disabled>اختر النوع</option>
+            <option value="MALE">ذكر</option>
+            <option value="FEMALE">انثي</option>
+          </select>
+          @if(AppRequest.get('gender')?.errors && AppRequest.get('gender')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('gender')?.getError('required') ) {
+                <p class="m-0"> *</p>
+
+              }
+            </div>
+          }
+        </div>
+        <label for="reg" class="col-sm-2 col-form-label"> الديانة</label>
+        <div class="col-sm-4">
+          <select formControlName="religion" class="form-control form-select" dir="ltr" name="" id="reg">
+            <option value="" disabled >اختر الديانة</option>
+            <option value="MUSLIM">مسلم</option>
+            <option value="CHRISTIAN">مسيحي</option>
+          </select>
+          @if(AppRequest.get('religion')?.errors && AppRequest.get('religion')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('religion')?.getError('required') ) {
+                <p class="m-0"> *</p>
+
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <!-- اختيار الدولة -->
+        <label for="country" class="col-sm-2 col-form-label">محل الاقامه</label>
+        <div class="col-sm-2">
+          <select formControlName="country" class="form-control form-select ">
+            <option value="one" disabled>اختر الدولة</option>
+            @for (country of countries; track country.isoCode) {
+              <option [value]="country.isoCode">
+                {{ country.name }}
+              </option>
+            }
+          </select>
+        </div>
+        @if (selectedCountry() === 'EG') {
+          <!-- اختيار المحافظة -->
+          <label for="governorate" class="col-sm-2 col-form-label">المحافظة</label>
+          <div class="col-sm-2">
+            <select formControlName="governorate" class="form-control form-select" [disabled]="!filteredGovernorates().length">
+              <option value="" selected disabled>اختر المحافظة</option>
+              @for (gov of filteredGovernorates(); track gov.id) {
+                <option [value]="gov.id">
+                  {{ gov.governorate_name_ar }}
+                </option>
+              }
+            </select>
+          </div>
+      
+        @if (selectedGovernorate()) {
+            <!-- اختيار المدينة -->
+            <label for="city" class="col-sm-2 col-form-label">المدينة</label>
+            <div class="col-sm-2">
+              <select formControlName="city" class="form-control form-select" [disabled]="!filteredCities().length">
+                <option value="" selected disabled>اختر المدينة</option>
+                @for (city of filteredCities(); track city.id) {
+                  <option [value]="city.id">
+                    {{ city.city_name_ar }}
+                  </option>
+                }
+              </select>
+            </div>
+        }
+      }
+      
+        
+      </div>
+        
+     <!--  <div class="mb-3 row">
+        <label for="residenceAddress" class="col-sm-2 col-form-label">العنوان الكامل</label>
+        <div class="col-sm-4">
+          <input formControlName="residenceAddress" class="form-control" type="text" readonly>
+        </div>
+      </div> عرض العنوان المحفوظ --> 
+      <div class="mb-3 row">
+        <label for="deatilsOfAddress" class="col-sm-2 col-form-label">
+        العنوان بالتفصيل</label
+        >
+        <div class="col-sm-10">
+          <input formControlName="detailedAddress" type="text" class="form-control" id="text" />
+          @if(AppRequest.get('detailedAddress')?.errors && AppRequest.get('detailedAddress')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('detailedAddress')?.getError('required') ) {
+                <p class="m-0"> *</p>
+
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="email" class="col-sm-2 col-form-label">
+          البريد الالكتروني</label
+        >
+        <div class="col-sm-10">
+          <input formControlName="username" type="email" class="form-control" id="email" />
+          @if(AppRequest.get('username')?.errors && AppRequest.get('username')?.touched ){
+            <div class=" m-1 p-2 text-danger text-danger w-100">
+              @if (AppRequest.get('username')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+              @else if (AppRequest.get('username')?.getError('email')) {
+                <p class="m-0"> *</p>              
+
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div class="mb-3 row">
+
+        <!-- <label for="tel" class="col-sm-2 col-form-label"> التليفون</label> 
+        <div class="col-sm-4">
+          <input formControlName="" type="tel" class="form-control" id="tel" />
+        </div> -->
+       
+        <label for="phone" class="col-sm-2 col-form-label"> الموبايل</label>
+        <div class="col-sm-4">
+          <input formControlName="mobileNumber" type="tel" class="form-control" id="phone" />
+          @if(AppRequest.get('mobileNumber')?.errors && AppRequest.get('mobileNumber')?.touched ){
+            <div class=" m-1 p-2 alert-danger text-danger w-100">
+              @if (AppRequest.get('mobileNumber')?.getError('mobileNumber') ) {
+                <p class="m-0"> *</p>              
+              }
+              @else if (AppRequest.get('mobileNumber')?.getError('pattern')) {
+                <p class="m-0"> *</p>              
+
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="fatherName" class="col-sm-2 col-form-label"> اسم الأب</label>
+        <div class="col-sm-10">
+          <input
+          formControlName="fatherName"
+            type="text"
+            class="form-control"
+            id="fatherName"
+            placeholder="الاسم رباعي باللغة العربية"
+          />
+          @if(AppRequest.get('fatherName')?.errors && AppRequest.get('fatherName')?.touched ){
+            <div class=" m-1 p-2 alert-danger text-danger w-100">
+              @if (AppRequest.get('fatherName')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="fatherSsn" class="col-sm-2 col-form-label">
+          الرقم القومى للأب
+        </label>
+        <div class="col-sm-10">
+          <input formControlName="fatherNationalId" type="input" class="form-control" id="fatherSsn" />
+          
+          @if(AppRequest.get('fatherNationalId')?.errors && AppRequest.get('fatherNationalId')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('fatherNationalId')?.getError('required') ) {
+                <p class="m-0">الرقم القومي مطلوب.</p>
+
+              }
+              @else if (AppRequest.get('fatherNationalId')?.getError('pattern') ) {
+                <p class="m-0"> يجب أن يكون 14 رقم </p>
+              }
+            </div>
+          }
+
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="job" class="col-sm-2 col-form-label"> وظيفة الأب </label>
+        <div class="col-sm-4">
+          <input formControlName="fatherOccupation" type="input" class="form-control" id="job" />
+
+          @if(AppRequest.get('fatherOccupation')?.errors && AppRequest.get('fatherOccupation')?.touched ){
+            <div class=" m-1 p-2 alert-danger text-danger w-100">
+              @if (AppRequest.get('fatherOccupation')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+            </div>
+          }
+        </div>
+        <label for="fathPhone" class="col-sm-2 col-form-label">تليفون الأب</label>
+        <div class="col-sm-4">
+          <input formControlName="fatherPhoneNumber" type="input" class="form-control" id="fathPhone" />
+
+          @if(AppRequest.get('fatherPhoneNumber')?.errors && AppRequest.get('fatherPhoneNumber')?.touched ){
+            <div class=" m-1 p-2 alert-danger text-danger w-100">
+              @if (AppRequest.get('fatherPhoneNumber')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="name2" class="col-sm-2 col-form-label"> اسم ولى الأمر</label>
+        <div class="col-sm-4">
+          <input formControlName="guardianName" type="input" class="form-control" id="name2" />
+
+          @if(AppRequest.get('guardianName')?.errors && AppRequest.get('guardianName')?.touched ){
+            <div class=" m-1 p-2 alert-danger text-danger w-100">
+              @if (AppRequest.get('guardianName')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+            </div>
+          }
+        </div>
+        <label for="relation" class="col-sm-2 col-form-label">
+          صلة ولي الأمر</label
+        >
+        <div class="col-sm-4">
+          <input type="input" class="form-control" id="relation" />
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="Ssn3" class="col-sm-2 col-form-label">
+          الرقم القومى لولي الأمر</label
+        >
+        <div class="col-sm-4">
+          <input formControlName="guardianNationalId"  type="input" class="form-control" id="Ssn3" />
+
+          @if(AppRequest.get('guardianNationalId')?.errors && AppRequest.get('guardianNationalId')?.touched ){
+            <div class=" m-1 p-2  alert-danger text-danger w-100">
+              @if (AppRequest.get('guardianNationalId')?.getError('required') ) {
+                <p class="m-0">الرقم القومي مطلوب.</p>
+
+              }
+              @else if (AppRequest.get('guardianNationalId')?.getError('pattern') ) {
+                <p class="m-0"> يجب أن يكون 14 رقم </p>
+              }
+            </div>
+          }
+        </div>
+        <label for="phone2" class="col-sm-2 col-form-label">
+          تليفون ولي الأمر</label
+        >
+        <div class="col-sm-4">
+          <input formControlName="guardianPhoneNumber" type="input" class="form-control" id="phone2" />
+          @if(AppRequest.get('guardianPhoneNumber')?.errors && AppRequest.get('guardianPhoneNumber')?.touched ){
+            <div class=" m-1 p-2 alert-danger text-danger w-100">
+              @if (AppRequest.get('guardianPhoneNumber')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+            </div>
+          }
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="parentsStatus" class="col-sm-2 col-form-label"> حالة تخص الوالدين</label>
+        <div class="col-sm-4">
+          <select formControlName="parentsStatus" class="form-control form-select" dir="ltr" name="" id="gender">
+            <option value="" disabled>اختر الحالة</option>
+            <option value="وفاة الوالد">وفاة الوالد </option>
+            <option value="وفاة الوالدين">وفاة الوالدين </option>
+            <option value="انفصال الوالدين">انفصال الوالدين </option>
+            @if(AppRequest.get('parentsStatus')?.errors && AppRequest.get('parentsStatus')?.touched ){
+              <div class=" m-1 p-2 alert-danger text-danger w-100">
+                @if (AppRequest.get('parentsStatus')?.getError('required') ) {
+                  <p class="m-0"> *</p>              
+                }
+              </div>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="faculty" class="col-sm-2 col-form-label">الكلية</label>
+        <div class="col-sm-4">
+          <select formControlName="faculty" class="form-control form-select" dir="ltr" id="faculty">
+            <option value="" selected disabled>اختر الكلية</option>
+<option value="كلية الآداب">كلية الآداب</option>
+<option value="كلية الاقتصاد المنزلي">كلية الاقتصاد المنزلي</option>
+<option value="كلية التربية">كلية التربية</option>
+<option value="كلية التمريض">كلية التمريض</option>
+<option value="كلية الحاسبات والذكاء الاصطناعي">كلية الحاسبات والذكاء الاصطناعي</option>
+<option value="كلية الخدمة الاجتماعية">كلية الخدمة الاجتماعية</option>
+<option value="كلية الصيدلة">كلية الصيدلة</option>
+<option value="كلية الطب">كلية الطب</option>
+<option value="كلية العلوم">كلية العلوم</option>
+<option value="كلية الفنون التطبيقية">كلية الفنون التطبيقية</option>
+<option value="كلية الفنون الجميلة">كلية الفنون الجميلة</option>
+<option value="كلية التربية الرياضية بنين">كلية التربية الرياضية بنين</option>
+<option value="كلية التربية الرياضية بنات">كلية التربية الرياضية بنات</option>
+<option value="كلية الهندسة بالمطرية">كلية الهندسة بالمطرية</option>
+<option value="كلية الهندسة بحلوان">كلية الهندسة بحلوان</option>
+<option value="كلية التجارة وإدارة الأعمال">كلية التجارة وإدارة الأعمال</option>
+<option value="كلية الحقوق">كلية الحقوق</option>
+<option value="كلية التربية الموسيقية">كلية التربية الموسيقية</option>
+<option value="كلية التربية الفنية">كلية التربية الفنية</option>
+<option value="كلية السياحة والفنادق">كلية السياحة والفنادق</option>
+<option value="كلية التعليم الصناعي">كلية التعليم الصناعي</option>
+<option value="المعهد القومي للملكية الفكرية">المعهد القومي للملكية الفكرية</option>
+
+          </select>
+          @if(AppRequest.get('faculty')?.errors && AppRequest.get('faculty')?.touched ){
+            <div class=" m-1 p-2 alert-danger text-danger w-100">
+              @if (AppRequest.get('faculty')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+            </div>
+          }
+        </div>
+      
+        <label for="level" class="col-sm-2 col-form-label">الفرقة</label>
+        <div class="col-sm-4">
+          <select formControlName="level" class="form-control form-select" dir="ltr" id="level">
+            <option value="" selected disabled>اختر الفرقة</option>
+            @for (level of levels(); track level.value) {
+              <option [value]="level.value">{{ level.label }}</option>
+            }
+
+            @if(AppRequest.get('level')?.errors && AppRequest.get('level')?.touched ){
+              <div class=" m-1 p-2 text-danger w-100">
+                @if (AppRequest.get('level')?.getError('required') ) {
+                  <p class="m-0"> *</p>              
+                }
+              </div>
+            }
+          </select>
+        </div>
+      </div>
+      @if(studentType==='new'){
+<div class="mb-3 row">
+        <label for="secondaryDivision" class="col-sm-2 col-form-label"> شعبة الثانوية العامة</label>
+        <div class="col-sm-4">
+
+        <select formControlName="secondaryDivision" class="form-control form-select">
+          <option value="" disabled selected>اختر الخيار</option>
+          <option value="---">---</option>
+          <option value="علمي علوم">علمي علوم</option>
+          <option value="علمي رياضة">علمي رياضة</option>
+          <option value="أدبي">أدبي</option>
+          <option value="أزهري علمي">أزهري علمي</option>
+          <option value="أزهري أدبي">أزهري أدبي</option>
+          <option value="معاهد مهنية ثلاث سنوات">معاهد مهنية ثلاث سنوات</option>
+          <option value="معاهد مهنية أربع سنوات">معاهد مهنية أربع سنوات</option>
+          <option value="معاهد مهنية خمس سنوات">معاهد مهنية خمس سنوات</option>
+          <option value="دبلومات مهنية">دبلومات مهنية</option>
+          <option value="شهادات معادلة">شهادات معادلة</option>
+          <option value="مدارس STEM للعلوم والتكنولوجيا">مدارس STEM للعلوم والتكنولوجيا</option>
+          <option value="مدارس النيل للعلوم والتكنولوجيا">مدارس النيل للعلوم والتكنولوجيا</option>
+          <option value="تحويل ورقي">تحويل ورقي</option>
+          @if(AppRequest.get('secondaryDivision')?.errors && AppRequest.get('secondaryDivision')?.touched ){
+            <div class=" m-1 p-2 alert-danger text-danger w-100">
+              @if (AppRequest.get('secondaryDivision')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+            </div>
+          }
+      </select>
+        </div>
+
+        <label for="totalGradesHighSchool" class="col-sm-2 col-form-label"> مجموع الثانوية العامة</label>
+        <div class="col-sm-1">
+            <input
+            formControlName="totalGradesHighSchool"
+            type="number"
+            class="form-control"
+            id="totalGradesHighSchool"
+            placeholder=" % "
+          />
+          @if(AppRequest.get('totalGradesHighSchool')?.errors && AppRequest.get('totalGradesHighSchool')?.touched ){
+            <div class=" m-1 p-2 alert-danger text-danger w-100">
+              @if (AppRequest.get('totalGradesHighSchool')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+            </div>
+          }
+        </div>
+      </div>
+      }
+      
+
+      @if(studentType === 'old'){
+        <div class="mb-3 row">
+        <!-- <label for="previousAcademicYearGpa" class="col-sm-2 col-form-label"> تقدير العام الماضى </label> -->
+        <!-- <div class="col-sm-4">
+            <select formControlName="previousAcademicYearGpa" class="form-control form-select"  name="grades">
+              <option value="" selected disabled>---</option>
+              <option value="مقبول">مقبول</option>
+              <option value="محمول بمادة">محمول بمادة</option>
+              <option value="غياب بعذر">غياب بعذر</option>
+              <option value="مقبول (بمادة ومادة ثالثة)">مقبول (بمادة ومادة ثالثة)</option>
+              <option value="ناجح">ناجح</option>
+              <option value="جيد">جيد</option>
+              <option value="جيد جدًا">جيد جدًا</option>
+              <option value="ممتاز">ممتاز</option>
+              <option value="مقبول بمادة">مقبول بمادة</option>
+              <option value="مقبول بمادتين">مقبول بمادتين</option>
+              <option value="راسب">راسب</option>
+              <option value="دور ثان">دور ثان</option>
+              <option value="مقبول (بمادتين ومادة مرفوعة)">مقبول (بمادتين ومادة مرفوعة)</option>
+              
+            </select>
+            @if(AppRequest.get('previousAcademicYearGpa')?.errors && AppRequest.get('previousAcademicYearGpa')?.touched ){
+              <div class=" m-1 p-2 alert-danger text-danger w-100">
+                @if (AppRequest.get('previousAcademicYearGpa')?.getError('required') ) {
+                  <p class="m-0"> *</p>              
+                }
+              </div>
+            }
+        </div> -->
+       <label for="previousAcademicYearGpa" class="col-sm-2 col-form-label">  نسبة التقدير العام الماضي</label>
+        <div class="col-sm-1">
+            <input
+            formControlName="previousAcademicYearGpa"
+            type="number"
+            class="form-control"
+            id="previousAcademicYearGpa"
+            placeholder=" % "
+          />
+          @if(AppRequest.get('previousAcademicYearGpa')?.errors && AppRequest.get('previousAcademicYearGpa')?.touched ){
+            <div class=" m-1 p-2 text-danger w-100">
+              @if (AppRequest.get('previousAcademicYearGpa')?.getError('required') ) {
+                <p class="m-0"> *</p>              
+              }
+            </div>
+          }
+        </div>  
+      </div>
+
+      <div class="mb-3 row">
+        <label for="housingInPreviousYears" class="col-sm-2 col-form-label"> السكن فى الأعوام السابقة</label>
+        <div class="col-sm-4">
+            <select formControlName="housingInPreviousYears" class="form-control form-select"  name="housingInPreviousYears">
+                <option value="" selected disabled>---</option>
+                <option value="سكن قديم">سكن قديم </option>
+                <option value="سكن مستجد">سكن مستجد</option>
+                <option value="سكن منقطع">سكن منقطع</option>
+
+            </select>
+            @if(AppRequest.get('housingInPreviousYears')?.errors && AppRequest.get('housingInPreviousYears')?.touched ){
+              <div class=" m-1 p-2 alert-danger text-danger w-100">
+                @if (AppRequest.get('housingInPreviousYears')?.getError('required') ) {
+                  <p class="m-0"> *</p>              
+                }
+              </div>
+            }
+        </div>
+       
+      </div>
+      }
+      
+      <div class="mb-3 row">
+        <label for="" class="col-sm-2 col-form-label"> نوع السكن</label>
+        <div class="col-sm-4">
+            <select formControlName="" class="form-control form-select"  name="">
+                <option value="" selected disabled>---</option>
+                <option value="سكن عادي">سكن عادي</option>
+            </select>
+            @if(AppRequest.get('faculty')?.errors && AppRequest.get('faculty')?.touched ){
+              <div class=" m-1 p-2 alert-danger text-danger w-100">
+                @if (AppRequest.get('faculty')?.getError('required') ) {
+                  <p class="m-0"> *</p>              
+                }
+              </div>
+            }
+        </div>
+        
+        <div class="col-sm-4">
+            <label for="" class="col-sm-3 me-2   col-form-label"> سكن بدون تغذية</label>
+            <input type="checkbox" formControlName="" >
+        </div>
+       
+      </div>
+      <div class="mb-3 row">
+        <div class="col-sm-4">
+            <label for="" class="col-sm-3 me-2 col-form-label"> الأسرة بالخارج
+            </label>
+            <input type="checkbox" formControlName="familyAbroad" >
+            @if(AppRequest.get('familyAbroad')?.errors && AppRequest.get('familyAbroad')?.touched ){
+              <div class=" m-1 p-2 alert-danger text-danger w-100">
+                @if (AppRequest.get('familyAbroad')?.getError('required') ) {
+                  <p class="m-0"> *</p>              
+                }
+              </div>
+            }
+        </div>
+        
+        <div class="col-sm-4">
+            <label for="" class="col-sm-4 m-2   col-form-label"> ذوى احتياجات خاصة
+            </label>
+            <input type="checkbox" formControlName="specialNeeds" >
+            @if(AppRequest.get('specialNeeds')?.errors && AppRequest.get('specialNeeds')?.touched ){
+              <div class=" m-1 p-2 alert-danger text-danger w-100">
+                @if (AppRequest.get('specialNeeds')?.getError('required') ) {
+                  <p class="m-0"> *</p>              
+                }
+              </div>
+            }
+        </div>
+       
+      </div>
+      <div class="mb-3 row">
+        <label for="password" class="col-sm-2 col-form-label"> كلمة المرور </label>
+        <div class="col-sm-4">
+         <input class="form-control" type="password" formControlName="password">
+         @if(AppRequest.get('password')?.errors && AppRequest.get('password')?.touched ){
+          <div class=" m-1 p-2 alert-danger text-danger w-100">
+            @if (AppRequest.get('password')?.getError('required') ) {
+              <p class="m-0"> *</p>              
+            }
+            @else if (AppRequest.get('password')?.getError('pattern')) {
+              <p class="m-0"> 
+                
+                كلمة المرور يجب أن تتكون من 8 أحرف على الأقل، وتحتوي على:
+
+حرف كبير (مثل: A)
+حرف صغير (مثل: a)
+رقم (مثل: 1)
+رمز خاص (مثل:!)
+                
+                *</p>              
+
+            }
+          </div>
+        }
+        </div>
+        <label for="Repassword" class="col-sm-2 col-form-label"> اعادة كلمة المرور </label>
+        <div class="col-sm-4">
+             <input  class="form-control" type="password" formControlName="rePassword">
+             @if (AppRequest.getError("mismatch") &&
+       (AppRequest.get("rePassword")?.touched && AppRequest.get("rePassword")?.touched)) {
+      <div class=" alert-danger text-danger fw-bold mt-2" role="alert">
+        تأكيد كلمة المرور غير صحيح      </div>
+      }
+        </div>
+      </div>
+
+      <div class=" mb-3 row bg-warning-subtle">
+        <p class="fw-bolder h4 m-2">
+          ملاحظات هامة
+
+        </p>
+        <ul class="fw-bold m-2">
+           <li class="mb-2">
+          يجب الاحتفاظ بكلمة المرور لأهميتها فى تعديل بياناتك كما سيتم استخدامها لاحقا عند إقامتك بالمدينة
+           </li>
+           <li class="mb-2">
+               لوحظ أن العديد من الطلاب يختارون السكن المميز ويجب الإشارة بأن السكن المميز له تكلفة عالية بالنسبة للسكن العادى
+           </li>
+           <li class="mb-2">
+            ذوى الاحتياجات الخاصة لا يدخل فى التنسيق
+
+           </li>
+
+
+        </ul>
+      
+      </div>
+
+      <div class=" col-12">
+       
+        <input type="checkbox" formControlName="specialNeeds" >
+        <label for="" class=" col-9 mx-2 fw-semibold   col-form-label"> أقر بأن البيانات (محل الإقامة - التقدير - الفرقة/الكلية) صحيحة طبقاً للأوراق الرسمية على أن أقدم هذه الأوراق عند حضوري للمدينة في حالة القبول وإذا ثبت أي خطأ في البيانات يتم تحويلي للشئون القانونية وفصلي نهائياً من المدينة
+
+        </label>
+        @if(AppRequest.get('specialNeeds')?.errors && AppRequest.get('specialNeeds')?.touched ){
+          <div class=" m-1 p-2 alert-danger text-danger w-100">
+            @if (AppRequest.get('specialNeeds')?.getError('required') ) {
+              <p class="m-0"> *</p>              
+            }
+          </div>
+        }
+      </div>
+     
+      @if(errmsg){
+        <p class=" m-0 alert alert-danger w-50 p-3  m-auto mb-2 text-center  fs-5 fw-semibold">
+          {{errmsg}} 
+        </p>
+      }
+      <button [disabled]="AppRequest.invalid"  class="btn-main d-block m-auto 
+      "> تسجيل طلب الالتحاق</button>
+    </form>
+  </section>
+  
