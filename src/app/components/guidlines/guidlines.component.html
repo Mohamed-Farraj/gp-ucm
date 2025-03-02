@@ -8,8 +8,8 @@
             </button>
           </h2>
           <div id="collapseOne"  class="accordion-collapse collapse hide" data-bs-parent="#accordionExample">
-            <div  class="accordion-body">
-              {{res[0].guidelines}}
+            <div  *ngIf="res[0]?.guidelines"  class="accordion-body">
+              {{res[0]?.guidelines}}
             </div>
           </div>
         </div>

@@ -9,15 +9,15 @@
       </tr>
     </thead>
     <tbody class="">
-      <tr  class="">
-        <th scope="row">{{res[0].studentType}}</th>
-        <td>{{res[0].applicationStartDate}}</td>
-        <td>{{res[0].applicationEndDate}}</td>
+      <tr  *ngIf="res[0]?.guidelines" class="">
+        <th scope="row">{{res[0]?.studentType}}</th>
+        <td>{{res[0]?.applicationStartDate}}</td>
+        <td>{{res[0]?.applicationEndDate}}</td>
       </tr>
-      <tr>
-        <th scope="row">{{res[1].studentType}}</th>
-        <td>{{res[1].applicationStartDate}}</td>
-        <td>{{res[1].applicationEndDate}}</td>
+      <tr  *ngIf="res[0]?.guidelines">
+        <th scope="row">{{res[1]?.studentType}}</th>
+        <td>{{res[1]?.applicationStartDate}}</td>
+        <td>{{res[1]?.applicationEndDate}}</td>
       </tr>
 
     </tbody>
