@@ -15,13 +15,23 @@
     background-color: var(--light-parent-color);
     transition: all 1s ease;
   }
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23050F27' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
 
   .scrolled{
     background-color: transparent !important;
-
+    width: 100%;
+    padding-inline: 1rem;
+    
+  }
+  .scrolled .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
   }
   .scrolled button{
     border-radius:1000px !important;
-
   }
   .scrolled a{    color: white !important;}
+  .scrolled .navbar-brand{
+    margin-inline: 0 !important;
+  }

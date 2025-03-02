@@ -13,7 +13,7 @@ export class GuestNavComponent {
   isMenuCollapsed = true;
   @ViewChild('guestNav') el!:ElementRef;
   @HostListener('window:scroll') onScroll(){
-    if (window.scrollY > 200) {
+    if (window.scrollY > 80) {
       this.el.nativeElement.classList.remove('scrolled', 'additional-class');
 
   }
