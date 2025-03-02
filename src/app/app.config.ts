@@ -4,7 +4,8 @@ import { provideRouter, withHashLocation, withInMemoryScrolling, withViewTransit
 import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes , withHashLocation(), withInMemoryScrolling({scrollPositionRestoration:"top",anchorScrolling: 'enabled',}) , withViewTransitions()), provideClientHydration(), provideHttpClient(withFetch())]
+  providers: [provideRouter(routes , withHashLocation(), withInMemoryScrolling({scrollPositionRestoration:"top",anchorScrolling: 'enabled',}) , withViewTransitions()), provideClientHydration(), provideHttpClient(withFetch()),provideAnimations()]
 };

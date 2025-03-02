@@ -30,7 +30,9 @@
 }
 #application-deadline::before,
 #guidlines::before,
-#acceptanceStatus::before {
+#acceptanceStatus::before,
+#hero-helper::before
+ {
   content: "";
   display: block;
   height: 110px;
