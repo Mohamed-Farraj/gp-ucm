@@ -52,7 +52,7 @@
             formControlName="firstName"
             type="input"
             class="form-control"
-            id="name"
+            id="fName"
             placeholder="الاسم الاول باللغة العربية"
           />
           @if(AppRequest.get('firstName')?.errors && AppRequest.get('firstName')?.touched ){
@@ -64,13 +64,13 @@
             </div>
           }
         </div>
-        <label for="name" class="col-sm-2 col-form-label"> الأسم الثاني</label>
+        <label for="lName" class="col-sm-2 col-form-label"> الأسم الثاني</label>
         <div class="col-sm-4">
           <input
           formControlName="lastName"
             type="input"
             class="form-control"
-            id="name"
+            id="lName"
             placeholder="الاسم الثاني باللغة العربية"
           />
           @if(AppRequest.get('lastName')?.errors && AppRequest.get('lastName')?.touched ){
@@ -412,7 +412,7 @@
       <div class="mb-3 row">
         <label for="parentsStatus" class="col-sm-2 col-form-label"> حالة تخص الوالدين</label>
         <div class="col-sm-4">
-          <select formControlName="parentsStatus" class="form-control form-select" dir="ltr" name="" id="gender">
+          <select formControlName="parentsStatus" class="form-control form-select" dir="ltr" name="" id="parentsStatus">
             <option value="" disabled>اختر الحالة</option>
             <option value="وفاة الوالد">وفاة الوالد </option>
             <option value="وفاة الوالدين">وفاة الوالدين </option>
@@ -605,7 +605,7 @@
       </div>
       }
       
-      <div class="mb-3 row">
+      <!-- <div class="mb-3 row">
         <label for="" class="col-sm-2 col-form-label"> نوع السكن</label>
         <div class="col-sm-4">
             <select formControlName="" class="form-control form-select"  name="">
@@ -626,7 +626,7 @@
             <input type="checkbox" formControlName="" >
         </div>
        
-      </div>
+      </div> -->
       <div class="mb-3 row">
         <div class="col-sm-4">
             <label for="" class="col-sm-3 me-2 col-form-label"> الأسرة بالخارج
@@ -733,7 +733,7 @@
           {{errmsg}} 
         </p>
       }
-      <button [disabled]="AppRequest.invalid"  class="btn-main d-block m-auto 
+      <button [disabled]="AppRequest.invalid" class="btn-main d-block m-auto 
       "> تسجيل طلب الالتحاق</button>
     </form>
   </section>
