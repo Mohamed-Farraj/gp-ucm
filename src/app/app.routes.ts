@@ -18,8 +18,11 @@ export const routes: Routes = [
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
     {path:"app-request",component:ApplicationRequestComponent},
+<<<<<<< HEAD
     {path:"login",component:LoginComponent},
 
+=======
+>>>>>>> bcfabc226650af8052bef814aeb9bd585374b59b
     ]},
     {path:"hu",component:HuLayoutComponent,children:[
 
