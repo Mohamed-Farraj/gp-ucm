@@ -1,5 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+*
+{
+  font-family: 'cairo';
+}
 :root {
   --main-color: #0aad0a;
   --hover-color: #11bd11;
@@ -17,9 +21,32 @@
   --font-family: "Encode Sans Expanded", sans-serif;
   --rating-color: #ffc908;
 }
+/* Add scroll margin to all anchor targets */
+#application-deadline,
+#guidlines,
+#acceptanceStatus {
+  // scroll-margin-top: 200px !important; /* 90px nav height + 20px spacing */
 
+}
+#application-deadline::before,
+#guidlines::before,
+#acceptanceStatus::before,
+#hero-helper::before
+ {
+  content: "";
+  display: block;
+  height: 110px;
+  margin-top: -110px;
+  visibility: hidden;
+}
+
+html {
+  
+  scroll-behavior: smooth;
+}
 body {
   font-family: var(--font-family) !important;
+  overflow-x: hidden;
 }
 .my-container
 {

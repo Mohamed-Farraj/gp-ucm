@@ -22,14 +22,18 @@ section
 .table tbody tr th:first-child,
 .table thead tr th:first-child
  {
-    border-radius: 100px 0 0 100px;
+    // border-radius: 100px 0 0 100px;
+    border-radius: 0 100px 100px 0;
+
 }
 
 .table tbody tr td:last-child,
 .table tbody tr th:last-child,
 .table thead tr th:last-child
  {
-    border-radius: 0 100px 100px 0;
+    // border-radius: 0 100px 100px 0;
+        border-radius: 100px 0 0 100px;
+
 }
 
 .table-hover tbody tr:hover {

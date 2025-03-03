@@ -1,35 +1,23 @@
-<section class="p-5">
-<h1>Application , Deadline!</h1>
-<table class="table  table-hover">
+<section class="p-md-5 py-5 px-2">
+<h1>مواعيد التقديم للمدن الجامعية</h1>
+<table class="table table-hover">
     <thead class="">
       <tr class="">
         <th scope="col"></th>
-        <th scope="col">From</th>
-        <th scope="col">To</th>
+        <th scope="col">من</th>
+        <th scope="col">الي</th>
       </tr>
     </thead>
     <tbody class="">
-      <tr  class="">
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-      </tr>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-      </tr>
-      
+      @for (item of res; track $index) 
+      {
+        <tr  class="">
+          <th scope="row">{{item?.studentType}}</th>
+          <td>{{item?.applicationStartDate}}</td>
+          <td>{{item?.applicationEndDate}}</td>
+        </tr>
+      }
+
     </tbody>
   </table>
 </section>
