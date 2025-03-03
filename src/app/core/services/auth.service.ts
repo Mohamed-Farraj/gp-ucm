@@ -12,5 +12,9 @@ export class AuthService {
   {
    return this._HttpClient.post('http://localhost:8080/public/register' , data)
   }
+  setLoginForm(data:object)
+  {
+   return this._HttpClient.post('http://localhost:8080/public/login' , data)
+  }
 
 }

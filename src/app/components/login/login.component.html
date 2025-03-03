@@ -1,0 +1,113 @@
+<section class="bodysection" dir="rtl">
+  <!----------------------- Main Container -------------------------->
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+
+    <!----------------------- Login Container -------------------------->
+    <div class="row border rounded-5 bg-white shadow box-area" style="max-width: 1000px; width: 100%; margin: 0 auto; overflow: hidden;">
+
+      <!--------------------------- Left Box ----------------------------->
+      <div class="col-md-6 m-0 p-0 d-flex justify-content-center align-items-center flex-column left-box" style="overflow: hidden;">
+        <!-- Large Image for Larger Screens -->
+        <div class="featured-image w-100 h-100">
+          <img src="../assets/Website-1.jpg" class="img-fluid w-100 h-100 rounded-start-0 desktop-img" alt="Login Image" style="object-fit: cover;">
+        </div>
+        <!-- Logo for Small Screens -->
+        <div class="logo-small-screen ">
+          <img src="../assets/lightlogo.png" alt="Logo" class="img-fluid" style="max-width: 120px;">
+        </div>
+      </div>
+
+      <!----------------------- Right Box ---------------------------->
+      <div class="col-md-6 m-0 p-0 right-box d-flex align-items-center">
+        <div class="w-100 p-4">
+          <div class="header-text mb-4 text-start">
+            <h2> اهـلا بـك في مسكـني  </h2>
+            <!-- <h5>    لأداره المدن الجامـعية لجامـعة حـلـوان  </h5> -->
+
+            <p>نحن سعداء لرؤيتك مرة أخرى.</p>
+          </div>
+          <Form [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+            
+             <div class="input-group mb-3">
+            <input  
+
+            [ngClass]="{
+              'is-valid' : !loginForm.get('username')?.errors && loginForm.get('username')?.touched,
+              'is-invalid' : loginForm.get('username')?.errors && loginForm.get('username')?.touched}"
+
+               formControlName="username" type="email" class="form-control form-control-lg bg-light fs-6" style="text-align: right;" placeholder="عنوان البريد الإلكتروني">
+            @if(loginForm.get('username')?.errors && loginForm.get('username')?.touched ){
+              <div class=" m-1 p-2 text-danger text-danger w-100">
+                @if (loginForm.get('username')?.getError('required') ) {
+                  <p class="m-0"> *</p>              
+                }
+                @else if (loginForm.get('username')?.getError('email')) {
+                  <p class="m-0"> *</p>              
+  
+                }
+              </div>
+            }
+          </div>
+          <div class="input-group mb-1">
+            <div class="input-group">
+              <input
+                [ngClass]="{
+                  'is-valid': !loginForm.get('password')?.errors && loginForm.get('password')?.touched,
+                  'is-invalid': loginForm.get('password')?.errors && loginForm.get('password')?.touched
+                }"
+                formControlName="password"
+                [type]="showPassword ? 'text' : 'password'"
+                class="form-control form-control-lg bg-light fs-6"
+                placeholder="كلمة المرور"
+              />
+              <button
+                type="button"
+                class="btn btn-main"
+                (click)="togglePasswordVisibility()"
+                aria-label="Toggle password visibility"
+              >
+                <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+              </button>
+            </div>
+            @if (loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
+              <div class="m-1 p-2 text-danger w-100">
+                @if (loginForm.get('password')?.getError('required')) {
+                  <p class="m-0"> *</p>
+                }
+                @else if (loginForm.get('password')?.getError('pattern')) {
+                  <p class="m-0"> *</p>
+                }
+              </div>
+            }
+          </div>
+          <div class="input-group mb-5 d-flex justify-content-between">
+            <!-- <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="formCheck">
+              <label for="formCheck" class="form-check-label text-secondary"><small>تذكرني</small></label>
+            </div> -->
+            <div class="forgot">
+              <small><a  class="link-primary cursor-pointer" href="#">نسيت كلمة المرور؟</a></small>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <button class="btn btn-lg btn-main w-100 fs-6">تسجيل الدخول</button>
+          </div>
+          <!-- <div class="input-group mb-3">
+            <button class="btn btn-lg btn-light w-100 fs-6"><img src="images/google.png" style="width:20px" class="me-2"><small>تسجيل الدخول باستخدام Google</small></button>
+          </div> -->
+          @if(errmsg){
+            <p class=" m-0 alert alert-danger w-100 p-3  m-auto mb-2 text-center  fs-6 fw-semibold">
+              {{errmsg}} 
+            </p>
+          }
+          <div class="row fw-semibold text-end">
+            <small>ليس لديك حساب؟ <a class="link-primary cursor-pointer" routerLink="app-request">اشتراك</a></small>
+          </div>
+          </Form>
+         
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

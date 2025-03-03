@@ -8,9 +8,12 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AcceptanceStatusComponent } from './components/acceptance-status/acceptance-status.component';
 import { AppRequestComponent } from './components/app-request/app-request.component';
 import { ApplicationRequestComponent } from './components/application-request/application-request.component';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
     {path:"app-request",component:ApplicationRequestComponent},
+    {path:"login",component:LoginComponent},
+
 
     {path:"",redirectTo:"guest",pathMatch:"full"},
 
