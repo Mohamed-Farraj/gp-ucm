@@ -9,6 +9,7 @@ import { AcceptanceStatusComponent } from './components/acceptance-status/accept
 import { ApplicationRequestComponent } from './components/application-request/application-request.component';
 import { LoginComponent } from './components/login/login.component';
 import { GuestHomeComponent } from './components/guest-home/guest-home.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
 
@@ -28,7 +29,8 @@ export const routes: Routes = [
 
     ]},
     {path:"admin",component:AdminLayoutComponent,children:[
-
+        {path:"",redirectTo:"admin-dashboard",pathMatch:"full"},
+        {path:"admin-dashboard",component:AdminDashboardComponent},
     ]},
     {path:"**",component:NotfoundComponent}
 
