@@ -33,6 +33,16 @@ loginSubmit(){
            this.errmsg=res.body.message
         console.log(res)
         }
+        else{
+          setTimeout(() => {
+            //save Token
+            localStorage.setItem('userToken' , res.data.token)
+
+            //decode Token
+            this._AuthService.saveUserData()
+            //navigate to home
+          }, 1000);
+        }
        
       },
 
