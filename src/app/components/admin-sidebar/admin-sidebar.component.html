@@ -1,0 +1,74 @@
+<div class="container-fluid">
+    <section class="row flex-md-nowrap">
+        <section class="sidebar gap-5 px-3 py-5 d-flex flex-column" [class.collapsed]="isCollapsed">
+                <button class="toggle-btn btn" (click)="isCollapsed = !isCollapsed">
+                    <i class="fas fa-xl fa-bars"></i>
+                  </button>
+            <div class="logo w-100 d-flex justify-content-center align-content-center">
+                <div class="d-flex align-content-center "  [class.d-none]="isCollapsed"><h1 class="m-auto fw-bolder title">مسكني</h1></div>
+                <div class="image me-auto"><img src="./assets/light logo.png" style="width: clamp(5rem, 6rem, 8rem);"></div>
+            </div>
+            <div dir="rtl">
+                    <div class="">
+                      <div class="list-group d-flex flex-column gap-3" id="list-tab" role="tablist">
+                        <a class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">
+                            <i class="fa-solid fa-2xl fa-chart-line"></i>
+                            <span class="fs-3" [ngClass]="{'collapsed': isCollapsed}">لوحة التحكم</span>
+                        </a>
+                        <a class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">
+                            <i class="fa-solid fa-2xl fa-user"></i>
+                            <span class="fs-3" [ngClass]="{'collapsed': isCollapsed}">طلبات الألتحاق</span>
+                        </a>
+                        <a class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">
+                            <i class="fa-solid fa-2xl fa-city"></i>
+                            <span class="fs-3" [ngClass]="{'collapsed': isCollapsed}">الجزاءات و العقوبات</span>
+                        </a>
+                        <a class=" d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">
+                            <i class="fa-solid fa-2xl fa-gear"></i>
+                            <span class="fs-3" [ngClass]="{'collapsed': isCollapsed}">الاعدادات</span>
+                        </a>
+                      </div>
+                    </div>
+                 
+            </div>
+            </section>
+
+<!-- --------------------------------------------------------------------------- -->
+<section dir="rtl" class="col-md-7 main-content">
+    <app-ar-display [selectedAdmissionRequest]="selectedAdmissionRequest"></app-ar-display>       
+</section>
+<!----------------------------------------------------------------- ------------- -->
+            <section class="col-md-3 py-5 px-3 side-content">
+                <div class="text-center">
+                    <div class="tab-content" id="nav-tabContent">
+                      <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">hhhhhhhhhhh</div>
+
+                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                        <div class="filteration">
+
+                        </div>
+                        <table style="" class="table table-hover">
+
+                            <tbody class="">
+                              @for (item of res; track $index) 
+                              {
+                                <tr  >
+                                  <td (click)="handleClick(item)" class="cursor-pointer rounded-pill">{{item?.firstName}} {{item?.lastName}}</td>
+                                </tr>
+                              }
+                        
+                            </tbody>
+                          </table>
+                    </div>
+
+
+                      <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">.wwwwwwwwwwwww..</div>
+                      <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">.ssssssssssssss..</div>
+                    </div>
+                  </div>
+            </section>
+            <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+ 
+</div>
+    </section>
+</div>

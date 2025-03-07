@@ -1,15 +1,15 @@
-<section class="my-section p-5">
-    <h1>University Guidlines</h1>
-    <div class="accordion fs-2 " id="accordionExample">
-        <div class="accordion-item">
+<section  class="my-section p-md-5 py-5 px-2">
+    <h1>تعليمات القبول</h1>
+    <div class="accordion fs-5 lh-lg " id="accordionExample">
+        <div class="accordion-item p-md-5 px-2">
           <h2 class="accordion-header">
             <button class="accordion-button fs-2 rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              University GuidLines
+              التعليمات و الارشادات
             </button>
           </h2>
           <div id="collapseOne"  class="accordion-collapse collapse hide" data-bs-parent="#accordionExample">
-            <div  class="accordion-body">
-              <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+            <div  *ngIf="res[0]?.guidelines"  class="accordion-body">
+              {{res[0]?.guidelines}}
             </div>
           </div>
         </div>
