@@ -39,6 +39,7 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
       this._AuthService.DecideArState(id, status).subscribe({
         next: (response) => {
           console.log('Operation succeeded:', response);
+          this.selectedAdmissionRequest.status = status;
           if (status === 'UNDER_REVIEW' ) {
             this.Toast.fire({
               icon: 'success',
@@ -63,7 +64,7 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
           console.error('Operation failed:', err);
           this.Toast.fire({
             icon: 'error',
-            title: 'حدث خطأ ما',
+            title: err.error.message,
           })   
         },
       });

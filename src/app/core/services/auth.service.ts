@@ -99,7 +99,7 @@ export class AuthService {
 
   return this._HttpClient.get('http://localhost:8080/admin/admission-requests', { 
     headers: new HttpHeaders({
-      'Authorization': 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtb2hhbWVkbW9oYW1lZEBnbWFpbC5jb20iLCJpYXQiOjE3NDEyMjE0NTgsImV4cCI6MTc0MTMwNzg1OH0.KSBd03o3qXBsMXoicjwqjEJnZ_lFS2odRpJnMPllWiatDT0ANoyDmDhRvVfg_mPr',
+      'Authorization': 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtb2hhbWVkbW9oYW1lZG1vaGFtZWRAZ21haWwuY29tIiwiaWF0IjoxNzQxMzA5MzkyLCJleHAiOjE3NDEzOTU3OTJ9.037oFjjr8tKbqnJZcuSxF4RxRzot4aP8qWQCtPWpcDjnTuwqx80jymAzf6tQliOe',
       'Content-Type': 'application/json'
     })
   });
@@ -109,10 +109,12 @@ export class AuthService {
     return this._HttpClient.put(`http://localhost:8080/admin/admission-requests/${UId}/status?status=${Status}`,
       null,
       {headers: new HttpHeaders({
-        'Authorization': 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtb2hhbWVkbW9oYW1lZEBnbWFpbC5jb20iLCJpYXQiOjE3NDEyMjE0NTgsImV4cCI6MTc0MTMwNzg1OH0.KSBd03o3qXBsMXoicjwqjEJnZ_lFS2odRpJnMPllWiatDT0ANoyDmDhRvVfg_mPr',
-        'Content-Type': 'application/json'
-      })}
-    );
+        'Authorization': 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtb2hhbWVkbW9oYW1lZG1vaGFtZWRAZ21haWwuY29tIiwiaWF0IjoxNzQxMzA5MzkyLCJleHAiOjE3NDEzOTU3OTJ9.037oFjjr8tKbqnJZcuSxF4RxRzot4aP8qWQCtPWpcDjnTuwqx80jymAzf6tQliOe',
+        'Content-Type': 'application/json',
+      }),    
+      withCredentials: true 
+    },
+        );
   }
 
   setRegisterForm(data:object)

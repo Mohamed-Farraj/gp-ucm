@@ -1,19 +1,19 @@
-<div class="container-fluid">
-    <section class="row flex-md-nowrap">
-        <section class="sidebar gap-5 px-3 py-5 d-flex flex-column" [class.collapsed]="isCollapsed">
-                <button class="toggle-btn btn" (click)="isCollapsed = !isCollapsed">
+<div dir="ltr"  class="container-fluid">
+    <section style="padding-inline-start:80px ;" class="row flex-lg-nowrap">
+        <section class="position-fixed fixed-top sidebar gap-5 px-3 py-5 d-flex flex-column" [class.collapsed]="isCollapsed">
+                <button class="toggle-btn btn" (click)="toggleCollapsed()">
                     <i class="fas fa-xl fa-bars"></i>
                   </button>
             <div class="logo w-100 d-flex justify-content-center align-content-center">
-                <div class="d-flex align-content-center "  [class.d-none]="isCollapsed"><h1 class="m-auto fw-bolder title">مسكني</h1></div>
+                <div  class="d-flex align-content-center "  [class.collapsed]="isCollapsed"><h1 class="m-auto fw-bolder title">مسكني</h1></div>
                 <div class="image me-auto"><img src="./assets/light logo.png" style="width: clamp(5rem, 6rem, 8rem);"></div>
             </div>
             <div dir="rtl">
                     <div class="">
                       <div class="list-group d-flex flex-column gap-3" id="list-tab" role="tablist">
-                        <a class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">
+                        <a  class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">
                             <i class="fa-solid fa-2xl fa-chart-line"></i>
-                            <span class="fs-3" [ngClass]="{'collapsed': isCollapsed}">لوحة التحكم</span>
+                            <span  class="fs-3" [ngClass]="{'collapsed': isCollapsed}">لوحة التحكم</span>
                         </a>
                         <a class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">
                             <i class="fa-solid fa-2xl fa-user"></i>
@@ -34,11 +34,11 @@
             </section>
 
 <!-- --------------------------------------------------------------------------- -->
-<section dir="rtl" class="col-md-7 main-content">
-    <app-ar-display [selectedAdmissionRequest]="selectedAdmissionRequest"></app-ar-display>       
+<section dir="rtl" class="col-md-7 flex-grow-1 main-content">
+    <app-ar-display  [selectedAdmissionRequest]="selectedAdmissionRequest"></app-ar-display>       
 </section>
 <!----------------------------------------------------------------- ------------- -->
-            <section class="col-md-3 py-5 px-3 side-content">
+            <section dir="rtl" class="col-md-3 py-5 px-3 side-content">
                 <div class="text-center">
                     <div class="tab-content" id="nav-tabContent">
                       <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">hhhhhhhhhhh</div>
@@ -50,15 +50,41 @@
                         <table style="" class="table table-hover">
 
                             <tbody class="">
-                              @for (item of res; track $index) 
+                              @for (item of pagedItems; track $index) 
                               {
                                 <tr  >
-                                  <td (click)="handleClick(item)" class="cursor-pointer rounded-pill">{{item?.firstName}} {{item?.lastName}}</td>
+                                  <td (click)="handleClick(item)" class="cursor-pointer rounded-pill">
+                                    <i 
+                                    [class.text-success]="item?.status==='ACCEPTED'" 
+                                    [class.text-danger]="item?.status==='REJECTED'" 
+                                    [class.text-warning]="item?.status==='UNDER_REVIEW'" 
+                                    class="fa-solid fa-circle mx-2"></i>
+                                    {{item?.firstName}} {{item?.lastName}}
+                                  </td>
                                 </tr>
                               }
                         
                             </tbody>
                           </table>
+
+                          <nav dir="rtl" aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                              <li class="page-item" [class.disabled]="currentPage === 1">
+                                <a class="cursor-pointer page-link rounded-start-pill rounded" (click)="changePage(currentPage - 1)">
+                                  السابق
+                                </a>
+                              </li>
+                              <li class="page-item" *ngFor="let page of getDisplayedPages()" [class.active]="page === currentPage">
+                                <a class="cursor-pointer page-link" (click)="changePage(page)">{{ page }}</a>
+                              </li>
+                              <li class="page-item" [class.disabled]="currentPage === totalPages">
+                                <a class="cursor-pointer page-link rounded-end-pill rounded" (click)="changePage(currentPage + 1)">
+                                  التالي
+                                </a>
+                              </li>
+                            </ul>
+                          </nav>
+
                     </div>
 
 

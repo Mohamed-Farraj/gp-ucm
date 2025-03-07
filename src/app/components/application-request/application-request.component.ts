@@ -6,6 +6,7 @@ import rawGovernorates from '../../../assets/cities (1).json';  // لاحظ أن
 import rawCities from '../../../assets/states (1).json';  // لاحظ أن البيانات تأتي من ملف states.json
 import { AuthService } from '../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -16,6 +17,18 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './application-request.component.scss'
 })
 export class ApplicationRequestComponent {
+
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top',
+    iconColor: 'white',
+    customClass: {
+      popup: 'colored-toast',
+    },
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+  })
 
   private readonly _AuthService= inject(AuthService)
   errmsg:string='';
@@ -49,7 +62,7 @@ export class ApplicationRequestComponent {
     guardianPhoneNumber: new FormControl(null, [Validators.required]),
     parentsStatus: new FormControl(null, [Validators.required]),
     previousAcademicYearGpa: new FormControl(null),
-    status: new FormControl(null),
+    status: new FormControl(2),
     housingInPreviousYears: new FormControl(null, [Validators.required]),
     familyAbroad: new FormControl(null),
     specialNeeds: new FormControl(null),
@@ -167,6 +180,16 @@ registerSubmit(){
         if(res.body.success === false) {
            this.errmsg=res.body.message
         console.log(res)
+        this.Toast.fire({
+          icon: 'error',
+          title: this.errmsg,
+        })   
+        }
+        else{
+          this.Toast.fire({
+            icon: 'success',
+            title: 'تم الارسال بنجاح',
+          })   
         }
        
       },
@@ -174,7 +197,10 @@ registerSubmit(){
       error:(err:HttpErrorResponse)=>{
         
         console.log(err)
-
+        this.Toast.fire({
+          icon: 'error',
+          title: err.message,
+        })   
       }
 
     })
