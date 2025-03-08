@@ -217,10 +217,12 @@ updateValidation(studentType: 'old' | 'new') {
   const previousAcademicYearGpaControl = this.AppRequest.get('previousAcademicYearGpa');
   const highSchoolGradeControl = this.AppRequest.get('totalGradesHighSchool');
   const secondaryDivisionControl = this.AppRequest.get('secondaryDivision');
+  const housingInPreviousYearsControl = this.AppRequest.get('housingInPreviousYears')
   
   if (studentType === 'old') {
     // إضافة التحقق من الصحة لحقول القدامى
     previousAcademicYearGpaControl?.setValidators([Validators.required]);
+    housingInPreviousYearsControl?.setValidators([Validators.required]);
     // إزالة التحقق من الصحة لحقول الجدد
     highSchoolGradeControl?.clearValidators();
     secondaryDivisionControl?.clearValidators();
@@ -231,12 +233,14 @@ updateValidation(studentType: 'old' | 'new') {
 
     // إزالة التحقق من الصحة لحقول القدامى
     previousAcademicYearGpaControl?.clearValidators();
+    housingInPreviousYearsControl?.clearValidators();
   }
 
   // تحديث حالة التحقق من الصحة
   previousAcademicYearGpaControl?.updateValueAndValidity();
   highSchoolGradeControl?.updateValueAndValidity();
   secondaryDivisionControl?.updateValueAndValidity();
+  housingInPreviousYearsControl?.updateValueAndValidity();
 }
 
 
@@ -257,6 +261,8 @@ clearFormBasedOnType() {
     this.AppRequest.get('secondaryDivision')?.reset();
   } else if (this.studentType === 'new') {
     this.AppRequest.get('previousAcademicYearGpa')?.reset();
+    this.AppRequest.get('housingInPreviousYearsControl')?.reset();
+
   }
 }
 

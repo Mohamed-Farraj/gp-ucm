@@ -8,6 +8,8 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AcceptanceStatusComponent } from './components/acceptance-status/acceptance-status.component';
 import { ApplicationRequestComponent } from './components/application-request/application-request.component';
 import { LoginComponent } from './components/login/login.component';
+import { AddGuideLinesComponent } from './components/add-guide-lines/add-guide-lines.component';
+  
 import { GuestHomeComponent } from './components/guest-home/guest-home.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
@@ -20,7 +22,8 @@ export const routes: Routes = [
     {path:"home",component:GuestHomeComponent},
     {path:"app-request",component:ApplicationRequestComponent},
     {path:"login",component:LoginComponent},
-
+    {path:"app-request",component:ApplicationRequestComponent},
+    {path:"add-guide", component:AddGuideLinesComponent},
     ]},
     {path:"hu",component:HuLayoutComponent,children:[
 
