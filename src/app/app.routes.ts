@@ -23,7 +23,6 @@ export const routes: Routes = [
     {path:"app-request",component:ApplicationRequestComponent},
     {path:"login",component:LoginComponent},
     {path:"app-request",component:ApplicationRequestComponent},
-    {path:"add-guide", component:AddGuideLinesComponent},
     ]},
     {path:"hu",component:HuLayoutComponent,children:[
 
