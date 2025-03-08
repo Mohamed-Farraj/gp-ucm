@@ -1,8 +1,65 @@
 <section class="bg-main-light container my-5 p-4 rounded-4" dir="rtl">
   <div class="title fw-bold mb-4">
     <h1 class="border-bottom pb-2">أضف الإرشادات</h1>
+
+    <div>
+      <form [formGroup]="guidelineForm">
+        <!-- Textarea for the guideline -->
+        <textarea class="textarea"
+          formControlName="guidelines"
+          rows="10"
+          cols="50"
+          placeholder="أدخل إرشاداتك هنا.
+
+
+
+
+
+
+
+          "
+        ></textarea>
+    
+        <!-- Validation message -->
+        <div
+          *ngIf="guidelineForm.get('guidelines')?.invalid && guidelineForm.get('guidelines')?.touched"
+          class="error-message fs-5"
+        >
+        النص الإرشادي مطلوب.
+      </div>
+        <div >
+          <!-- Save/Update Button -->
+          <button type="submit"
+            
+            (click)="saveGuideline()"
+            [disabled]="guidelineForm.invalid"
+            class="btn-main d-block m-auto"
+          >
+            {{ guidelineExists ? 'تعـديل' : 'حـفظ' }}
+          </button>
+      
+          <!-- Delete Button (only shown if a guideline exists) -->
+          <button 
+            (click)="deleteGuideline()"
+            *ngIf="guidelineExists"
+            class=" btn-main-delete d-block m-auto mt-2 "
+          >
+            حـذف
+          </button>
+        </div>
+      </form>
+    
+      <!-- Buttons for Save/Update and Delete -->
+     
+    </div>
+
+
+
+
+<!-- 
+    
     <div class="mb-3 row border-bottom p-1">
-        <!-- <div class="col-sm-2 col-4 m-1">
+        <div class="col-sm-2 col-4 m-1">
           <button type="button" class="btn btn-secondary w-100" 
           [class.btn-main]="activeButton === 'old'"
           [class.btn-secondary]="activeButton !== 'old'"
@@ -13,12 +70,13 @@
           [class.btn-main]="activeButton === 'new'"
           [class.btn-secondary]="activeButton !== 'new'"
           (click)="selectStudentType('new')">طلاب مستجـدين</button>
-        </div> -->
+        </div>
       </div>
     <form [formGroup]="addguideForm" (ngSubmit)="setguideline()" >
       <div class="mb-4">
         <label class="py-3 fw-bold fs-5" for="description">الإرشادات:</label><br />
         <textarea
+        [value]="result[0]?.guidelines"
         class="textarea"
         formControlName="guidelines"
           id="description"
@@ -28,7 +86,7 @@
           required
         ></textarea>
       </div>
-      <!-- <div>
+      <div>
         <label class="py-3 fw-bold fs-5 " for="file">رفع ملفات:</label><br />
         <input
     formControlName="file"
@@ -37,8 +95,9 @@
           name="file"
           required
         />
-      </div> -->
-      <button class="btn-main d-block m-auto" type="submit">ارسـال</button>
-    </form>
+      </div>
+      <button *ngIf="err" class="btn-main d-block m-auto" type="submit">ارسـال</button>
+      <button  *ngIf="!err" class="btn-main d-block m-auto" type="submit">تعـديل</button>
+    </form> -->
   </div>
 </section>
