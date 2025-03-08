@@ -7,6 +7,7 @@ import { inject, Injectable } from '@angular/core';
 export class AuthService {
 
   private readonly _HttpClient = inject(HttpClient)
+  private token: string = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtb2hhbWVkbW9oYW1lZG1vaGFtZWRtb21vQGdtYWlsLmNvbSIsImlhdCI6MTc0MTM5OTE2NiwiZXhwIjoxNzQxNDg1NTY2fQ.c7q2sqajeLE14VIj101VIMu4RMy6QNoc8gC2wExiQ0z80ZqZDJjf5TIvWMStb8L7"
 
   getApplications()
   {
@@ -99,7 +100,7 @@ export class AuthService {
 
   return this._HttpClient.get('http://localhost:8080/admin/admission-requests', { 
     headers: new HttpHeaders({
-      'Authorization': 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtb2hhbWVkbW9oYW1lZG1vaGFtZWRAZ21haWwuY29tIiwiaWF0IjoxNzQxMzA5MzkyLCJleHAiOjE3NDEzOTU3OTJ9.037oFjjr8tKbqnJZcuSxF4RxRzot4aP8qWQCtPWpcDjnTuwqx80jymAzf6tQliOe',
+      'Authorization': `Bearer ${this.token}`,
       'Content-Type': 'application/json'
     })
   });
@@ -109,7 +110,7 @@ export class AuthService {
     return this._HttpClient.put(`http://localhost:8080/admin/admission-requests/${UId}/status?status=${Status}`,
       null,
       {headers: new HttpHeaders({
-        'Authorization': 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtb2hhbWVkbW9oYW1lZG1vaGFtZWRAZ21haWwuY29tIiwiaWF0IjoxNzQxMzA5MzkyLCJleHAiOjE3NDEzOTU3OTJ9.037oFjjr8tKbqnJZcuSxF4RxRzot4aP8qWQCtPWpcDjnTuwqx80jymAzf6tQliOe',
+        'Authorization': `Bearer ${this.token}`,
         'Content-Type': 'application/json',
       }),    
       withCredentials: true 

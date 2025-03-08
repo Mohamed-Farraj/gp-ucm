@@ -33,7 +33,7 @@ section.sidebar
  td, th {
     padding:1rem;
 }
-
+h4{color:var(--main-color)}
 
 .table-hover tbody tr:hover {
     transform: translateY(-2px); /* Optional hover lift effect */
@@ -111,37 +111,13 @@ section.sidebar
     color: var(--main-color)
   }
 
-//   .sidebar {
-//     position: relative;
-//     width: fit-content; /* Expanded width */
-//     min-width: fit-content; /* Add this */
-//     overflow: hidden; /* Keep content contained */
-//   }
+  .form-control:focus {
+    border-color: var(--main-color); /* Change to your desired color */
+    box-shadow: 0 0 0 0.2rem #9f83376e; /* Adjust the spread and opacity */
+  }
+  .custom-checkbox:checked {
+    accent-color: var(--main-color);
+
+  }
   
-//   .sidebar.collapsed {
-//     width: 80px !important;
-//     min-width: 80px !important;
-//   }
   
-//   /* Add these transitions for text */
-//   .fs-3 {
-//     transition: opacity 0.2s ease, max-width 0.3s ease;
-//     display: inline-block !important;
-//     max-width: 200px;
-//     opacity: 1;
-//   }
-  
-//   .sidebar.collapsed .fs-3 {
-//     opacity: 0;
-//     max-width: 0;
-//   }
-  
-//   /* Logo text transition */
-//   .logo h1 {
-//     transition: opacity 0.3s ease;
-//     opacity: 1;
-//   }
-  
-//   .sidebar.collapsed .logo h1 {
-//     opacity: 0;
-//   }
