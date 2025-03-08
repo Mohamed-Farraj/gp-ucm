@@ -6,11 +6,12 @@ import { ArDisplayComponent } from "../ar-display/ar-display.component";
 import Aos from 'aos';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { AddGuideLinesComponent } from "../add-guide-lines/add-guide-lines.component";
 
 @Component({
   selector: 'app-admin-sidebar',
   standalone: true,
-  imports: [ArDisplayComponent, NgClass, NgFor, ReactiveFormsModule],
+  imports: [ArDisplayComponent, NgClass, NgFor, ReactiveFormsModule, AddGuideLinesComponent],
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'] // تم تصحيح الاسم هنا
 })
@@ -31,6 +32,18 @@ export class AdminSidebarComponent {
   // مصفوفة لتخزين الحالات المختارة من checkboxes
   selectedStatuses: string[] = [];
   filteredItems: any[] = [];
+  activeTab: string = 'home';
+
+setActiveTab(tab: string) {
+  this.activeTab = tab;
+  console.log('Current Active Tab:', this.activeTab);
+  this.isCollapsed=true;
+}
+
+getActiveTab() {
+  const activeTab = document.querySelector('.tab-pane.show.active');
+  console.log('Active Tab:', activeTab?.id);
+}
 
 
   toggleCollapsed(): void {
