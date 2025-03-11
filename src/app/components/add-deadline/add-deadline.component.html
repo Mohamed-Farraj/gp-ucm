@@ -1,0 +1,36 @@
+<section class="bg-main-light container px-4 rtl py-5  " dir="rtl">
+
+
+  <h5 class="mb-5 ">المواعيد</h5>
+  <form [formGroup]="deadlineForm" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+    <div class="mb-5">
+      <label for="applicationStartDate" class="block mb-2">تاريخ بدء التقديم</label>
+      <input type="date" id="applicationStartDate" class="form-control" placeholder="applicationStartDate" formControlName="applicationStartDate">
+      @if (deadlineForm.get('applicationStartDate')?.hasError('required') && deadlineForm.get('applicationStartDate')?.touched) {
+      <div class="text-danger">مطلوب</div>
+      }
+    </div>
+    <div class="mb-5">
+      <label for="applicationEndDate" class="block mb-2 "> تاريخ انتهاء التقديم
+      </label>
+      <input type="date" id="applicationEndDate" class="form-control" placeholder="applicationEndDate Address" formControlName="applicationEndDate">
+      @if (deadlineForm.get('applicationEndDate')?.hasError('required') && deadlineForm.get('applicationEndDate')?.touched) {
+      <div class="text-danger">مطلوب</div>
+      }
+    </div>
+    <div class="mb-5">
+      <label for="studentType" class="block mb-2 "> نوع الطالب
+      </label>
+      <input type="text" id="studentType" class="form-control" placeholder="نوع الطالب" formControlName="studentType">
+      @if (deadlineForm.get('studentType')?.hasError('required') && deadlineForm.get('studentType')?.touched) {
+      <div class="text-danger">مطلوب</div>
+      }
+    </div>
+   
+       <button type="submit"
+      class="btn-main me-3 ">اضافه</button>
+    <button type="button" (click)="onClose()"
+      class="btn-main-delete ">الغاء</button>
+   
+  </form>
+</section>

@@ -1,9 +1,47 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$gp-ucm-primary: mat.define-palette(mat.$indigo-palette);
+$gp-ucm-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$gp-ucm-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$gp-ucm-theme: mat.define-light-theme((
+  color: (
+    primary: $gp-ucm-primary,
+    accent: $gp-ucm-accent,
+    warn: $gp-ucm-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($gp-ucm-theme);
+
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
-*
-{
+*{
   font-family: 'cairo';
 }
+// @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+
 :root {
   --main-color: #9F8437;
   --hover-color: #11bd11;
@@ -15,9 +53,9 @@
   --dark-parent-color: #111B31;
   --dark-child-color: #1B2439;
  --delete-main-color: #750202;
-  --shadow: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
-    rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
-    rgba(145, 158, 171, 0.12) 0px 1px 10px 0px;
+  --shadow: rgba(145, 158, 171, 0.2) 0rem .125rem .25rem -0.0625rem,
+    rgba(145, 158, 171, 0.14) 0rem .25rem .3125rem 0rem,
+    rgba(145, 158, 171, 0.12) 0rem .0625rem .625rem 0rem;
   --font-family: "Encode Sans Expanded", sans-serif;
   --rating-color: #ffc908;
 }
@@ -25,7 +63,7 @@
 #application-deadline,
 #guidlines,
 #acceptanceStatus {
-  // scroll-margin-top: 200px !important; /* 90px nav height + 20px spacing */
+  // scroll-margin-top: 12.5rem !important; /* 5.625rem nav height + 1.25rem spacing */
 
 }
 #application-deadline::before,
@@ -35,8 +73,8 @@
  {
   content: "";
   display: block;
-  height: 110px;
-  margin-top: -110px;
+  height: 6.875rem;
+  margin-top: -6.875rem;
   visibility: hidden;
 }
 
@@ -52,15 +90,15 @@ body {
 {
   width: 90%;
   margin-inline: auto auto;
-  border-radius: 5rem;
+  border-radius: 80px;
 }
 
 .my-section
 {
     background-color: var(--light-parent-color);
     margin-inline: 0;
-    margin-block: 3rem;
-    border-radius: 5rem;
+    margin-block: 48px;
+    border-radius: 80px;
 }
 
 .nav-link {
@@ -69,7 +107,7 @@ body {
 .active-link {
   background-color: var(--main-color) !important;
   color: var(--light-color) !important;
-  border-radius: 5px;
+  border-radius: .3125rem;
 }
 
 .rating-color {
@@ -85,18 +123,18 @@ a:hover {
 }
 
 .product {
-  border-radius: 5px;
-  border: solid 1px var(--main-color);
+  border-radius: .3125rem;
+  border: solid .0625rem var(--main-color);
   transition: box-shadow 0.5s;
   overflow: hidden;
 }
 
 .product:hover {
-  box-shadow: 0 0 10px #11bd1168;
+  box-shadow: 0 0 .625rem #11bd1168;
 }
 
 .font-sm {
-  font-size: 12px;
+  font-size: .75rem;
 }
 .text-main {
   color: var(--main-color);
@@ -109,18 +147,18 @@ a:hover {
 }
 .btn-main {
   background-color: var(--dark-base-color);
-  padding: 7px 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: .4375rem 1.25rem;
+  border: .0625rem solid #ccc;
+  border-radius: .3125rem;
   color: #fff;
   cursor: pointer;
   transition: all 0.5s;
 }
 .btn-main-delete {
   background-color: var(--delete-main-color);
-  padding: 7px 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: .4375rem 1.25rem;
+  border: .0625rem solid #ccc;
+  border-radius: .3125rem;
   color: #fff;
   cursor: pointer;
   transition: all 0.5s;
@@ -140,7 +178,7 @@ a:hover {
 }
 .nav-spacer
 {
-  height: 72px;
+  height: 4.5rem;
 }
 
 
@@ -175,3 +213,8 @@ a:hover {
 .colored-toast .swal2-html-container {
   color: white;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

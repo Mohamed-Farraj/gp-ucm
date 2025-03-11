@@ -1,0 +1,59 @@
+
+<section class="bg-main-light container  my-5 p-4 rounded-4  " dir="rtl">
+  <div class="flex justify-between items-center mb-2">
+    <h4 class="fw-bold m-auto mb-5">اضافه وتعديل مواعيد التقديم</h4>
+    <button type="button" (click)="openDialog()"
+      class="btn-main d-block me-auto">اضافة ميعاد</button>
+  </div>
+  <div class="">
+    <table class="w-100 ">
+      
+      <thead class="text-xs ">
+        <tr>
+          <th scope="col" class=" py-3">
+            تاريخ بدء التـقديم
+          </th>
+          <th scope="col" class=" py-3">
+            تاريخ انتـهاء التـقديم
+          </th>
+          <th scope="col" class=" py-3">
+           نـوع الطالب
+          </th>
+          <th scope="col" class=" py-3">
+            <span class="">اضـافة او حـذف</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (deadlines.length > 0) {
+        @for (item of deadlines; track $index) {
+        <tr class=" border-bottom ">
+          <th scope="row" class=" py-4 ">
+            {{item.applicationStartDate}}
+          </th>
+          <td class="py-4">
+            {{item.applicationEndDate}}
+          </td>
+          <td class="py-4">
+            {{item.studentType}}
+          </td>
+          <td class="py-4 text-right">
+            <button type="button" (click)="loadDeadline(item)"
+              class="btn-main me-3">تعديل</button>
+            <button type="button" (click)="deleteDeadline(item.id)"
+              class=" btn-main-delete">حذف</button>
+          </td>
+        </tr>
+        }}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- <app-model [isOpen]="isModelOpen" (closeModel)="closeModel()">
+  <app-add-deadline (onCloseModel)="closeModel()" [data]="deadline"></app-add-deadline>
+</app-model>  -->
+      
+  
+ 
+  
