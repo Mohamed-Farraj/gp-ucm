@@ -4,7 +4,6 @@ import { Ideadlins } from '../../core/interfaces/ideadlins';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder } from '@angular/forms';
 import { AddDeadlineComponent } from "../add-deadline/add-deadline.component";
-import { ModelComponent } from "../model/model.component";
 import { EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 @Component({

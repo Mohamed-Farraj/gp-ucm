@@ -7,7 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { RouterModule } from '@angular/router';
 import { EventEmitter } from '@angular/core';
 import { Ideadlins } from '../../core/interfaces/ideadlins';
-import { ModelComponent } from '../model/model.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
