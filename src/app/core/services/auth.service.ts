@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   private readonly _HttpClient = inject(HttpClient)
-  private token: string = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJtb2hhbWVkbW9oYW1lZG1vaGFtZWRtb21vQGdtYWlsLmNvbSIsImlhdCI6MTc0MTM5OTE2NiwiZXhwIjoxNzQxNDg1NTY2fQ.c7q2sqajeLE14VIj101VIMu4RMy6QNoc8gC2wExiQ0z80ZqZDJjf5TIvWMStb8L7"
+  private token: string = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzb3NvQGdtYWlsLmNvbSIsImlhdCI6MTc0MTU3NzAzNywiZXhwIjoxNzQxNjYzNDM3fQ.kztdjWcjDtggKJpkVYNv3cAwNmkxTJxehOdozcdagt-SlSecdfJcLNSIy0fEUwJI"
   userData:any = null
 
   

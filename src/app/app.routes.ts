@@ -12,6 +12,7 @@ import { AddGuideLinesComponent } from './components/add-guide-lines/add-guide-l
   
 import { GuestHomeComponent } from './components/guest-home/guest-home.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 
 export const routes: Routes = [
 
@@ -25,7 +26,8 @@ export const routes: Routes = [
     {path:"app-request",component:ApplicationRequestComponent},
     ]},
     {path:"hu",component:HuLayoutComponent,children:[
-
+        {path:"",redirectTo:"user-dashboard",pathMatch:"full"},
+        {path:"user-dashboard",component:UserDashboardComponent},
     ]},
     {path:"hnu",component:HnuLayoutComponent,children:[
 

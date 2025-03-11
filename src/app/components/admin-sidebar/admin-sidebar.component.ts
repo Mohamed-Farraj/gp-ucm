@@ -7,11 +7,12 @@ import Aos from 'aos';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { AddGuideLinesComponent } from "../add-guide-lines/add-guide-lines.component";
+import { AdminLandingPageComponent } from "../admin-landing-page/admin-landing-page.component";
 
 @Component({
   selector: 'app-admin-sidebar',
   standalone: true,
-  imports: [ArDisplayComponent, NgClass, NgFor, ReactiveFormsModule, AddGuideLinesComponent],
+  imports: [ArDisplayComponent, NgClass, NgFor, ReactiveFormsModule, AddGuideLinesComponent, AdminLandingPageComponent],
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'] // تم تصحيح الاسم هنا
 })
@@ -33,6 +34,7 @@ export class AdminSidebarComponent {
   selectedStatuses: string[] = [];
   filteredItems: any[] = [];
   activeTab: string = 'home';
+  objectData: any ;
 
 setActiveTab(tab: string) {
   this.activeTab = tab;
@@ -118,8 +120,10 @@ getActiveTab() {
   ngOnInit(): void {
     this._AuthService.getApplications().subscribe({
       next: (res: any) => {
+       
         console.log(res);
         this.res = res.data;
+        this.getAnalysis();
         this.filteredItems = this.res;
         console.log(this.res);
         this.initPagination();
@@ -134,6 +138,44 @@ getActiveTab() {
       this.applyFilters();
     });
   }
+
+
+  getAnalysis() {
+    this.objectData = {
+      male: {
+        UNDER_REVIEW: 0,
+        ACCEPTED: 0,
+        REJECTED: 0,
+        total: 0
+      },
+      female: {
+        UNDER_REVIEW: 0,
+        ACCEPTED: 0,
+        REJECTED: 0,
+        total: 0
+      }
+    };
+  
+    for (const item of this.res) {
+      // Assuming the gender is provided as 'MALE' or 'FEMALE'
+      const genderKey = item.gender.toUpperCase() === 'FEMALE' ? 'female' : 'male';
+  
+      // Increment the overall total for the gender
+      this.objectData[genderKey].total++;
+  
+      // Increment count for each status
+      if (item.status === 'UNDER_REVIEW') {
+        this.objectData[genderKey].UNDER_REVIEW++;
+      } else if (item.status === 'ACCEPTED') {
+        this.objectData[genderKey].ACCEPTED++;
+      } else if (item.status === 'REJECTED') {
+        this.objectData[genderKey].REJECTED++;
+      }
+    }
+  
+    console.log('Analysis:', this.objectData);
+  }
+  
 
   // دالة لتحديث selectedStatuses عند تغيير حالة checkbox
   onStatusChange(event: any): void {

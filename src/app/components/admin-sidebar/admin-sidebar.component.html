@@ -70,7 +70,7 @@
               (click)="setActiveTab('penalty')"
 
             >
-              <i class="fa-solid fa-2xl fa-city"></i>
+              <i class="fa-solid fa-2xl fa-triangle-exclamation"></i>
               <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
                 >الجزاءات و العقوبات</span
               >
@@ -97,6 +97,7 @@
               href="#list-settings"
               role="tab"
               aria-controls="list-settings"
+              (click)="setActiveTab('deadline')"
             >
               <i class="fa-solid fa-2xl fa-calendar-days"></i>
               <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
@@ -119,6 +120,10 @@
       @else if (activeTab === 'guidelines')
       {
         <app-add-guide-lines></app-add-guide-lines>
+      }
+      @else if (activeTab === 'home')
+      {
+        <app-admin-landing-page [data]="objectData"></app-admin-landing-page>
       }
     </section>
     <!----------------------------------------------------------------- ------------- -->
