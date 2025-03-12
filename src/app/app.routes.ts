@@ -25,11 +25,8 @@ export const routes: Routes = [
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
     {path:"app-request",component:ApplicationRequestComponent},
-    {path:"login",canActivate:[loggedGuard],component:LoginComponent},
     {path:"app-request",component:ApplicationRequestComponent},
-    {path:"add-deadline", component:AddDeadlineComponent},
-    {path:"deadlines", component:DeadlinsFormComponent},
-
+    {path:"login",canActivate:[loggedGuard],component:LoginComponent},
    
     ]},
     {path:"hu",component:HuLayoutComponent, canActivate:[authGuard] ,children:[

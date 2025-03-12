@@ -12,7 +12,7 @@ export class AuthService {
 
   private readonly _HttpClient = inject(HttpClient)
   private readonly router = inject(Router)
-  private token: string = ""
+  public token: string = ""
     public userData: { 
     decodedToken?: any; 
     token?: string|null; 
@@ -26,10 +26,9 @@ export class AuthService {
   
   getApplications():Observable<any>
   {
-
   return this._HttpClient.get(`${environment.baseUrl}/admin/admission-requests`, { 
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
+      'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
       'Content-Type': 'application/json'
     })
   });
@@ -40,7 +39,7 @@ export class AuthService {
     return this._HttpClient.put(`${environment.baseUrl}/admin/admission-requests/${UId}/status?status=${Status}`,
       null,
       {headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.token}`,
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
         'Content-Type': 'application/json',
       })
     },

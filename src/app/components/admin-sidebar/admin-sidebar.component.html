@@ -125,6 +125,10 @@
       {
         <app-admin-landing-page [data]="objectData"></app-admin-landing-page>
       }
+      @else if (activeTab === 'deadline')
+      {
+        <app-deadlins-form></app-deadlins-form>
+      }
     </section>
     <!----------------------------------------------------------------- ------------- -->
     <section [class.d-none]="activeTab!='ar'" dir="rtl" class="col-md-3 py-5 px-3 side-content">

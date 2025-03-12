@@ -55,6 +55,7 @@ export class AddDeadlineComponent implements OnChanges {
   }
 
   onSubmit() {
+    console.log('local storage before submission',localStorage.getItem('userToken'));
     if (this.deadlineForm.valid) {
       if (this.data) {
         this._deadlineService.updateDeadLine(this.data.id, this.deadlineForm.value).subscribe({
@@ -74,6 +75,7 @@ export class AddDeadlineComponent implements OnChanges {
     } else {
       this.deadlineForm.markAllAsTouched();
     }
+
   }
 
   onClose() {
