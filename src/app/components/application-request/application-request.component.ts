@@ -7,6 +7,7 @@ import rawCities from '../../../assets/states (1).json';  // لاحظ أن ال�
 import { AuthService } from '../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,6 +18,8 @@ import Swal from 'sweetalert2';
   styleUrl: './application-request.component.scss'
 })
 export class ApplicationRequestComponent {
+
+
 
   Toast = Swal.mixin({
     toast: true,
@@ -31,6 +34,7 @@ export class ApplicationRequestComponent {
   })
 
   private readonly _AuthService= inject(AuthService)
+  private readonly router = inject(Router)
   errmsg:string='';
    
 
@@ -188,8 +192,15 @@ registerSubmit(){
         else{
           this.Toast.fire({
             icon: 'success',
-            title: 'تم الارسال بنجاح',
-          })   
+            title: 'تم الارسال بنجاح يمكنك تسجيل الدخول',
+          })
+
+          console.log('register res:',res);
+          
+          setTimeout(() => {
+            this.router.navigate(['/guest/login']);
+          }, 3000);
+          
         }
        
       },

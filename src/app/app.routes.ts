@@ -13,6 +13,8 @@ import { AddGuideLinesComponent } from './components/add-guide-lines/add-guide-l
 import { GuestHomeComponent } from './components/guest-home/guest-home.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
+import { authGuard } from './core/guards/auth.guard';
+import { loggedGuard } from './core/guards/logged.guard';
 
 export const routes: Routes = [
 
@@ -22,17 +24,17 @@ export const routes: Routes = [
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
     {path:"app-request",component:ApplicationRequestComponent},
-    {path:"login",component:LoginComponent},
+    {path:"login",canActivate:[loggedGuard],component:LoginComponent},
     {path:"app-request",component:ApplicationRequestComponent},
     ]},
-    {path:"hu",component:HuLayoutComponent,children:[
+    {path:"hu",component:HuLayoutComponent, canActivate:[authGuard] ,children:[
         {path:"",redirectTo:"user-dashboard",pathMatch:"full"},
         {path:"user-dashboard",component:UserDashboardComponent},
     ]},
     {path:"hnu",component:HnuLayoutComponent,children:[
 
     ]},
-    {path:"admin",component:AdminLayoutComponent,children:[
+    {path:"admin",component:AdminLayoutComponent, canActivate:[authGuard],children:[
         {path:"",redirectTo:"admin-dashboard",pathMatch:"full"},
         {path:"admin-dashboard",component:AdminDashboardComponent},
     ]},

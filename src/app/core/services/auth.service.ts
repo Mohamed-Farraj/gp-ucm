@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +11,23 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   private readonly _HttpClient = inject(HttpClient)
-  private token: string = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzb3NvQGdtYWlsLmNvbSIsImlhdCI6MTc0MTU3NzAzNywiZXhwIjoxNzQxNjYzNDM3fQ.kztdjWcjDtggKJpkVYNv3cAwNmkxTJxehOdozcdagt-SlSecdfJcLNSIy0fEUwJI"
-  userData:any = null
+  private readonly router = inject(Router)
+  private token: string = ""
+    public userData: { 
+    decodedToken?: any; 
+    token?: string|null; 
+    userId?: number; 
+    email?: string;
+    userRole?:string;
+  } = {};
 
+
+    
   
-  getApplications()
+  getApplications():Observable<any>
   {
 
-  return this._HttpClient.get('http://localhost:8080/admin/admission-requests', { 
+  return this._HttpClient.get(`${environment.baseUrl}/admin/admission-requests`, { 
     headers: new HttpHeaders({
       'Authorization': `Bearer ${this.token}`,
       'Content-Type': 'application/json'
@@ -24,33 +35,50 @@ export class AuthService {
   });
   }
 
-  DecideArState(UId:number,Status:string){
-    return this._HttpClient.put(`http://localhost:8080/admin/admission-requests/${UId}/status?status=${Status}`,
+
+  DecideArState(UId:number,Status:string):Observable<any>{
+    return this._HttpClient.put(`${environment.baseUrl}/admin/admission-requests/${UId}/status?status=${Status}`,
       null,
       {headers: new HttpHeaders({
         'Authorization': `Bearer ${this.token}`,
         'Content-Type': 'application/json',
-      }),    
-      withCredentials: true 
+      })
     },
         );
   }
 
+
+
+
   setRegisterForm(data:object):Observable<any>
   {
-   return this._HttpClient.post('http://localhost:8080/public/register' , data)
+   return this._HttpClient.post(`${environment.baseUrl}/public/register` , data)
   }
   setLoginForm(data:object):Observable<any>
   {
-   return this._HttpClient.post('http://localhost:8080/public/login' , data)
+   return this._HttpClient.post(`${environment.baseUrl}/public/login` , data)
+  }
+
+
+  logout(){
+    localStorage.removeItem('userToken')
+    this.userData = {}
+    console.log('logging out...');
+    this.router.navigate(['/'])
   }
 
 
 
-
-  saveUserData(){
+  saveUserData(input:any){
     if(localStorage.getItem('userToken') !== null){
-    this.userData=  jwtDecode(localStorage.getItem('userToken')!)
+    this.userData.decodedToken=  jwtDecode(localStorage.getItem('userToken')!)
+    this.token = input.token;
+    this.userData.token =  input.token;
+    this.userData.userId = input.userID;
+    this.userData.email = input.username;
+    this.userData.userRole = input.role;
+    console.log('saveUserData userToken', this.userData);
     }
+
   }
 }

@@ -1,5 +1,6 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-user-navbar',
@@ -10,7 +11,8 @@ import { RouterLink } from '@angular/router';
 })
 export class UserNavbarComponent {
   @ViewChild('userNav') el!:ElementRef;
-
+  private readonly router = inject(Router);
+  private readonly auth = inject(AuthService)
   @HostListener('window:scroll') onScroll(){
     if (window.scrollY > 80) {
       this.el.nativeElement.classList.remove('shadow-lg', 'additional-class');
@@ -21,4 +23,9 @@ export class UserNavbarComponent {
     this.el.nativeElement.classList.add('shadow-lg', 'additional-class');
   }
 }
+
+logout(){
+  this.auth.logout();
+}
+
 }
