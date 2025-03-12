@@ -15,17 +15,22 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 import { authGuard } from './core/guards/auth.guard';
 import { loggedGuard } from './core/guards/logged.guard';
+import { AddDeadlineComponent } from './components/add-deadline/add-deadline.component';
+import { DeadlinsFormComponent } from './components/deadlins-form/deadlins-form.component';
 
 export const routes: Routes = [
 
     {path:"",redirectTo:"guest",pathMatch:"full"},
-
     {path:"guest",component:GuestLayoutComponent,children:[
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
     {path:"app-request",component:ApplicationRequestComponent},
     {path:"login",canActivate:[loggedGuard],component:LoginComponent},
     {path:"app-request",component:ApplicationRequestComponent},
+    {path:"add-deadline", component:AddDeadlineComponent},
+    {path:"deadlines", component:DeadlinsFormComponent},
+
+   
     ]},
     {path:"hu",component:HuLayoutComponent, canActivate:[authGuard] ,children:[
         {path:"",redirectTo:"user-dashboard",pathMatch:"full"},
@@ -37,6 +42,9 @@ export const routes: Routes = [
     {path:"admin",component:AdminLayoutComponent, canActivate:[authGuard],children:[
         {path:"",redirectTo:"admin-dashboard",pathMatch:"full"},
         {path:"admin-dashboard",component:AdminDashboardComponent},
+        {path:"add-guide", component:AddGuideLinesComponent},
+
+
     ]},
     {path:"**",component:NotfoundComponent}
 
