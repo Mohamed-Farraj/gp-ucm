@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,6 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class LoginComponent {
  private readonly _AuthService= inject(AuthService)
- private readonly router= inject(Router)
  
   errmsg:string='';
   showPassword: boolean = false;
@@ -37,21 +36,12 @@ loginSubmit(){
         }
         else{
           setTimeout(() => {
-            console.log('loginresponse',res);
             //save Token
-            localStorage.setItem('userToken' , res?.body?.data?.token)
+            localStorage.setItem('userToken' , res.data.token)
 
             //decode Token
-            this._AuthService.saveUserData(res.body.data)
+            this._AuthService.saveUserData()
             //navigate to home
-            if(res?.body?.data?.role ==='USER')
-            {
-              this.router.navigate(['/hu/user-dashboard'])
-            }
-            if(res?.body?.data?.role ==='ADMIN')
-            {
-              this.router.navigate(['/admin/admin-dashboard'])
-            }
           }, 1000);
         }
        
@@ -75,8 +65,5 @@ loginSubmit(){
 togglePasswordVisibility() {
   this.showPassword = !this.showPassword;
 }
-
-
-
 
 }
