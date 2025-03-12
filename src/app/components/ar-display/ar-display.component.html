@@ -5,10 +5,10 @@
         <div class="card">
           <div class="card-header">
             <h3 class="text-center">
+              عرض بيانات الطلب
                 <span *ngIf="selectedAdmissionRequest?.status === 'UNDER_REVIEW'" class="badge rounded-pill text-bg-warning">تحت المراجعة</span>
                 <span *ngIf="selectedAdmissionRequest?.status === 'ACCEPTED'" class="badge rounded-pill text-bg-success">مقبول</span>
                 <span *ngIf="selectedAdmissionRequest?.status === 'REJECTED'" class="badge rounded-pill text-bg-danger">مرفوض</span>
-                عرض بيانات الطلب
             </h3>
           </div>
           <div class="card-body">
@@ -190,9 +190,9 @@
         </div>
       </section>
       <div class="buttons d-flex gap-3">
-          <button (click)="DecideAr(selectedAdmissionRequest?.userId,'ACCEPTED')" class="acceptButton px-4 btn btn-outline-success">قبول الطلب</button>
-          <button (click)="DecideAr(selectedAdmissionRequest?.userId,'REJECTED')" class="rejectButton px-4 btn btn-outline-danger">رفض الطلب</button>
-          <button (click)="DecideAr(selectedAdmissionRequest?.userId,'UNDER_REVIEW')" class="reviewButton px-4 btn btn-outline-warning">تحت المراجعة</button>
+          <button [class.d-none]="selectedAdmissionRequest?.status === 'ACCEPTED'" (click)="DecideAr(selectedAdmissionRequest?.userId,'ACCEPTED')" class="acceptButton px-4 btn btn-outline-success">قبول الطلب</button>
+          <button [class.d-none]="selectedAdmissionRequest?.status === 'REJECTED'" (click)="DecideAr(selectedAdmissionRequest?.userId,'REJECTED')" class="rejectButton px-4 btn btn-outline-danger">رفض الطلب</button>
+          <button [class.d-none]="selectedAdmissionRequest?.status === 'UNDER_REVIEW'" (click)="DecideAr(selectedAdmissionRequest?.userId,'UNDER_REVIEW')" class="reviewButton px-4 btn btn-outline-warning">تحت المراجعة</button>
       </div>
       
     </section>

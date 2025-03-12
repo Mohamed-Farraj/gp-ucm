@@ -1,0 +1,26 @@
+.back,.front{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+.wave{
+    transform: rotate(25deg) translateY(45%);
+    transform-origin: bottom right;
+    width: 120%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.waveback{
+    height: 31vw;
+    background-color: var(--dark-base-color);
+    transform-origin: bottom left;
+    width: 120%;
+    position: absolute;
+    right: 0%;
+    bottom: -30vw;
+    left: 0;
+    
+}

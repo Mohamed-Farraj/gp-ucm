@@ -33,12 +33,15 @@ section.sidebar
  td, th {
     padding:1rem;
 }
-
+h4{color:var(--main-color)}
 
 .table-hover tbody tr:hover {
     transform: translateY(-2px); /* Optional hover lift effect */
 }
 
+.table-hover tbody tr:hover td{
+      color: var(--main-color);
+}
 
 
   .toggle-btn {
@@ -56,9 +59,9 @@ section.sidebar
   /* Add to your stylesheet */
 .sidebar {
     position: relative;
-    transition: all 1s ease;
-    max-width: 315px;      /* But it won’t exceed 315px */
-    aspect-ratio: 315 / 895;
+    // transition: all 0.3s ease;
+    max-width: 350px; 
+    aspect-ratio: 400 / 895;
   }
 
   
@@ -90,37 +93,31 @@ section.sidebar
     width: 50px !important;
   }
 
-//   .sidebar {
-//     position: relative;
-//     width: fit-content; /* Expanded width */
-//     min-width: fit-content; /* Add this */
-//     overflow: hidden; /* Keep content contained */
-//   }
+ .sidebar.collapsed a{
+    aspect-ratio: 1/1;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .active > .page-link, .page-link.active {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    color:white
+  }
+  .page-link:hover{
+    color: var(--main-color)
+  }
+  .page-link{
+    color: var(--main-color)
+  }
+
+  .form-control:focus {
+    border-color: var(--main-color); /* Change to your desired color */
+    box-shadow: 0 0 0 0.2rem #9f83376e; /* Adjust the spread and opacity */
+  }
+  .custom-checkbox:checked {
+    accent-color: var(--main-color);
+
+  }
   
-//   .sidebar.collapsed {
-//     width: 80px !important;
-//     min-width: 80px !important;
-//   }
   
-//   /* Add these transitions for text */
-//   .fs-3 {
-//     transition: opacity 0.2s ease, max-width 0.3s ease;
-//     display: inline-block !important;
-//     max-width: 200px;
-//     opacity: 1;
-//   }
-  
-//   .sidebar.collapsed .fs-3 {
-//     opacity: 0;
-//     max-width: 0;
-//   }
-  
-//   /* Logo text transition */
-//   .logo h1 {
-//     transition: opacity 0.3s ease;
-//     opacity: 1;
-//   }
-  
-//   .sidebar.collapsed .logo h1 {
-//     opacity: 0;
-//   }
