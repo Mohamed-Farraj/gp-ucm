@@ -17,6 +17,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { loggedGuard } from './core/guards/logged.guard';
 import { AddDeadlineComponent } from './components/add-deadline/add-deadline.component';
 import { DeadlinsFormComponent } from './components/deadlins-form/deadlins-form.component';
+import { adminGuard } from './core/guards/admin.guard';
 
 export const routes: Routes = [
 
@@ -36,7 +37,7 @@ export const routes: Routes = [
     {path:"hnu",component:HnuLayoutComponent,children:[
 
     ]},
-    {path:"admin",component:AdminLayoutComponent, canActivate:[authGuard],children:[
+    {path:"admin",component:AdminLayoutComponent, canActivate:[adminGuard],children:[
         {path:"",redirectTo:"admin-dashboard",pathMatch:"full"},
         {path:"admin-dashboard",component:AdminDashboardComponent},
         {path:"add-guide", component:AddGuideLinesComponent},
