@@ -154,6 +154,12 @@
             aria-labelledby="list-profile-list"
           >
             <div class="filteration">
+              <div class="mb-3">
+                <select class="form-select" [formControl]="sortControl">
+                  <option value="normal">الاقدم اولا</option>
+                  <option value="reverse">الاحدث اولا</option>
+                </select>
+              </div>
               <!-- checkboxes لتحديد الحالات -->
               <div
                 style="width: 90%"

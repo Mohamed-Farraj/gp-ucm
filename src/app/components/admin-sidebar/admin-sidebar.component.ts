@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { NgClass, NgFor } from '@angular/common';
@@ -21,6 +21,7 @@ export class AdminSidebarComponent {
   
   private readonly _AuthService = inject(AuthService);
   private readonly dataService = inject(SharedDataService);
+  private readonly cd = inject(ChangeDetectorRef);
   
   res: any[] = []; // البيانات الأصلية
   selectedAdmissionRequest: any = {};
@@ -32,6 +33,8 @@ export class AdminSidebarComponent {
   pages: number[] = [];
   searchControl = new FormControl('');
   // مصفوفة لتخزين الحالات المختارة من checkboxes
+   // متغير للفرز: "normal" أو "reverse"
+   sortControl = new FormControl('normal');
   selectedStatuses: string[] = [];
   filteredItems: any[] = [];
   activeTab: string = 'home';
@@ -138,6 +141,11 @@ getActiveTab() {
     ).subscribe(() => {
       this.applyFilters();
     });
+    this.sortControl.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      this.applyFilters();
+    });
   }
 
 
@@ -213,7 +221,16 @@ getActiveTab() {
       filtered = filtered.filter((item: any) => this.selectedStatuses.includes(item.status));
     }
   
+   
+
+
+     // تطبيق الفرز: استخدام نسخة من المصفوفة لعكس الترتيب لتجنب التعديل على المصفوفة الأصلية
+     const sortOption = this.sortControl.value;
+     if (sortOption === 'reverse') {
+       filtered = [...filtered].reverse(); // Create a new array to avoid mutation issues
+     }
     // احفظ النتيجة المفلترة في this.filteredItems
+
     this.filteredItems = filtered;
   
     // إعادة تعيين Pagination بناءً على النتائج المفلترة
@@ -221,6 +238,7 @@ getActiveTab() {
     this.totalPages = Math.ceil(filtered.length / this.pageSize);
     this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
     this.updatePagedItems();
+    this.cd.detectChanges();
   }
   
 }
