@@ -37,7 +37,7 @@ export const routes: Routes = [
     {path:"hnu",component:HnuLayoutComponent,children:[
 
     ]},
-    {path:"admin",component:AdminLayoutComponent, canActivate:[],children:[
+    {path:"admin",component:AdminLayoutComponent, canActivate:[adminGuard],children:[
         {path:"",redirectTo:"admin-dashboard",pathMatch:"full"},
         {path:"admin-dashboard",component:AdminDashboardComponent},
         {path:"add-guide", component:AddGuideLinesComponent},

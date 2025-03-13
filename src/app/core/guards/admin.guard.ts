@@ -9,17 +9,19 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
 
 
-
-    if (auth.userData.userRole === 'ADMIN') {
-      console.log(auth.userData.userRole);
+  if (isPlatformBrowser(platformId)) 
+  {
+    if (localStorage.getItem('role') === 'ADMIN') {
     return true;
-    }
+  }
+
   else
   {
-    console.log(auth.userData);
     router.navigate(['/guest/login'])
     return false;
   }
-
+  } else {
+    return false
+  }
 
 };

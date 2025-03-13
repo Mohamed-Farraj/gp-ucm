@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
+import { SharedDataService } from './shared-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AuthService {
 
   private readonly _HttpClient = inject(HttpClient)
   private readonly router = inject(Router)
+  private readonly sharedDataService = inject(SharedDataService)
   public token: string = ""
     public userData: { 
     decodedToken?: any; 
@@ -62,6 +64,7 @@ export class AuthService {
   logout(){
     localStorage.removeItem('userToken')
     this.userData = {}
+    this.sharedDataService.clearUserData();
     console.log('logging out...');
     this.router.navigate(['/'])
   }
@@ -77,6 +80,7 @@ export class AuthService {
     this.userData.email = input.username;
     this.userData.userRole = input.role;
     console.log('saveUserData userToken', this.userData);
+    this.sharedDataService.setUserData(this.userData);
     }
 
   }

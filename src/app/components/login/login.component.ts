@@ -40,6 +40,7 @@ loginSubmit(){
             console.log('loginresponse',res);
             //save Token
             localStorage.setItem('userToken' , res?.body?.data?.token)
+            localStorage.setItem('role' , res?.body?.data?.role)
 
             //decode Token
             this._AuthService.saveUserData(res.body.data)
