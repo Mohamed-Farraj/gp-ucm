@@ -43,6 +43,12 @@ h4{color:var(--main-color)}
       color: var(--main-color);
 }
 
+.table-hover tbody tr td.selected{
+      color: var(--main-color);
+      background-color: var(--light-color);
+
+}
+
 
   .toggle-btn {
     position: absolute;

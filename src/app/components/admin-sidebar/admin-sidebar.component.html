@@ -212,6 +212,7 @@
                   <td
                     (click)="handleClick(item)"
                     class="cursor-pointer rounded-pill d-flex align-items-center"
+                    [ngClass]="{ selected: item === selectedAdmissionRequest }"
                   >
                     <i
                       [class.text-success]="item?.status === 'ACCEPTED'"
