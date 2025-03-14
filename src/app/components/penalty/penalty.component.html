@@ -1,0 +1,37 @@
+<section class="bg-main-light container px-4 rtl py-5  " dir="rtl">
+
+
+    <h5 class="mb-5 ">الجزاءات</h5>
+    <form [formGroup]="penaltyForm" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-5">
+        <label for="penaltyTitle" class="block mb-2">  penalty Title </label>
+        <input type="text" id="penaltyTitle" class="form-control" placeholder="penaltyTitle" formControlName="penaltyTitle">
+        @if (penaltyForm.get('penaltyTitle')?.hasError('required') && penaltyForm.get('penaltyTitle')?.touched) {
+        <div class="text-danger">مطلوب</div>
+        }
+      </div>
+      <div class="mb-5">
+        <label for="reason" class="block mb-2 "> reason
+        </label>
+        <input type="text" id="reason" class="form-control" placeholder="reason" formControlName="reason">
+        @if (penaltyForm.get('reason')?.hasError('required') && penaltyForm.get('reason')?.touched) {
+        <div class="text-danger">مطلوب</div>
+        }
+      </div>
+      <div class="mb-5">
+        <label for="dateIssued" class="block mb-2 "> date Issued
+        </label>
+        <input type="date" id="dateIssued" class="form-control" placeholder="date Issued" formControlName="dateIssued">
+        @if (penaltyForm.get('dateIssued')?.hasError('required') && penaltyForm.get('dateIssued')?.touched) {
+        <div class="text-danger">مطلوب</div>
+        }
+      </div>
+     
+         <button type="submit"
+        class="btn-main me-3 ">اضافه</button>
+      <button type="button" (click)="onClose()"
+        class="btn-main-delete ">الغاء</button>
+     
+    </form>
+  </section>
+  
