@@ -67,7 +67,7 @@ export class ApplicationRequestComponent {
     parentsStatus: new FormControl(null, [Validators.required]),
     previousAcademicYearGpa: new FormControl(null),
     status: new FormControl(2),
-    housingInPreviousYears: new FormControl(null, [Validators.required]),
+    housingInPreviousYears: new FormControl(null),
     familyAbroad: new FormControl(null),
     specialNeeds: new FormControl(null),
     secondaryDivision: new FormControl(null),
