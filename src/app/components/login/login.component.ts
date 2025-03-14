@@ -41,6 +41,7 @@ loginSubmit(){
             //save Token
             localStorage.setItem('userToken' , res?.body?.data?.token)
             localStorage.setItem('role' , res?.body?.data?.role)
+            localStorage.setItem('Uid' , res?.body?.data?.userID)
 
             //decode Token
             this._AuthService.saveUserData(res.body.data)

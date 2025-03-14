@@ -18,6 +18,7 @@ import { loggedGuard } from './core/guards/logged.guard';
 import { AddDeadlineComponent } from './components/add-deadline/add-deadline.component';
 import { DeadlinsFormComponent } from './components/deadlins-form/deadlins-form.component';
 import { adminGuard } from './core/guards/admin.guard';
+import { UserLandingPageComponent } from './components/user-landing-page/user-landing-page.component';
 
 export const routes: Routes = [
 
@@ -26,13 +27,18 @@ export const routes: Routes = [
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
     {path:"app-request",component:ApplicationRequestComponent},
-    {path:"app-request",component:ApplicationRequestComponent},
     {path:"login",canActivate:[loggedGuard],component:LoginComponent},
    
     ]},
     {path:"hu",component:HuLayoutComponent, canActivate:[authGuard] ,children:[
         {path:"",redirectTo:"user-dashboard",pathMatch:"full"},
-        {path:"user-dashboard",component:UserDashboardComponent},
+        {path:"user-dashboard",component:UserDashboardComponent,
+            // children:[
+            //     {path:"",redirectTo:"home",pathMatch:"full"},
+            //     {path:"home",component:UserLandingPageComponent},
+            //     {path:"acceptance-status",component:AcceptanceStatusComponent},
+            // ]
+        },
     ]},
     {path:"hnu",component:HnuLayoutComponent,children:[
 

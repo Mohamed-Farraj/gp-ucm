@@ -34,8 +34,14 @@
           </li> -->
         </ul>
         <ul class="navbar-nav">
-            <li data-aos="fade-down" class="nav-item">
+            <li *ngIf="!isLoggedIn" data-aos="fade-down" class="nav-item">
                 <button routerLink="/guest/login" class=" btn btn-main buttonPill rounded-end-pill py-3 px-4">تسجيل الدخول</button>
+            </li>
+            <li *ngIf="isLoggedIn" data-aos="fade-down" class="nav-item">
+                <button (click)="loggout()" class=" btn btn-outline-danger buttonPill rounded-end-pill py-3 px-4">
+                  <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                  تسجيل الخروج
+                </button>
             </li>
         </ul>
         

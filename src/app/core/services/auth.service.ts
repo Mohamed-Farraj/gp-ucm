@@ -63,6 +63,7 @@ export class AuthService {
 
   logout(){
     localStorage.removeItem('userToken')
+    localStorage.removeItem('role')
     this.userData = {}
     this.sharedDataService.clearUserData();
     console.log('logging out...');
