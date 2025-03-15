@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ComplaintsService } from '../../core/services/complaints.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { SharedDataService } from '../../core/services/shared-data.service';
 
 @Component({
   selector: 'app-display-complaints',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe,NgIf],
   templateUrl: './display-complaints.component.html',
   styleUrl: './display-complaints.component.scss'
 })
@@ -53,6 +53,7 @@ export class DisplayComplaintsComponent implements OnInit {
   else if(localStorage.getItem('role') === 'USER'){
     const uid:number = Number(localStorage?.getItem('Uid')) || 0;
     console.log(uid);
+    this.isAdmin = false;
     this.complaintsService.getComplaintsByUser(uid).subscribe({
       next: (response: any) => {
         console.log('user complaints', response);

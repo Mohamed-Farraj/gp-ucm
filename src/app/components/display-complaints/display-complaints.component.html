@@ -1,4 +1,7 @@
 <section class="container-fluid">
+  <div *ngIf="!isAdmin">
+    <h1>Complaint add form</h1>
+  </div>
     <div class="row gy-4">
         @for (item of filteredComplaints; track $index) 
         {
