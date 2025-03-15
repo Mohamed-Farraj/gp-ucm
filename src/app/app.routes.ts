@@ -1,3 +1,4 @@
+import { loggedGuard } from './../../.history/src/app/core/guards/loged.guard_20250312005758';
 import { Routes } from '@angular/router';
 import { GuestLayoutComponent } from './layouts/guest-layout/guest-layout.component';
 import { HuLayoutComponent } from './layouts/hu-layout/hu-layout.component';
@@ -23,11 +24,8 @@ export const routes: Routes = [
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
     {path:"app-request",component:ApplicationRequestComponent},
-    {path:"login",component:LoginComponent},
     {path:"app-request",component:ApplicationRequestComponent},
-    // {path:"add-deadline", component:AddDeadlineComponent},
-    // {path:"deadlines", component:DeadlinsFormComponent},
-
+    {path:"login",canActivate:[loggedGuard],component:LoginComponent},
    
     ]},
     {path:"hu",component:HuLayoutComponent,children:[

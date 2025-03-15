@@ -1,5 +1,7 @@
+import { environment } from './../../../../.history/src/app/core/environments/environment_20250311113040';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
 
@@ -9,16 +11,22 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   private readonly _HttpClient = inject(HttpClient)
-  private token: string = "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzb3NvQGdtYWlsLmNvbSIsImlhdCI6MTc0MTU3NzAzNywiZXhwIjoxNzQxNjYzNDM3fQ.kztdjWcjDtggKJpkVYNv3cAwNmkxTJxehOdozcdagt-SlSecdfJcLNSIy0fEUwJI"
-  userData:any = null
+  private readonly router = inject(Router)
+  public token: string = ""
+    public userData: { 
+    decodedToken?: any; 
+    token?: string|null; 
+    userId?: number; 
+    email?: string;
+    userRole?:string;
+  } = {};
 
   
   getApplications()
   {
-
-  return this._HttpClient.get('http://localhost:8080/admin/admission-requests', { 
+  return this._HttpClient.get(`${environment.baseUrl}/admin/admission-requests`, { 
     headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
+      'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
       'Content-Type': 'application/json'
     })
   });
@@ -28,7 +36,7 @@ export class AuthService {
     return this._HttpClient.put(`http://localhost:8080/admin/admission-requests/${UId}/status?status=${Status}`,
       null,
       {headers: new HttpHeaders({
-        'Authorization': `Bearer ${this.token}`,
+        'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
         'Content-Type': 'application/json',
       }),    
       withCredentials: true 

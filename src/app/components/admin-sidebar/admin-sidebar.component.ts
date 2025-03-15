@@ -8,11 +8,15 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { AddGuideLinesComponent } from "../add-guide-lines/add-guide-lines.component";
 import { AdminLandingPageComponent } from "../admin-landing-page/admin-landing-page.component";
+import { DeadlinsFormComponent } from "../deadlins-form/deadlins-form.component";
+import { PenaltyComponent } from "../penalty/penalty.component";
+import { MatDialogModule } from '@angular/material/dialog';
+import { AddPenaltyComponent } from "../add-penalty/add-penalty.component";
 
 @Component({
   selector: 'app-admin-sidebar',
   standalone: true,
-  imports: [ArDisplayComponent, NgClass, NgFor, ReactiveFormsModule, AddGuideLinesComponent, AdminLandingPageComponent],
+  imports: [ArDisplayComponent, NgClass, NgFor, ReactiveFormsModule, AddGuideLinesComponent, AdminLandingPageComponent, DeadlinsFormComponent, AddPenaltyComponent],
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'] // تم تصحيح الاسم هنا
 })
