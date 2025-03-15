@@ -25,7 +25,10 @@
         (click)="selectStudentType('new')">طلاب مستجـدين</button>
       </div>
     </div>
-    <form [formGroup]="AppRequest"  (ngSubmit)="registerSubmit()">
+    @if (studentType !== null) {
+
+
+ <form [formGroup]="AppRequest"  (ngSubmit)="registerSubmit()">
       <div class="mb-3 row">
         <label for="ssn" class="col-sm-2 col-form-label"> الرقم القومى</label>
         <div class="col-sm-4">
@@ -741,6 +744,10 @@
       <button [disabled]="AppRequest.invalid" class="btn-main d-block m-auto 
       "> تسجيل طلب الالتحاق</button>
     </form>
+
+
+    }
+   
 </section>
   </div>
 </section>
