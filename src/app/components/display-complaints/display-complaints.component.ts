@@ -1,0 +1,102 @@
+import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
+import { ComplaintsService } from '../../core/services/complaints.service';
+import { DatePipe } from '@angular/common';
+import { SharedDataService } from '../../core/services/shared-data.service';
+
+@Component({
+  selector: 'app-display-complaints',
+  standalone: true,
+  imports: [DatePipe],
+  templateUrl: './display-complaints.component.html',
+  styleUrl: './display-complaints.component.scss'
+})
+export class DisplayComplaintsComponent implements OnInit {
+
+  private readonly complaintsService = inject(ComplaintsService);
+  private readonly dataService = inject(SharedDataService)
+  complaints: any[] = [];
+  filteredComplaints: any[] = [];
+  selected: any;
+  @Input() isAdmin: boolean = false;
+
+  constructor(private cd: ChangeDetectorRef) {
+    this.dataService.currentStudentData.subscribe(data => {
+      console.log('complaint data:', data);
+      this.selected = data;
+      
+      // Filter only when we have complaints
+      if (this.complaints.length) {
+        this.filteredComplaints = this.filterComplaints(this.complaints);
+      }
+    });
+  }
+
+ ngOnInit() {
+    if(this.isAdmin){
+
+    
+    this.complaintsService.getAllComplaints().subscribe({
+      next: (response: any) => {
+        console.log('all complaints', response);
+        this.complaints = response.data;
+        
+        // Apply filter after loading complaints
+        this.filteredComplaints = this.filterComplaints(this.complaints);
+        this.cd.detectChanges();
+      },
+      error: (error: any) => {
+        console.error(error);
+      }
+    });
+  }
+  else if(localStorage.getItem('role') === 'USER'){
+    const uid:number = Number(localStorage?.getItem('Uid')) || 0;
+    console.log(uid);
+    this.complaintsService.getComplaintsByUser(uid).subscribe({
+      next: (response: any) => {
+        console.log('user complaints', response);
+        this.complaints = response.data;
+        
+        this.filteredComplaints = this.complaints;
+        this.cd.detectChanges();
+      },
+      error: (error: any) => {
+        console.error(error);
+      }
+    });
+  }
+  }
+
+  filterComplaints(complaints: any[]): any[] {
+    console.log('filterComplaints', this.selected?.userId);
+    
+    // Use optional chaining and nullish coalescing
+    if (!this.selected?.userId) {
+      return complaints;
+    }
+    
+    return complaints.filter((complaint: any) => 
+      complaint.userId === this.selected?.userId
+    );
+  }
+
+
+  readMore(complaint:string){
+    Swal.fire(complaint);
+  }
+
+
+  deleteComplaint(id:number){
+    this.complaintsService.deleteComplaint(id).subscribe({
+      next: (response: any) => {
+        console.log('complaint deleted', response);
+        this.ngOnInit();
+      },
+      error: (error: any) => {
+        console.error(error);
+      }
+  });
+}
+
+}

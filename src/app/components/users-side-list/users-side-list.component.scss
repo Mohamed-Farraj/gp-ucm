@@ -1,0 +1,51 @@
+.table {
+    border-collapse: separate;
+    border-spacing: 0 15px; /* Vertical spacing between rows */
+    width: 90%;
+    margin: auto;
+}
+
+/* Fix border radius and hover effects */
+.table-hover tbody tr {
+    background: white;
+    transition: all 0.3s ease;
+}
+ td, th {
+    padding:1rem;
+}
+h4{color:var(--main-color)}
+
+.table-hover tbody tr:hover {
+    transform: translateY(-2px); /* Optional hover lift effect */
+}
+
+.table-hover tbody tr:hover td{
+      color: var(--main-color);
+}
+
+.table-hover tbody tr td.selected{
+      color: var(--main-color);
+      background-color: var(--light-color);
+
+}
+
+.active > .page-link, .page-link.active {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    color:white
+  }
+  .page-link:hover{
+    color: var(--main-color)
+  }
+  .page-link{
+    color: var(--main-color)
+  }
+
+  .form-control:focus {
+    border-color: var(--main-color); /* Change to your desired color */
+    box-shadow: 0 0 0 0.2rem #9f83376e; /* Adjust the spread and opacity */
+  }
+  .custom-checkbox:checked {
+    accent-color: var(--main-color);
+
+  }

@@ -1,0 +1,7 @@
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    line-clamp: 3;     /* عدد الأسطر التي تريد عرضها */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }

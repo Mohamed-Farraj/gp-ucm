@@ -19,6 +19,7 @@ import { AddDeadlineComponent } from './components/add-deadline/add-deadline.com
 import { DeadlinsFormComponent } from './components/deadlins-form/deadlins-form.component';
 import { adminGuard } from './core/guards/admin.guard';
 import { UserLandingPageComponent } from './components/user-landing-page/user-landing-page.component';
+import { DisplayComplaintsComponent } from './components/display-complaints/display-complaints.component';
 
 export const routes: Routes = [
 
@@ -32,13 +33,8 @@ export const routes: Routes = [
     ]},
     {path:"hu",component:HuLayoutComponent, canActivate:[authGuard] ,children:[
         {path:"",redirectTo:"user-dashboard",pathMatch:"full"},
-        {path:"user-dashboard",component:UserDashboardComponent,
-            // children:[
-            //     {path:"",redirectTo:"home",pathMatch:"full"},
-            //     {path:"home",component:UserLandingPageComponent},
-            //     {path:"acceptance-status",component:AcceptanceStatusComponent},
-            // ]
-        },
+        {path:"user-dashboard",component:UserDashboardComponent,},
+        {path:"complaints",component:DisplayComplaintsComponent},
     ]},
     {path:"hnu",component:HnuLayoutComponent,children:[
 

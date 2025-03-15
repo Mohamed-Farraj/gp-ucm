@@ -104,6 +104,20 @@
                 >مواعيد التقديم</span
               >
             </a>
+            <a
+              class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
+              id="list-complaints-list"
+              data-bs-toggle="list"
+              href="#list-complaints"
+              role="tab"
+              aria-controls="list-complaints"
+              (click)="setActiveTab('complaints')"
+            >
+              <i class="fa-solid fa-2xl fa-face-angry"></i>
+              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
+                >الشكاوى</span
+              >
+            </a>
           </div>
         </div>
       </div>
@@ -133,9 +147,13 @@
       {
         <app-add-penalty></app-add-penalty>
       }
+      @else if (activeTab === 'complaints')
+      {
+        <app-display-complaints [isAdmin]="true"></app-display-complaints>
+      }
     </section>
     <!----------------------------------------------------------------- ------------- -->
-    <section [class.d-none]="activeTab !='ar' && activeTab !='penalty' "  dir="rtl" class="col-md-3 py-5 px-3 side-content">
+    <section [class.d-none]="activeTab !='ar' && activeTab !='penalty' && activeTab != 'complaints' "  dir="rtl" class="col-md-3 py-5 px-3 side-content">
       <div class="text-center">
         <div class="tab-content" id="nav-tabContent">
           <div
@@ -146,6 +164,9 @@
           >
             hhhhhhhhhhh
           </div>
+
+
+
           <!-- pane for ar -->
           <div
             class="tab-pane fade"
@@ -153,236 +174,22 @@
             role="tabpanel"
             aria-labelledby="list-profile-list"
           >
-            <div class="filteration">
-              <div class="mb-3">
-                <select class="form-select" [formControl]="sortControl">
-                  <option value="normal">الاقدم اولا</option>
-                  <option value="reverse">الاحدث اولا</option>
-                </select>
-              </div>
-              <!-- checkboxes لتحديد الحالات -->
-              <div
-                style="width: 90%"
-                class="mb-3 mx-auto d-flex justify-content-between"
-              >
-                <label class="cursor-pointer">
-                  <input
-                    type="checkbox"
-                    value="UNDER_REVIEW"
-                    class="custom-checkbox cursor-pointer"
-                    (change)="onStatusChange($event)"
-                  />
-                  تحت المراجعة
-                </label>
-                <label class="cursor-pointer">
-                  <input
-                    type="checkbox"
-                    value="ACCEPTED"
-                    class="custom-checkbox cursor-pointer"
-                    (change)="onStatusChange($event)"
-                  />
-                  مقبول
-                </label>
-                <label class="cursor-pointer">
-                  <input
-                    type="checkbox"
-                    value="REJECTED"
-                    class="custom-checkbox cursor-pointer"
-                    (change)="onStatusChange($event)"
-                  />
-                  مرفوض
-                </label>
-              </div>
-              <input
-                type="text"
-                style="width: 90%"
-                class="form-control rounded-pill mx-auto my-3"
-                placeholder="ابحث بالاسم أو الرقم القومي"
-                [formControl]="searchControl"
-              />
-            </div>
-
-            <h4>
-              عدد الطلبات:
-              {{
-                searchControl.value || selectedStatuses.length > 0
-                  ? filteredItems.length
-                  : res.length
-              }}
-            </h4>
-
-            <table class="table table-hover">
-              <tbody class="">
-                @for (item of pagedItems; track $index) {
-                <tr>
-                  <td
-                    (click)="handleClick(item)"
-                    class="cursor-pointer rounded-pill d-flex align-items-center"
-                    [ngClass]="{ selected: item === selectedAdmissionRequest }"
-                  >
-                    <i
-                      [class.text-success]="item?.status === 'ACCEPTED'"
-                      [class.text-danger]="item?.status === 'REJECTED'"
-                      [class.text-warning]="item?.status === 'UNDER_REVIEW'"
-                      class="fa-solid fa-circle mx-2"
-                    ></i>
-                    <span> {{ item?.firstName }} {{ item?.lastName }} </span>
-                  </td>
-                </tr>
-                }
-              </tbody>
-            </table>
-
-            <nav dir="rtl" aria-label="Page navigation">
-              <ul class="pagination justify-content-center">
-                <li class="page-item" [class.disabled]="currentPage === 1">
-                  <a
-                    class="cursor-pointer page-link rounded-start-pill rounded"
-                    (click)="changePage(currentPage - 1)"
-                  >
-                    السابق
-                  </a>
-                </li>
-                <li
-                  class="page-item"
-                  *ngFor="let page of getDisplayedPages()"
-                  [class.active]="page === currentPage"
-                >
-                  <a
-                    class="cursor-pointer page-link"
-                    (click)="changePage(page)"
-                    >{{ page }}</a
-                  >
-                </li>
-                <li
-                  class="page-item"
-                  [class.disabled]="currentPage === totalPages"
-                >
-                  <a
-                    class="cursor-pointer page-link rounded-end-pill rounded"
-                    (click)="changePage(currentPage + 1)"
-                  >
-                    التالي
-                  </a>
-                </li>
-              </ul>
-            </nav>
+            <app-users-side-list></app-users-side-list>
           </div>
 
+
+
+          <!-- pane for penalty -->
           <div
             class="tab-pane fade"
             id="list-messages"
             role="tabpanel"
             aria-labelledby="list-messages-list"
           >
-          <div class="filteration">
-            <!-- checkboxes لتحديد الحالات -->
-            <div
-              style="width: 90%"
-              class="mb-3 mx-auto d-flex justify-content-between"
-            >
-              <label class="cursor-pointer">
-                <input
-                  type="checkbox"
-                  value="UNDER_REVIEW"
-                  class="custom-checkbox cursor-pointer"
-                  (change)="onStatusChange($event)"
-                />
-                تحت المراجعة
-              </label>
-              <label class="cursor-pointer">
-                <input
-                  type="checkbox"
-                  value="ACCEPTED"
-                  class="custom-checkbox cursor-pointer"
-                  (change)="onStatusChange($event)"
-                />
-                مقبول
-              </label>
-              <label class="cursor-pointer">
-                <input
-                  type="checkbox"
-                  value="REJECTED"
-                  class="custom-checkbox cursor-pointer"
-                  (change)="onStatusChange($event)"
-                />
-                مرفوض
-              </label>
-            </div>
-            <input
-              type="text"
-              style="width: 90%"
-              class="form-control rounded-pill mx-auto my-3"
-              placeholder="ابحث بالاسم أو الرقم القومي"
-              [formControl]="searchControl"
-            />
+          <app-users-side-list></app-users-side-list>
           </div>
 
-          <h4>
-            عدد الطلبات:
-            {{
-              searchControl.value || selectedStatuses.length > 0
-                ? filteredItems.length
-                : res.length
-            }}
-          </h4>
 
-          <table class="table table-hover">
-            <tbody class="">
-              @for (item of pagedItems; track $index) {
-              <tr>
-                <td
-                  (click)="handleClick(item)"
-                  class="cursor-pointer rounded-pill d-flex align-items-center"
-                >
-                  <i
-                    [class.text-success]="item?.status === 'ACCEPTED'"
-                    [class.text-danger]="item?.status === 'REJECTED'"
-                    [class.text-warning]="item?.status === 'UNDER_REVIEW'"
-                    class="fa-solid fa-circle mx-2"
-                  ></i>
-                  <span> {{ item?.firstName }} {{ item?.lastName }} </span>
-                </td>
-              </tr>
-              }
-            </tbody>
-          </table>
-
-          <nav dir="rtl" aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-              <li class="page-item" [class.disabled]="currentPage === 1">
-                <a
-                  class="cursor-pointer page-link rounded-start-pill rounded"
-                  (click)="changePage(currentPage - 1)"
-                >
-                  السابق
-                </a>
-              </li>
-              <li
-                class="page-item"
-                *ngFor="let page of getDisplayedPages()"
-                [class.active]="page === currentPage"
-              >
-                <a
-                  class="cursor-pointer page-link"
-                  (click)="changePage(page)"
-                  >{{ page }}</a
-                >
-              </li>
-              <li
-                class="page-item"
-                [class.disabled]="currentPage === totalPages"
-              >
-                <a
-                  class="cursor-pointer page-link rounded-end-pill rounded"
-                  (click)="changePage(currentPage + 1)"
-                >
-                  التالي
-                </a>
-              </li>
-            </ul>
-          </nav>
-          </div>
           <div
             class="tab-pane fade"
             id="list-settings"
@@ -391,12 +198,25 @@
           >
             .ssssssssssssss..
           </div>
+
+
+          <div
+            class="tab-pane fade"
+            id="list-complaints"
+            role="tabpanel"
+            aria-labelledby="list-complaints-list"
+          >
+            <app-users-side-list></app-users-side-list>
+          </div>
+
+
           <div
             class="tab-pane fade"
             id="list-guidelines"
             role="tabpanel"
             aria-labelledby="list-guidelines-list"
           >
+
           </div>
         </div>
       </div>
