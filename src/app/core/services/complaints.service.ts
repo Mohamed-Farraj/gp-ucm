@@ -9,11 +9,12 @@ import { Observable } from 'rxjs';
 export class ComplaintsService {
 
   private readonly http = inject(HttpClient);
-  private token = localStorage.getItem('userToken');
+  private token = "";
 
 
    // إنشاء شكوى (User)
    createComplaint(userId: number, request:any): Observable<any> {
+    this.token = localStorage.getItem('userToken')!;
     const url = `${environment.baseUrl}/user/make-complaint/${userId}`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`,
@@ -24,6 +25,8 @@ export class ComplaintsService {
 
   // جلب كل الشكاوى (Admin)
   getAllComplaints(): Observable<any> {
+    this.token = localStorage.getItem('userToken')!;
+    console.log('getAllComplaints',this.token);
     const url = `${environment.baseUrl}/admin/get-all-complaints`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
@@ -33,6 +36,7 @@ export class ComplaintsService {
 
   // جلب شكوى بواسطة المعرف (Admin)
   getComplaintById(id: number): Observable<any> {
+    this.token = localStorage.getItem('userToken')!;
     const url = `${environment.baseUrl}/admin/get-complaint/${id}`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
@@ -42,6 +46,7 @@ export class ComplaintsService {
 
   // تحديث شكوى بواسطة المعرف (User)
   updateComplaint(id: number, request: any): Observable<any> {
+    this.token = localStorage.getItem('userToken')!;
     const url = `${environment.baseUrl}/user/update-complaint/${id}`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`,
@@ -52,6 +57,7 @@ export class ComplaintsService {
 
   // حذف شكوى بواسطة المعرف (Admin)
   deleteComplaint(id: number): Observable<any> {
+    this.token = localStorage.getItem('userToken')!;
     const url = `${environment.baseUrl}/admin/delete-complaint/${id}`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
@@ -61,6 +67,7 @@ export class ComplaintsService {
 
   // جلب كل الشكاوى الخاصة بمستخدم معين (Admin)
   getComplaintsByUser(userId: number): Observable<any> {
+    this.token = localStorage.getItem('userToken')!;
     const url = `${environment.baseUrl}/admin/get-user-complaints/${userId}`;
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`

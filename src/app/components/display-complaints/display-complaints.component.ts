@@ -33,25 +33,37 @@ export class DisplayComplaintsComponent implements OnInit {
   }
 
  ngOnInit() {
-    if(this.isAdmin){
-
-    
-    this.complaintsService.getAllComplaints().subscribe({
-      next: (response: any) => {
-        console.log('all complaints', response);
-        this.complaints = response.data;
-        
-        // Apply filter after loading complaints
-        this.filteredComplaints = this.filterComplaints(this.complaints);
-        this.cd.detectChanges();
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
-    });
+  setTimeout(() => {
+    this.checkAuthAndLoadData();
+  }, 500);
   }
-  else if(localStorage.getItem('role') === 'USER'){
-    const uid:number = Number(localStorage?.getItem('Uid')) || 0;
+
+
+  private checkAuthAndLoadData() {
+    const role = localStorage.getItem('role');
+    const token = localStorage.getItem('userToken');
+  
+    
+  
+    if (role === 'ADMIN') {
+
+      this.complaintsService.getAllComplaints().subscribe({
+        next: (response: any) => {
+          console.log('all complaints', response);
+          this.complaints = response.data;
+          
+          // Apply filter after loading complaints
+          this.filteredComplaints = this.filterComplaints(this.complaints);
+          this.cd.detectChanges();
+        },
+        error: (error: any) => {
+          console.error(error,token);
+        }
+      });
+
+    } else if (role === 'USER') {
+
+      const uid:number = Number(localStorage?.getItem('Uid')) || 0;
     console.log(uid);
     this.isAdmin = false;
     this.complaintsService.getComplaintsByUser(uid).subscribe({
@@ -66,7 +78,7 @@ export class DisplayComplaintsComponent implements OnInit {
         console.error(error);
       }
     });
-  }
+    }
   }
 
   filterComplaints(complaints: any[]): any[] {
