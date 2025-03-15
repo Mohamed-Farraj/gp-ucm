@@ -1,21 +1,24 @@
-import { Component, ElementRef, NgModule, ViewChild } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, ElementRef, Input, NgModule, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HomeService } from '../../services/guest/home.service';
 
 @Component({
   selector: 'app-acceptance-status',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,NgIf],
   templateUrl: './acceptance-status.component.html',
   styleUrl: './acceptance-status.component.scss'
 })
 export class AcceptanceStatusComponent {
 
 
-  // constructor(private _call:CallService) { }
+  constructor(private _call:HomeService) { }
   @ViewChild('no') reject!:ElementRef;
   @ViewChild('yes') accept!:ElementRef;
   @ViewChild('pending') pending!:ElementRef;
   @ViewChild('cstm') cstm!:ElementRef;
+  @Input() state : string = 'nid';
   studentId:string="";
   isvalid:boolean=false;
   hiderule:boolean = true;
@@ -120,6 +123,43 @@ export class AcceptanceStatusComponent {
   //       this.rejected();
   //     }
   //   })
+   }
+  askForUid()
+   {
+    console.log(this.studentId);
+    this._call.getApplicationStatusById(localStorage.getItem('Uid')!).subscribe({
+      next:(resdata:any)=>{
+        this.apirespons=resdata;
+        this.userN = this.apirespons?.data
+        // this.accepted();
+        console.log(resdata);
+        if (this.apirespons.data === "UNDER_REVIEW") {
+          this.pended()
+        }
+        else if(this.apirespons.message === "Student Not Found")
+        {
+          this.rejected()
+          this.isRejectd = false
+        }
+        else if(this.apirespons.data === "REJECTED")
+        {
+          this.rejected()
+          this.isRejectd = true
+        }
+        else if(this.apirespons.data === "ACCEPTED")
+        {
+          this.accepted()
+        }
+        else{
+          this.alertmsg = this.apirespons.message
+          this.cstmed()
+        }
+      },
+      error:(errdata:any)=>{
+        console.log(errdata);
+        this.rejected();
+      }
+    })
    }
 
 

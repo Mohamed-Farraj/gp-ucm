@@ -17,6 +17,9 @@ import { authGuard } from './core/guards/auth.guard';
 import { loggedGuard } from './core/guards/logged.guard';
 import { AddDeadlineComponent } from './components/add-deadline/add-deadline.component';
 import { DeadlinsFormComponent } from './components/deadlins-form/deadlins-form.component';
+import { adminGuard } from './core/guards/admin.guard';
+import { UserLandingPageComponent } from './components/user-landing-page/user-landing-page.component';
+import { DisplayComplaintsComponent } from './components/display-complaints/display-complaints.component';
 
 export const routes: Routes = [
 
@@ -25,18 +28,18 @@ export const routes: Routes = [
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
     {path:"app-request",component:ApplicationRequestComponent},
-    {path:"app-request",component:ApplicationRequestComponent},
     {path:"login",canActivate:[loggedGuard],component:LoginComponent},
    
     ]},
     {path:"hu",component:HuLayoutComponent, canActivate:[authGuard] ,children:[
         {path:"",redirectTo:"user-dashboard",pathMatch:"full"},
-        {path:"user-dashboard",component:UserDashboardComponent},
+        {path:"user-dashboard",component:UserDashboardComponent,},
+        {path:"complaints",component:DisplayComplaintsComponent},
     ]},
     {path:"hnu",component:HnuLayoutComponent,children:[
 
     ]},
-    {path:"admin",component:AdminLayoutComponent, canActivate:[authGuard],children:[
+    {path:"admin",component:AdminLayoutComponent, canActivate:[adminGuard],children:[
         {path:"",redirectTo:"admin-dashboard",pathMatch:"full"},
         {path:"admin-dashboard",component:AdminDashboardComponent},
         {path:"add-guide", component:AddGuideLinesComponent},

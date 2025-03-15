@@ -16,6 +16,10 @@ section.sidebar
     border-color: #9F8437;
 }
 
+.main-content{
+  height: 100vh;
+  overflow-y: auto;
+}
 
 
 .table {
@@ -41,6 +45,12 @@ h4{color:var(--main-color)}
 
 .table-hover tbody tr:hover td{
       color: var(--main-color);
+}
+
+.table-hover tbody tr td.selected{
+      color: var(--main-color);
+      background-color: var(--light-color);
+
 }
 
 
