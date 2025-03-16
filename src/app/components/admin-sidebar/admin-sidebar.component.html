@@ -24,7 +24,7 @@
         </div>
       </div>
       <div dir="rtl">
-        <div class="">
+        <div >
           <div
             class="list-group d-flex flex-column gap-3"
             id="list-tab"
@@ -127,9 +127,23 @@
               aria-controls="list-buildings"
               (click)="setActiveTab('buildings')"
             >
-              <i class="fa-solid fa-2x fa-building-user"></i>
+              <i class="fa-solid fa-2x fa-building"></i>
               <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
                 >المباني و الغرف</span
+              >
+            </a>
+            <a
+              class=" btn btn-outline-danger d-flex align-items-center gap-3 rounded rounded-4 "
+              id="list-buildings-list"
+              data-bs-toggle="list"
+              href="#list-buildings"
+              role="tab"
+              aria-controls="list-buildings"
+              (click)="_AuthService.logout()"
+            >
+              <i class="fa-solid fa-2x fa-arrow-right-from-bracket"></i>
+              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
+                > تسجيل خروج </span
               >
             </a>
           </div>

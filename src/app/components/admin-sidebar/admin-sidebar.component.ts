@@ -27,7 +27,7 @@ import { RoomsComponent } from "../rooms/rooms.component";
 })
 export class AdminSidebarComponent {
   
-  private readonly _AuthService = inject(AuthService);
+  protected readonly _AuthService = inject(AuthService);
   private readonly dataService = inject(SharedDataService);
   private readonly cd = inject(ChangeDetectorRef);
   
