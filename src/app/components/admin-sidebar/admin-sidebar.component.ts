@@ -15,11 +15,13 @@ import { AddPenaltyComponent } from "../add-penalty/add-penalty.component";
 import { UsersSideListComponent } from "../users-side-list/users-side-list.component";
 import { UserDashboardComponent } from "../user-dashboard/user-dashboard.component";
 import { DisplayComplaintsComponent } from '../display-complaints/display-complaints.component';
+import { BuildingsListComponent } from "../buildings-list/buildings-list.component";
+import { RoomsComponent } from "../rooms/rooms.component";
 
 @Component({
   selector: 'app-admin-sidebar',
   standalone: true,
-  imports: [ArDisplayComponent, NgClass, NgFor, ReactiveFormsModule, AddGuideLinesComponent, AdminLandingPageComponent, DeadlinsFormComponent, AddPenaltyComponent, UsersSideListComponent, UserDashboardComponent,DisplayComplaintsComponent],
+  imports: [ArDisplayComponent, NgClass, NgFor, ReactiveFormsModule, AddGuideLinesComponent, AdminLandingPageComponent, DeadlinsFormComponent, AddPenaltyComponent, UsersSideListComponent, UserDashboardComponent, DisplayComplaintsComponent, BuildingsListComponent, RoomsComponent],
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'] // تم تصحيح الاسم هنا
 })

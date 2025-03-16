@@ -1,5 +1,6 @@
 <section>
-    <div class="filteration">
+    <!-- commented by d-none -->
+    <div class="filteration d-none">
         <div class="mb-3">
           <select class="form-select" [formControl]="sortControl">
             <option value="normal">الاقدم اولا</option>
@@ -7,47 +8,38 @@
           </select>
         </div>
         <!-- checkboxes لتحديد الحالات -->
-        <div class="btn-group mb-3 mx-auto" 
-     style="width: 90%"
-     role="group" 
-     aria-label="Basic checkbox toggle button group">
-     
-  <!-- تحت المراجعة -->
-  <input type="checkbox" 
-         value="UNDER_REVIEW"
-         id="underReview" 
-         class="btn-check"
-         (change)="onStatusChange($event)"
-         autocomplete="off">
-  <label class="btn btn-outline-warning rounded-start-pill" 
-         for="underReview">
-    تحت المراجعة
-  </label>
-
-  <!-- مقبول -->
-  <input type="checkbox" 
-         value="ACCEPTED"
-         id="accepted" 
-         class="btn-check"
-         (change)="onStatusChange($event)"
-         autocomplete="off">
-  <label class="btn btn-outline-success rounded-0 border-end-0" 
-         for="accepted">
-    مقبول
-  </label>
-
-  <!-- مرفوض -->
-  <input type="checkbox" 
-         value="REJECTED"
-         id="rejected" 
-         class="btn-check"
-         (change)="onStatusChange($event)"
-         autocomplete="off">
-  <label class="btn btn-outline-danger rounded-end-pill" 
-         for="rejected">
-    مرفوض
-  </label>
-</div>
+        <div
+          style="width: 90%"
+          class="mb-3 mx-auto d-flex justify-content-between"
+        >
+          <label class="cursor-pointer">
+            <input
+              type="checkbox"
+              value="UNDER_REVIEW"
+              class="custom-checkbox cursor-pointer"
+              (change)="onStatusChange($event)"
+            />
+            تحت المراجعة
+          </label>
+          <label class="cursor-pointer">
+            <input
+              type="checkbox"
+              value="ACCEPTED"
+              class="custom-checkbox cursor-pointer"
+              (change)="onStatusChange($event)"
+            />
+            مقبول
+          </label>
+          <label class="cursor-pointer">
+            <input
+              type="checkbox"
+              value="REJECTED"
+              class="custom-checkbox cursor-pointer"
+              (change)="onStatusChange($event)"
+            />
+            مرفوض
+          </label>
+        </div>
         <input
           type="text"
           style="width: 90%"
@@ -56,9 +48,12 @@
           [formControl]="searchControl"
         />
       </div>
+    <!-- commented by d-none -->
+
+      
 
       <h4>
-        عدد الطلبات:
+        عدد المباني:
         {{
           searchControl.value || selectedStatuses.length > 0
             ? filteredItems.length
@@ -73,20 +68,20 @@
             <td
               (click)="handleClick(item)"
               class="cursor-pointer rounded-pill d-flex align-items-center"
-              [ngClass]="{ selected: item === selectedAdmissionRequest }"
+              [ngClass]="{ selected: item === selectedBuilding }"
             >
               <i
-                [class.text-success]="item?.status === 'ACCEPTED'"
-                [class.text-danger]="item?.status === 'REJECTED'"
-                [class.text-warning]="item?.status === 'UNDER_REVIEW'"
+                [class.text-info]="item?.type === 'MALE'"
+                [class.females]="item?.type === 'FEMALE'"
                 class="fa-solid fa-circle mx-2"
               ></i>
-              <span> {{ item?.firstName }} {{ item?.lastName }} </span>
+              <span> {{ item?.name }}</span>
             </td>
           </tr>
           }
         </tbody>
       </table>
+
 
       <nav dir="rtl" aria-label="Page navigation">
         <ul class="pagination justify-content-center">
