@@ -3,6 +3,7 @@ section.sidebar
     min-height: 100vh;
     // max-width: fit-content;
     background-color: var(--light-color);
+    z-index: 999;
 }
 .logo{
     width: fit-content;
@@ -22,6 +23,27 @@ section.sidebar
 }
 
 
+
+// في ملف الـ theme أو global styles
+::ng-deep .custom-tooltip {
+    background-color: #333 !important;
+    color: white !important;
+    font-size: 1.2rem !important;
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+  }
+
+
+  ::ng-deep .mat-tooltip {
+    font-size: 1.2rem  !important; 
+    color: inherit !important;
+    white-space: nowrap; /* إذا كان النص لا يظهر في سطر واحد */
+  }
+
+
+
+
+
 .table {
     border-collapse: separate;
     border-spacing: 0 15px; /* Vertical spacing between rows */
@@ -29,29 +51,8 @@ section.sidebar
     margin: auto;
 }
 
-/* Fix border radius and hover effects */
-.table-hover tbody tr {
-    background: white;
-    transition: all 0.3s ease;
-}
- td, th {
-    padding:1rem;
-}
+
 h4{color:var(--main-color)}
-
-.table-hover tbody tr:hover {
-    transform: translateY(-2px); /* Optional hover lift effect */
-}
-
-.table-hover tbody tr:hover td{
-      color: var(--main-color);
-}
-
-.table-hover tbody tr td.selected{
-      color: var(--main-color);
-      background-color: var(--light-color);
-
-}
 
 
   .toggle-btn {
@@ -114,20 +115,6 @@ h4{color:var(--main-color)}
     border-color: var(--main-color);
     color:white
   }
-  .page-link:hover{
-    color: var(--main-color)
-  }
-  .page-link{
-    color: var(--main-color)
-  }
-
-  .form-control:focus {
-    border-color: var(--main-color); /* Change to your desired color */
-    box-shadow: 0 0 0 0.2rem #9f83376e; /* Adjust the spread and opacity */
-  }
-  .custom-checkbox:checked {
-    accent-color: var(--main-color);
-
-  }
+ 
   
   

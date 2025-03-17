@@ -24,116 +24,26 @@
         </div>
       </div>
       <div dir="rtl">
-        <div >
+        <div>
           <div
             class="list-group d-flex flex-column gap-3"
             id="list-tab"
             role="tablist"
           >
             <a
-              class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action active"
-              id="list-home-list"
-              data-bs-toggle="list"
-              href="#list-home"
-              role="tab"
-              aria-controls="list-home"
-              (click)="setActiveTab('home')"
+              *ngFor="let item of navItems"
+              class="d-flex cursor-pointer align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
+              [class.active]="activeTab === item.id"
+              (click)="setActiveTab(item.id)"
+            >
+              <i class="fa-solid fa-2xl" [ngClass]="item.icon"></i>
+              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }">
+                {{ item.label }}
+              </span>
+            </a>
 
-            >
-              <i class="fa-solid fa-2xl fa-chart-line"></i>
-              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
-                >لوحة التحكم</span
-              >
-            </a>
             <a
-              class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
-              id="list-profile-list"
-              data-bs-toggle="list"
-              href="#list-profile"
-              role="tab"
-              aria-controls="list-profile"
-              (click)="setActiveTab('ar')"
-
-            >
-              <i class="fa-solid fa-2xl fa-user"></i>
-              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
-                >طلبات الألتحاق</span
-              >
-            </a>
-            <a
-              class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
-              id="list-messages-list"
-              data-bs-toggle="list"
-              href="#list-messages"
-              role="tab"
-              aria-controls="list-messages"
-              (click)="setActiveTab('penalty')"
-
-            >
-              <i class="fa-solid fa-2xl fa-triangle-exclamation"></i>
-              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
-                >الجزاءات و العقوبات</span
-              >
-            </a>
-            <a
-              class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
-              id="list-guidelines-list"
-              data-bs-toggle="list"
-              href="#list-guidelines"
-              role="tab"
-              aria-controls="list-guidelines"
-              (click)="setActiveTab('guidelines')"
-
-            >
-              <i class="fa-solid fa-2xl fa-rectangle-list"></i>
-              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
-                >الارشادات</span
-              >
-            </a>
-            <a
-              class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
-              id="list-settings-list"
-              data-bs-toggle="list"
-              href="#list-settings"
-              role="tab"
-              aria-controls="list-settings"
-              (click)="setActiveTab('deadline')"
-            >
-              <i class="fa-solid fa-2xl fa-calendar-days"></i>
-              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
-                >مواعيد التقديم</span
-              >
-            </a>
-            <a
-              class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
-              id="list-complaints-list"
-              data-bs-toggle="list"
-              href="#list-complaints"
-              role="tab"
-              aria-controls="list-complaints"
-              (click)="setActiveTab('complaints')"
-            >
-              <i class="fa-solid fa-2xl fa-face-angry"></i>
-              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
-                >الشكاوى</span
-              >
-            </a>
-            <a
-              class="d-flex align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
-              id="list-buildings-list"
-              data-bs-toggle="list"
-              href="#list-buildings"
-              role="tab"
-              aria-controls="list-buildings"
-              (click)="setActiveTab('buildings')"
-            >
-              <i class="fa-solid fa-2x fa-building"></i>
-              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
-                >المباني و الغرف</span
-              >
-            </a>
-            <a
-              class=" btn btn-outline-danger d-flex align-items-center gap-3 rounded rounded-4 "
+              class="btn btn-outline-danger d-flex align-items-center gap-3 rounded rounded-4"
               id="list-buildings-list"
               data-bs-toggle="list"
               href="#list-buildings"
@@ -142,9 +52,9 @@
               (click)="_AuthService.logout()"
             >
               <i class="fa-solid fa-2x fa-arrow-right-from-bracket"></i>
-              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }"
-                > تسجيل خروج </span
-              >
+              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }">
+                تسجيل خروج
+              </span>
             </a>
           </div>
         </div>
@@ -153,110 +63,60 @@
 
     <!-- --------------------------------------------------------------------------- -->
     <section dir="rtl" class="col-md-7 flex-grow-1 main-content">
-      @if (activeTab === 'ar') 
-      {
-        <app-ar-display
-          [selectedAdmissionRequest]="selectedAdmissionRequest"
-        ></app-ar-display>
-      }
-      @else if (activeTab === 'guidelines')
-      {
-        <app-add-guide-lines></app-add-guide-lines>
-      }
-      @else if (activeTab === 'home')
-      {
-        <app-admin-landing-page [data]="objectData"></app-admin-landing-page>
-      }
-      @else if (activeTab === 'deadline')
-      {
-        <app-deadlins-form></app-deadlins-form>
-      }
-      @else if (activeTab === 'penalty')
-      {
-        <app-add-penalty></app-add-penalty>
-      }
-      @else if (activeTab === 'complaints')
-      {
-        <section class="py-3">
-          <app-display-complaints [isAdmin]="true"></app-display-complaints>
-        </section>
-      }
-      @else if (activeTab === 'buildings')
-      {
-        <section class="py-3">
-          <app-rooms></app-rooms>
-        </section>
-      }
+      <app-ar-display 
+        *ngIf="activeTab === 'ar'" 
+        [selectedAdmissionRequest]="selectedAdmissionRequest">
+      </app-ar-display>
+    
+      <app-add-guide-lines *ngIf="activeTab === 'guidelines'"></app-add-guide-lines>
+    
+      <app-admin-landing-page 
+        *ngIf="activeTab === 'home'" 
+        [data]="objectData">
+      </app-admin-landing-page>
+    
+      <app-deadlins-form *ngIf="activeTab === 'deadline'"></app-deadlins-form>
+    
+      <app-add-penalty *ngIf="activeTab === 'penalty'"></app-add-penalty>
+    
+      <section *ngIf="activeTab === 'complaints'" class="py-3">
+        <app-display-complaints [isAdmin]="true"></app-display-complaints>
+      </section>
+    
+      <section *ngIf="activeTab === 'buildings'" class="py-3">
+        <app-rooms></app-rooms>
+      </section>
     </section>
+    
     <!----------------------------------------------------------------- ------------- -->
-    <section [class.d-none]="activeTab !='ar' && activeTab !='penalty' && activeTab != 'complaints' && activeTab != 'buildings' "    dir="rtl" class="col-md-3 py-5 px-3 side-content">
+    <section
+      [class.d-none]="
+        activeTab != 'ar' &&
+        activeTab != 'penalty' &&
+        activeTab != 'complaints' &&
+        activeTab != 'buildings'
+      "
+      dir="rtl"
+      class="col-md-3 py-5 px-3 side-content"
+    >
       <div class="text-center">
         <div class="tab-content" id="nav-tabContent">
-          <div
-            class="tab-pane fade show active"
-            id="list-home"
-            role="tabpanel"
-            aria-labelledby="list-home-list"
-          >
-            hhhhhhhhhhh
-          </div>
-
-
-
-          <!-- pane for ar -->
-          <div
-            class="tab-pane fade"
-            id="list-profile"
-            role="tabpanel"
-            aria-labelledby="list-profile-list"
-          >
-            <app-users-side-list></app-users-side-list>
-          </div>
-
-
-
-          <!-- pane for penalty -->
-          <div
-            class="tab-pane fade"
-            id="list-messages"
-            role="tabpanel"
-            aria-labelledby="list-messages-list"
-          >
-          <app-users-side-list></app-users-side-list>
-          </div>
+          <!-- pane for admission requests & Penalty & Complaints  -->
+          <app-users-side-list
+            [class.d-none]="
+              activeTab != 'ar' &&
+              activeTab != 'penalty' &&
+              activeTab != 'complaints'
+            "
+            [class.d-none]="activeTab == 'buildings'"
+          ></app-users-side-list>
 
           <!-- pane for buildings  -->
-          <div
-            class="tab-pane fade"
-            id="list-buildings"
-            role="tabpanel"
-            aria-labelledby="list-buildings-list"
-          >
-            <app-buildings-list></app-buildings-list>
-          </div>
-
-
-          <div
-            class="tab-pane fade"
-            id="list-complaints"
-            role="tabpanel"
-            aria-labelledby="list-complaints-list"
-          >
-            <app-users-side-list></app-users-side-list>
-          </div>
-
-
-          <div
-            class="tab-pane fade"
-            id="list-guidelines"
-            role="tabpanel"
-            aria-labelledby="list-guidelines-list"
-          >
-
-          </div>
+            <app-buildings-list
+              [class.d-none]="activeTab != 'buildings'"
+            ></app-buildings-list>
         </div>
       </div>
     </section>
-   
   </section>
 </div>

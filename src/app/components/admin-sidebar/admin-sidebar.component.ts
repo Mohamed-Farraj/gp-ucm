@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { SharedDataService } from '../../core/services/shared-data.service';
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { ArDisplayComponent } from "../ar-display/ar-display.component";
 import Aos from 'aos';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -10,18 +10,35 @@ import { AddGuideLinesComponent } from "../add-guide-lines/add-guide-lines.compo
 import { AdminLandingPageComponent } from "../admin-landing-page/admin-landing-page.component";
 import { DeadlinsFormComponent } from "../deadlins-form/deadlins-form.component";
 import { PenaltyComponent } from "../penalty/penalty.component";
-import { MatDialogModule } from '@angular/material/dialog';
+import { matDialogAnimations, MatDialogModule } from '@angular/material/dialog';
 import { AddPenaltyComponent } from "../add-penalty/add-penalty.component";
 import { UsersSideListComponent } from "../users-side-list/users-side-list.component";
 import { UserDashboardComponent } from "../user-dashboard/user-dashboard.component";
 import { DisplayComplaintsComponent } from '../display-complaints/display-complaints.component';
 import { BuildingsListComponent } from "../buildings-list/buildings-list.component";
 import { RoomsComponent } from "../rooms/rooms.component";
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 @Component({
   selector: 'app-admin-sidebar',
   standalone: true,
-  imports: [ArDisplayComponent, NgClass, NgFor, ReactiveFormsModule, AddGuideLinesComponent, AdminLandingPageComponent, DeadlinsFormComponent, AddPenaltyComponent, UsersSideListComponent, UserDashboardComponent, DisplayComplaintsComponent, BuildingsListComponent, RoomsComponent],
+  imports: [
+    NgClass,
+    MatTooltipModule,
+    ArDisplayComponent,
+    NgIf,
+    NgFor,
+    ReactiveFormsModule,
+    AddGuideLinesComponent,
+    AdminLandingPageComponent,
+    DeadlinsFormComponent,
+    AddPenaltyComponent,
+    UsersSideListComponent,
+    DisplayComplaintsComponent,
+    BuildingsListComponent,
+    RoomsComponent,
+  ],
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'] // تم تصحيح الاسم هنا
 })
@@ -34,19 +51,18 @@ export class AdminSidebarComponent {
   res: any[] = []; // البيانات الأصلية
   selectedAdmissionRequest: any = {};
   isCollapsed: boolean = true;
-  pagedItems: any[] = [];
-  currentPage: number = 1;
-  pageSize: number = 7;
-  totalPages: number = 0;
-  pages: number[] = [];
-  searchControl = new FormControl('');
-  // مصفوفة لتخزين الحالات المختارة من checkboxes
-   // متغير للفرز: "normal" أو "reverse"
-   sortControl = new FormControl('normal');
-  selectedStatuses: string[] = [];
-  filteredItems: any[] = [];
   activeTab: string = 'home';
   objectData: any ;
+  navItems = [
+    { id: 'home', icon: 'fa-chart-line', label: 'لوحة التحكم' },
+    { id: 'ar', icon: 'fa-user', label: 'طلبات الألتحاق' },
+    { id: 'penalty', icon: 'fa-triangle-exclamation', label: 'الجزاءات و العقوبات' },
+    { id: 'complaints', icon: 'fa-face-angry', label: 'الشكاوى' },
+    { id: 'buildings', icon: 'fa-building', label: 'المباني و الغرف' },
+    { id: 'guidelines', icon: 'fa-rectangle-list', label: 'الإرشادات' },
+    { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
+  ];
+  
 
 setActiveTab(tab: string) {
   this.activeTab = tab;
@@ -79,7 +95,6 @@ getActiveTab() {
         console.log(res);
         this.res = res.data;
         this.getAnalysis();
-        this.filteredItems = this.res;
         console.log(this.res);
       },
       error: (err) => { console.log(err); },

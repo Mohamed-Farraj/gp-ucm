@@ -33,9 +33,7 @@ export class DisplayComplaintsComponent implements OnInit {
   }
 
  ngOnInit() {
-  setTimeout(() => {
     this.checkAuthAndLoadData();
-  }, 500);
   }
 
 
