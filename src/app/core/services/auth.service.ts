@@ -28,23 +28,13 @@ export class AuthService {
   
   getApplications():Observable<any>
   {
-  return this._HttpClient.get(`${environment.baseUrl}/admin/admission-requests`, { 
-    headers: new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
-      'Content-Type': 'application/json'
-    })
-  });
+  return this._HttpClient.get(`${environment.baseUrl}/admin/admission-requests`);
   }
 
 
   DecideArState(UId:number,Status:string):Observable<any>{
     return this._HttpClient.put(`${environment.baseUrl}/admin/admission-requests/${UId}/status?status=${Status}`,
       null,
-      {headers: new HttpHeaders({
-        'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
-        'Content-Type': 'application/json',
-      })
-    },
         );
   }
 

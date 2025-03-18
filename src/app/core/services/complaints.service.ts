@@ -14,64 +14,63 @@ export class ComplaintsService {
 
    // إنشاء شكوى (User)
    createComplaint(userId: number, request:any): Observable<any> {
-    this.token = localStorage.getItem('userToken')!;
-    const url = `${environment.baseUrl}/user/make-complaint/${userId}`;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.post(url, request, { headers });
+     const url = `${environment.baseUrl}/user/make-complaint/${userId}`;
+    // this.token = localStorage.getItem('userToken')!;
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${this.token}`,
+    //   'Content-Type': 'application/json'
+    // });
+    return this.http.post(url, request);
   }
 
   // جلب كل الشكاوى (Admin)
   getAllComplaints(): Observable<any> {
-    this.token = localStorage.getItem('userToken')!;
-    console.log('getAllComplaints',this.token);
     const url = `${environment.baseUrl}/admin/get-all-complaints`;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
-    });
-    return this.http.get(url, { headers: headers });
+    // this.token = localStorage.getItem('userToken')!;
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${this.token}`
+    // });
+    return this.http.get(url);
   }
 
   // جلب شكوى بواسطة المعرف (Admin)
   getComplaintById(id: number): Observable<any> {
-    this.token = localStorage.getItem('userToken')!;
     const url = `${environment.baseUrl}/admin/get-complaint/${id}`;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
-    });
-    return this.http.get(url, { headers });
+    // this.token = localStorage.getItem('userToken')!;
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${this.token}`
+    // });
+    return this.http.get(url);
   }
 
   // تحديث شكوى بواسطة المعرف (User)
   updateComplaint(id: number, request: any): Observable<any> {
-    this.token = localStorage.getItem('userToken')!;
     const url = `${environment.baseUrl}/user/update-complaint/${id}`;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
-      'Content-Type': 'application/json'
-    });
-    return this.http.put(url, request, { headers });
+    // this.token = localStorage.getItem('userToken')!;
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${this.token}`,
+    //   'Content-Type': 'application/json'
+    // });
+    return this.http.put(url, request);
   }
 
   // حذف شكوى بواسطة المعرف (Admin)
   deleteComplaint(id: number): Observable<any> {
-    this.token = localStorage.getItem('userToken')!;
     const url = `${environment.baseUrl}/admin/delete-complaint/${id}`;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
-    });
-    return this.http.delete(url, { headers });
+    // this.token = localStorage.getItem('userToken')!;
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${this.token}`
+    // });
+    return this.http.delete(url);
   }
 
   // جلب كل الشكاوى الخاصة بمستخدم معين (Admin)
   getComplaintsByUser(userId: number): Observable<any> {
-    this.token = localStorage.getItem('userToken')!;
     const url = `${environment.baseUrl}/admin/get-user-complaints/${userId}`;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`
-    });
-    return this.http.get(url, { headers });
+    // this.token = localStorage.getItem('userToken')!;
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${this.token}`
+    // });
+    return this.http.get(url);
   }
 }

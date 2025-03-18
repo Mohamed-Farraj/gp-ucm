@@ -44,11 +44,6 @@
 
             <a
               class="btn btn-outline-danger d-flex align-items-center gap-3 rounded rounded-4"
-              id="list-buildings-list"
-              data-bs-toggle="list"
-              href="#list-buildings"
-              role="tab"
-              aria-controls="list-buildings"
               (click)="_AuthService.logout()"
             >
               <i class="fa-solid fa-2x fa-arrow-right-from-bracket"></i>
@@ -62,6 +57,8 @@
     </section>
 
     <!-- --------------------------------------------------------------------------- -->
+
+    
     <section dir="rtl" class="col-md-7 flex-grow-1 main-content">
       <app-ar-display 
         *ngIf="activeTab === 'ar'" 

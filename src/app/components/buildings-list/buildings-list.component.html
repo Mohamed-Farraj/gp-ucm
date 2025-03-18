@@ -1,7 +1,7 @@
 <section>
     <!-- commented by d-none -->
-    <div class="filteration d-none">
-        <div class="mb-3">
+    <div class="filteration">
+        <div class="mb-3 d-none">
           <select class="form-select" [formControl]="sortControl">
             <option value="normal">الاقدم اولا</option>
             <option value="reverse">الاحدث اولا</option>
@@ -10,7 +10,7 @@
         <!-- checkboxes لتحديد الحالات -->
         <div
           style="width: 90%"
-          class="mb-3 mx-auto d-flex justify-content-between"
+          class="mb-3 d-none mx-auto d-flex justify-content-between"
         >
           <label class="cursor-pointer">
             <input
@@ -44,8 +44,8 @@
           type="text"
           style="width: 90%"
           class="form-control rounded-pill mx-auto my-3"
-          placeholder="ابحث بالاسم أو الرقم القومي"
-          [formControl]="searchControl"
+          placeholder="ابحث بالاسم   "
+          [(ngModel)]="myModel"
         />
       </div>
     <!-- commented by d-none -->
@@ -53,7 +53,7 @@
       
 
       <h4>
-        عدد المباني:
+        اجمالي عدد المباني:
         {{
           searchControl.value || selectedStatuses.length > 0
             ? filteredItems.length
@@ -63,7 +63,7 @@
 
       <table class="table table-hover">
         <tbody class="">
-          @for (item of pagedItems; track $index) {
+          @for (item of pagedItems|search:myModel:'name'; track $index) {
           <tr>
             <td
               (click)="handleClick(item)"

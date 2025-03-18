@@ -4,22 +4,22 @@
     <h5 class="mb-5 ">الجزاءات</h5>
     <form [formGroup]="penaltyForm" class="w-100" (ngSubmit)="onSubmit()" novalidate>
       <div class="mb-5">
-        <label for="penaltyTitle" class="block mb-2">  penalty Title </label>
-        <input type="text" id="penaltyTitle" class="form-control" placeholder="penaltyTitle" formControlName="penaltyTitle">
+        <label for="penaltyTitle" class="block mb-2">  اسم الجزاء </label>
+        <input type="text" id="penaltyTitle" class="form-control" placeholder="اكتب الاسم هنا" formControlName="penaltyTitle">
         @if (penaltyForm.get('penaltyTitle')?.hasError('required') && penaltyForm.get('penaltyTitle')?.touched) {
         <div class="text-danger">مطلوب</div>
         }
       </div>
       <div class="mb-5">
-        <label for="reason" class="block mb-2 "> reason
+        <label for="reason" class="block mb-2 "> سبب الجزاء
         </label>
-        <input type="text" id="reason" class="form-control" placeholder="reason" formControlName="reason">
+        <input type="text" id="reason" class="form-control" placeholder="اكتب السبب هنا" formControlName="reason">
         @if (penaltyForm.get('reason')?.hasError('required') && penaltyForm.get('reason')?.touched) {
         <div class="text-danger">مطلوب</div>
         }
       </div>
       <div class="mb-5">
-        <label for="dateIssued" class="block mb-2 "> date Issued
+        <label for="dateIssued" class="block mb-2 "> تاريخ الجزاء
         </label>
         <input type="date" id="dateIssued" class="form-control" placeholder="date Issued" formControlName="dateIssued">
         @if (penaltyForm.get('dateIssued')?.hasError('required') && penaltyForm.get('dateIssued')?.touched) {
