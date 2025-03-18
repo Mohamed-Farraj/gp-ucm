@@ -17,15 +17,7 @@ token:string = '';
     if (localStorage.getItem('userToken') !== null) {
       this.token = localStorage.getItem('userToken')!;
     }
-   return this._HttpClient.post('http://localhost:8080/admin/application-deadline/1' , data , 
-
-   {headers: new HttpHeaders({
-           'Authorization': `Bearer ${this.token}`,
-           'Content-Type': 'application/json'
-         })}
-
-
-   )
+   return this._HttpClient.post('http://localhost:8080/admin/application-deadline/1' , data)
  
   }
 
@@ -36,27 +28,14 @@ token:string = '';
 
   deleteDeadLine(id: number): Observable<any> 
   {
-    if (localStorage.getItem('userToken') !== null) {
-      this.token = localStorage.getItem('userToken')!;
-    }
-    return this._HttpClient.delete(`${environment.baseUrl}/admin/delete-application-deadline?universityId=1&deadlineId=${id}`, {headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
-      'Content-Type': 'application/json'
-    })}
-);
+    
+    return this._HttpClient.delete(`${environment.baseUrl}/admin/delete-application-deadline?universityId=1&deadlineId=${id}`);
   }
 
 
   updateDeadLine(id: number, data: object): Observable<any>
   {
-    if (localStorage.getItem('userToken') !== null) {
-      this.token = localStorage.getItem('userToken')!;
-    }
-    return this._HttpClient.put(`${environment.baseUrl}/admin/update-application-deadline?deadlineId=${id}&universityId=1`, data, {headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
-      'Content-Type': 'application/json'
-    })}
-);
+    return this._HttpClient.put(`${environment.baseUrl}/admin/update-application-deadline?deadlineId=${id}&universityId=1`, data);
   }
 
 

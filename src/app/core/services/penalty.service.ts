@@ -17,36 +17,19 @@ token:string = '';
     if (localStorage.getItem('userToken') !== null) {
       this.token = localStorage.getItem('userToken')!;
     }
-   return this._HttpClient.post('http://localhost:8080/admin/add-penalty' , data , 
-
-   {headers: new HttpHeaders({
-           'Authorization': `Bearer ${this.token}`,
-           'Content-Type': 'application/json'
-         })}
-
-
-   )
+   return this._HttpClient.post('http://localhost:8080/admin/add-penalty' , data)
  
   }
 
   getAllpenalties(): Observable<any> {
-    return this._HttpClient.get('http://localhost:8080/admin/get-all-penalties' ,  {headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
-      'Content-Type': 'application/json'
-    })});
+    return this._HttpClient.get('http://localhost:8080/admin/get-all-penalties');
   }
 
 
   deletePenalty(id: number): Observable<any> 
   {
-    if (localStorage.getItem('userToken') !== null) {
-      this.token = localStorage.getItem('userToken')!;
-    }
-    return this._HttpClient.delete(`${environment.baseUrl}/admin/delete-penalty/${id}`, {headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
-      'Content-Type': 'application/json'
-    })}
-);
+  
+    return this._HttpClient.delete(`${environment.baseUrl}/admin/delete-penalty/${id}`);
   }
 
 
@@ -54,20 +37,12 @@ token:string = '';
   if (localStorage.getItem('userToken') !== null) {
     this.token = localStorage.getItem('userToken')!;
   }
-   return this._HttpClient.get(`${environment.baseUrl}/admin/get-penalty/${id}`,  {headers: new HttpHeaders({
-      'Authorization': `Bearer ${this.token}`,
-      'Content-Type': 'application/json'
-    })});
+   return this._HttpClient.get(`${environment.baseUrl}/admin/get-penalty/${id}`);
  }
 
  getPenaltyforSpecificUser(id: number): Observable<any> {
-  if (localStorage.getItem('userToken') !== null) {
-    this.token = localStorage.getItem('userToken')!;
-  }
-  return this._HttpClient.get(`${environment.baseUrl}/admin/get-all-user-penalties/${id}`,  {headers: new HttpHeaders({
-     'Authorization': `Bearer ${this.token}`,
-     'Content-Type': 'application/json'
-   })});
+ 
+  return this._HttpClient.get(`${environment.baseUrl}/admin/get-all-user-penalties/${id}`);
 }
 
 

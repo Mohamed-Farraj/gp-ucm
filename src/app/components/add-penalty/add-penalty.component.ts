@@ -6,11 +6,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { PenaltyComponent } from '../penalty/penalty.component';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { filter, tap } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-penalty',
   standalone: true,
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './add-penalty.component.html',
   styleUrl: './add-penalty.component.scss'
 })

@@ -1,14 +1,15 @@
 import { Component, inject } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { BuildingsService } from '../../core/services/buildings.service';
 import { debounceTime } from 'rxjs';
 import { NgClass, NgFor } from '@angular/common';
+import { SearchPipe } from '../../core/pipes/search.pipe';
 
 @Component({
   selector: 'app-buildings-list',
   standalone: true,
-  imports: [NgClass,ReactiveFormsModule,NgFor],
+  imports: [NgClass,ReactiveFormsModule,NgFor,SearchPipe,FormsModule],
   templateUrl: './buildings-list.component.html',
   styleUrl: './buildings-list.component.scss'
 })
@@ -34,6 +35,7 @@ export class BuildingsListComponent {
         sortControl = new FormControl('normal');// متغير للفرز: "normal" أو "reverse"
         selectedStatuses: string[] = [];// مصفوفة لتخزين الحالات المختارة من checkboxes
         filteredItems: any[] = [];
+        myModel:string = "";
         //#endregion
     
         activeTab: string = 'buildings';

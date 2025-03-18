@@ -14,13 +14,13 @@ export class BuildingsService {
   constructor(private http: HttpClient) { }
 
   // Helper to create headers
-  private createHeaders(): HttpHeaders {
-    const token = localStorage.getItem('userToken');    
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-  }
+  // private createHeaders(): HttpHeaders {
+  //   const token = localStorage.getItem('userToken');    
+  //   return new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${token}`
+  //   });
+  // }
 
   // ----------------------
   // Building APIs
@@ -33,13 +33,13 @@ export class BuildingsService {
   addBuilding(request: any): Observable<any> {
     
     const url = `${this.baseUrl}/admin/add-buildings`;
-    return this.http.post(url, request, { headers: this.createHeaders() });
+    return this.http.post(url, request);
   }
 
   getAllBuildings(universityId: number): Observable<any> {
     const url = `${this.baseUrl}/public/get-buildings/${universityId}`;
     // In a public endpoint you may not require the token but add it if necessary
-    return this.http.get(url, { headers: this.createHeaders() });
+    return this.http.get(url);
   }
 
   /**
@@ -48,7 +48,7 @@ export class BuildingsService {
    */
   deleteBuilding(universityId: number, buildingId: number): Observable<any> {
     const url = `${this.baseUrl}/admin/delete-building?universityId=${universityId}&buildingId=${buildingId}`;
-    return this.http.delete(url, { headers: this.createHeaders() });
+    return this.http.delete(url);
   }
 
   // ----------------------
@@ -61,7 +61,7 @@ export class BuildingsService {
    */
   addRoom(dto: any): Observable<any> {
     const url = `${this.baseUrl}/admin/rooms/add`;
-    return this.http.post(url, dto, { headers: this.createHeaders() });
+    return this.http.post(url, dto);
   }
 
   /**
@@ -70,7 +70,7 @@ export class BuildingsService {
    */
   getAllRooms(buildingId: number): Observable<any> {
     const url = `${this.baseUrl}/public/rooms/getAll/${buildingId}`;
-    return this.http.get(url, { headers: this.createHeaders() });
+    return this.http.get(url);
   }
 
   /**
@@ -79,7 +79,7 @@ export class BuildingsService {
    */
   deleteRoom(buildingId: number, roomId: number): Observable<any> {
     const url = `${this.baseUrl}/admin/rooms/delete?buildingId=${buildingId}&roomId=${roomId}`;
-    return this.http.delete(url, { headers: this.createHeaders() });
+    return this.http.delete(url);
   }
 
   

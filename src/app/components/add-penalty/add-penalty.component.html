@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center mb-2">
       <h4 class="fw-bold m-auto mb-5">الجزاءات</h4>
       <button type="button" (click)="openDialog()"
-        class="btn-main d-block me-auto">create penalty</button>
+        class="btn-main d-block me-auto">اضافه جزاء</button>
     </div>
     <div class="">
       <table class="w-100 ">
@@ -11,13 +11,13 @@
         <thead class="text-xs ">
           <tr>
             <th scope="col" class=" py-3">
-                penalty Title
+                اسم الجزاء
             </th>
             <th scope="col" class=" py-3">
-                reason
+                سبب الجزاء
             </th>
             <th scope="col" class=" py-3">
-                dateIssued
+                تاريخ الجزاء
             </th>
             <th scope="col" class=" py-3">
               <span class="">اضـافة او حـذف</span>
@@ -35,7 +35,7 @@
               {{item.reason}}
             </td>
             <td class="py-4">
-              {{item.dateIssued}}
+              {{item.dateIssued | date:'yyyy/MM/dd, hh:mm a' }}
             </td>
             <td class="py-4 text-right">
              
