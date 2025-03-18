@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withHashLocation, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -10,14 +10,17 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { headerInterceptor } from './core/interceptors/header.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { successInterceptor } from './core/interceptors/success.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes , withHashLocation(), withInMemoryScrolling({scrollPositionRestoration:"top",anchorScrolling: 'enabled',}) , withViewTransitions()),
      provideClientHydration(),
-     provideHttpClient(withFetch(),withInterceptors([headerInterceptor,errorInterceptor,successInterceptor])),
+     provideHttpClient(withFetch(),withInterceptors([headerInterceptor,errorInterceptor,successInterceptor,loadingInterceptor])),
      provideAnimations() ,
      provideToastr(),
+     importProvidersFrom(NgxSpinnerModule),
      provideAnimationsAsync(),
      provideAnimationsAsync(),
      provideAnimationsAsync(),
