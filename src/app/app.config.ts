@@ -12,6 +12,7 @@ import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { successInterceptor } from './core/interceptors/success.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,5 +25,6 @@ export const appConfig: ApplicationConfig = {
      provideAnimationsAsync(),
      provideAnimationsAsync(),
      provideAnimationsAsync(),
+     provideCharts(withDefaultRegisterables()),
     ]
 };
