@@ -1,10 +1,76 @@
 <div dir="ltr" class="container-fluid">
+  
+<div  class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div
+        class="logo my-3 w-100 d-flex justify-content-center align-content-center"
+      >
+        <div
+          class="d-flex align-content-center"
+          [class.collapsed]="isCollapsed"
+        >
+          <h1 class="m-auto fw-bolder title">مسكني</h1>
+        </div>
+        <div class="image me-auto">
+          <img
+            src="./assets/light logo.png"
+            style="width: clamp(5rem, 6rem, 8rem)"
+          />
+        </div>
+      </div>
+      <div dir="rtl">
+        <div>
+          <div
+            class="list-group d-flex flex-column gap-3"
+            id="list-tab"
+            role="tablist"
+          >
+            <a
+              *ngFor="let item of navItems"
+              class="d-flex cursor-pointer align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
+              [class.active]="activeTab === item.id"
+              (click)="setActiveTab(item.id)"
+            >
+              <i class="fa-solid fa-2xl" [ngClass]="item.icon"></i>
+              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }">
+                {{ item.label }}
+              </span>
+            </a>
+
+            <a
+              class="btn btn-outline-danger d-flex align-items-center gap-3 rounded rounded-4"
+              (click)="_AuthService.logout()"
+            >
+              <i class="fa-solid fa-2x fa-arrow-right-from-bracket"></i>
+              <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }">
+                تسجيل خروج
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
   <section style="padding-inline-start: 80px" class="row flex-lg-nowrap">
     <section
       class="position-fixed fixed-top sidebar gap-5 px-3 py-5 d-flex flex-column"
       [class.collapsed]="isCollapsed"
     >
-      <button class="toggle-btn btn" (click)="toggleCollapsed()">
+      <!-- <button class="toggle-btn btn"
+              (click)="toggleCollapsed()"
+              >
+        <i class="fas fa-xl fa-bars"></i>
+      </button> -->
+      <button class="toggle-btn btn"
+              type="button" data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasWithBothOptions"
+              aria-controls="offcanvasWithBothOptions"
+              >
         <i class="fas fa-xl fa-bars"></i>
       </button>
       <div

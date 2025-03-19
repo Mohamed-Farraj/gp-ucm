@@ -13,6 +13,7 @@ import { AuthService } from '../../core/services/auth.service';
 export class GuestNavComponent implements OnInit {
   isMenuCollapsed = true;
   isLoggedIn = false;
+  role = '';
   private readonly _PLATFORM_ID = inject(PLATFORM_ID)
    readonly auth = inject(AuthService)
   @ViewChild('guestNav') el!:ElementRef;
@@ -22,6 +23,7 @@ export class GuestNavComponent implements OnInit {
     if (isPlatformBrowser(this._PLATFORM_ID)) {
       if (localStorage.getItem('userToken')) {
         this.isLoggedIn = true;
+        this.role = localStorage.getItem('role') || '';
       }
     }
   }

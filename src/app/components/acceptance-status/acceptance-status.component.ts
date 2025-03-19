@@ -89,40 +89,40 @@ export class AcceptanceStatusComponent {
 
   ask()
    {
-  //   console.log(this.studentId);
-  //   this._call.callidapi(this.studentId).subscribe({
-  //     next:(resdata:any)=>{
-  //       this.apirespons=resdata;
-  //       this.userN = this.apirespons?.name
-  //       // this.accepted();
-  //       console.log(resdata);
-  //       if (this.apirespons.acceptanceStatus === "لم يستدل عليه") {
-  //         this.pended()
-  //       }
-  //       else if(this.apirespons.message === "Student Not Found")
-  //       {
-  //         this.rejected()
-  //         this.isRejectd = false
-  //       }
-  //       else if(this.apirespons.acceptanceStatus === "مرفوض")
-  //       {
-  //         this.rejected()
-  //         this.isRejectd = true
-  //       }
-  //       else if(this.apirespons.acceptanceStatus === "مقبول")
-  //       {
-  //         this.accepted()
-  //       }
-  //       else{
-  //         this.alertmsg = this.apirespons.acceptanceStatus
-  //         this.cstmed()
-  //       }
-  //     },
-  //     error:(errdata:any)=>{
-  //       console.log(errdata);
-  //       this.rejected();
-  //     }
-  //   })
+    console.log(this.studentId);
+    this._call.getApplicationStatusByNationalId(this.studentId).subscribe({
+      next:(resdata:any)=>{
+        this.apirespons=resdata;
+        this.userN = this.apirespons?.name
+        // this.accepted();
+        console.log(resdata);
+        if (this.apirespons.data.status === "UNDER_REVIEW") {
+          this.pended()
+        }
+        else if(this.apirespons.message === "Student Not Found")
+        {
+          this.rejected()
+          this.isRejectd = false
+        }
+        else if(this.apirespons.data.status === "REJECTED")
+        {
+          this.rejected()
+          this.isRejectd = true
+        }
+        else if(this.apirespons.data.status === "ACCEPTED")
+        {
+          this.accepted()
+        }
+        else{
+          this.alertmsg = this.apirespons.message
+          this.cstmed()
+        }
+      },
+      error:(errdata:any)=>{
+        console.log(errdata);
+        this.rejected();
+      }
+    })
    }
   askForUid()
    {
