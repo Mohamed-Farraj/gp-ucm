@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../core/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,11 @@ export class HomeService {
 
   getApplicationStatusById(id:string):Observable<any>
   {
-    return this._HttpClient.get(`http://localhost:8080/user/admission-requests/1/status?userId=${id}`,
-      {headers: new HttpHeaders({
-        'Authorization': `Bearer ${localStorage.getItem('userToken')}`,
-        'Content-Type': 'application/json',
-      })
-    }
-    );
+    return this._HttpClient.get(`http://localhost:8080/user/admission-requests/1/status?userId=${id}`);
+  }
+  getApplicationStatusByNationalId(id:string):Observable<any>
+  {
+    return this._HttpClient.get(`${environment.baseUrl}/public/admission-requests/nid/${id}/status`);
   }
 
 }
