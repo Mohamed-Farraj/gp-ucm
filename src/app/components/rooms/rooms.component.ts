@@ -64,6 +64,9 @@ export class RoomsComponent {
         this.rooms = response.data; // أو حسب البنية
       },
       error: (error: any) => {
+        if (error.status === 404) {
+          this.rooms = [];
+        }
         console.error(error);
       }
     });
@@ -90,6 +93,7 @@ export class RoomsComponent {
       next: (response: any) => {
         console.log('Building deleted:', response);
         this.dataService.changeBuildingData(null); // حذف المبنى من الخا��ية التي تمتلكها
+        this.dataService.notifyBuildingsChanged();
       },
       error: (error: any) => {
         console.error(error);

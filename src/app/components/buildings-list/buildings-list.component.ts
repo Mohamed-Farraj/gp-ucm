@@ -51,9 +51,8 @@ export class BuildingsListComponent {
         this.selectedBuilding = data; 
       });
     }
-  
-  
-    ngOnInit(): void {
+
+    getBuildings(): void {
       this._BuildingsService.getAllBuildings(1).subscribe({
         next: (res: any) => {
          
@@ -64,6 +63,18 @@ export class BuildingsListComponent {
           this.initPagination();
         },
         error: (err) => { console.log(err); },
+      });
+    }
+  
+  
+    ngOnInit(): void {
+     
+      this.getBuildings(); // ��لب البيانات الأصلية عند تشغيل المكون
+
+      this.dataService.buildingsUpdated$.subscribe((updated) => {
+        if (updated) {
+          this.getBuildings(); // ⬅️ إعادة تحميل البيانات
+        }
       });
   
       // الاشتراك في تغييرات حقل البحث باستخدام Reactive Form مع debounceTime
@@ -201,5 +212,7 @@ export class BuildingsListComponent {
       this.dataService.changeBuildingData(null);
   
     }
+
+  
 
 }
