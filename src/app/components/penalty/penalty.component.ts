@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { Ipenalty } from '../../core/interfaces/ipenalty';
 import { CommonModule } from '@angular/common';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-penalty',
@@ -25,10 +26,11 @@ export class PenaltyComponent {
     dialogRef = inject(MatDialogRef<AddPenaltyComponent>);
     data: Ipenalty = inject(MAT_DIALOG_DATA) || {} as Ipenalty;
     userData: any = {};
+    private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
 
 
     constructor() {
-      this._dataService.currentStudentData.subscribe(data => {
+      this._dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
         console.log('Received data:', data);
         this.userData = data; 
     
@@ -94,6 +96,11 @@ export class PenaltyComponent {
     resetDeadlineForm() {
       this.penaltyForm.reset();
       this.onClose();
+    }
+
+    ngOnDestroy(): void {
+      this.destroy$.next();
+      this.destroy$.complete();
     }
    
   }

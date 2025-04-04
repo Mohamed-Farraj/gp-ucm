@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { BuildingsService } from '../../core/services/buildings.service';
-import { debounceTime } from 'rxjs';
+import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { NgClass, NgFor } from '@angular/common';
 import { SearchPipe } from '../../core/pipes/search.pipe';
 
@@ -41,12 +41,12 @@ export class BuildingsListComponent {
         activeTab: string = 'buildings';
         objectData: any ;
     //#endregion
-  
+    private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
     private readonly dataService = inject(SharedDataService);
     private readonly _BuildingsService = inject(BuildingsService);
-  
+
     constructor() {
-      this.dataService.currentBuildingData.subscribe(data => {
+      this.dataService.currentBuildingData.pipe(takeUntil(this.destroy$)).subscribe(data => {
         console.log('building data:', data);
         this.selectedBuilding = data; 
       });
@@ -71,7 +71,7 @@ export class BuildingsListComponent {
      
       this.getBuildings(); // ��لب البيانات الأصلية عند تشغيل المكون
 
-      this.dataService.buildingsUpdated$.subscribe((updated) => {
+      this.dataService.buildingsUpdated$.pipe(takeUntil(this.destroy$)).subscribe((updated) => {
         if (updated) {
           this.getBuildings(); // ⬅️ إعادة تحميل البيانات
         }
@@ -214,5 +214,11 @@ export class BuildingsListComponent {
     }
 
   
+
+    ngOnDestroy(): void {
+      this.destroy$.next();
+      this.destroy$.complete();
+    }
+    
 
 }

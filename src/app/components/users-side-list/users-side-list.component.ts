@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { SharedDataService } from '../../core/services/shared-data.service';
-import { debounceTime } from 'rxjs';
+import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { NgClass, NgFor } from '@angular/common';
 
@@ -40,9 +40,10 @@ export class UsersSideListComponent {
 
   private readonly dataService = inject(SharedDataService);
   private readonly _AuthService = inject(AuthService);
+  private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
 
   constructor() {
-    this.dataService.currentStudentData.subscribe(data => {
+    this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
       console.log('Received data:', data);
       this.selectedAdmissionRequest = data; 
     });
@@ -196,6 +197,11 @@ export class UsersSideListComponent {
   {
     this.dataService.changeStudentData(null);
 
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 
