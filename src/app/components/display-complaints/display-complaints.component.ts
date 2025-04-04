@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { ComplaintsService } from '../../core/services/complaints.service';
 import { DatePipe, NgIf } from '@angular/common';
 import { SharedDataService } from '../../core/services/shared-data.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-display-complaints',
@@ -19,9 +20,10 @@ export class DisplayComplaintsComponent implements OnInit {
   filteredComplaints: any[] = [];
   selected: any;
   @Input() isAdmin: boolean = false;
+  private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
 
   constructor(private cd: ChangeDetectorRef) {
-    this.dataService.currentStudentData.subscribe(data => {
+    this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
       console.log('complaint data:', data);
       this.selected = data;
       
@@ -110,4 +112,9 @@ export class DisplayComplaintsComponent implements OnInit {
   });
 }
 
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

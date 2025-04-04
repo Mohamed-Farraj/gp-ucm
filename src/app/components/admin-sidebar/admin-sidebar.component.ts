@@ -5,7 +5,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { ArDisplayComponent } from "../ar-display/ar-display.component";
 import Aos from 'aos';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { AddGuideLinesComponent } from "../add-guide-lines/add-guide-lines.component";
 import { AdminLandingPageComponent } from "../admin-landing-page/admin-landing-page.component";
 import { DeadlinsFormComponent } from "../deadlins-form/deadlins-form.component";
@@ -18,6 +18,7 @@ import { DisplayComplaintsComponent } from '../display-complaints/display-compla
 import { BuildingsListComponent } from "../buildings-list/buildings-list.component";
 import { RoomsComponent } from "../rooms/rooms.component";
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class AdminSidebarComponent {
   protected readonly _AuthService = inject(AuthService);
   private readonly dataService = inject(SharedDataService);
   private readonly cd = inject(ChangeDetectorRef);
-  
+  private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
   res: any[] = []; // البيانات الأصلية
   selectedAdmissionRequest: any = {};
   isCollapsed: boolean = true;
@@ -81,7 +82,7 @@ getActiveTab() {
   }
 
   constructor() {
-    this.dataService.currentStudentData.subscribe(data => {
+    this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
       console.log('Received data:', data);
       this.selectedAdmissionRequest = data; 
     });
@@ -141,7 +142,11 @@ getActiveTab() {
   
  
   
-
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  
  
   
 }

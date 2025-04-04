@@ -10,13 +10,6 @@ export class SharedDataService {
   currentStudentData = this.dataSource.asObservable();
 
 
-
-  private buildingsList = new BehaviorSubject<any>(null);
-  currentBuildingData = this.buildingsList.asObservable();
-
-
-
-
   private userDataSubject = new BehaviorSubject<any>(null);
   userData = this.userDataSubject.asObservable();
 
@@ -24,11 +17,20 @@ export class SharedDataService {
     this.dataSource.next(data);
   }
 
+  private buildingsList = new BehaviorSubject<any>(null); //for selection
+  currentBuildingData = this.buildingsList.asObservable();
+
   changeBuildingData(data: any) {
     this.buildingsList.next(data);
   }
 
 
+  private buildingsUpdated = new BehaviorSubject<boolean>(false);
+  buildingsUpdated$ = this.buildingsUpdated.asObservable();
+
+  notifyBuildingsChanged() {
+    this.buildingsUpdated.next(true);
+  }
 
 
   setUserData(data: any): void {

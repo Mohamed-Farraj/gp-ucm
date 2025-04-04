@@ -5,7 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PenaltyComponent } from '../penalty/penalty.component';
 import { SharedDataService } from '../../core/services/shared-data.service';
-import { filter, tap } from 'rxjs';
+import { filter, Subject, takeUntil, tap } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -24,7 +24,7 @@ export class AddPenaltyComponent  {
     penalty!: Ipenalty;
      private readonly _PenaltyService=inject(PenaltyService);
      private readonly _dataService = inject(SharedDataService);
-     
+     private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
       private readonly _formBuilder= inject(FormBuilder)
       public  dialog = inject(MatDialog);
   
@@ -39,7 +39,8 @@ export class AddPenaltyComponent  {
               console.log('Received data:', data);
               this.userData = data;  
               this.getPenaltyforSpecificUser(); // Fetch penalties immediately
-            })
+            }),
+            takeUntil(this.destroy$)
           )
           .subscribe();
       }
@@ -123,6 +124,12 @@ export class AddPenaltyComponent  {
       });
     }
 
+
+    ngOnDestroy(): void {
+      this.destroy$.next();
+      this.destroy$.complete();
+    }
+    
 
 
 }

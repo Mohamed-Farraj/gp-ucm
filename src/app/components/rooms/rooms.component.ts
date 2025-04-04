@@ -4,6 +4,7 @@ import { BuildingsService } from '../../core/services/buildings.service';
 import { NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { BuildingsListComponent } from '../buildings-list/buildings-list.component';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-rooms',
@@ -17,6 +18,7 @@ export class RoomsComponent {
   rooms: any = [];
   selectedBuilding: any;
   @Output() refreshParent = new EventEmitter<void>();
+  private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
 
   getArabicType(type: string): string {
     const translations: { [key: string]: string } = {
@@ -49,7 +51,7 @@ export class RoomsComponent {
 
   ngOnInit(): void {
     // الاشتراك في تغير بيانات المبنى
-    this.dataService.currentBuildingData.subscribe(building => {
+    this.dataService.currentBuildingData.pipe(takeUntil(this.destroy$)).subscribe(building => {
         this.selectedBuilding = building;
         // عند تغيير بيانات المبنى، استدعاء API لجلب الغرف للمبنى
         if(building?.id)
@@ -64,6 +66,9 @@ export class RoomsComponent {
         this.rooms = response.data; // أو حسب البنية
       },
       error: (error: any) => {
+        if (error.status === 404) {
+          this.rooms = [];
+        }
         console.error(error);
       }
     });
@@ -90,6 +95,7 @@ export class RoomsComponent {
       next: (response: any) => {
         console.log('Building deleted:', response);
         this.dataService.changeBuildingData(null); // حذف المبنى من الخا��ية التي تمتلكها
+        this.dataService.notifyBuildingsChanged();
       },
       error: (error: any) => {
         console.error(error);
@@ -104,4 +110,9 @@ export class RoomsComponent {
     )
   }
 }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }
