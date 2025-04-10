@@ -1,0 +1,63 @@
+<section class="bg-main-light container px-4 rtl py-5  " dir="rtl">
+
+
+    <h5 class="mb-5 ">اضافة غرفة</h5>
+    <form [formGroup]="addRoomForm" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-5">
+        <label for="roomNumber" class="block mb-2">  رقم الغرفه </label>
+        <input type="text" id="roomNumber" class="form-control" placeholder="اكتب الاسم هنا" formControlName="roomNumber">
+        @if (addRoomForm.get('roomNumber')?.hasError('required') && addRoomForm.get('roomNumber')?.touched) {
+        <div class="text-danger">مطلوب</div>
+        }
+      </div>
+      <div class="mb-5">
+        <label for="capacity" class="block mb-2 "> الكثافة
+        </label>
+        <input type="text" id="capacity" class="form-control" placeholder="اكتب السبب هنا" formControlName="capacity">
+        @if (addRoomForm.get('capacity')?.hasError('required') && addRoomForm.get('capacity')?.touched) {
+        <div class="text-danger">مطلوب</div>
+        }
+      </div>
+      <div class="mb-5">
+        <label for="currentOccupancy" class="block mb-2 "> الإشغال الحالي
+        </label>
+        <input type="text" id="currentOccupancy" class="form-control" placeholder="date Issued" formControlName="currentOccupancy">
+        @if (addRoomForm.get('currentOccupancy')?.hasError('required') && addRoomForm.get('currentOccupancy')?.touched) {
+        <div class="text-danger">مطلوب</div>
+        }
+      </div>
+      <div class="mb-5">
+        <label for="type" class="block mb-2">النوع</label>
+        <select id="type" class="form-control" formControlName="type">
+          <option value="" disabled selected>اختر النوع</option>
+          <option value="SINGLE">مفردة</option>
+          <option value="DOUBLE">مزدوجة</option>
+          <option value="DORM">DORM</option>
+        </select>
+        @if (addRoomForm.get('type')?.hasError('required') && addRoomForm.get('type')?.touched) {
+          <div class="text-danger">مطلوب</div>
+        }
+      </div>
+      
+      <div class="mb-5">
+        <label for="status" class="block mb-2">الحالة</label>
+        <select id="status" class="form-control" formControlName="status">
+          <option value="" disabled selected>اختر الحالة</option>
+          <option value="AVAILABLE">متاحة</option>
+          <option value="OCCUPIED">مشغولة</option>
+          <option value="MAINTENANCE">تحت الصيانة</option>
+        </select>
+        @if (addRoomForm.get('status')?.hasError('required') && addRoomForm.get('status')?.touched) {
+          <div class="text-danger">مطلوب</div>
+        }
+      </div>
+      
+     
+         <button type="submit"
+        class="btn-main me-3 ">اضافه</button>
+      <button type="button" (click)="onClose()"
+        class="btn-main-delete ">الغاء</button>
+     
+    </form>
+  </section>
+  
