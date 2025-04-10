@@ -5,6 +5,9 @@ import { BuildingsService } from '../../core/services/buildings.service';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { NgClass, NgFor } from '@angular/common';
 import { SearchPipe } from '../../core/pipes/search.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { Ibuilding } from '../../core/interfaces/ibuilding';
+import { AddBuildingComponent } from '../add-building/add-building.component';
 
 @Component({
   selector: 'app-buildings-list',
@@ -18,7 +21,7 @@ export class BuildingsListComponent {
 
   //#region attributes
     res: any[] = []; // البيانات الأصلية
-  
+
   
         //#region pagination attributes
       selectedBuilding: any = {};
@@ -66,7 +69,7 @@ export class BuildingsListComponent {
       });
     }
   
-  
+
     ngOnInit(): void {
      
       this.getBuildings(); // ��لب البيانات الأصلية عند تشغيل المكون
