@@ -72,7 +72,7 @@ export class AddPenaltyComponent  {
 
     getPenaltyforSpecificUser() {
       if (!this.userData?.userId) {
-        console.warn('No user ID selected yet.');
+        this.getAllPenalties();
         return;
       }
     

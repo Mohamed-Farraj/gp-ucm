@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center mb-2">
       <h4 class="fw-bold m-auto mb-5">الجزاءات</h4>
      
-          <button type="button" (click)="openDialog()"
+          <button [disabled]="!userData" type="button" (click)="openDialog()"
         class="btn-main d-block me-auto">اضافه جزاء</button>
       
     
