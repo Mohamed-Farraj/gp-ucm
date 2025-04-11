@@ -1,10 +1,15 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { SharedDataService } from '../../core/services/shared-data.service';
+import { SharedDataService } from './../../core/services/shared-data.service';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { BuildingsService } from '../../core/services/buildings.service';
 import { NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { BuildingsListComponent } from '../buildings-list/buildings-list.component';
 import { Subject, takeUntil } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { AddRoomComponent } from '../add-room/add-room.component';
+import { Irooms } from '../../core/interfaces/irooms';
+import { AddBuildingComponent } from '../add-building/add-building.component';
+import { Ibuilding } from '../../core/interfaces/ibuilding';
 
 @Component({
   selector: 'app-rooms',
@@ -19,7 +24,14 @@ export class RoomsComponent {
   selectedBuilding: any;
   @Output() refreshParent = new EventEmitter<void>();
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
+  private readonly _BuildingsService=inject (BuildingsService);
 
+  public  dialog = inject(MatDialog);
+  Irooms: Irooms[] = [];
+  room!: Irooms;
+  
+  Ibuildings: Ibuilding[] = [];
+  building!: Ibuilding;
   getArabicType(type: string): string {
     const translations: { [key: string]: string } = {
       'SINGLE': 'فردي',
@@ -64,6 +76,7 @@ export class RoomsComponent {
       next: (response: any) => {
         console.log('Rooms:', response);
         this.rooms = response.data; // أو حسب البنية
+        this.Irooms=response.data
       },
       error: (error: any) => {
         if (error.status === 404) {
@@ -110,6 +123,32 @@ export class RoomsComponent {
     )
   }
 }
+
+openDialog(): void {
+      const dialogRef = this.dialog.open(AddRoomComponent, {
+        width: '50%', // Set the width of the dialog
+        data: this.rooms || null, // Pass data to the dialog
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.getAllRooms(this.selectedBuilding?.id); // Refresh the list after the dialog is closed
+        }
+      });
+    }
+
+    openBuildingDialog(): void {
+      const dialogRef = this.dialog.open(AddBuildingComponent, {
+        width: '50%', // Set the width of the dialog
+        data: this.building || null, // Pass data to the dialog
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.dataService.notifyBuildingsChanged();
+        }
+      });
+    }
 
   ngOnDestroy(): void {
     this.destroy$.next();

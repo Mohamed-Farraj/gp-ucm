@@ -22,6 +22,7 @@ export class AddPenaltyComponent  {
     isModelOpen = false;
     penalties: Ipenalty[] = [];
     penalty!: Ipenalty;
+    allPenalties = []
      private readonly _PenaltyService=inject(PenaltyService);
      private readonly _dataService = inject(SharedDataService);
      private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
@@ -49,10 +50,26 @@ export class AddPenaltyComponent  {
 
       
 
-    // ngOnInit(): void {
-    //   this.getPenaltyforSpecificUser();
-    // }
-  
+    ngOnInit(): void {
+      this.getAllPenalties();
+    }
+
+    getAllPenalties() {
+
+      this._PenaltyService.getAllpenalties().subscribe({
+        next: (res: any) => {
+          this.penalties = Array.isArray(res.data) ? res.data : [];
+          console.log('Penalties for user:', this.penalties);
+        },
+        error: (err) => {
+          console.error('Error fetching penalties:', err);
+          this.penalties = []; 
+        },
+      });
+    }
+    
+
+
     getPenaltyforSpecificUser() {
       if (!this.userData?.userId) {
         console.warn('No user ID selected yet.');

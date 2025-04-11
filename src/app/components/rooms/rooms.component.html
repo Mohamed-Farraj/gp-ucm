@@ -43,8 +43,8 @@
         <h6 class="text-muted mb-3"> اجراءات:</h6>
         <div class="row">
           <div class="col-sm-6 d-flex gap-3">
-            <button class="btn btn-primary">اضافة مبنى</button>
-            <button [disabled]="!selectedBuilding" [class.btndisabled]="!selectedBuilding" class="btn btn-success">اضافة غرفه</button>
+            <button (click)="openBuildingDialog()" class="btn btn-primary">اضافة مبنى</button>
+            <button (click)="openDialog()" [disabled]="!selectedBuilding" [class.btndisabled]="!selectedBuilding" class="btn btn-success">اضافة غرفه</button>
           </div>
           <div class="col-sm-6 d-flex justify-content-end">
             <button (click)="deleteBuilding(selectedBuilding?.university?.id , selectedBuilding?.id)" [disabled]="!selectedBuilding" [class.btndisabled]="!selectedBuilding" class="btn btn-danger">حذف المبنى</button>
@@ -55,7 +55,7 @@
   </div>
 <section *ngIf="selectedBuilding">
 
-<table class="table table-hover">
+<table class="table m-auto table-hover">
     <thead class="">
       <tr class="">
         <th scope="col">الغرفة</th>

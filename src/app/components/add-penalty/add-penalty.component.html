@@ -2,14 +2,20 @@
 <section class="bg-main-light container  my-5 p-4 rounded-4  " dir="rtl">
     <div class="flex justify-between items-center mb-2">
       <h4 class="fw-bold m-auto mb-5">الجزاءات</h4>
-      <button type="button" (click)="openDialog()"
+     
+          <button type="button" (click)="openDialog()"
         class="btn-main d-block me-auto">اضافه جزاء</button>
+      
+    
     </div>
     <div class="">
       <table class="w-100 ">
         
         <thead class="text-xs ">
           <tr>
+            <th scope="col" class=" py-3">
+              الاسم
+          </th>
             <th scope="col" class=" py-3">
                 اسم الجزاء
             </th>
@@ -28,6 +34,9 @@
           @if (penalties.length > 0) {
           @for (item of penalties; track $index) {
           <tr class=" border-bottom ">
+            <th scope="row" class=" py-4 ">
+              {{item.user.firstName}}
+            </th>
             <th scope="row" class=" py-4 ">
               {{item.penaltyTitle}}
             </th>
@@ -49,9 +58,7 @@
     </div>
   </section>
   
-  <!-- <app-model [isOpen]="isModelOpen" (closeModel)="closeModel()">
-    <app-add-deadline (onCloseModel)="closeModel()" [data]="deadline"></app-add-deadline>
-  </app-model>  -->
+
         
     
    

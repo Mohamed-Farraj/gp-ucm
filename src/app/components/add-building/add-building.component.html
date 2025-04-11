@@ -1,0 +1,33 @@
+<section class="bg-main-light container px-4 rtl py-5  " dir="rtl">
+
+
+    <h5 class="mb-5 ">اضافة مبني</h5>
+    <form [formGroup]="addBuildingForm" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+      <div class="mb-5">
+        <label for="name" class="block mb-2">  اسم المبني</label>
+        <input type="text" id="name" class="form-control" placeholder="اكتب الاسم هنا" formControlName="name">
+        @if (addBuildingForm.get('name')?.hasError('required') && addBuildingForm.get('name')?.touched) {
+        <div class="text-danger">مطلوب</div>
+        }
+      </div>
+      <div class="mb-5">
+        <label for="type" class="block mb-2">النوع</label>
+        <select id="type" class="form-control" formControlName="type">
+          <option value="" disabled selected>اختر النوع</option>
+          <option value="MALE">ذكور</option>
+          <option value="FEMALE">إناث</option>
+        </select>
+        @if (addBuildingForm.get('type')?.hasError('required') && addBuildingForm.get('type')?.touched) {
+          <div class="text-danger">مطلوب</div>
+        }
+      </div>
+      
+     
+         <button type="submit"
+        class="btn-main me-3 ">اضافه</button>
+      <button type="button" (click)="onClose()"
+        class="btn-main-delete ">الغاء</button>
+     
+    </form>
+  </section>
+  
