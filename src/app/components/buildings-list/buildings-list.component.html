@@ -1,4 +1,4 @@
-<section>
+<section class="d-flex flex-column justify-content-center">
     <!-- commented by d-none -->
     <div class="filteration">
         <div class="mb-3 d-none">
@@ -52,7 +52,7 @@
 
       
 
-      <h4>
+      <h4 class="text-center">
         اجمالي عدد المباني:
         {{
           searchControl.value || selectedStatuses.length > 0
@@ -118,5 +118,5 @@
         </ul>
       </nav>
 
-      <button (click)="removeSelection()" class="btn btn-outline-warning">ازاله التحديد</button>
+      <button (click)="removeSelection()" class="btn btn-outline-warning mx-auto">ازاله التحديد</button>
 </section>

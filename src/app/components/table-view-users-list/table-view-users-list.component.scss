@@ -1,7 +1,6 @@
-.table {
+.table,.card {
     border-collapse: separate;
-    border-spacing: 0 15px; /* Vertical spacing between rows */
-    width: 90%;
+    // border-spacing: 0 15px; /* Vertical spacing between rows */
     margin: auto;
 }
 
@@ -11,7 +10,13 @@
     transition: all 0.3s ease;
 }
  td, th {
-    padding:.5rem;
+    padding:0.25rem;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: fit-content;
+    max-width: 200px;
 }
 h4{color:var(--main-color)}
 
@@ -48,4 +53,11 @@ h4{color:var(--main-color)}
   .custom-checkbox:checked {
     accent-color: var(--main-color);
 
+  }
+
+  .females{
+    color: palevioletred;
+  }
+  .bg-females{
+    background-color: palevioletred;
   }

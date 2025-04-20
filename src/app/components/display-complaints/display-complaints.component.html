@@ -1,25 +1,41 @@
-<section class="container-fluid">
-  <div *ngIf="!isAdmin">
-    <h1>Complaint add form</h1>
-  </div>
-    <div class="row gy-4">
-        @for (item of filteredComplaints; track $index) 
-        {
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                      {{item.createdAt | date:'dd/MM/yyyy, hh:mm a' }}
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">{{item.username}}</h5>
-                      <p class="card-text">
-                        {{item.complaintText}}
-                      </p>
-                      <button (click)="readMore(item.complaintText)" class="btn btn-primary">عرض الشكوى</button>
-                      <button (click)="deleteComplaint(item.id)" class="btn btn-outline-danger mx-2">مسح</button>
-                    </div>
-                  </div>
+<section class="row flex-lg-nowrap">
+  <section class="col-md-3 py-3 px-3 side-content">
+    <app-users-side-list></app-users-side-list>
+  </section>
+  <section class="col-md-7 flex-grow-1 main-content">
+    <section class="container-fluid">
+      <div *ngIf="!isAdmin">
+        <h1>Complaint add form</h1>
+      </div>
+      <div class="row gy-4">
+        @for (item of filteredComplaints; track $index) {
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              {{ item.createdAt | date : "dd/MM/yyyy, hh:mm a" }}
             </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ item.username }}</h5>
+              <p class="card-text">
+                {{ item.complaintText }}
+              </p>
+              <button
+                (click)="readMore(item.complaintText)"
+                class="btn btn-primary"
+              >
+                عرض الشكوى
+              </button>
+              <button
+                (click)="deleteComplaint(item.id)"
+                class="btn btn-outline-danger mx-2"
+              >
+                مسح
+              </button>
+            </div>
+          </div>
+        </div>
         }
-    </div>
+      </div>
+    </section>
+  </section>
 </section>

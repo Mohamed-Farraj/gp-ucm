@@ -14,7 +14,7 @@ import { Ibuilding } from '../../core/interfaces/ibuilding';
 @Component({
   selector: 'app-rooms',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, BuildingsListComponent],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss'
 })

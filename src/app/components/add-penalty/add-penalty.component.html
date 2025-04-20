@@ -1,65 +1,64 @@
-
-<section class="bg-main-light container  my-5 p-4 rounded-4  " dir="rtl">
-    <div class="flex justify-between items-center mb-2">
-      <h4 class="fw-bold m-auto mb-5">الجزاءات</h4>
-     
-          <button [disabled]="!userData" type="button" (click)="openDialog()"
-        class="btn-main d-block me-auto">اضافه جزاء</button>
-      
-    
-    </div>
-    <div class="">
-      <table class="w-100 ">
-        
-        <thead class="text-xs ">
-          <tr>
-            <th scope="col" class=" py-3">
-              الاسم
-          </th>
-            <th scope="col" class=" py-3">
-                اسم الجزاء
-            </th>
-            <th scope="col" class=" py-3">
-                سبب الجزاء
-            </th>
-            <th scope="col" class=" py-3">
-                تاريخ الجزاء
-            </th>
-            <th scope="col" class=" py-3">
-              <span class="">اضـافة او حـذف</span>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          @if (penalties.length > 0) {
-          @for (item of penalties; track $index) {
-          <tr class=" border-bottom ">
-            <th scope="row" class=" py-4 ">
-              {{item.user.firstName}}
-            </th>
-            <th scope="row" class=" py-4 ">
-              {{item.penaltyTitle}}
-            </th>
-            <td class="py-4">
-              {{item.reason}}
-            </td>
-            <td class="py-4">
-              {{item.dateIssued | date:'yyyy/MM/dd, hh:mm a' }}
-            </td>
-            <td class="py-4 text-right">
-             
-              <button type="button" (click)="deletePenalty(item.id)"
-                class=" btn-main-delete">حذف</button>
-            </td>
-          </tr>
-          }}
-        </tbody>
-      </table>
-    </div>
+<section class="row flex-lg-nowrap">
+  <section class="col-md-3 py-3 px-3 side-content">
+    <app-users-side-list></app-users-side-list>
   </section>
-  
+  <section class="col-md-7 flex-grow-1 main-content">
+    <section class="bg-main-light container my-5 p-4 rounded-4" dir="rtl">
+      <div class="flex justify-between items-center mb-2">
+        <h4 class="fw-bold m-auto mb-5">الجزاءات</h4>
 
-        
-    
-   
-    
+        <button
+          [disabled]="!userData"
+          type="button"
+          (click)="openDialog()"
+          class="btn-main d-block me-auto"
+        >
+          اضافه جزاء
+        </button>
+      </div>
+      <div class="">
+        <table class="w-100">
+          <thead class="text-xs">
+            <tr>
+              <th scope="col" class="py-3">الاسم</th>
+              <th scope="col" class="py-3">اسم الجزاء</th>
+              <th scope="col" class="py-3">سبب الجزاء</th>
+              <th scope="col" class="py-3">تاريخ الجزاء</th>
+              <th scope="col" class="py-3">
+                <span class="">اضـافة او حـذف</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (penalties.length > 0) { @for (item of penalties; track $index)
+            {
+            <tr class="border-bottom">
+              <th scope="row" class="py-4">
+                {{ item.user.firstName }}
+              </th>
+              <th scope="row" class="py-4">
+                {{ item.penaltyTitle }}
+              </th>
+              <td class="py-4">
+                {{ item.reason }}
+              </td>
+              <td class="py-4">
+                {{ item.dateIssued | date : "yyyy/MM/dd, hh:mm a" }}
+              </td>
+              <td class="py-4 text-right">
+                <button
+                  type="button"
+                  (click)="deletePenalty(item.id)"
+                  class="btn-main-delete"
+                >
+                  حذف
+                </button>
+              </td>
+            </tr>
+            }}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+</section>

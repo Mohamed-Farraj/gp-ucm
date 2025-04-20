@@ -22,7 +22,7 @@ export class UsersSideListComponent {
     isCollapsed: boolean = true;
     pagedItems: any[] = [];
     currentPage: number = 1;
-    pageSize: number = 7;
+    pageSize: number = 10;
     totalPages: number = 0;
     pages: number[] = [];
     //#endregion

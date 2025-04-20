@@ -4,11 +4,12 @@ import { ComplaintsService } from '../../core/services/complaints.service';
 import { DatePipe, NgIf } from '@angular/common';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { Subject, takeUntil } from 'rxjs';
+import { UsersSideListComponent } from "../users-side-list/users-side-list.component";
 
 @Component({
   selector: 'app-display-complaints',
   standalone: true,
-  imports: [DatePipe,NgIf],
+  imports: [DatePipe, NgIf, UsersSideListComponent],
   templateUrl: './display-complaints.component.html',
   styleUrl: './display-complaints.component.scss'
 })
