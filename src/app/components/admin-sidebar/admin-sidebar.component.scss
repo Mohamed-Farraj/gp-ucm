@@ -110,7 +110,7 @@ h4{color:var(--main-color)}
     justify-content: center;
   }
 
-  .active > .page-link, .page-link.active {
+  .active ,.active > .page-link, .page-link.active {
     background-color: var(--main-color);
     border-color: var(--main-color);
     color:white

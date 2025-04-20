@@ -20,6 +20,15 @@ import { DeadlinsFormComponent } from './components/deadlins-form/deadlins-form.
 import { adminGuard } from './core/guards/admin.guard';
 import { UserLandingPageComponent } from './components/user-landing-page/user-landing-page.component';
 import { DisplayComplaintsComponent } from './components/display-complaints/display-complaints.component';
+import { ArDisplayComponent } from './components/ar-display/ar-display.component';
+import { TableViewUsersListComponent } from './components/table-view-users-list/table-view-users-list.component';
+import { GuidlinesComponent } from './components/guidlines/guidlines.component';
+import { ApplicationDeadlineComponent } from './components/application-deadline/application-deadline.component';
+import { PenaltyComponent } from './components/penalty/penalty.component';
+import { RoomsComponent } from './components/rooms/rooms.component';
+import { BuildingsListComponent } from './components/buildings-list/buildings-list.component';
+import { AdminLandingPageComponent } from './components/admin-landing-page/admin-landing-page.component';
+import { AddPenaltyComponent } from './components/add-penalty/add-penalty.component';
 
 export const routes: Routes = [
 
@@ -40,10 +49,16 @@ export const routes: Routes = [
 
     ]},
     {path:"admin",component:AdminLayoutComponent, canActivate:[adminGuard],children:[
-        {path:"",redirectTo:"admin-dashboard",pathMatch:"full"},
-        {path:"admin-dashboard",component:AdminDashboardComponent},
-        {path:"add-guide", component:AddGuideLinesComponent},
-
+        {path:"",redirectTo:"home",pathMatch:"full"},
+        {path:"home",component:AdminLandingPageComponent},
+        {path:"ar",component:TableViewUsersListComponent},
+        {path:"details/:id",component:ArDisplayComponent},
+        {path:"guidelines",component:AddGuideLinesComponent},
+        {path:"deadline", component:DeadlinsFormComponent},
+        {path:"penalty",component:AddPenaltyComponent},
+        {path:"complaints",component:DisplayComplaintsComponent},
+        {path:'buildings',component: RoomsComponent,},
+        {path:'',component: BuildingsListComponent, outlet: 'side' },
 
     ]},
     {path:"**",component:NotfoundComponent}

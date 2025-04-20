@@ -34,6 +34,8 @@
               class="d-flex cursor-pointer align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
               [class.active]="activeTab === item.id"
               (click)="setActiveTab(item.id)"
+              routerLink="{{item.id}}"
+              routerLinkActive="active"
             >
               <i class="fa-solid fa-2xl" [ngClass]="item.icon"></i>
               <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }">
@@ -56,7 +58,7 @@
   </div>
 </div>
 
-  <section style="padding-inline-start: 80px" class="row flex-lg-nowrap">
+  <section dir="rtl" style="padding-inline-end: 80px">
     <section
       class="position-fixed fixed-top sidebar gap-5 px-3 py-5 d-flex flex-column"
       [class.collapsed]="isCollapsed"
@@ -99,6 +101,8 @@
             <a
               *ngFor="let item of navItems"
               class="d-flex cursor-pointer align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
+              routerLink="{{item.id}}"
+              routerLinkActive="active"
               [class.active]="activeTab === item.id"
               (click)="setActiveTab(item.id)"
             >
@@ -124,62 +128,17 @@
 
     <!-- --------------------------------------------------------------------------- -->
 
-    
-    <section dir="rtl" class="col-md-7 flex-grow-1 main-content">
-      <app-ar-display 
-        *ngIf="activeTab === 'ar'" 
-        [selectedAdmissionRequest]="selectedAdmissionRequest">
-      </app-ar-display>
-    
-      <app-add-guide-lines *ngIf="activeTab === 'guidelines'"></app-add-guide-lines>
-    
-      <app-admin-landing-page 
-        *ngIf="activeTab === 'home'" 
-        [data]="objectData">
-      </app-admin-landing-page>
-    
-      <app-deadlins-form *ngIf="activeTab === 'deadline'"></app-deadlins-form>
-    
-      <app-add-penalty *ngIf="activeTab === 'penalty'"></app-add-penalty>
-    
-      <section *ngIf="activeTab === 'complaints'" class="py-3">
-        <app-display-complaints [isAdmin]="true"></app-display-complaints>
-      </section>
-    
-      <section *ngIf="activeTab === 'buildings'" class="py-3">
-        <app-rooms></app-rooms>
-      </section>
+    <!-- 
+    <section  class="col-md-3 py-3 px-3 side-content">
+  
     </section>
+    
+    <section  class="col-md-7 flex-grow-1 main-content">
+
+    </section> 
+    -->
+    <router-outlet></router-outlet>
     
     <!----------------------------------------------------------------- ------------- -->
-    <section
-      [class.d-none]="
-        activeTab != 'ar' &&
-        activeTab != 'penalty' &&
-        activeTab != 'complaints' &&
-        activeTab != 'buildings'
-      "
-      dir="rtl"
-      class="col-md-3 py-5 px-3 side-content"
-    >
-      <div class="text-center">
-        <div class="tab-content" id="nav-tabContent">
-          <!-- pane for admission requests & Penalty & Complaints  -->
-          <app-users-side-list
-            [class.d-none]="
-              activeTab != 'ar' &&
-              activeTab != 'penalty' &&
-              activeTab != 'complaints'
-            "
-            [class.d-none]="activeTab == 'buildings'"
-          ></app-users-side-list>
-
-          <!-- pane for buildings  -->
-            <app-buildings-list
-              [class.d-none]="activeTab != 'buildings'"
-            ></app-buildings-list>
-        </div>
-      </div>
-    </section>
   </section>
 </div>

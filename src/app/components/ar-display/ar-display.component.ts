@@ -2,6 +2,9 @@ import { NgIf } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../core/services/auth.service';
+import { TableViewUsersListComponent } from '../table-view-users-list/table-view-users-list.component';
+import { SharedDataService } from '../../core/services/shared-data.service';
+import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -14,6 +17,8 @@ import { AuthService } from '../../core/services/auth.service';
 export class ArDisplayComponent {
 
   private readonly _AuthService = inject(AuthService);
+  private readonly dataService = inject(SharedDataService);
+  private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
 
    Toast = Swal.mixin({
     toast: true,
@@ -75,6 +80,20 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
     }
 }
 
- @Input({required:true}) selectedAdmissionRequest :any = {};
+ @Input() selectedAdmissionRequest :any = {};
+
+ ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
+    this.selectedAdmissionRequest = data;
+    
+  })
+ }
+
+ ngOnDestroy(): void {
+  this.destroy$.next();
+  this.destroy$.complete();
+}
 
 }

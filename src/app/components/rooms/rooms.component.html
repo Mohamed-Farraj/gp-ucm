@@ -1,92 +1,127 @@
-<div class="card shadow-sm mb-4" style="direction: rtl;">
-    <div 
-         [class.bg-info]="selectedBuilding?.type === 'MALE'"
-         [class.bg-females]="selectedBuilding?.type === 'FEMALE'" 
-         class="card-header text-white">
-      <h5 class="card-title mb-0">تفاصيل المبنى</h5>
-    </div>
-    
-    <div class="card-body">
-      <!-- الصف الأول -->
-      <div class="row mb-3">
-        <div class="col-sm-6">
-          <dl class="row mb-0">
-            <dt class="col-sm-4 text-muted">عدد الغرف:</dt>
-            <dd class="col-sm-8 fw-bold">{{rooms?.length}}</dd>
-          </dl>
-        </div>
-        <div class="col-sm-6">
-          <dl class="row mb-0">
-            <dt class="col-sm-4 text-muted">الاسم:</dt>
-            <dd class="col-sm-8"> {{selectedBuilding?.name}}</dd>
-          </dl>
-        </div>
+<section class="row flex-lg-nowrap">
+  <section class="col-md-3 py-3 px-3 side-content">
+    <app-buildings-list></app-buildings-list>
+  </section>
+  <section class="col-md-7 flex-grow-1 main-content">
+    <div class="card shadow-sm mb-4" style="direction: rtl">
+      <div
+        [class.bg-info]="selectedBuilding?.type === 'MALE'"
+        [class.bg-females]="selectedBuilding?.type === 'FEMALE'"
+        class="card-header text-white"
+      >
+        <h5 class="card-title mb-0">تفاصيل المبنى</h5>
       </div>
-  
-      <!-- الصف الثاني -->
-      <div class="row mb-3">
-        <div class="col-sm-6">
-          <dl class="row mb-0">
-            <dt class="col-sm-4 text-muted">النوع:</dt>
-            <dd class="col-sm-8">
-              <span 
-              [class.bg-info]="selectedBuilding?.type === 'MALE'"
-              [class.bg-females]="selectedBuilding?.type === 'FEMALE'" 
-              class="badge text-xl">{{ getArabicGender(selectedBuilding?.type) }}</span>
-            </dd>
-          </dl>
-        </div>
-      </div>
-  
-      <!-- تفاصيل الجامعة -->
-      <div class="border-top pt-3">
-        <h6 class="text-muted mb-3"> اجراءات:</h6>
-        <div class="row">
-          <div class="col-sm-6 d-flex gap-3">
-            <button (click)="openBuildingDialog()" class="btn btn-primary">اضافة مبنى</button>
-            <button (click)="openDialog()" [disabled]="!selectedBuilding" [class.btndisabled]="!selectedBuilding" class="btn btn-success">اضافة غرفه</button>
+
+      <div class="card-body">
+        <!-- الصف الأول -->
+        <div class="row mb-3">
+          <div class="col-sm-6">
+            <dl class="row mb-0">
+              <dt class="col-sm-4 text-muted">عدد الغرف:</dt>
+              <dd class="col-sm-8 fw-bold">{{ rooms?.length }}</dd>
+            </dl>
           </div>
-          <div class="col-sm-6 d-flex justify-content-end">
-            <button (click)="deleteBuilding(selectedBuilding?.university?.id , selectedBuilding?.id)" [disabled]="!selectedBuilding" [class.btndisabled]="!selectedBuilding" class="btn btn-danger">حذف المبنى</button>
+          <div class="col-sm-6">
+            <dl class="row mb-0">
+              <dt class="col-sm-4 text-muted">الاسم:</dt>
+              <dd class="col-sm-8">{{ selectedBuilding?.name }}</dd>
+            </dl>
           </div>
         </div>
+
+        <!-- الصف الثاني -->
+        <div class="row mb-3">
+          <div class="col-sm-6">
+            <dl class="row mb-0">
+              <dt class="col-sm-4 text-muted">النوع:</dt>
+              <dd class="col-sm-8">
+                <span
+                  [class.bg-info]="selectedBuilding?.type === 'MALE'"
+                  [class.bg-females]="selectedBuilding?.type === 'FEMALE'"
+                  class="badge text-xl"
+                  >{{ getArabicGender(selectedBuilding?.type) }}</span
+                >
+              </dd>
+            </dl>
+          </div>
+        </div>
+
+        <!-- تفاصيل الجامعة -->
+        <div class="border-top pt-3">
+          <h6 class="text-muted mb-3">اجراءات:</h6>
+          <div class="row">
+            <div class="col-sm-6 d-flex gap-3">
+              <button (click)="openBuildingDialog()" class="btn btn-primary">
+                اضافة مبنى
+              </button>
+              <button
+                (click)="openDialog()"
+                [disabled]="!selectedBuilding"
+                [class.btndisabled]="!selectedBuilding"
+                class="btn btn-success"
+              >
+                اضافة غرفه
+              </button>
+            </div>
+            <div class="col-sm-6 d-flex justify-content-end">
+              <button
+                (click)="
+                  deleteBuilding(
+                    selectedBuilding?.university?.id,
+                    selectedBuilding?.id
+                  )
+                "
+                [disabled]="!selectedBuilding"
+                [class.btndisabled]="!selectedBuilding"
+                class="btn btn-danger"
+              >
+                حذف المبنى
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-<section *ngIf="selectedBuilding">
-
-<table class="table m-auto table-hover">
-    <thead class="">
-      <tr class="">
-        <th scope="col">الغرفة</th>
-        <th scope="col">النوع</th>
-        <th scope="col">الكثافة</th>
-        <th scope="col">عدد الافراد</th>
-        <th scope="col">الحاله</th>
-        <th scope="col">
-            المبنى
-        </th>
-        <th scope="col">تعديل</th>
-        <th scope="col">حذف</th>
-      </tr>
-    </thead>
-    <tbody class="">
-      @for (item of rooms; track $index) 
-      {
-        <tr  class="">
-          <th scope="row">{{item?.roomNumber}}</th>
-          <td>{{ getArabicType(item?.type) }}</td>
-          <td>{{item?.capacity}}</td>
-          <td>{{item?.currentOccupancy}}</td>
-          <td>{{getArabicStatue(item?.status)}}</td>
-          <td>{{item?.building?.name}}</td>
-          <td><button class="btn px-4 rounded rounded-pill btn-warning">تعديل</button></td>
-          <td><button (click)="deleteRoom(item?.building?.id,item?.id)" class="btn px-4 rounded rounded-pill btn-danger">حذف</button></td>
-        </tr>
-      }
-
-    </tbody>
-  </table>
-
-
+    <section *ngIf="selectedBuilding">
+      <table class="table m-auto table-hover">
+        <thead class="">
+          <tr class="">
+            <th scope="col">الغرفة</th>
+            <th scope="col">النوع</th>
+            <th scope="col">الكثافة</th>
+            <th scope="col">عدد الافراد</th>
+            <th scope="col">الحاله</th>
+            <th scope="col">المبنى</th>
+            <th scope="col">تعديل</th>
+            <th scope="col">حذف</th>
+          </tr>
+        </thead>
+        <tbody class="">
+          @for (item of rooms; track $index) {
+          <tr class="">
+            <th scope="row">{{ item?.roomNumber }}</th>
+            <td>{{ getArabicType(item?.type) }}</td>
+            <td>{{ item?.capacity }}</td>
+            <td>{{ item?.currentOccupancy }}</td>
+            <td>{{ getArabicStatue(item?.status) }}</td>
+            <td>{{ item?.building?.name }}</td>
+            <td>
+              <button class="btn px-4 rounded rounded-pill btn-warning">
+                تعديل
+              </button>
+            </td>
+            <td>
+              <button
+                (click)="deleteRoom(item?.building?.id, item?.id)"
+                class="btn px-4 rounded rounded-pill btn-danger"
+              >
+                حذف
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </section>
+  </section>
 </section>

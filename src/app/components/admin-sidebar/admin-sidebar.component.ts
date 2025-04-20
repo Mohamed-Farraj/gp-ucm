@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { SharedDataService } from '../../core/services/shared-data.service';
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { Location, NgClass, NgFor, NgIf } from '@angular/common';
 import { ArDisplayComponent } from "../ar-display/ar-display.component";
 import Aos from 'aos';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, takeUntil } from 'rxjs/operators';
 import { AddGuideLinesComponent } from "../add-guide-lines/add-guide-lines.component";
 import { AdminLandingPageComponent } from "../admin-landing-page/admin-landing-page.component";
 import { DeadlinsFormComponent } from "../deadlins-form/deadlins-form.component";
@@ -19,6 +19,7 @@ import { BuildingsListComponent } from "../buildings-list/buildings-list.compone
 import { RoomsComponent } from "../rooms/rooms.component";
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Subject } from 'rxjs';
+import { ActivationEnd, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -39,6 +40,9 @@ import { Subject } from 'rxjs';
     DisplayComplaintsComponent,
     BuildingsListComponent,
     RoomsComponent,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'] // تم تصحيح الاسم هنا
@@ -47,7 +51,9 @@ export class AdminSidebarComponent {
   
   protected readonly _AuthService = inject(AuthService);
   private readonly dataService = inject(SharedDataService);
+  private readonly router = inject(Router);
   private readonly cd = inject(ChangeDetectorRef);
+  private readonly location = inject(Location);
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
   res: any[] = []; // البيانات الأصلية
   selectedAdmissionRequest: any = {};
@@ -64,10 +70,23 @@ export class AdminSidebarComponent {
     { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
   ];
   
+  // showSideContent = false;
+  // currentRoute: string = '';
+  // private allowedRoutes = ['ar', 'penalty', 'complaints', 'buildings'];
+  
+  // isSideContentAllowed(route: string): boolean {
+  //   return this.allowedRoutes.includes(route);
+  // }
+  
+ 
 
 setActiveTab(tab: string) {
   this.activeTab = tab;
-  console.log('Current Active Tab:', this.activeTab);
+
+  // this.router.navigate(['/admin', tab]);
+  // console.log('Current Active Tab:', this.activeTab);
+  // this.isSideContentAllowed(tab)
+
   this.isCollapsed=true;
 }
 
@@ -100,6 +119,8 @@ getActiveTab() {
       },
       error: (err) => { console.log(err); },
     });
+
+    
    
   }
 

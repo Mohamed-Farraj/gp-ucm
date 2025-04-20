@@ -7,11 +7,12 @@ import { SharedDataService } from '../../core/services/shared-data.service';
 import { Ipenalty } from '../../core/interfaces/ipenalty';
 import { CommonModule } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
+import { UsersSideListComponent } from "../users-side-list/users-side-list.component";
 
 @Component({
   selector: 'app-penalty',
   standalone: true,
-  imports: [ReactiveFormsModule , FormsModule, CommonModule ],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, UsersSideListComponent],
   templateUrl: './penalty.component.html',
   styleUrl: './penalty.component.scss'
 })

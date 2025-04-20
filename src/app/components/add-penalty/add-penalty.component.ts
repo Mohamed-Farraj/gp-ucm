@@ -7,11 +7,12 @@ import { PenaltyComponent } from '../penalty/penalty.component';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { filter, Subject, takeUntil, tap } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { UsersSideListComponent } from "../users-side-list/users-side-list.component";
 
 @Component({
   selector: 'app-add-penalty',
   standalone: true,
-  imports: [DatePipe],
+  imports: [DatePipe, UsersSideListComponent],
   templateUrl: './add-penalty.component.html',
   styleUrl: './add-penalty.component.scss'
 })

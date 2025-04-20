@@ -52,7 +52,7 @@ loginSubmit(){
             }
             if(res?.body?.data?.role ==='ADMIN')
             {
-              this.router.navigate(['/admin/admin-dashboard'])
+              this.router.navigate(['/admin/'])
             }
           }, 1000);
         }
