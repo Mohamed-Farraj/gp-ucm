@@ -25,7 +25,7 @@ export class ComplaintsService {
 
   // جلب كل الشكاوى (Admin)
   getAllComplaints(): Observable<any> {
-    const url = `${environment.baseUrl}/admin/get-all-complaints`;
+    const url = `${environment.baseUrl}/admin/view/get-all-complaints`;
     // this.token = localStorage.getItem('userToken')!;
     // const headers = new HttpHeaders({
     //   'Authorization': `Bearer ${this.token}`
@@ -35,7 +35,7 @@ export class ComplaintsService {
 
   // جلب شكوى بواسطة المعرف (Admin)
   getComplaintById(id: number): Observable<any> {
-    const url = `${environment.baseUrl}/admin/get-complaint/${id}`;
+    const url = `${environment.baseUrl}/admin/view/get-complaint/${id}`;
     // this.token = localStorage.getItem('userToken')!;
     // const headers = new HttpHeaders({
     //   'Authorization': `Bearer ${this.token}`
@@ -66,7 +66,7 @@ export class ComplaintsService {
 
   // جلب كل الشكاوى الخاصة بمستخدم معين (Admin)
   getComplaintsByUser(userId: number): Observable<any> {
-    const url = `${environment.baseUrl}/admin/get-user-complaints/${userId}`;
+    const url = `${environment.baseUrl}/admin/view/get-user-complaints/${userId}`;
     // this.token = localStorage.getItem('userToken')!;
     // const headers = new HttpHeaders({
     //   'Authorization': `Bearer ${this.token}`

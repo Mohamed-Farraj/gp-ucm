@@ -16,19 +16,19 @@ export class ArService {
   constructor() { }
    getApplications():Observable<any>
     {
-    return this._HttpClient.get(`${environment.baseUrl}/admin/admission-requests`);
+    return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests`);
     }
   
   
     DecideArState(UId:number,Status:string):Observable<any>{
-      return this._HttpClient.put(`${environment.baseUrl}/admin/admission-requests/${UId}/status?status=${Status}`,
+      return this._HttpClient.put(`${environment.baseUrl}/admin/edit/admission-requests/${UId}/status?status=${Status}`,
         null,
           );
     }
 
     getSpecificApplication(id:number):Observable<any>
     {
-      return this._HttpClient.get(`${environment.baseUrl}/admin/admission-requests/${id}`);
+      return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests/${id}`);
     }
   
 }

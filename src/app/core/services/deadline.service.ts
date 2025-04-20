@@ -17,7 +17,7 @@ token:string = '';
     if (localStorage.getItem('userToken') !== null) {
       this.token = localStorage.getItem('userToken')!;
     }
-   return this._HttpClient.post('http://localhost:8080/admin/application-deadline/1' , data)
+   return this._HttpClient.post('http://localhost:8080/admin/edit/application-deadline/1' , data)
  
   }
 
@@ -35,7 +35,7 @@ token:string = '';
 
   updateDeadLine(id: number, data: object): Observable<any>
   {
-    return this._HttpClient.put(`${environment.baseUrl}/admin/update-application-deadline?deadlineId=${id}&universityId=1`, data);
+    return this._HttpClient.put(`${environment.baseUrl}/admin/edit/update-application-deadline?deadlineId=${id}&universityId=1`, data);
   }
 
 
