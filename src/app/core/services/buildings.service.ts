@@ -32,7 +32,7 @@ export class BuildingsService {
    */
   addBuilding(request: any): Observable<any> {
     
-    const url = `${this.baseUrl}/admin/add-buildings`;
+    const url = `${this.baseUrl}/admin/edit/add-buildings`;
     return this.http.post(url, request);
   }
 
@@ -60,7 +60,7 @@ export class BuildingsService {
    * Endpoint: POST /admin/rooms/add
    */
   addRoom(dto: any): Observable<any> {
-    const url = `${this.baseUrl}/admin/rooms/add`;
+    const url = `${this.baseUrl}/admin/edit/rooms/add`;
     return this.http.post(url, dto);
   }
 

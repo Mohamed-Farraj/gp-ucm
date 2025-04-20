@@ -12,7 +12,7 @@ export class GuidelinsService {
 
   setguideForm(data:object): Observable<any>
   {
-   return this._HttpClient.post('http://localhost:8080/admin/add-guidelines/1' , data)
+   return this._HttpClient.post('http://localhost:8080/admin/edit/add-guidelines/1' , data)
  
   }
 
@@ -29,6 +29,6 @@ export class GuidelinsService {
 
   updateGuideline(id: number, data: object): Observable<any>
   {
-    return this._HttpClient.put(`http://localhost:8080/admin/update-guidelines?universityId=1&guidelineId=${id}`, data);
+    return this._HttpClient.put(`http://localhost:8080/admin/edit/update-guidelines?universityId=1&guidelineId=${id}`, data);
   }
 }
