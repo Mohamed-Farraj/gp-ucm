@@ -92,7 +92,7 @@
             <th scope="col">عدد الافراد</th>
             <th scope="col">الحاله</th>
             <th scope="col">المبنى</th>
-            <th scope="col">تعديل</th>
+            <!-- <th scope="col">تعديل</th> -->
             <th scope="col">حذف</th>
           </tr>
         </thead>
@@ -105,11 +105,11 @@
             <td>{{ item?.currentOccupancy }}</td>
             <td>{{ getArabicStatue(item?.status) }}</td>
             <td>{{ item?.building?.name }}</td>
-            <td>
+            <!-- <td>
               <button class="btn px-4 rounded rounded-pill btn-warning">
                 تعديل
               </button>
-            </td>
+            </td> -->
             <td>
               <button
                 (click)="deleteRoom(item?.building?.id, item?.id)"

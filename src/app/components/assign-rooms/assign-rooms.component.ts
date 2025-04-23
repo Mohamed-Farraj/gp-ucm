@@ -1,31 +1,34 @@
-import { Component, inject } from '@angular/core';
-import { debounceTime, Subject, takeUntil } from 'rxjs';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { AuthService } from '../../core/services/auth.service';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NgClass, NgFor } from '@angular/common';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../core/services/excel.service';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { AddDeadlineComponent } from '../add-deadline/add-deadline.component';
+import { MatDialog } from '@angular/material/dialog';
+import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { ExportFormComponent } from '../export-form/export-form.component';
-import Swal from 'sweetalert2';
+import { BuildingsService } from '../../core/services/buildings.service';
+import { AssignRowComponent } from "../assign-row/assign-row.component";
 
 @Component({
-  selector: 'app-table-view-users-list',
+  selector: 'app-assign-rooms',
   standalone: true,
-  imports: [ReactiveFormsModule,NgFor,MatDialogModule],
-  templateUrl: './table-view-users-list.component.html',
-  styleUrl: './table-view-users-list.component.scss'
+  imports: [NgFor, NgIf, FormsModule, ReactiveFormsModule, AssignRowComponent],
+  templateUrl: './assign-rooms.component.html',
+  styleUrl: './assign-rooms.component.scss'
 })
-export class TableViewUsersListComponent {
+export class AssignRoomsComponent {
 
   //#region attributes
     res: any[] = []; // البيانات الأصلية
+    resBuildings: any[] = []; // البيانات الأصلية
+    resRooms: any[] = []; // البيانات الأصلية
   
   
         //#region pagination attributes
       selectedAdmissionRequest: any = {};
+      selectedBuilding: any = {};
       isCollapsed: boolean = true;
       pagedItems: any[] = [];
       currentPage: number = 1;
@@ -37,6 +40,7 @@ export class TableViewUsersListComponent {
         //#region filtration attributes
         searchControl = new FormControl('');
         sortControl = new FormControl('normal');// متغير للفرز: "normal" أو "reverse"
+        buildingControl = new FormControl();
         selectedStatuses: string[] = [];// مصفوفة لتخزين الحالات المختارة من checkboxes
         filteredItems: any[] = [];
         //#endregion
@@ -50,12 +54,41 @@ export class TableViewUsersListComponent {
     private readonly router = inject(Router);
     private readonly excel = inject(ExcelService);
     private readonly dialog = inject(MatDialog);
+    private readonly _BuildingsService = inject(BuildingsService)
     private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
   
     constructor() {
       this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
         console.log('Received data:', data);
         this.selectedAdmissionRequest = data; 
+
+        // this.dataService.currentBuildingData.pipe(takeUntil(this.destroy$)).subscribe(data => {
+        //   console.log('building data:', data);
+        //   this.selectedBuilding = data; 
+        // });
+      });
+    }
+
+
+    
+   
+    selectBuilding(e:any|null){
+
+      console.log("in selected building",e.value);
+      const buildingId = e.value;
+      if (!buildingId) {
+        this.resRooms = [];
+        return;
+      }
+    
+      this._BuildingsService.getAvailableRooms(buildingId,'DORM').subscribe({
+        next: (res:any) => {
+          this.resRooms = res.data; // على حسب شكل الريسبونس بتاعك
+          console.log("resRooms",this.resRooms);
+        },
+        error: (err:any) => {
+          console.error('Error loading rooms:', err);
+        }
       });
     }
   
@@ -63,7 +96,7 @@ export class TableViewUsersListComponent {
     ngOnInit(): void {
       this._AuthService.getApplications().subscribe({
         next: (res: any) => {
-         
+          this.getBuildings();
           console.log(res);
           this.res = res.data;
           this.filteredItems = this.res;
@@ -84,8 +117,22 @@ export class TableViewUsersListComponent {
       ).subscribe(() => {
         this.applyFilters();
       });
+    
     }
   
+
+    getBuildings(): void {
+      this._BuildingsService.getAllBuildings(1).subscribe({
+        next: (res: any) => {
+         
+          console.log('building result',res);
+          this.resBuildings = res.data;
+          this.filteredItems = this.res;
+          console.log(this.res);
+        },
+        error: (err) => { console.log(err); },
+      });
+    }
    
     //#region pagination methods
     initPagination(): void {
@@ -140,71 +187,16 @@ export class TableViewUsersListComponent {
     }
     //#endregion
   
-      Toast = Swal.mixin({
-        toast: true,
-        position: 'top',
-        iconColor: 'white',
-        customClass: {
-          popup: 'colored-toast',
-        },
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-      })
   
-    DecideAr(id:number = -1,status:string = 'UNDER_REVIEW',item?:any) {
-      if (id === -1) 
-        {
-          this.Toast.fire({
-          icon: 'error',
-          title: 'حدث خطأ في اختيار رقم المستخدم',
-        })   
-        }
-        else{
-    
-          this._AuthService.DecideArState(id, status).subscribe({
-            next: (response) => {
-              console.log('Operation succeeded:', response);
-              item.status = status;
-              if (status === 'UNDER_REVIEW' ) {
-                this.Toast.fire({
-                  icon: 'success',
-                  title: 'هذا الطلب تحت المراجعة',
-                })   
-              }
-              
-              else if (status === 'ACCEPTED' ) {
-                this.Toast.fire({
-                  icon: 'success',
-                  title: 'قد تم قبول الطلب بنجاح',
-                })   
-              }
-              else if (status === 'REJECTED' ) {
-                this.Toast.fire({
-                  icon: 'success',
-                  title: 'قد تم رفض الطلب بنجاح',
-                })   
-              }
-            },
-            error: (err) => {
-              console.error('Operation failed:', err);
-              this.Toast.fire({
-                icon: 'error',
-                title: err.error.message,
-              })   
-            },
-          });
-    
-         
-    
-    
-        }
-    }
-    
     handleClick(student: any): void {
       console.log(student);
       this.dataService.changeStudentData(student);
     }
+
+    // handleBuildingClick(building: any): void {
+    //   console.log(building);
+    //   this.dataService.changeBuildingData(building);
+    // }
   
     RowClick(item:any): void {
       console.log("hello there this is on row click", item);
@@ -313,5 +305,6 @@ export class TableViewUsersListComponent {
       this.destroy$.next();
       this.destroy$.complete();
     }
+
 
 }

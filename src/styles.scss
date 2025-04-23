@@ -143,11 +143,23 @@ a:hover {
 .bg-main {
   background-color: var(--main-color) !important;
 }
+.bg-main-navy {
+  background-color: var(--dark-base-color) !important;
+}
 .bg-main-light {
   background-color: var(--light-color) !important;
 }
 .btn-main {
   background-color: var(--dark-base-color);
+  padding: .4375rem 1.25rem;
+  border: .0625rem solid #ccc;
+  border-radius: .3125rem;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.btn-main-gold {
+  background-color: var(--main-color);
   padding: .4375rem 1.25rem;
   border: .0625rem solid #ccc;
   border-radius: .3125rem;
