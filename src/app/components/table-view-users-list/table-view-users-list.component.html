@@ -72,8 +72,8 @@
           </label>
         </div>
       </div>
-      <!-- import excel -->
-      <div class="col-12 col-sm-10 col-md-8 col-lg-2 mb-3 text-center d-flex ">
+      <!-- download excel -->
+      <div class="col-12 col-sm-10 col-md-8 col-lg-2 mb-3 text-center d-flex gap-3">
           <button
             type="button"
             class="btn btn-outline-dark rounded-pill d-flex justify-content-center align-items-center gap-2 px-3"
@@ -81,6 +81,14 @@
           >
           <i class="fa-solid fa-download"></i>
           <span>تنزيل</span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-success rounded-pill d-flex justify-content-center align-items-center gap-2 px-3"
+            (click)="openUploadDialog()"
+          >
+          <i class="fa-solid fa-upload"></i>
+          <span>رفع</span>
           </button>
       </div>
     </div>

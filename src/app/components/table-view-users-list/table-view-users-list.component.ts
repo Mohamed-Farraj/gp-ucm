@@ -10,6 +10,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddDeadlineComponent } from '../add-deadline/add-deadline.component';
 import { ExportFormComponent } from '../export-form/export-form.component';
 import Swal from 'sweetalert2';
+import { UploadFormComponent } from '../upload-form/upload-form.component';
 
 @Component({
   selector: 'app-table-view-users-list',
@@ -295,6 +296,24 @@ export class TableViewUsersListComponent {
       //       // يمكنك إضافة معالجة الأخطاء هنا
       //     }
       //   });
+    }
+
+    uploadFile() {
+
+    }
+
+    openUploadDialog():void{
+      const dialogRef = this.dialog.open(UploadFormComponent, {
+        width: '50%', // Set the width of the dialog
+        
+        panelClass: 'transparent-dialog',
+      });
+  
+      dialogRef.afterClosed().subscribe((result:any) => {
+        if (result) {
+          // this.getDeadLine(); // Refresh the list after the dialog is closed
+        }
+      });
     }
 
     openDialog(): void {

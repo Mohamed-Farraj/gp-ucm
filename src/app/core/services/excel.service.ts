@@ -41,5 +41,14 @@ export class ExcelService {
         })
       );
     }
+
+    importAdmissionRequests(formData: FormData): Observable<any> {
+      // const formData = new FormData();
+      // formData.append('file', file);
+      return this.http.post('http://localhost:8080/admin/upload-admission-request', formData,{
+        reportProgress: true,
+        observe: 'response'
+      });
+    }
   
 }

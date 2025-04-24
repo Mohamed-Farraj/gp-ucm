@@ -87,6 +87,11 @@ body {
   font-family: var(--font-family) !important;
   overflow-x: hidden;
 }
+.transparent-dialog .mat-dialog-container {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
 .my-container
 {
   width: 90%;
