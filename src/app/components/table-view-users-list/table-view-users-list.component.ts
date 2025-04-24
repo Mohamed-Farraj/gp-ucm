@@ -279,22 +279,22 @@ export class TableViewUsersListComponent {
     }
   
     downloadFile() {
-      this.excel.exportAdmissionRequests('ALL','ALL')
-        .subscribe({
-          next: (blob: Blob) => {
-            // إنشاء ملف قابل للتحميل
-            const a = document.createElement('a');
-            const objectUrl = URL.createObjectURL(blob);
-            a.href = objectUrl;
-            a.download = 'admission_requests.xlsx'; // تحديد اسم الملف
-            a.click();
-            URL.revokeObjectURL(objectUrl);
-          },
-          error: (err:any) => {
-            console.error('فشل التحميل:', err);
-            // يمكنك إضافة معالجة الأخطاء هنا
-          }
-        });
+      // this.excel.exportAdmissionRequests('ALL','ALL')
+      //   .subscribe({
+      //     next: (blob: Blob) => {
+      //       // إنشاء ملف قابل للتحميل
+      //       const a = document.createElement('a');
+      //       const objectUrl = URL.createObjectURL(blob);
+      //       a.href = objectUrl;
+      //       a.download = 'admission_requests.xlsx'; // تحديد اسم الملف
+      //       a.click();
+      //       URL.revokeObjectURL(objectUrl);
+      //     },
+      //     error: (err:any) => {
+      //       console.error('فشل التحميل:', err);
+      //       // يمكنك إضافة معالجة الأخطاء هنا
+      //     }
+      //   });
     }
 
     openDialog(): void {

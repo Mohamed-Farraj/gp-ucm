@@ -1,14 +1,14 @@
 <div class="container-fluid">
-    @if (selectedAdmissionRequest) {
+    @if (applicationRequest) {
     <section class="row gap-3">
       <section class="col-md-12">
         <div class="card">
           <div class="card-header">
             <h3 class="text-center">
               عرض بيانات الطلب
-                <span *ngIf="selectedAdmissionRequest?.status === 'UNDER_REVIEW'" class="badge rounded-pill text-bg-warning">تحت المراجعة</span>
-                <span *ngIf="selectedAdmissionRequest?.status === 'ACCEPTED'" class="badge rounded-pill text-bg-success">مقبول</span>
-                <span *ngIf="selectedAdmissionRequest?.status === 'REJECTED'" class="badge rounded-pill text-bg-danger">مرفوض</span>
+                <span *ngIf="applicationRequest?.status === 'UNDER_REVIEW'" class="badge rounded-pill text-bg-warning">تحت المراجعة</span>
+                <span *ngIf="applicationRequest?.status === 'ACCEPTED'" class="badge rounded-pill text-bg-success">مقبول</span>
+                <span *ngIf="applicationRequest?.status === 'REJECTED'" class="badge rounded-pill text-bg-danger">مرفوض</span>
             </h3>
           </div>
           <div class="card-body">
@@ -16,69 +16,69 @@
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label">الرقم القومي</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.nationalId }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.nationalId }}</p>
               </div>
               <label class="col-sm-2 col-form-label">كود الطالب</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.studentCode }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.studentCode }}</p>
               </div>
             </div>
             <!-- صف: الاسم الأول والاسم الثاني -->
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label">الاسم الأول</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.firstName }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.firstName }}</p>
               </div>
               <label class="col-sm-2 col-form-label">الاسم الثاني</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.lastName }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.lastName }}</p>
               </div>
             </div>
             <!-- صف: تاريخ الميلاد ومحّل الميلاد -->
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label">تاريخ الميلاد</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.dateOfBirth}}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.dateOfBirth}}</p>
               </div>
               <label class="col-sm-2 col-form-label">محل الميلاد</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.placeOfBirth }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.placeOfBirth }}</p>
               </div>
             </div>
             <!-- صف: النوع والديانة -->
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label">النوع</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.gender === 'MALE' ? 'ذكر' : 'أنثى' }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.gender === 'MALE' ? 'ذكر' : 'أنثى' }}</p>
               </div>
               <label class="col-sm-2 col-form-label">الديانة</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.religion === 'MUSLIM' ? 'مسلم' : 'مسيحي' }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.religion === 'MUSLIM' ? 'مسلم' : 'مسيحي' }}</p>
               </div>
             </div>
             <!-- residence address -->
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label">محل الأقامه</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.residenceAddress }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.residenceAddress }}</p>
               </div>
             </div>
             <!-- صف: العنوان بالتفصيل -->
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label">العنوان بالتفصيل</label>
               <div class="col-sm-10">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.detailedAddress }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.detailedAddress }}</p>
               </div>
             </div>
             <!-- صف: البريد الالكتروني -->
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">الموبايل</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ selectedAdmissionRequest?.mobileNumber }}</p>
+                  <p class="form-control-plaintext">{{ applicationRequest?.mobileNumber }}</p>
                 </div>
               <label class="col-sm-2 col-form-label">البريد الالكتروني</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.username }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.username }}</p>
               </div>
             </div>
             <hr>
@@ -86,29 +86,29 @@
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label">اسم الأب</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.fatherName }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.fatherName }}</p>
               </div>
               <label class="col-sm-2 col-form-label">الرقم القومي للأب</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.fatherNationalId }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.fatherNationalId }}</p>
               </div>
             </div>
             <!-- صف: بيانات ولي الأمر -->
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label">اسم ولي الأمر</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.guardianName }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.guardianName }}</p>
               </div>
               <label class="col-sm-2 col-form-label px-0">الرقم القومي لولي الأمر</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.guardianNationalId }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.guardianNationalId }}</p>
               </div>
             </div>
             <!-- parent status -->
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label"> حاله الوالدين </label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.parentsStatus }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.parentsStatus }}</p>
               </div>
               
             </div>
@@ -117,11 +117,11 @@
             <div class="mb-3 row">
               <label class="col-sm-2 col-form-label">الكلية</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.faculty }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.faculty }}</p>
               </div>
               <label class="col-sm-2 col-form-label">الفرقة</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ selectedAdmissionRequest?.level }}</p>
+                <p class="form-control-plaintext">{{ applicationRequest?.level }}</p>
               </div>
             </div>
             <!--صف:فاميلي احتياجات خاصه-->
@@ -129,38 +129,38 @@
               <label class="col-sm-2 col-form-label">الاسرة بالخارج</label>
               <div class="col-sm-4">
                 <p class="form-control-plaintext">
-                    {{ selectedAdmissionRequest?.familyAbroad }}
-                    <i *ngIf="selectedAdmissionRequest?.familyAbroad" class="fa-solid fa-square-check text-success"></i>
-                    <i *ngIf="!selectedAdmissionRequest?.familyAbroad" class="fa-solid fa-square-xmark text-danger"></i>
+                    {{ applicationRequest?.familyAbroad }}
+                    <i *ngIf="applicationRequest?.familyAbroad" class="fa-solid fa-square-check text-success"></i>
+                    <i *ngIf="!applicationRequest?.familyAbroad" class="fa-solid fa-square-xmark text-danger"></i>
                 </p>
               </div>
               <label class="col-sm-2 col-form-label">ذوي احتياجات خاصة</label>
               <div class="col-sm-4">
                 <p class="form-control-plaintext">
-                    {{ selectedAdmissionRequest?.specialNeeds}}
-                    <i *ngIf="selectedAdmissionRequest?.specialNeeds" class="fa-solid fa-square-check text-success"></i>
-                    <i *ngIf="!selectedAdmissionRequest?.specialNeeds" class="fa-solid fa-square-xmark text-danger"></i>
+                    {{ applicationRequest?.specialNeeds}}
+                    <i *ngIf="applicationRequest?.specialNeeds" class="fa-solid fa-square-check text-success"></i>
+                    <i *ngIf="!applicationRequest?.specialNeeds" class="fa-solid fa-square-xmark text-danger"></i>
                 </p>
               </div>
             </div>
             <hr>
-            @if (selectedAdmissionRequest?.housingInPreviousYears)
+            @if (applicationRequest?.housingInPreviousYears)
              {
                 <!-- صف: بيانات أخرى مثل نوع الطلب-->
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">نوع الطالب</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ selectedAdmissionRequest?.studentType}}</p>
+                  <p class="form-control-plaintext">{{ applicationRequest?.studentType}}</p>
                 </div>
               </div>
             <div class="mb-3 row">
                 <label class="col-sm-2 px-0 col-form-label">السكن فى الأعوام السابقة</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ selectedAdmissionRequest?.housingInPreviousYears }}</p>
+                  <p class="form-control-plaintext">{{ applicationRequest?.housingInPreviousYears }}</p>
                 </div>
                 <label class="col-sm-2 px-0 col-form-label">نسبة التقدير العام الماضي</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ selectedAdmissionRequest?.previousAcademicYearGpa }}</p>
+                  <p class="form-control-plaintext">{{ applicationRequest?.previousAcademicYearGpa }}</p>
                 </div>
               </div>
              }
@@ -170,18 +170,18 @@
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">نوع الطالب</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ selectedAdmissionRequest?.studentType}}</p>
+                  <p class="form-control-plaintext">{{ applicationRequest?.studentType}}</p>
                 </div>
               </div>
                     <!-- صف: بيانات أخرى مثل الكلية والفرقة -->
                 <div class="mb-3 row">
                 <label class="col-sm-2 px-0 col-form-label">شعبة الثانوية العامة</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ selectedAdmissionRequest?.secondaryDivision }}</p>
+                  <p class="form-control-plaintext">{{ applicationRequest?.secondaryDivision }}</p>
                 </div>
                 <label class="col-sm-2 px-0 col-form-label">مجموع الثانوية العامة</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ selectedAdmissionRequest?.totalGradesHighSchool }}</p>
+                  <p class="form-control-plaintext">{{ applicationRequest?.totalGradesHighSchool }}</p>
                 </div>
               </div>
              }
@@ -190,9 +190,9 @@
         </div>
       </section>
       <div class="buttons d-flex gap-3">
-          <button [class.d-none]="selectedAdmissionRequest?.status === 'ACCEPTED'" (click)="DecideAr(selectedAdmissionRequest?.userId,'ACCEPTED')" class="acceptButton px-4 btn btn-outline-success">قبول الطلب</button>
-          <button [class.d-none]="selectedAdmissionRequest?.status === 'REJECTED'" (click)="DecideAr(selectedAdmissionRequest?.userId,'REJECTED')" class="rejectButton px-4 btn btn-outline-danger">رفض الطلب</button>
-          <button [class.d-none]="selectedAdmissionRequest?.status === 'UNDER_REVIEW'" (click)="DecideAr(selectedAdmissionRequest?.userId,'UNDER_REVIEW')" class="reviewButton px-4 btn btn-outline-warning">تحت المراجعة</button>
+          <button [class.d-none]="applicationRequest?.status === 'ACCEPTED'" (click)="DecideAr(applicationRequest?.userId,'ACCEPTED')" class="acceptButton px-4 btn btn-outline-success">قبول الطلب</button>
+          <button [class.d-none]="applicationRequest?.status === 'REJECTED'" (click)="DecideAr(applicationRequest?.userId,'REJECTED')" class="rejectButton px-4 btn btn-outline-danger">رفض الطلب</button>
+          <button [class.d-none]="applicationRequest?.status === 'UNDER_REVIEW'" (click)="DecideAr(applicationRequest?.userId,'UNDER_REVIEW')" class="reviewButton px-4 btn btn-outline-warning">تحت المراجعة</button>
       </div>
       
     </section>

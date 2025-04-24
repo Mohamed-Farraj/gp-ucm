@@ -95,7 +95,7 @@
       }}
     </h4>
   
-    <table class="table m-auto table-hover container">
+    <table class="table m-auto px-0 table-hover table-striped container border border-3 rounded rounded-3 shadow-lg">
       <thead class="">
         <tr class="">
           <th scope="col">الحالة</th>
@@ -117,7 +117,7 @@
           <th scope="row">{{ item?.nationalId }}</th>
           <td>{{ item?.firstName }} {{ item?.lastName }}</td>
           <td>{{ item?.mobileNumber }}</td>
-          <td>
+          <td class="py-0">
             <app-assign-row [student]="item" [resBuildings]="resBuildings"></app-assign-row>
           </td>
         </tr>

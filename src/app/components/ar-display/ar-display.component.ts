@@ -5,6 +5,8 @@ import { AuthService } from '../../core/services/auth.service';
 import { TableViewUsersListComponent } from '../table-view-users-list/table-view-users-list.component';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ArService } from '../../core/services/ar.service';
 
 
 @Component({
@@ -17,6 +19,8 @@ import { Subject, takeUntil } from 'rxjs';
 export class ArDisplayComponent {
 
   private readonly _AuthService = inject(AuthService);
+  private readonly router = inject(ActivatedRoute);
+  private readonly  ar = inject(ArService);
   private readonly dataService = inject(SharedDataService);
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
 
@@ -81,14 +85,40 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
 }
 
  @Input() selectedAdmissionRequest :any = {};
+  applicationRequest :any = {};
 
  ngOnInit(): void {
-  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-  //Add 'implements OnInit' to the class.
+  this.getIdFromRoute();
   this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
     this.selectedAdmissionRequest = data;
     
   })
+
+
+  this.ar.getSpecificApplication(this.getIdFromRoute()).subscribe({
+    next: (response) => {
+      console.log('Operation succeeded:', response);
+      this.applicationRequest = response?.data;
+    },
+    error: (err) => {
+      console.error('Operation failed:', err);
+      this.Toast.fire({
+        icon: 'error',
+        title: err.error.message,
+      })   
+    },
+  })
+
+ }
+
+ getIdFromRoute():number
+ {
+   let id:string = "-1"; 
+   this.router.paramMap.subscribe(params => {
+     id = params.get('id')!;
+     console.log('ID from route:',JSON.parse(id));
+    });
+    return JSON.parse(id);
  }
 
  ngOnDestroy(): void {

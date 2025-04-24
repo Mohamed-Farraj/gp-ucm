@@ -3,6 +3,48 @@
     <div class="row justify-content-center">
       <div class="col-md-10">
         <form class="export-form">
+
+          <!-- Faculty Selection -->
+          <div class="card mb-4">
+          <div class="card-header bg-main text-white">
+            <h5 class="mb-0">اختر الكلية او الفرقة</h5>
+          </div>
+          <div class="card-body d-flex gap-3">
+            <select name="faculty" class="form-control form-select"  id="faculty" [(ngModel)]="selectedFaculty">
+              <option value="ALL" selected >كل الكليات</option>
+              <option value="كلية الآداب">كلية الآداب</option>
+              <option value="كلية الاقتصاد المنزلي">كلية الاقتصاد المنزلي</option>
+              <option value="كلية التربية">كلية التربية</option>
+              <option value="كلية التمريض">كلية التمريض</option>
+              <option value="كلية الحاسبات والذكاء الاصطناعي">كلية الحاسبات والذكاء الاصطناعي</option>
+              <option value="كلية الخدمة الاجتماعية">كلية الخدمة الاجتماعية</option>
+              <option value="كلية الصيدلة">كلية الصيدلة</option>
+              <option value="كلية الطب">كلية الطب</option>
+              <option value="كلية العلوم">كلية العلوم</option>
+              <option value="كلية الفنون التطبيقية">كلية الفنون التطبيقية</option>
+              <option value="كلية الفنون الجميلة">كلية الفنون الجميلة</option>
+              <option value="كلية التربية الرياضية بنين">كلية التربية الرياضية بنين</option>
+              <option value="كلية التربية الرياضية بنات">كلية التربية الرياضية بنات</option>
+              <option value="كلية الهندسة بالمطرية">كلية الهندسة بالمطرية</option>
+              <option value="كلية الهندسة بحلوان">كلية الهندسة بحلوان</option>
+              <option value="كلية التجارة وإدارة الأعمال">كلية التجارة وإدارة الأعمال</option>
+              <option value="كلية الحقوق">كلية الحقوق</option>
+              <option value="كلية التربية الموسيقية">كلية التربية الموسيقية</option>
+              <option value="كلية التربية الفنية">كلية التربية الفنية</option>
+              <option value="كلية السياحة والفنادق">كلية السياحة والفنادق</option>
+              <option value="كلية التعليم الصناعي">كلية التعليم الصناعي</option>
+              <option value="المعهد القومي للملكية الفكرية">المعهد القومي للملكية الفكرية</option>
+            </select>
+            <select name="level" class="form-control form-select"  id="level" [(ngModel)]="selectedLevel">
+              <option value="ALL" selected >كل الفرق</option>
+              <option value="1">الفرقة الاولى</option>
+              <option value="2">الفرقة الثانية</option>
+              <option value="3">الفرقة الثالثه</option>
+              <option value="4">الفرقة الرابعه</option>
+              <option value="5">الفرقة الخامسة</option>
+              </select>
+          </div>
+          </div>
           <!-- Gender Selection -->
           <div class="card mb-4">
             <div class="card-header  bg-main  text-white">

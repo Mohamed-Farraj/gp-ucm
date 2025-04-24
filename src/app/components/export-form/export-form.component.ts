@@ -27,6 +27,8 @@ export class ExportFormComponent implements OnInit {
 
   selectedGender = 'ALL';
   selectedStatus = 'ALL';
+  selectedFaculty = 'ALL';
+  selectedLevel = 'ALL';
   isDownloading = false;
   currentDate = "";
   constructor(private excel:ExcelService ) { }
@@ -38,9 +40,12 @@ export class ExportFormComponent implements OnInit {
   onDownload() {
     this.isDownloading = true;
     this.currentDate = new Date().toLocaleDateString();
+
+    console.log("this.selectedFaculty",this.selectedFaculty);
+    console.log("this.selectedLevel",this.selectedLevel);
     console.log("this.selectedStatus",this.selectedStatus);
     console.log("this.selectedGender",this.selectedGender);
-    this.excel.exportAdmissionRequests(this.selectedStatus ,this.selectedGender ).subscribe({
+    this.excel.exportAdmissionRequests(this.selectedStatus ,this.selectedGender,this.selectedFaculty,this.selectedLevel ).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
