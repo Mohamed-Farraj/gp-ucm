@@ -23,9 +23,17 @@
     [value]="student?.room?.id || ''"
   >
     <option disabled value="" hidden>اختر غرفة</option>
-    <option *ngFor="let room of resRooms" [value]="room.id">
-      {{ room.roomNumber }}
-    </option>
+    @if(student?.room)
+    { 
+      <option>
+        {{ student.room.roomNumber }}
+      </option>
+    }
+    @else {
+      <option *ngFor="let room of resRooms" [value]="room.id">
+        {{ room.roomNumber }}
+      </option>
+    }
   </select>
 </td>
 

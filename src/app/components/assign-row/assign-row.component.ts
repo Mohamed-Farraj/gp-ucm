@@ -69,7 +69,6 @@ export class AssignRowComponent {
         this.getFilteredBuildings()
           if (this.student?.room) {
             this.buildingId = this.student?.room?.building?.id
-            this.getAvailabeRooms()
            }
       }
       
