@@ -1,13 +1,14 @@
 import { Component, inject, input, Input, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject, filter } from 'rxjs';
+import { Subject, filter, takeUntil } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
 import { BuildingsService } from '../../core/services/buildings.service';
 import { ExcelService } from '../../core/services/excel.service';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
+import { ArService } from '../../core/services/ar.service';
 
 @Component({
   selector: 'app-assign-row',
@@ -19,6 +20,8 @@ import { NgFor, NgIf } from '@angular/common';
 export class AssignRowComponent {
 
   //#region attributes
+      filteredBuildings: any[] = [];
+      buildingId:any;
       res: any[] = []; // البيانات الأصلية
       resRooms: any[] = []; // البيانات الأصلية
       @Input({required: true}) resBuildings: any; // البيانات الأصلية
@@ -50,6 +53,7 @@ export class AssignRowComponent {
       private readonly dataService = inject(SharedDataService);
       private readonly _AuthService = inject(AuthService);
       private readonly router = inject(Router);
+      private readonly ar = inject(ArService);
       private readonly excel = inject(ExcelService);
       private readonly dialog = inject(MatDialog);
       private readonly _BuildingsService = inject(BuildingsService)
@@ -57,43 +61,51 @@ export class AssignRowComponent {
       
 
       ngOnInit(): void {
-        //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-        //Add 'implements OnInit' to the class.
-       
+
+       console.log("assign row ", this.student);
       }
       ngOnChanges(changes: SimpleChanges): void {
-        console.log("resBuildings",this.resBuildings);
-          this.filteredBuildings = this.resBuildings.filter(
-            (building:any) => building?.type?.toLowerCase() === this.student?.gender?.toLowerCase()
-          );
-          console.log("felteredBuildings",this.filteredBuildings);
+       
+        this.getFilteredBuildings()
+          if (this.student?.room) {
+            this.buildingId = this.student?.room?.building?.id
+            this.getAvailabeRooms()
+           }
       }
-      filteredBuildings: any[] = [];
-      buildingId:any;
+      
+      getFilteredBuildings(){
+        console.log("resBuildings",this.resBuildings);
+        this.filteredBuildings = this.resBuildings.filter(
+          (building:any) => building?.type?.toLowerCase() === this.student?.gender?.toLowerCase()
+        );
+        console.log("felteredBuildings",this.filteredBuildings);
+      }
 
       RowClick(item:any): void {
         console.log("hello there this is on row click", item);
-        this.handleClick(item);
         this.router.navigate(['admin/details', item.userId]);
       }
 
-      handleClick(student: any): void {
-        console.log(student);
-        this.dataService.changeStudentData(student);
-      }
 
       selectBuilding(e:any|null){
-
-        console.log("in selected building",e.value);
-         this.buildingId = e.value;
-        if (!this.buildingId) {
+        this.resRooms = [];
+        setTimeout(() => {
+          const selectedValue = (e.target as HTMLSelectElement).value;
+          this.buildingId = selectedValue;
+          if (!this.buildingId) {
           this.resRooms = [];
           return;
-        }
-      
-        this._BuildingsService.getAvailableRooms(this.buildingId,'DORM').subscribe({
+          }
+          this.getAvailabeRooms();
+      }, 50);
+      }
+
+      getAvailabeRooms()
+      {
+        this._BuildingsService.getAvailableRooms(this.buildingId,'DORM').pipe(takeUntil(this.destroy$)).subscribe({
           next: (res:any) => {
             this.resRooms = res.data; // على حسب شكل الريسبونس بتاعك
+            this.resRooms = [...this.resRooms];
             console.log("resRooms",this.resRooms);
           },
           error: (err:any) => {
@@ -101,19 +113,23 @@ export class AssignRowComponent {
           }
         });
       }
+
+
+
       selectRoom(e:any|null){
 
-        console.log("in selected Room",e.value);
-        const RoomId = e.value;
+        const RoomId = parseInt((e.target as HTMLSelectElement).value);
+        console.log("in selected Room",RoomId);
         if (!RoomId) {
           this.resRooms = [];
           return;
         }
       
-        console.log("resRooms assign",this.student,JSON.parse(RoomId));
-        this._BuildingsService.assignStudentSpecificRoom(this.student?.userId,JSON.parse(RoomId)).subscribe({
+        console.log("resRooms assign",this.student,RoomId);
+        this._BuildingsService.assignStudentSpecificRoom(this.student?.userId,RoomId).subscribe({
           next: (res:any) => {
             console.log("resRooms assign",res);
+            this.getSpecificStudent();
           },
           error: (err:any) => {
             console.error('Error assign rooms:', err);
@@ -121,19 +137,42 @@ export class AssignRowComponent {
         });
       }
 
-      
+      getSpecificStudent(){
+        this.ar.getSpecificApplication(this.student.userId).subscribe({
+          next: (response) => {
+            console.log('Operation succeeded:', response);
+            this.student = response?.data;
+          },
+          error: (err) => {
+            console.error('Operation failed:', err);
+            
+          },
+        })
+      }
+
+
+      removeStudentAssign()
+      {
+        console.log("this.removeStudentAssign call",this.student.userId,this.student.room.id);
+        this._BuildingsService.removeStudentFromRoom(this.student.userId,this.student.room.id).subscribe({
+          next: ()=>{
+            console.log("removed success");
+            this.student.room = null;
+            this.buildingId = null;
+            this.resRooms = [];
+
+          },
+          error: (e) =>{
+            console.log("error in remove student from room", e);
+          }
+        })
+      }
+
+
+      ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
+    }
     
 
-      getBuildings(): void {
-        this._BuildingsService.getAllBuildings(1).subscribe({
-          next: (res: any) => {
-           
-            console.log('building result',res);
-            this.resBuildings = res.data;
-            this.filteredItems = this.res;
-            console.log(this.res);
-          },
-          error: (err) => { console.log(err); },
-        });
-      }
 }

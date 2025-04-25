@@ -106,7 +106,7 @@
         </tr>
       </thead>
       <tbody class="">
-        @for (item of pagedItems; track $index) {
+        @for (item of pagedItems; track item.userId) {
         <tr (click)="RowClick(item)" class="cursor-pointer">
           <td><i
             [class.text-success]="item?.status === 'ACCEPTED'"

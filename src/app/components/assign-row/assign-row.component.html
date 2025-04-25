@@ -1,14 +1,40 @@
 <td>
-    <select (change)="selectBuilding($event.target)"  (click)="$event.stopPropagation();" class="form-select">
-        <option disabled selected hidden >اختر مبني</option>
-        <option *ngFor="let item of filteredBuildings " [value]="item.id" > {{item.name}}</option>
-      </select>
-  </td>
-  <td>
-    <select (change)="selectRoom($event.target)" [disabled]="resRooms.length === 0" class="form-select" (click)="$event.stopPropagation()" >
-        <option disabled selected hidden >اختر غرفة</option>
-        <option *ngFor="let room of resRooms" [value]="room.id">
-          {{ room.roomNumber }}
-        </option>
-      </select>
-  </td>
+  <select
+    [disabled]="student?.room?.building?.id"
+    (change)="selectBuilding($event)"
+    (click)="$event.stopPropagation()"
+    class="form-select"
+    [value]="buildingId || ''"
+  >
+    <option disabled value="" hidden>اختر مبني</option>
+    <option *ngFor="let item of filteredBuildings" [value]="item.id">
+      {{ item.name }}
+    </option>
+  </select>
+</td>
+
+<td>
+  <select
+    [class.invisible]="!buildingId"
+    (change)="selectRoom($event)"
+    [disabled]="student?.room"
+    class="form-select"
+    (click)="$event.stopPropagation()"
+    [value]="student?.room?.id || ''"
+  >
+    <option disabled value="" hidden>اختر غرفة</option>
+    <option *ngFor="let room of resRooms" [value]="room.id">
+      {{ room.roomNumber }}
+    </option>
+  </select>
+</td>
+
+<td>
+  <button
+    (click)="removeStudentAssign(); $event.stopPropagation()"
+    [class.invisible]="!student.room"
+    class="rounded rounded-circle btn btn-outline-danger"
+  >
+    <i class="fa-solid fa-trash"></i>
+  </button>
+</td>

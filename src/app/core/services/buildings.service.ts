@@ -90,6 +90,11 @@ export class BuildingsService {
     return this.http.post(url,null);
   }
 
+  removeStudentFromRoom(studentId: number, roomId: number): Observable<any> {
+    const url = `${this.baseUrl}/admin/rooms/remove-student?studentId=${studentId}&roomId=${roomId}`;
+    return this.http.delete(url);
+  }
+
 
 
 
