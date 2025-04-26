@@ -30,3 +30,20 @@
     padding: 12px 24px;
     font-size: 1.1rem;
   }
+
+  .badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    background-color: var(--main-color);
+  }
+  
+  .btn-close {
+    filter: invert(1);
+    opacity: 0.8;
+    transform: scale(0.7);
+  }
+  
+  .btn-close:hover {
+    opacity: 1;
+  }

@@ -11,7 +11,7 @@ export class ExcelService {
   constructor(private http: HttpClient) { }
 
     exportAdmissionRequests(status: string, gender: string,faculty: string,level:string): Observable<Blob> {
-      let apiUrl = '${environment.baseUrl}/admin/view/admission-requests/export';
+      let apiUrl = `${environment.baseUrl}/admin/view/admission-requests/export`;
       let params = new HttpParams();
       if (status && status !== 'ALL') {
         params = params.append('status', status);
