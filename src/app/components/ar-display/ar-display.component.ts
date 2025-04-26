@@ -48,14 +48,14 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
       this._AuthService.DecideArState(id, status).subscribe({
         next: (response) => {
           console.log('Operation succeeded:', response);
-          this.selectedAdmissionRequest.status = status;
+          this.applicationRequest.status = status;
+          this.getUser();
           if (status === 'UNDER_REVIEW' ) {
             this.Toast.fire({
               icon: 'success',
               title: 'هذا الطلب تحت المراجعة',
             })   
           }
-          
           else if (status === 'ACCEPTED' ) {
             this.Toast.fire({
               icon: 'success',
@@ -68,6 +68,8 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
               title: 'قد تم رفض الطلب بنجاح',
             })   
           }
+
+          
         },
         error: (err) => {
           console.error('Operation failed:', err);
@@ -95,6 +97,12 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
   })
 
 
+  this.getUser();
+  
+
+ }
+
+ getUser(){
   this.ar.getSpecificApplication(this.getIdFromRoute()).subscribe({
     next: (response) => {
       console.log('Operation succeeded:', response);
@@ -108,7 +116,6 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
       })   
     },
   })
-
  }
 
  getIdFromRoute():number
