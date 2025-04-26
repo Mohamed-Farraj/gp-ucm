@@ -26,6 +26,8 @@ allowedTypes = [
   'application/vnd.ms-excel'
 ];
 
+
+
 // دالة السحب فوق المنطقة
 onDragOver(event: DragEvent) {
   event.preventDefault();
@@ -121,5 +123,25 @@ uploadFile(event: any) {
   const file = event.target.files?.[0];
   this.handleFile(file);
 }
+
+downloadTemp() {
+  // Subscribe to the observable that downloads the template file
+  this.excel.downloadTemplate().subscribe({
+    // Handle the response when it is received
+    next: (response: Blob) => {
+      // Create a link to download the file
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(response);
+      link.download = 'template.xlsx';
+      link.click();
+    },
+    // Handle any errors that occur
+    error: (error: any) => {
+      console.error('Error downloading template:', error);
+    }
+  });
+
+}
+
 
 }

@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class ExcelService {
   constructor(private http: HttpClient) { }
 
     exportAdmissionRequests(status: string, gender: string,faculty: string,level:string): Observable<Blob> {
-      let apiUrl = 'http://localhost:8080/admin/view/admission-requests/export';
+      let apiUrl = '${environment.baseUrl}/admin/view/admission-requests/export';
       let params = new HttpParams();
       if (status && status !== 'ALL') {
         params = params.append('status', status);
@@ -26,7 +27,7 @@ export class ExcelService {
       }
       if(status === 'ALL' && gender === 'ALL' && faculty === 'ALL'&& level === 'ALL')
       {
-        apiUrl = 'http://localhost:8080/admin/view/export-admission-requests';
+        apiUrl = `${environment.baseUrl}/admin/view/export-admission-requests`;
       }
       return this.http.get(apiUrl, {
         params: params,
@@ -45,10 +46,26 @@ export class ExcelService {
     importAdmissionRequests(formData: FormData): Observable<any> {
       // const formData = new FormData();
       // formData.append('file', file);
-      return this.http.post('http://localhost:8080/admin/upload-admission-request', formData,{
+      return this.http.post(`${environment.baseUrl}/admin/upload-admission-request`, formData,{
         reportProgress: true,
         observe: 'response'
       });
+    }
+
+    
+    downloadTemplate(): Observable<Blob> {
+      const apiUrl = `${environment.baseUrl}/admin/view/security-check/template`;
+      return this.http.get(apiUrl, {
+        responseType: 'blob',
+        headers: new HttpHeaders({
+          'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        })
+      }).pipe(
+        catchError(error => {
+          console.error('Error downloading template:', error);
+          throw error;
+        })
+      );
     }
   
 }
