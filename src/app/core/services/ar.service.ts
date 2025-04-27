@@ -30,5 +30,15 @@ export class ArService {
     {
       return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests/${id}`);
     }
+
+  getArById(id:number):Observable<any>
+  {
+    return this._HttpClient.get(`${environment.baseUrl}/user/admission-requests/${id}`);
+  }
   
+  updateAr(id:number,data:object):Observable<any>
+  {
+    return this._HttpClient.put(`${environment.baseUrl}/user/admission-requests/${id}`,data);
+  }
+
 }

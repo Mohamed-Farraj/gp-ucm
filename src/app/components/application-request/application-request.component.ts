@@ -1,4 +1,5 @@
-import { Component, signal , WritableSignal , computed, Signal, inject   } from '@angular/core';
+import { ArService } from './../../core/services/ar.service';
+import { Component, signal , WritableSignal , computed, Signal, inject, OnInit   } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { single } from 'rxjs';
 import countries from '../../../assets/country (1).json';
@@ -8,16 +9,28 @@ import { AuthService } from '../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { BasicInfoStepComponent } from "../newest-app-reqeust/basic-info-step/basic-info-step.component";
+import { FamilyInfoStepComponent } from "../newest-app-reqeust/family-info-step/family-info-step.component";
+import { AcademicInfoStepComponent } from "../newest-app-reqeust/academic-info-step/academic-info-step.component";
+import { ContactInfoStepComponent } from "../newest-app-reqeust/contact-info-step/contact-info-step.component";
+import { AccountSetupStepComponent } from "../newest-app-reqeust/account-setup-step/account-setup-step.component";
+import { MatStepperModule } from '@angular/material/stepper';
+import { StepperComponent } from '../stepper/stepper.component';
+import { CdkStepper } from '@angular/cdk/stepper';
+import { NgIf } from '@angular/common';
+import { get } from 'node:http';
 
 
 @Component({
   selector: 'app-application-request',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule , MatStepperModule , BasicInfoStepComponent, FamilyInfoStepComponent, AcademicInfoStepComponent, ContactInfoStepComponent, AccountSetupStepComponent , ],
   templateUrl: './application-request.component.html',
-  styleUrl: './application-request.component.scss'
+  styleUrl: './application-request.component.scss',
+    providers:[{provide:CdkStepper,useExisting:StepperComponent}]
+  
 })
-export class ApplicationRequestComponent {
+export class ApplicationRequestComponent implements OnInit {
 
   Toast = Swal.mixin({
     toast: true,
@@ -33,8 +46,11 @@ export class ApplicationRequestComponent {
 
   private readonly _AuthService= inject(AuthService)
   private readonly router = inject(Router)
+  private readonly ArService=inject(ArService)
   errmsg:string='';
-   
+  isEditMode = false;
+  showPasswordFields = true; // تم تغيير القيمة الافتراضية إلى true لإظهار حقول كلمة المرور دائمًا
+
   // قائمة محافظات مصر مع أكوادها في الرقم القومي
   governoratesCodes: { [key: string]: string } = {
     '01': 'القاهره',
@@ -67,7 +83,7 @@ export class ApplicationRequestComponent {
     '88': 'خارج مصر'
   };
 
- AppRequest : FormGroup = new FormGroup({
+    AppRequest : FormGroup = new FormGroup({
     firstName: new FormControl(null ,[Validators.required]),
     lastName: new FormControl(null , [Validators.required]),
     username: new FormControl(null , [Validators.required , Validators.email]),//emails
@@ -103,11 +119,213 @@ export class ApplicationRequestComponent {
     totalGradesHighSchool: new FormControl(null),
     country: new FormControl(null), //  
     governorate: new FormControl(null ),
-    city: new FormControl(null)
+    city: new FormControl(null),
+    confirmDataAccuracy: new FormControl(true, [Validators.requiredTrue]), 
  
   } , this.passwordConfirmation)
 
+  ngOnInit(): void {
+    // استرجاع بيانات الطالب إذا كان مسجلاً
+    this.loadUserData();
+  }
+  debugForm() {
+    console.log(this.AppRequest);
+  }
 
+  // دالة لتحميل بيانات المستخدم
+  loadUserData(): void {
+    const userId:any = localStorage.getItem('Uid');
+    
+    if (userId) {
+      console.log('تم العثور على معرف المستخدم:', userId);
+      this.ArService.getArById(userId).subscribe({
+        next: (res: any) => {
+          if (res && res.data) {
+            console.log('تم استرجاع بيانات المستخدم:', res.data);
+            
+            // تعيين وضع التعديل
+            this.isEditMode = true;
+            
+            // تعديل التحقق من حقول كلمة المرور في وضع التعديل
+            // جعل حقول كلمة المرور اختيارية في وضع التعديل
+            this.AppRequest.get('password')?.clearValidators();
+            this.AppRequest.get('password')?.setValidators(
+              Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+            );
+            this.AppRequest.get('password')?.updateValueAndValidity();
+            
+            this.AppRequest.get('rePassword')?.clearValidators();
+            this.AppRequest.get('rePassword')?.updateValueAndValidity();
+            
+            // تعبئة النموذج بالبيانات المسترجعة
+            this.AppRequest.patchValue(res.data);
+            
+            // تحليل عنوان الإقامة إلى مكوناته (الدولة، المحافظة، المدينة)
+            this.parseResidenceAddress(res.data.residenceAddress);
+            
+            // معالجة الاختيارات المتسلسلة
+            this.handleCascadingSelections(res.data);
+            
+            // تحديد نوع الطالب بناءً على البيانات المسترجعة
+            if (res.data.previousAcademicYearGpa !== null && res.data.previousAcademicYearGpa !== undefined) {
+              this.selectStudentType('old');
+            } else if (res.data.totalGradesHighSchool !== null && res.data.totalGradesHighSchool !== undefined) {
+              this.selectStudentType('new');
+            }
+          } 
+        },
+        error: (error) => {
+          console.error('خطأ في استرجاع بيانات المستخدم:', error); 
+        }
+      });
+    }
+  }
+
+  // دالة جديدة لتحليل عنوان الإقامة
+  parseResidenceAddress(residenceAddress: string): void {
+    if (!residenceAddress) return;
+    
+    console.log('تحليل عنوان الإقامة:', residenceAddress);
+    
+    // تقسيم العنوان بناءً على الفاصل " - "
+    const parts = residenceAddress.split(' - ');
+    
+    if (parts.length >= 1) {
+      // تحديد الدولة
+      const countryName = parts[0];
+      // البحث عن رمز الدولة المناسب
+      if (countryName === 'مصر') {
+        // حالة خاصة لمصر - بناءً على ملف JSON الفعلي
+        this.selectedCountry.set('EG');
+        this.AppRequest.get('country')?.setValue('EG');
+        console.log('تم تحديد الدولة: مصر (EG)');
+      }
+    }
+    
+    // تأخير قصير لضمان تحديث قائمة المحافظات
+    setTimeout(() => {
+      if (parts.length >= 2 && this.selectedCountry() === 'EG') {
+        // تحديد المحافظة
+        const governorateName = parts[1];
+        
+        // الحصول على بيانات المحافظات من ملف JSON
+        const governoratesData = this.governorates;
+        
+        // البحث عن المحافظة باستخدام الاسم العربي
+        const governorate = governoratesData.find(g => 
+          g.governorate_name_ar === governorateName || 
+          // التعامل مع الاختلافات البسيطة في الأسماء
+          g.governorate_name_ar.replace('ة', 'ه') === governorateName.replace('ة', 'ه')
+        );
+        
+        if (governorate) {
+          this.selectedGovernorate.set(governorate.id);
+          this.AppRequest.get('governorate')?.setValue(governorate.id);
+          console.log('تم تحديد المحافظة:', governorate.id, governorateName);
+          
+          // تأخير آخر لضمان تحديث قائمة المدن
+          setTimeout(() => {
+            if (parts.length >= 3) {
+              // تحديد المدينة
+              const cityName = parts[2];
+              
+              // الحصول على بيانات المدن من ملف JSON
+              const citiesData = this.cities;
+              
+              // البحث عن المدينة باستخدام الاسم العربي والمحافظة
+              const city = citiesData.find(c => 
+                c.governorate_id === governorate.id && 
+                (c.city_name_ar === cityName || 
+                // التعامل مع الاختلافات البسيطة في الأسماء
+                c.city_name_ar.replace('ة', 'ه') === cityName.replace('ة', 'ه'))
+              );
+              
+              if (city) {
+                this.AppRequest.get('city')?.setValue(city.id);
+                console.log('تم تحديد المدينة:', city.id, cityName);
+              } else {
+                console.log('لم يتم العثور على المدينة:', cityName);
+              }
+            }
+          }, 300);
+        } else {
+          console.log('لم يتم العثور على المحافظة:', governorateName);
+        }
+      }
+    }, 300);
+  }
+
+  // دالة جديدة لمعالجة الاختيارات المتسلسلة
+  handleCascadingSelections(data: any): void {
+    // معالجة الكلية والفرقة
+    if (data.faculty) {
+      this.facultySelected.set(data.faculty);
+      
+      // تأخير قصير لضمان تحديث قائمة الفرق
+      setTimeout(() => {
+        if (data.level) {
+          this.AppRequest.get('level')?.setValue(data.level);
+        }
+      }, 100);
+    }
+    
+    // معالجة حالة الوالدين
+    if (data.parentsStatus) {
+      this.AppRequest.get('parentsStatus')?.setValue(data.parentsStatus);
+    }
+    
+    // معالجة السكن في الأعوام السابقة
+    if (data.housingInPreviousYears) {
+      this.AppRequest.get('housingInPreviousYears')?.setValue(data.housingInPreviousYears);
+    }
+  }
+
+  // دالة لتحديث طلب الالتحاق
+  updateApplication() {
+    const userId:any = localStorage.getItem('Uid');
+    if (userId && this.AppRequest.valid) {
+      // نسخ البيانات من النموذج
+      const formData = {...this.AppRequest.value};
+      
+      // حذف حقل rePassword دائماً عند التحديث
+      delete formData.rePassword;
+      
+      // التحقق من حقل كلمة المرور - إذا كان فارغاً، نحذفه من البيانات المرسلة
+      if (!formData.password || formData.password === '' || formData.password === null) {
+        delete formData.password;
+      }
+      
+      console.log('البيانات المرسلة للتحديث:', formData);
+      
+      this.ArService.updateAr(userId, formData).subscribe({
+        next: (res: any) => {
+          console.log('تم تحديث البيانات بنجاح:', res);
+          this.Toast.fire({
+            icon: 'success',
+            title: 'تم تحديث البيانات بنجاح',
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error('خطأ في تحديث البيانات:', err);
+          this.Toast.fire({
+            icon: 'error',
+            title: err.message || 'حدث خطأ أثناء تحديث البيانات',
+          });
+        }
+      });
+    }
+  }
+
+  // دالة للتعامل مع إرسال النموذج (تسجيل أو تعديل)
+  handleSubmit() {
+    if (this.AppRequest.valid) {
+      if (this.isEditMode) {
+        this.updateApplication();
+      } else {
+        this.registerSubmit();
+      }
+    }
+  }
 
   // الكليات التي لديها 5 فرق دراسية
   fiveYearFaculties: string[] = ['كلية الهندسة بالمطرية', 'كلية الهندسة بحلوان', 'كلية الطب'];
@@ -172,20 +390,12 @@ export class ApplicationRequestComponent {
         this.extractFatherDataFromNationalId(fatherNationalId);
       }
     });
+    
+    // استمع لتغييرات كلمة المرور وتأكيد كلمة المرور للتحقق من التطابق
+    this.AppRequest.get('password')?.valueChanges.subscribe(() => {
+      this.AppRequest.get('rePassword')?.updateValueAndValidity();
+    });
   }
-
-  // formatDate(dateString: string): string {
-  //   if (!dateString) return '';
-    
-  //   // تحويل التاريخ من yyyy-mm-dd إلى mm/dd/yyyy
-  //   const parts = dateString.split('-');
-  //   if (parts.length === 3) {
-  //     return `${parts[1]}/${parts[2]}/${parts[0]}`;
-  //   }
-    
-  //   return dateString;
-  // }
-  
 
   // استخراج البيانات من الرقم القومي
   extractDataFromNationalId(nationalId: string) {
@@ -218,6 +428,7 @@ export class ApplicationRequestComponent {
     }
   }
 
+  
   // استخراج بيانات الأب من الرقم القومي
   extractFatherDataFromNationalId(nationalId: string) {
     if (nationalId && nationalId.length === 14) {
@@ -238,30 +449,53 @@ export class ApplicationRequestComponent {
   }
 
   updateResidenceAddress() {
-    const country = this.selectedCountry() === "EG" ? "مصر" : this.selectedCountry();
-    const governorate = this.AppRequest.get('governorate')?.value 
-      ? this.governorates.find(gov => gov.id === this.AppRequest.get('governorate')?.value)?.governorate_name_ar
-      : "";
-    const city = this.AppRequest.get('city')?.value 
-      ? this.cities.find(city => city.id === this.AppRequest.get('city')?.value)?.city_name_ar
-      : "";
+    // استخدام الاسم العربي للدولة من ملف JSON
+    let countryName = "مصر"; // القيمة الافتراضية لمصر
+    if (this.selectedCountry() !== "EG") {
+      const countryObj = this.countries.find(c => c.isoCode === this.selectedCountry());
+      if (countryObj) {
+        countryName = countryObj.name;
+      }
+    }
+    
+    // استخدام الاسم العربي للمحافظة من ملف JSON
+    const governorateId = this.AppRequest.get('governorate')?.value;
+    let governorateName = "";
+    if (governorateId) {
+      const governorate = this.governorates.find(gov => gov.id === governorateId);
+      if (governorate) {
+        governorateName = governorate.governorate_name_ar;
+      }
+    }
+    
+    // استخدام الاسم العربي للمدينة من ملف JSON
+    const cityId = this.AppRequest.get('city')?.value;
+    let cityName = "";
+    if (cityId) {
+      const city = this.cities.find(city => city.id === cityId);
+      if (city) {
+        cityName = city.city_name_ar;
+      }
+    }
 
-    const fullAddress = [country, governorate, city].filter(Boolean).join(" - ");
+    const fullAddress = [countryName, governorateName, cityName].filter(Boolean).join(" - ");
     this.AppRequest.get('residenceAddress')?.setValue(fullAddress);
     console.log("العنوان المحفوظ:", fullAddress);
   }
+  
+  // تحميل بيانات الدول من ملف JSON
   countries = countries;
 
   selectedCountry: WritableSignal<string | null> = signal(null);
   selectedGovernorate: WritableSignal<string | null> = signal(null);
 
-  // ✅ تحميل المحافظات المرتبطة بمصر فقط
+  // تحميل المحافظات من ملف JSON
   governorates = rawGovernorates.find(entry => entry.type === 'table' && entry.name === 'governorates')?.data || [];
   filteredGovernorates: Signal<any[]> = computed(() => {
     return this.selectedCountry() === "EG" ? this.governorates.filter(gov => gov.countryCode === "EG") : [];
   });
 
-  // ✅ تحميل جميع المدن وربطها بالمحافظة المختارة
+  // تحميل المدن من ملف JSON
   cities = rawCities.find(entry => entry.type === 'table' && entry.name === 'cities')?.data || [];
   filteredCities: Signal<any[]> = computed(() => {
     const govId = this.selectedGovernorate();
@@ -270,6 +504,11 @@ export class ApplicationRequestComponent {
 
   passwordConfirmation(g:AbstractControl)
   {
+    // إذا كنا في وضع التعديل وكلمة المرور فارغة، نتجاهل التحقق من التطابق
+    if ( (!g.get("password")?.value || g.get("password")?.value === '')) {
+      return null;
+    }
+    
     if(g.get("password")?.value === g.get("rePassword")?.value){
       return null
     }
@@ -358,6 +597,7 @@ export class ApplicationRequestComponent {
     this.studentType = type;
     this.activeButton = type; // تحديث الزر النشط
 
+    this.updateValidation(type);
     this.clearFormBasedOnType();
   }
 
@@ -368,7 +608,12 @@ export class ApplicationRequestComponent {
       this.AppRequest.get('secondaryDivision')?.reset();
     } else if (this.studentType === 'new') {
       this.AppRequest.get('previousAcademicYearGpa')?.reset();
-      this.AppRequest.get('housingInPreviousYearsControl')?.reset();
+      this.AppRequest.get('housingInPreviousYears')?.reset();
     }
   }
+
+
+
 }
+
+

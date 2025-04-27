@@ -68,6 +68,7 @@ export class AdminSidebarComponent {
     { id: 'buildings', icon: 'fa-building', label: 'المباني و الغرف' },
     { id: 'guidelines', icon: 'fa-rectangle-list', label: 'الإرشادات' },
     { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
+    { id: 'meals', icon: 'fa-utensils', label: ' الوجبات' },
   ];
   
   // showSideContent = false;
