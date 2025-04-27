@@ -1,3 +1,91 @@
-label{
-    color : var(--main-color);
-}
+
+  
+  body {
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--light-bg);
+    direction: rtl;
+  }
+  
+  .container-fluid {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  /* Card Styling */
+  .card {
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: var(--main-color);
+    color: white;
+    border-bottom: none;
+  }
+  
+  /* Labels */
+  label {
+    color: var(--main-color);
+    font-weight: bold;
+  }
+  
+  /* Section styling */
+  .section-title {
+    color: var(--main-color-dark);
+    font-size: 1.25rem;
+    border-bottom-color: var(--main-color-light) !important;
+  }
+  
+  .form-control-plaintext {
+    font-size: 1rem;
+    padding-right: 0.5rem;
+  }
+  
+  /* Status badges */
+  .badge {
+    font-size: 0.85rem;
+    padding: 0.35em 0.85em;
+  }
+  
+  .bg-main {
+    background-color: var(--main-color);
+  }
+  
+  /* Buttons */
+  .btn {
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    label.col-form-label {
+      text-align: right;
+    }
+    
+    .section-container {
+      padding: 0.5rem;
+    }
+    
+    .btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+    
+    .d-flex.justify-content-center {
+      flex-direction: column;
+    }
+  }

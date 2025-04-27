@@ -61,3 +61,44 @@ h4{color:var(--main-color)}
   .bg-females{
     background-color: palevioletred;
   }
+
+  /* CSS */
+/* تنسيق الذكر عند التحديد */
+#male + .btn-outline-primary {
+  border-color: #0DCAF0 !important;
+}
+
+/* تنسيق الأنثى عند التحديد */
+#female + .btn-outline-info {
+  border-color: palevioletred !important;
+  outline-color: palevioletred !important;
+  color: palevioletred !important;
+}
+#male:checked + .btn-outline-primary {
+  background-color: #0DCAF0 !important;
+  border-color: #0DCAF0 !important;
+  color: white !important;
+}
+
+/* تنسيق الأنثى عند التحديد */
+#female:checked + .btn-outline-info {
+  background-color: palevioletred !important;
+  border-color: palevioletred !important;
+  outline-color: palevioletred !important;
+  color: white !important;
+}
+
+/* تأثيرات Hover */
+#male:not(:checked) + .btn-outline-primary:hover {
+  background-color: rgba(13, 202, 240, 0.2) !important;
+}
+
+#female:not(:checked) + .btn-outline-info:hover {
+  background-color: rgba(219, 112, 147, 0.2) !important;
+}
+
+/* تأثيرات Active (عند الضغط) */
+#male:active + .btn-outline-primary,
+#female:active + .btn-outline-info {
+  filter: brightness(90%) !important;
+}

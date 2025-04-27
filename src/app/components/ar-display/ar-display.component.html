@@ -1,201 +1,384 @@
-<div class="container-fluid">
-    @if (applicationRequest) {
-    <section class="row gap-3">
-      <section class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="text-center">
-              عرض بيانات الطلب
-                <span *ngIf="applicationRequest?.status === 'UNDER_REVIEW'" class="badge rounded-pill text-bg-warning">تحت المراجعة</span>
-                <span *ngIf="applicationRequest?.status === 'ACCEPTED'" class="badge rounded-pill text-bg-success">مقبول</span>
-                <span *ngIf="applicationRequest?.status === 'REJECTED'" class="badge rounded-pill text-bg-danger">مرفوض</span>
-            </h3>
-          </div>
-          <div class="card-body">
-            <!-- صف: الرقم القومي وكود الطالب -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">الرقم القومي</label>
+<div class="container-fluid py-4">
+  @if (applicationRequest) {
+  <section class="row">
+    <section class="col-md-12">
+      <div class="card shadow-lg border-0">
+        <div class="card-header py-3 text-white position-relative" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.85), rgba(197, 168, 128, 0.85)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.18);">
+          <div class="position-absolute top-0 start-0 w-100 h-100" style="background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.2), transparent 70%); z-index: 0; border-radius: 15px;"></div>
+          <h3 class="text-center d-flex justify-content-center mb-0 position-relative" style="text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); z-index: 1;">
+            <span style="font-weight: 600;">عرض بيانات الطلب</span>
+            
+            <!-- Under Review Badge -->
+            <span *ngIf="applicationRequest?.status === 'UNDER_REVIEW'" 
+                  class="badge ms-2" 
+                  style="background: linear-gradient(135deg, #f39c12, #e67e22); 
+                         padding: 8px 15px; 
+                         border-radius: 20px;
+                         box-shadow: 0 4px 10px rgba(230, 126, 34, 0.4);
+                         position: relative;
+                         overflow: hidden;">
+              <span class="position-absolute top-0 start-0 w-100 h-100" 
+                    style="background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.4), transparent); 
+                           z-index: 0;"></span>
+              <span style="position: relative; z-index: 1;">تحت المراجعة</span>
+            </span>
+            
+            <!-- Accepted Badge -->
+            <span *ngIf="applicationRequest?.status === 'ACCEPTED'" 
+                  class="badge ms-2" 
+                  style="background: linear-gradient(135deg, #2ecc71, #27ae60); 
+                         padding: 8px 15px; 
+                         border-radius: 20px;
+                         box-shadow: 0 4px 10px rgba(46, 204, 113, 0.4);
+                         position: relative;
+                         overflow: hidden;">
+              <span class="position-absolute top-0 start-0 w-100 h-100" 
+                    style="background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.4), transparent); 
+                           z-index: 0;"></span>
+              <span style="position: relative; z-index: 1;">مقبول</span>
+            </span>
+            
+            <!-- Rejected Badge -->
+            <span *ngIf="applicationRequest?.status === 'REJECTED'" 
+                  class="badge ms-2" 
+                  style="background: linear-gradient(135deg, #e74c3c, #c0392b); 
+                         padding: 8px 15px; 
+                         border-radius: 20px;
+                         box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4);
+                         position: relative;
+                         overflow: hidden;">
+              <span class="position-absolute top-0 start-0 w-100 h-100" 
+                    style="background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.4), transparent); 
+                           z-index: 0;"></span>
+              <span style="position: relative; z-index: 1;">مرفوض</span>
+            </span>
+          </h3>
+        </div>
+
+        <div class="card-body p-4">
+          <!-- بيانات الطالب الشخصية -->
+          <div class="section-container mb-4">
+            <h4 class="section-title border-bottom pb-2 mb-3">البيانات الشخصية</h4>
+            
+            <!-- صف: معرف المستخدم -->
+            <!-- <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">معرف المستخدم</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.nationalId }}</p>
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.userId }}</p>
               </div>
-              <label class="col-sm-2 col-form-label">كود الطالب</label>
+              <label class="col-sm-2 col-form-label fw-bold">كود الطالب</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.studentCode }}</p>
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.studentCode }}</p>
+              </div>
+            </div> -->
+            
+            <!-- صف: الرقم القومي ورقم جواز السفر -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">الرقم القومي</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.nationalId }}</p>
+              </div>
+              <label class="col-sm-2 col-form-label fw-bold">رقم جواز السفر</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.passportNumber || 'غير متوفر' }}</p>
               </div>
             </div>
-            <!-- صف: الاسم الأول والاسم الثاني -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">الاسم الأول</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.firstName }}</p>
-              </div>
-              <label class="col-sm-2 col-form-label">الاسم الثاني</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.lastName }}</p>
-              </div>
-            </div>
-            <!-- صف: تاريخ الميلاد ومحّل الميلاد -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">تاريخ الميلاد</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.dateOfBirth}}</p>
-              </div>
-              <label class="col-sm-2 col-form-label">محل الميلاد</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.placeOfBirth }}</p>
-              </div>
-            </div>
-            <!-- صف: النوع والديانة -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">النوع</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.gender === 'MALE' ? 'ذكر' : 'أنثى' }}</p>
-              </div>
-              <label class="col-sm-2 col-form-label">الديانة</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.religion === 'MUSLIM' ? 'مسلم' : 'مسيحي' }}</p>
-              </div>
-            </div>
-            <!-- residence address -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">محل الأقامه</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.residenceAddress }}</p>
-              </div>
-            </div>
-            <!-- صف: العنوان بالتفصيل -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">العنوان بالتفصيل</label>
+            
+            <!-- صف: جهة إصدار جواز السفر -->
+            <div class="mb-4 row" *ngIf="applicationRequest?.passportIssuingAuthority">
+              <label class="col-sm-2 col-form-label fw-bold">جهة إصدار جواز السفر</label>
               <div class="col-sm-10">
-                <p class="form-control-plaintext">{{ applicationRequest?.detailedAddress }}</p>
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.passportIssuingAuthority || 'غير متوفر' }}</p>
               </div>
             </div>
+            
+            <!-- صف: الاسم الأول والاسم الثاني -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">الاسم الأول</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.firstName }}</p>
+              </div>
+              <label class="col-sm-2 col-form-label fw-bold">الاسم الثاني</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.lastName }}</p>
+              </div>
+            </div>
+            
+            <!-- صف: تاريخ الميلاد ومحّل الميلاد -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">تاريخ الميلاد</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.dateOfBirth}}</p>
+              </div>
+              <label class="col-sm-2 col-form-label fw-bold">محل الميلاد</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.placeOfBirth }}</p>
+              </div>
+            </div>
+            
+            <!-- صف: النوع والديانة -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">النوع</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.gender === 'MALE' ? 'ذكر' : 'أنثى' }}</p>
+              </div>
+              <label class="col-sm-2 col-form-label fw-bold">الديانة</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.religion === 'MUSLIM' ? 'مسلم' : 'مسيحي' }}</p>
+              </div>
+            </div>
+            
+            <!-- معلومات الاتصال والعنوان -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">محل الإقامة</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.residenceAddress }}</p>
+              </div>
+              <label class="col-sm-2 col-form-label fw-bold">الموبايل</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.mobileNumber }}</p>
+              </div>
+            </div>
+            
+            <!-- صف: العنوان بالتفصيل -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">العنوان بالتفصيل</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.detailedAddress }}</p>
+              </div>
+            </div>
+            
             <!-- صف: البريد الالكتروني -->
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">الموبايل</label>
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">البريد الإلكتروني</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.username }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- بيانات الجامعة -->
+          <div class="section-container mb-4">
+            <h4 class="section-title border-bottom pb-2 mb-3">البيانات الجامعية</h4>
+            
+            <!-- صف: الجامعة -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">الجامعة</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.university?.name }}</p>
+              </div>
+            </div>
+            
+            <!-- صف: الكلية والفرقة -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">الكلية</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.faculty }}</p>
+              </div>
+              <label class="col-sm-2 col-form-label fw-bold">الفرقة</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.level }}</p>
+              </div>
+            </div>
+            
+            <!-- صف: عدد العقوبات -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">عدد العقوبات</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.penaltiesCount }}</p>
+              </div>
+            </div>
+            
+            <!-- صف: نوع الطالب -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">نوع الطالب</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.studentType || 'غير محدد' }}</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- بيانات السكن -->
+          <div class="section-container mb-4">
+            <h4 class="section-title border-bottom pb-2 mb-3">بيانات السكن</h4>
+            <div *ngIf="applicationRequest?.room">
+              <!-- صف: معلومات الغرفة -->
+              <div class="mb-4 row">
+                <label class="col-sm-2 col-form-label fw-bold">رقم الغرفة</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ applicationRequest?.mobileNumber }}</p>
+                  <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.room?.roomNumber }}</p>
                 </div>
-              <label class="col-sm-2 col-form-label">البريد الالكتروني</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.username }}</p>
+                <label class="col-sm-2 col-form-label fw-bold">السعة</label>
+                <div class="col-sm-4">
+                  <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.room?.currentOccupancy }} / {{ applicationRequest?.room?.capacity }}</p>
+                </div>
               </div>
-            </div>
-            <hr>
-            <!-- صف: بيانات الأب -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">اسم الأب</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.fatherName }}</p>
+              
+              <!-- صف: معلومات المبنى -->
+              <div class="mb-4 row">
+                <label class="col-sm-2 col-form-label fw-bold">المبنى</label>
+                <div class="col-sm-4">
+                  <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.room?.building?.name }}</p>
+                </div>
+                <label class="col-sm-2 col-form-label fw-bold">نوع المبنى</label>
+                <div class="col-sm-4">
+                  <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.room?.building?.type === 'MALE' ? 'طلاب' : 'طالبات' }}</p>
+                </div>
+              
               </div>
-              <label class="col-sm-2 col-form-label">الرقم القومي للأب</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.fatherNationalId }}</p>
-              </div>
-            </div>
-            <!-- صف: بيانات ولي الأمر -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">اسم ولي الأمر</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.guardianName }}</p>
-              </div>
-              <label class="col-sm-2 col-form-label px-0">الرقم القومي لولي الأمر</label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.guardianNationalId }}</p>
-              </div>
-            </div>
-            <!-- parent status -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label"> حاله الوالدين </label>
-              <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.parentsStatus }}</p>
+              
+              <!-- صف: السكن في الأعوام السابقة -->
+              <div class="mb-4 row">
+                <label class="col-sm-2 col-form-label fw-bold">السكن في الأعوام السابقة</label>
+                <div class="col-sm-10">
+                  <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.housingInPreviousYears || 'غير متوفر' }}</p>
+                </div>
               </div>
               
             </div>
-            <hr>
-            <!-- صف: بيانات أخرى مثل الكلية والفرقة -->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">الكلية</label>
+            <div *ngIf="!applicationRequest?.room">
+              <p class="form-control-plaintext border-bottom border-light-subtle pb-1">غير متوفر</p>
+            </div>
+          </div>
+          
+          <!-- بيانات العائلة -->
+          <div class="section-container mb-4">
+            <h4 class="section-title border-bottom pb-2 mb-3">بيانات العائلة</h4>
+            
+            <!-- صف: بيانات الأب -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">اسم الأب</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.faculty }}</p>
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.fatherName }}</p>
               </div>
-              <label class="col-sm-2 col-form-label">الفرقة</label>
+              <label class="col-sm-2 col-form-label fw-bold">الرقم القومي للأب</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext">{{ applicationRequest?.level }}</p>
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.fatherNationalId }}</p>
               </div>
             </div>
-            <!--صف:فاميلي احتياجات خاصه-->
-            <div class="mb-3 row">
-              <label class="col-sm-2 col-form-label">الاسرة بالخارج</label>
+            
+            <!-- صف: وظيفة الأب ورقم هاتف الأب -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">وظيفة الأب</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.fatherOccupation }}</p>
+              </div>
+              <label class="col-sm-2 col-form-label fw-bold">رقم هاتف الأب</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.fatherPhoneNumber }}</p>
+              </div>
+            </div>
+            
+            <!-- صف: بيانات ولي الأمر -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">اسم ولي الأمر</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.guardianName }}</p>
+              </div>
+              <label class="col-sm-2 col-form-label fw-bold">الرقم القومي لولي الأمر</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.guardianNationalId }}</p>
+              </div>
+            </div>
+            
+            <!-- صف: رقم هاتف ولي الأمر -->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">رقم هاتف ولي الأمر</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.guardianPhoneNumber }}</p>
+              </div>
+              <label class="col-sm-2 col-form-label fw-bold">حالة الوالدين</label>
+              <div class="col-sm-4">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.parentsStatus }}</p>
+              </div>
+            </div>
+            
+            <!--صف: الأسرة بالخارج والاحتياجات الخاصة-->
+            <div class="mb-4 row">
+              <label class="col-sm-2 col-form-label fw-bold">الأسرة بالخارج</label>
               <div class="col-sm-4">
                 <p class="form-control-plaintext">
-                    {{ applicationRequest?.familyAbroad }}
-                    <i *ngIf="applicationRequest?.familyAbroad" class="fa-solid fa-square-check text-success"></i>
-                    <i *ngIf="!applicationRequest?.familyAbroad" class="fa-solid fa-square-xmark text-danger"></i>
+                  <span class="badge rounded-pill px-3 py-2 {{ applicationRequest?.familyAbroad ? 'bg-success' : 'bg-danger' }}">
+                    {{ applicationRequest?.familyAbroad ? 'نعم' : 'لا' }}
+                    <i class="fa-solid {{ applicationRequest?.familyAbroad ? 'fa-check' : 'fa-times' }} ms-1"></i>
+                  </span>
                 </p>
               </div>
-              <label class="col-sm-2 col-form-label">ذوي احتياجات خاصة</label>
+              <label class="col-sm-2 col-form-label fw-bold">ذوي احتياجات خاصة</label>
               <div class="col-sm-4">
                 <p class="form-control-plaintext">
-                    {{ applicationRequest?.specialNeeds}}
-                    <i *ngIf="applicationRequest?.specialNeeds" class="fa-solid fa-square-check text-success"></i>
-                    <i *ngIf="!applicationRequest?.specialNeeds" class="fa-solid fa-square-xmark text-danger"></i>
+                  <span class="badge rounded-pill px-3 py-2 {{ applicationRequest?.specialNeeds ? 'bg-success' : 'bg-danger' }}">
+                    {{ applicationRequest?.specialNeeds ? 'نعم' : 'لا' }}
+                    <i class="fa-solid {{ applicationRequest?.specialNeeds ? 'fa-check' : 'fa-times' }} ms-1"></i>
+                  </span>
                 </p>
               </div>
             </div>
-            <hr>
-            @if (applicationRequest?.housingInPreviousYears)
-             {
-                <!-- صف: بيانات أخرى مثل نوع الطلب-->
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">نوع الطالب</label>
-                <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ applicationRequest?.studentType}}</p>
+          </div>
+          
+          <!-- معلومات دراسية إضافية -->
+          <div class="section-container mb-4">
+            <h4 class="section-title border-bottom pb-2 mb-3">المعلومات الدراسية</h4>
+            
+            @if (applicationRequest?.housingInPreviousYears) {
+              <!-- طالب قديم - بيانات العام السابق -->
+              <div class="mb-4 row">
+                <label class="col-sm-2 col-form-label fw-bold">نسبة التقدير العام الماضي</label>
+                <div class="col-sm-10">
+                  <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.previousAcademicYearGpa }}</p>
                 </div>
               </div>
-            <div class="mb-3 row">
-                <label class="col-sm-2 px-0 col-form-label">السكن فى الأعوام السابقة</label>
+            } @else {
+              <!-- طالب مستجد - بيانات الثانوية العامة -->
+              <div class="mb-4 row">
+                <label class="col-sm-2 col-form-label fw-bold">شعبة الثانوية العامة</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ applicationRequest?.housingInPreviousYears }}</p>
+                  <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.secondaryDivision || 'غير متوفر' }}</p>
                 </div>
-                <label class="col-sm-2 px-0 col-form-label">نسبة التقدير العام الماضي</label>
+                <label class="col-sm-2 col-form-label fw-bold">مجموع الثانوية العامة</label>
                 <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ applicationRequest?.previousAcademicYearGpa }}</p>
-                </div>
-              </div>
-             }
-             @else 
-             {
-                 <!-- صف: بيانات أخرى مثل نوع الطلب-->
-            <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">نوع الطالب</label>
-                <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ applicationRequest?.studentType}}</p>
+                  <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.totalGradesHighSchool || 'غير متوفر' }}</p>
                 </div>
               </div>
-                    <!-- صف: بيانات أخرى مثل الكلية والفرقة -->
-                <div class="mb-3 row">
-                <label class="col-sm-2 px-0 col-form-label">شعبة الثانوية العامة</label>
-                <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ applicationRequest?.secondaryDivision }}</p>
-                </div>
-                <label class="col-sm-2 px-0 col-form-label">مجموع الثانوية العامة</label>
-                <div class="col-sm-4">
-                  <p class="form-control-plaintext">{{ applicationRequest?.totalGradesHighSchool }}</p>
-                </div>
+            }
+          </div>
+          
+          <!-- معلومات أمنية وملاحظات -->
+          <div class="section-container">
+            <h4 class="section-title border-bottom pb-2 mb-3">معلومات إضافية</h4>
+            
+            <!-- صف: حالة الفحص الأمني -->
+            <div class="mb-4 row" >
+              <label class="col-sm-2 col-form-label fw-bold">حالة الفحص الأمني</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.securityCheckStatues || 'غير متوفر' }}</p>
               </div>
-             }
-            <!-- يمكنك متابعة باقي الحقول بنفس الطريقة -->
+            </div>
+            
+            <!-- صف: الملاحظات -->
+            <div class="mb-4 row" >
+              <label class="col-sm-2 col-form-label fw-bold">ملاحظات</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.notes || 'لا توجد ملاحظات' }}</p>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-      <div class="buttons d-flex gap-3">
-          <button [class.d-none]="applicationRequest?.status === 'ACCEPTED'" (click)="DecideAr(applicationRequest?.userId,'ACCEPTED')" class="acceptButton px-4 btn btn-outline-success">قبول الطلب</button>
-          <button [class.d-none]="applicationRequest?.status === 'REJECTED'" (click)="DecideAr(applicationRequest?.userId,'REJECTED')" class="rejectButton px-4 btn btn-outline-danger">رفض الطلب</button>
-          <button [class.d-none]="applicationRequest?.status === 'UNDER_REVIEW'" (click)="DecideAr(applicationRequest?.userId,'UNDER_REVIEW')" class="reviewButton px-4 btn btn-outline-warning">تحت المراجعة</button>
       </div>
-      
     </section>
-}
-
-  </div>
+    
+    <!-- Buttons Section -->
+    <div class="d-flex justify-content-center gap-3 mt-4 mb-4">
+      <button [class.d-none]="applicationRequest?.status === 'ACCEPTED'" (click)="DecideAr(applicationRequest?.userId,'ACCEPTED')" class="btn btn-success px-4 py-2">
+        <i class="fa-solid fa-check me-2"></i> قبول الطلب
+      </button>
+      <button [class.d-none]="applicationRequest?.status === 'REJECTED'" (click)="DecideAr(applicationRequest?.userId,'REJECTED')" class="btn btn-danger px-4 py-2">
+        <i class="fa-solid fa-times me-2"></i> رفض الطلب
+      </button>
+      <button [class.d-none]="applicationRequest?.status === 'UNDER_REVIEW'" (click)="DecideAr(applicationRequest?.userId,'UNDER_REVIEW')" class="btn btn-warning px-4 py-2">
+        <i class="fa-solid fa-clock me-2"></i> تحت المراجعة
+      </button>
+    </div>
+  </section>
+  }
+</div>

@@ -103,7 +103,8 @@ export class AssignRowComponent {
       {
         this._BuildingsService.getAvailableRooms(this.buildingId,'DORM').pipe(takeUntil(this.destroy$)).subscribe({
           next: (res:any) => {
-            this.resRooms = res.data; // على حسب شكل الريسبونس بتاعك
+            this.resRooms = res.data.filter((room:any) => room?.building?.id === +this.buildingId); // على حسب شكل الريسبونس بتاعك
+            console.log("resRooms Data",res.data);
             this.resRooms = [...this.resRooms];
             console.log("resRooms",this.resRooms);
           },

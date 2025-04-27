@@ -10,6 +10,7 @@ import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { ExportFormComponent } from '../export-form/export-form.component';
 import { BuildingsService } from '../../core/services/buildings.service';
 import { AssignRowComponent } from "../assign-row/assign-row.component";
+import { ArService } from '../../core/services/ar.service';
 
 @Component({
   selector: 'app-assign-rooms',
@@ -51,6 +52,7 @@ export class AssignRoomsComponent {
   
     private readonly dataService = inject(SharedDataService);
     private readonly _AuthService = inject(AuthService);
+    private readonly ar = inject(ArService);
     private readonly router = inject(Router);
     private readonly excel = inject(ExcelService);
     private readonly dialog = inject(MatDialog);
@@ -94,7 +96,7 @@ export class AssignRoomsComponent {
   
   
     ngOnInit(): void {
-      this._AuthService.getApplications().subscribe({
+      this.ar.getApplications({ status: 'ACCEPTED',securityCheck:'ACCEPTED',hasPenalty:'false' }).subscribe({
         next: (res: any) => {
           this.getBuildings();
           console.log(res);
@@ -102,6 +104,8 @@ export class AssignRoomsComponent {
           this.filteredItems = this.res;
           console.log(this.res);
           this.initPagination();
+          this.applyFilters();
+
         },
         error: (err:any) => { console.log(err); },
       });
@@ -117,7 +121,6 @@ export class AssignRoomsComponent {
       ).subscribe(() => {
         this.applyFilters();
       });
-    
     }
   
 
@@ -193,10 +196,6 @@ export class AssignRoomsComponent {
       this.dataService.changeStudentData(student);
     }
 
-    // handleBuildingClick(building: any): void {
-    //   console.log(building);
-    //   this.dataService.changeBuildingData(building);
-    // }
   
     RowClick(item:any): void {
       console.log("hello there this is on row click", item);
@@ -259,18 +258,18 @@ export class AssignRoomsComponent {
     }
   
    
-    removeSelection()
-    {
-      this.dataService.changeStudentData(null);
+    // removeSelection()
+    // {
+    //   this.dataService.changeStudentData(null);
   
-    }
+    // }
 
-    deleteAr(id:number,id2:number)
-    {
-        console.log("this is delete button");
-    }
+    // deleteAr(id:number,id2:number)
+    // {
+    //     console.log("this is delete button");
+    // }
   
-     downloadFile() {
+    //  downloadFile() {
     //   this.excel.exportAdmissionRequests('ALL','ALL')
     //     .subscribe({
     //       next: (blob: Blob) => {
@@ -287,19 +286,19 @@ export class AssignRoomsComponent {
     //         // يمكنك إضافة معالجة الأخطاء هنا
     //       }
     //     });
-     }
+    //  }
 
-    openDialog(): void {
-        const dialogRef = this.dialog.open(ExportFormComponent, {
-          width: '50%', // Set the width of the dialog
-        });
+    // openDialog(): void {
+    //     const dialogRef = this.dialog.open(ExportFormComponent, {
+    //       width: '50%', // Set the width of the dialog
+    //     });
     
-        dialogRef.afterClosed().subscribe((result:any) => {
-          if (result) {
-            // this.getDeadLine(); // Refresh the list after the dialog is closed
-          }
-        });
-      }
+    //     dialogRef.afterClosed().subscribe((result:any) => {
+    //       if (result) {
+    //         // this.getDeadLine(); // Refresh the list after the dialog is closed
+    //       }
+    //     });
+    //   }
 
     ngOnDestroy(): void {
       this.destroy$.next();

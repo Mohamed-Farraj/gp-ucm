@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { SharedDataService } from './shared-data.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +14,12 @@ export class ArService {
     private readonly sharedDataService = inject(SharedDataService)
 
   constructor() { }
-   getApplications():Observable<any>
-    {
-    return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests`);
-    }
+  getApplications(params?: any): Observable<any> {
+    let httpParams = new HttpParams({ fromObject: params || {} });
+    return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests`, {
+      params: httpParams
+    });
+  }
   
   
     DecideArState(UId:number,Status:string):Observable<any>{

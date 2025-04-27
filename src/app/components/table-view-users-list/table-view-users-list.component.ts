@@ -39,6 +39,7 @@ export class TableViewUsersListComponent {
         searchControl = new FormControl('');
         sortControl = new FormControl('normal');// متغير للفرز: "normal" أو "reverse"
         selectedStatuses: string[] = [];// مصفوفة لتخزين الحالات المختارة من checkboxes
+        selectedGenders: string[] = [];// مصفوفة لتخزين gender المختارة من checkboxes
         filteredItems: any[] = [];
         //#endregion
     
@@ -212,6 +213,18 @@ export class TableViewUsersListComponent {
       this.handleClick(item);
       this.router.navigate(['admin/details', item.userId]);
     }
+
+    // Updated change handler
+onGenderChange(event: any): void {
+  const checked = event.target.checked;
+  const value = event.target.value;
+  if (checked) {
+    this.selectedGenders.push(value);
+  } else {
+    this.selectedGenders = this.selectedGenders.filter(gender => gender !== value);
+  }
+  this.applyFilters();
+}
   
     // دالة لتحديث selectedStatuses عند تغيير حالة checkbox
     onStatusChange(event: any): void {
@@ -248,7 +261,12 @@ export class TableViewUsersListComponent {
         filtered = filtered.filter((item: any) => this.selectedStatuses.includes(item.status));
       }
     
-     
+      // Gender filter
+  if (this.selectedGenders.length > 0) {
+    filtered = filtered.filter((item: any) => 
+      this.selectedGenders.includes(item.gender)
+    );
+  }
   
   
        // تطبيق الفرز: استخدام نسخة من المصفوفة لعكس الترتيب لتجنب التعديل على المصفوفة الأصلية

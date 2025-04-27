@@ -56,11 +56,10 @@ h4{color:var(--main-color)}
 
 
   .toggle-btn {
-    position: absolute;
-    left: 100%;
-    top: 10px;
+    // position: absolute;
+    // left: 100%;
+    // top: 10px;
     border: none;
-    background: #fff;
     padding: 8px;
     border-radius: 4px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -80,17 +79,17 @@ h4{color:var(--main-color)}
     width: 80px;
   }
   
-  .toggle-btn {
-    position: absolute;
-    left: 100%;
-    top: 10px;
-    border: none;
-    background: transparent;
-    padding: 8px;
-    border-radius: 4px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    z-index: 1000;
-  }
+  // .toggle-btn {
+  //   // position: absolute;
+  //   // left: 100%;
+  //   // top: 10px;
+  //   border: none;
+  //   background: transparent;
+  //   padding: 8px;
+  //   border-radius: 4px;
+  //   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  //   z-index: 1000;
+  // }
   
   .sidebar.collapsed .fs-3 {
     display: none !important;

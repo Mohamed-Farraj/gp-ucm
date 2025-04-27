@@ -22,7 +22,7 @@
       <!-- Status checkboxes -->
       <div class="col-12 col-sm-10 col-md-8 col-lg-2 mb-3 text-center">
         <div
-          class="btn-group d-inline-flex flex-wrap justify-content-center"
+          class="btn-group d-inline-flex flex-no-wrap justify-content-center"
           role="group"
           aria-label="Basic checkbox toggle button group"
         >
@@ -72,24 +72,62 @@
           </label>
         </div>
       </div>
+
+      <!-- Gender checkboxes -->
+      <div class="col-12 col-sm-10 col-md-8 col-lg-1 mb-3 text-center">
+        <div
+          class="btn-group d-inline-flex flex-no-wrap justify-content-center"
+          role="group"
+          aria-label="Gender filter buttons"
+        >
+          <!-- Male -->
+          <input
+            type="checkbox"
+            value="MALE"
+            id="male"
+            class="btn-check"
+            (change)="onGenderChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-primary rounded-start-pill" for="male">
+            ذكر
+          </label>
+
+          <!-- Female -->
+          <input
+            type="checkbox"
+            value="FEMALE"
+            id="female"
+            class="btn-check"
+            (change)="onGenderChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-info rounded-end-pill" for="female">
+            أنثى
+          </label>
+        </div>
+      </div>
+
       <!-- download excel -->
-      <div class="col-12 col-sm-10 col-md-8 col-lg-2 mb-3 text-center d-flex gap-3">
-          <button
-            type="button"
-            class="btn btn-outline-dark rounded-pill d-flex justify-content-center align-items-center gap-2 px-3"
-            (click)="openDialog()"
-          >
+      <div
+        class="col-12 col-sm-10 col-md-8 col-lg-2 mb-3 text-center d-flex gap-3"
+      >
+        <button
+          type="button"
+          class="btn btn-outline-dark rounded-pill d-flex justify-content-center align-items-center gap-2 px-3"
+          (click)="openDialog()"
+        >
           <i class="fa-solid fa-download"></i>
           <span>تنزيل</span>
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-success rounded-pill d-flex justify-content-center align-items-center gap-2 px-3"
-            (click)="openUploadDialog()"
-          >
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-success rounded-pill d-flex justify-content-center align-items-center gap-2 px-3"
+          (click)="openUploadDialog()"
+        >
           <i class="fa-solid fa-upload"></i>
           <span>رفع</span>
-          </button>
+        </button>
       </div>
     </div>
   </div>
@@ -97,13 +135,15 @@
   <h4 class="text-center">
     عدد الطلبات:
     {{
-      searchControl.value || selectedStatuses.length > 0
+      searchControl.value || selectedStatuses.length > 0 || selectedGenders.length > 0
         ? filteredItems.length
         : res.length
     }}
   </h4>
 
-  <table class="table m-auto table-hover table-striped">
+  <table
+    class="table m-auto table-hover table-striped border border-3 rounded rounded-3 shadow-lg"
+  >
     <thead class="">
       <tr class="">
         <th scope="col">الحالة</th>
@@ -119,12 +159,14 @@
     <tbody class="">
       @for (item of pagedItems; track $index) {
       <tr (click)="RowClick(item)" class="cursor-pointer">
-        <td><i
-          [class.text-success]="item?.status === 'ACCEPTED'"
-          [class.text-danger]="item?.status === 'REJECTED'"
-          [class.text-warning]="item?.status === 'UNDER_REVIEW'"
-          class="fa-solid fa-circle mx-2"
-        ></i></td>
+        <td>
+          <i
+            [class.text-success]="item?.status === 'ACCEPTED'"
+            [class.text-danger]="item?.status === 'REJECTED'"
+            [class.text-warning]="item?.status === 'UNDER_REVIEW'"
+            class="fa-solid fa-circle mx-2"
+          ></i>
+        </td>
         <th scope="row">{{ item?.nationalId }}</th>
         <td>{{ item?.firstName }} {{ item?.lastName }}</td>
         <td>{{ item?.mobileNumber }}</td>
@@ -132,11 +174,18 @@
         <td>{{ item?.faculty }}</td>
         <td>{{ item?.level }}</td>
         <td>
-          <div class="buttons d-flex gap-3">
+          <button
+            (click)="$event.stopPropagation()"
+            class="rejectButton px-4 btn btn-outline-danger"
+          >
+            <i class="fa-solid fa-trash me-2"></i>
+            حذف الطلب
+          </button>
+          <!-- <div class="buttons d-flex gap-3">
             <button [class.d-none]="item?.status === 'ACCEPTED'"     (click)="DecideAr(item?.userId,'ACCEPTED',item);$event.stopPropagation()" class="acceptButton px-4 btn btn-outline-success">قبول الطلب</button>
             <button [class.d-none]="item?.status === 'REJECTED'"     (click)="DecideAr(item?.userId,'REJECTED',item);$event.stopPropagation()" class="rejectButton px-4 btn btn-outline-danger">رفض الطلب</button>
             <button [class.d-none]="item?.status === 'UNDER_REVIEW'" (click)="DecideAr(item?.userId,'UNDER_REVIEW',item);$event.stopPropagation()" class="reviewButton px-3 btn btn-outline-warning">تحت المراجعة</button>
-        </div>
+        </div> -->
         </td>
       </tr>
       }
