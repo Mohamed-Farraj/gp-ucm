@@ -10,14 +10,20 @@ export class ExcelService {
 
   constructor(private http: HttpClient) { }
 
-    exportAdmissionRequests(status: string, gender: string,faculty: string,level:string): Observable<Blob> {
+    exportAdmissionRequests(status: string, securityCheck: string, gender: string,penalty:string,faculty: string,level:string): Observable<Blob> {
       let apiUrl = `${environment.baseUrl}/admin/view/admission-requests/export`;
       let params = new HttpParams();
       if (status && status !== 'ALL') {
         params = params.append('status', status);
       }
+      if (securityCheck && securityCheck !== 'ALL') {
+        params = params.append('securityCheck', securityCheck);
+      }
       if (gender && gender !== 'ALL') {
         params = params.append('gender', gender);
+      }
+      if (penalty !== 'ALL') {
+        params = params.append('hasPenalty', penalty);
       }
       if (faculty && faculty !== 'ALL') {
         params = params.append('faculty', faculty);
@@ -25,10 +31,10 @@ export class ExcelService {
       if (level && level !== 'ALL') {
         params = params.append('level', level);
       }
-      if(status === 'ALL' && gender === 'ALL' && faculty === 'ALL'&& level === 'ALL')
-      {
-        apiUrl = `${environment.baseUrl}/admin/view/export-admission-requests`;
-      }
+      // if(status === 'ALL' && gender === 'ALL' && faculty === 'ALL'&& level === 'ALL')
+      // {
+      //   apiUrl = `${environment.baseUrl}/admin/view/export-admission-requests`;
+      // }
       return this.http.get(apiUrl, {
         params: params,
         responseType: 'blob',

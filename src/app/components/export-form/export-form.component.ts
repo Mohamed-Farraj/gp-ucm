@@ -18,12 +18,27 @@ export class ExportFormComponent implements OnInit {
     { value: 'ALL', label: 'الكل' }
   ];
 
+  penalties = [
+    { value: true, label: 'لديه عقوبات' },
+    { value: false, label: 'ليس لديه عقوبات' },
+    { value: 'ALL', label: 'الكل' }
+  ];
+
   statuses = [
     { value: 'UNDER_REVIEW', label: 'تحت المراجعة' },
-    { value: 'REJECTED', label: 'المرقوض' },
+    { value: 'REJECTED', label: 'مرفوض' },
     { value: 'ACCEPTED', label: 'مقبول' },
     { value: 'ALL', label: 'الكل' }
   ];
+
+  securityCheck = [
+    { value: 'UNDER_REVIEW', label: 'غير متوفر' },
+    { value: 'REJECTED', label: 'مرفوض' },
+    { value: 'ACCEPTED', label: 'مقبول' },
+    { value: 'ALL', label: 'الكل' }
+  ];
+
+
 
   readonly LEVEL_OPTIONS = [
     { value: 'first', label: 'الفرقة الاولى' },
@@ -37,7 +52,9 @@ export class ExportFormComponent implements OnInit {
 
 
   selectedStatus = 'ALL';
+  selectedSecurityCheck = 'ALL';
   selectedGender = 'ALL';
+  selectedPenalty = 'ALL';
   selectedFaculty: string = 'ALL';
   facultiesArray: string[] = [];
   selectedLevel = 'ALL';
@@ -122,6 +139,12 @@ export class ExportFormComponent implements OnInit {
     }
     return this.selectedStatus.split(',').includes(statusValue);
   }
+  isSelectedSecurity(statusValue: string): boolean {
+    if (statusValue === 'ALL') {
+      return this.selectedSecurityCheck === 'ALL';
+    }
+    return this.selectedSecurityCheck.split(',').includes(statusValue);
+  }
 
   // دالة معالجة التغيير
   onStatusChange(statusValue: string, event: any): void {
@@ -138,6 +161,22 @@ export class ExportFormComponent implements OnInit {
       }
       
       this.selectedStatus = currentValues.join(',');
+    }
+  }
+  onSecurityChange(securityValue: string, event: any): void {
+    const isChecked = event.target.checked;
+    if (securityValue === 'ALL') {
+      this.selectedSecurityCheck = isChecked ? 'ALL' : '';
+    } else {
+      let currentValues = this.selectedSecurityCheck === 'ALL' ? [] : this.selectedSecurityCheck.split(',');
+      
+      if (isChecked) {
+        currentValues.push(securityValue);
+      } else {
+        currentValues = currentValues.filter(val => val !== securityValue);
+      }
+      
+      this.selectedSecurityCheck = currentValues.join(',');
     }
   }
 
@@ -169,8 +208,10 @@ export class ExportFormComponent implements OnInit {
     console.log("levelsArray",this.levelsArray);
     this.selectedLevel = this.levelsArray;
     console.log("this.selectedStatus",this.selectedStatus);
+    console.log("this.selectedSecurityCheck",this.selectedSecurityCheck);
     console.log("this.selectedGender",this.selectedGender);
-    this.excel.exportAdmissionRequests(this.selectedStatus ,this.selectedGender,this.selectedFaculty,this.selectedLevel ).subscribe({
+    console.log("this.selectedPenalty",this.selectedPenalty);
+    this.excel.exportAdmissionRequests(this.selectedStatus,this.selectedSecurityCheck ,this.selectedGender,this.selectedPenalty,this.selectedFaculty,this.selectedLevel ).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');

@@ -171,6 +171,59 @@
           </div>
         </div>
 
+        <!-- Security Selection -->
+        <div class="card mb-4">
+          <div class="card-header bg-main text-white">
+            <h5 class="mb-0"> الاستعلام الامني</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-3" *ngFor="let security of securityCheck">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="security"
+                    [id]="security.value"
+                    [value]="security.value"
+                    [checked]="isSelectedSecurity(security.value)"
+                    (change)="onSecurityChange(security.value, $event)"
+                  />
+                  <label class="form-check-label" [for]="security.value">
+                    {{ security.label }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- hasPenalty Selection -->
+        <div class="card mb-4">
+          <div class="card-header bg-main text-white">
+            <h5 class="mb-0">حالة الجزاءات</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4" *ngFor="let penalty of penalties">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="penalty"
+                    id="{{ penalty.value }}"
+                    [value]="penalty.value"
+                    [(ngModel)]="selectedPenalty"
+                  />
+                  <label class="form-check-label" [for]="penalty.value">
+                    {{ penalty.label }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Download Button -->
         <div class="d-grid gap-2">
           <button
