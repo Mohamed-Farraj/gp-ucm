@@ -51,8 +51,9 @@
           <div class="flex flex-col">
             <!-- Vertical stepper for large screens -->
             <mat-vertical-stepper
+            *ngIf="!isMobile"
               #stepperLarge
-              class="bg-white p-4 w-100 d-none d-md-block"
+              class="bg-white p-4 w-100 "
               labelPosition="bottom"
               [linear]="false"
             >
@@ -189,8 +190,9 @@
 
             <!-- Horizontal stepper for mobile -->
             <mat-horizontal-stepper
+            *ngIf="isMobile"
               #stepperMobile
-              class="bg-white p-4 w-100 d-block d-md-none"
+              class="bg-white p-4 w-100 "
               labelPosition="bottom"
               [linear]="false"
             >

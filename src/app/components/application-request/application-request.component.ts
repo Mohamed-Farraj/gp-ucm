@@ -1,5 +1,5 @@
 import { ArService } from './../../core/services/ar.service';
-import { Component, signal , WritableSignal , computed, Signal, inject, OnInit   } from '@angular/core';
+import { Component, signal , WritableSignal , computed, Signal, inject, OnInit, HostListener   } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { single } from 'rxjs';
 import countries from '../../../assets/country (1).json';
@@ -24,7 +24,7 @@ import { get } from 'node:http';
 @Component({
   selector: 'app-application-request',
   standalone: true,
-  imports: [ReactiveFormsModule , MatStepperModule , BasicInfoStepComponent, FamilyInfoStepComponent, AcademicInfoStepComponent, ContactInfoStepComponent, AccountSetupStepComponent , ],
+  imports: [NgIf,ReactiveFormsModule , MatStepperModule , BasicInfoStepComponent, FamilyInfoStepComponent, AcademicInfoStepComponent, ContactInfoStepComponent, AccountSetupStepComponent , ],
   templateUrl: './application-request.component.html',
   styleUrl: './application-request.component.scss',
     providers:[{provide:CdkStepper,useExisting:StepperComponent}]
@@ -130,6 +130,13 @@ export class ApplicationRequestComponent implements OnInit {
     // استرجاع بيانات الطالب إذا كان مسجلاً
     this.loadUserData();
   }
+
+  isMobile = window.innerWidth < 768; // مثلاً
+
+@HostListener('window:resize', ['$event'])
+onResize(event:any) {
+  this.isMobile = window.innerWidth < 768;
+}
   debugForm() {
     console.log(this.AppRequest);
   }
