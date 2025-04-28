@@ -119,7 +119,9 @@ export class ApplicationRequestComponent implements OnInit {
     totalGradesHighSchool: new FormControl(null),
     country: new FormControl(null), //  
     governorate: new FormControl(null ),
-    city: new FormControl(null),
+    city: new FormControl(null),  
+    securityCheck: new FormControl("PENDING"),
+
     confirmDataAccuracy: new FormControl(true, [Validators.requiredTrue]), 
  
   } , this.passwordConfirmation)
