@@ -1,31 +1,29 @@
 <section>
-  <div class="filteration container-fluid p-3">
-    <div class="row justify-content-start">
+  <div class="container-fluid py-3">
+    <div class="row g-3">
       <!-- Search input -->
-      <div class="col-12 col-sm-10 col-md-8 col-lg-4 mb-3">
-        <input
-          type="text"
-          class="form-control rounded-pill"
-          placeholder="ابحث بالاسم أو الرقم القومي"
-          [formControl]="searchControl"
-        />
+      <div class="col-12 col-md-4">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control "
+            placeholder="ابحث بالاسم أو الرقم القومي"
+            [formControl]="searchControl"
+          />
+        </div>
       </div>
-
+  
       <!-- Sort dropdown -->
-      <div class="col-12 col-sm-10 col-md-8 col-lg-2 mb-3">
+      <div class="col-12 col-md-2">
         <select class="form-select" [formControl]="sortControl">
           <option value="normal">الاقدم اولا</option>
           <option value="reverse">الاحدث اولا</option>
         </select>
       </div>
-
-      <!-- Status checkboxes -->
-      <div class="col-12 col-sm-10 col-md-8 col-lg-2 mb-3 text-center">
-        <div
-          class="btn-group d-inline-flex flex-no-wrap justify-content-center"
-          role="group"
-          aria-label="Basic checkbox toggle button group"
-        >
+  
+      <!-- Status filters -->
+      <div class="col-12 col-md-3">
+        <div class="btn-group w-100" role="group" aria-label="Status filter buttons">
           <!-- تحت المراجعة -->
           <input
             type="checkbox"
@@ -35,13 +33,10 @@
             (change)="onStatusChange($event)"
             autocomplete="off"
           />
-          <label
-            class="btn btn-outline-warning rounded-start-pill"
-            for="underReview"
-          >
+          <label class="btn btn-outline-warning" for="underReview">
             تحت المراجعة
           </label>
-
+  
           <!-- مقبول -->
           <input
             type="checkbox"
@@ -51,13 +46,10 @@
             (change)="onStatusChange($event)"
             autocomplete="off"
           />
-          <label
-            class="btn btn-outline-success rounded-0 border-end-0"
-            for="accepted"
-          >
+          <label class="btn btn-outline-success" for="accepted">
             مقبول
           </label>
-
+  
           <!-- مرفوض -->
           <input
             type="checkbox"
@@ -67,19 +59,15 @@
             (change)="onStatusChange($event)"
             autocomplete="off"
           />
-          <label class="btn btn-outline-danger rounded-end-pill" for="rejected">
+          <label class="btn btn-outline-danger" for="rejected">
             مرفوض
           </label>
         </div>
       </div>
-
-      <!-- Gender checkboxes -->
-      <div class="col-12 col-sm-10 col-md-8 col-lg-1 mb-3 text-center">
-        <div
-          class="btn-group d-inline-flex flex-no-wrap justify-content-center"
-          role="group"
-          aria-label="Gender filter buttons"
-        >
+  
+      <!-- Gender filters -->
+      <div class="col-12 col-md-1">
+        <div class="btn-group w-100" role="group" aria-label="Gender filter buttons">
           <!-- Male -->
           <input
             type="checkbox"
@@ -89,10 +77,10 @@
             (change)="onGenderChange($event)"
             autocomplete="off"
           />
-          <label class="btn btn-outline-primary rounded-start-pill" for="male">
+          <label class="btn btn-outline-primary" for="male">
             ذكر
           </label>
-
+  
           <!-- Female -->
           <input
             type="checkbox"
@@ -102,32 +90,32 @@
             (change)="onGenderChange($event)"
             autocomplete="off"
           />
-          <label class="btn btn-outline-info rounded-end-pill" for="female">
+          <label class="btn btn-outline-info" for="female">
             أنثى
           </label>
         </div>
       </div>
-
-      <!-- download excel -->
-      <div
-        class="col-12 col-sm-10 col-md-8 col-lg-2 mb-3 text-center d-flex gap-3"
-      >
-        <button
-          type="button"
-          class="btn btn-outline-dark rounded-pill d-flex justify-content-center align-items-center gap-2 px-3"
-          (click)="openDialog()"
-        >
-          <i class="fa-solid fa-download"></i>
-          <span>تنزيل</span>
-        </button>
-        <button
-          type="button"
-          class="btn btn-outline-success rounded-pill d-flex justify-content-center align-items-center gap-2 px-3"
-          (click)="openUploadDialog()"
-        >
-          <i class="fa-solid fa-upload"></i>
-          <span>رفع</span>
-        </button>
+  
+      <!-- Action buttons -->
+      <div class="col-12 col-md-2">
+        <div class="d-flex gap-2">
+          <button
+            type="button"
+            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openDialog()"
+          >
+            <i class="fa-solid fa-download"></i>
+            <span>تنزيل</span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openUploadDialog()"
+          >
+            <i class="fa-solid fa-upload"></i>
+            <span>رفع</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -141,88 +129,93 @@
     }}
   </h4>
 
-  <table
-    class="table m-auto table-hover table-striped border border-3 rounded rounded-3 shadow-lg"
-  >
-    <thead class="">
-      <tr class="">
-        <th scope="col">الحالة</th>
-        <th scope="col">الرقم القومي</th>
-        <th scope="col">الاسم</th>
-        <th scope="col">الموبايل</th>
-        <th scope="col">العنوان</th>
-        <th scope="col">الكلية</th>
-        <th scope="col">الفرقة</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody class="">
-      @for (item of pagedItems; track $index) {
-      <tr (click)="RowClick(item)" class="cursor-pointer">
-        <td>
-          <i
-            [class.text-success]="item?.status === 'ACCEPTED'"
-            [class.text-danger]="item?.status === 'REJECTED'"
-            [class.text-warning]="item?.status === 'UNDER_REVIEW'"
-            class="fa-solid fa-circle mx-2"
-          ></i>
-        </td>
-        <th scope="row">{{ item?.nationalId }}</th>
-        <td>{{ item?.firstName }} {{ item?.lastName }}</td>
-        <td>{{ item?.mobileNumber }}</td>
-        <td>{{ item?.residenceAddress }}</td>
-        <td>{{ item?.faculty }}</td>
-        <td>{{ item?.level }}</td>
-        <td>
-          <button
-            (click)="$event.stopPropagation()"
-            class="rejectButton px-4 btn btn-outline-danger"
-          >
-            <i class="fa-solid fa-trash me-2"></i>
-            حذف الطلب
-          </button>
-          <!-- <div class="buttons d-flex gap-3">
-            <button [class.d-none]="item?.status === 'ACCEPTED'"     (click)="DecideAr(item?.userId,'ACCEPTED',item);$event.stopPropagation()" class="acceptButton px-4 btn btn-outline-success">قبول الطلب</button>
-            <button [class.d-none]="item?.status === 'REJECTED'"     (click)="DecideAr(item?.userId,'REJECTED',item);$event.stopPropagation()" class="rejectButton px-4 btn btn-outline-danger">رفض الطلب</button>
-            <button [class.d-none]="item?.status === 'UNDER_REVIEW'" (click)="DecideAr(item?.userId,'UNDER_REVIEW',item);$event.stopPropagation()" class="reviewButton px-3 btn btn-outline-warning">تحت المراجعة</button>
-        </div> -->
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
-
-  <!-- <button class="btn btn-primary mx-auto" (click)="downloadFile()">
-    download excel
-  </button> -->
-
-  <nav dir="rtl" class="py-3" aria-label="Page navigation ">
-    <ul class="pagination justify-content-center">
+  <div class="table-responsive overflow-x-auto shadow-lg">
+    <table class="table table-hover table-striped border shadow-sm rounded">
+      <thead class="table-light">
+        <tr class="text-center">
+          <th scope="col" width="60">الحالة</th>
+          <th scope="col">الرقم القومي</th>
+          <th scope="col">الاسم</th>
+          <th scope="col">الموبايل</th>
+          <th scope="col">العنوان</th>
+          <th scope="col">الكلية</th>
+          <th scope="col">الفرقة</th>
+          <th scope="col" class="text-center">الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of pagedItems; track $index) {
+        <tr (click)="RowClick(item)" class="cursor-pointer align-middle">
+          <td class="text-center">
+            <span class="status-indicator">
+              <i
+                [class.text-success]="item?.status === 'ACCEPTED'"
+                [class.text-danger]="item?.status === 'REJECTED'"
+                [class.text-warning]="item?.status === 'UNDER_REVIEW'"
+                class="fa-solid fa-circle"
+              ></i>
+              <!-- <span class="status-text d-none d-md-inline small ms-1 fw-bold" 
+                [class.text-success]="item?.status === 'ACCEPTED'"
+                [class.text-danger]="item?.status === 'REJECTED'"
+                [class.text-warning]="item?.status === 'UNDER_REVIEW'">
+                {{ item?.status === 'ACCEPTED' ? 'مقبول' : 
+                   item?.status === 'REJECTED' ? 'مرفوض' : 'تحت المراجعة' }}
+              </span> -->
+            </span>
+          </td>
+          <th scope="row" class="fw-medium">{{ item?.nationalId }}</th>
+          <td>{{ item?.firstName }} {{ item?.lastName }}</td>
+          <td>{{ item?.mobileNumber }}</td>
+          <td>{{ item?.residenceAddress }}</td>
+          <td>{{ item?.faculty }}</td>
+          <td>{{ getLevel(item?.level) }}</td>
+          <td>
+            <div class="d-flex flex-wrap gap-2 justify-content-center">
+              <button *ngIf="item?.securityCheckStatues" 
+                [class.d-none]="item?.status === 'ACCEPTED'" 
+                (click)="confirmation(item?.userId,'ACCEPTED',item);$event.stopPropagation()" 
+                class="btn btn-sm btn-outline-success">
+                <i class="fa-solid fa-check me-1"></i> قبول
+              </button>
+              <button 
+                [class.d-none]="item?.status === 'REJECTED'" 
+                (click)="confirmation(item?.userId,'REJECTED',item);$event.stopPropagation()" 
+                class="btn btn-sm btn-outline-danger">
+                <i class="fa-solid fa-times me-1"></i> رفض
+              </button>
+              <button 
+                [class.d-none]="item?.status === 'UNDER_REVIEW'" 
+                (click)="confirmation(item?.userId,'UNDER_REVIEW',item);$event.stopPropagation()" 
+                class="btn btn-sm btn-outline-warning">
+                <i class="fa-solid fa-clock me-1"></i> مراجعة
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  
+  <!-- Enhanced Pagination -->
+  <nav dir="rtl" class="py-4" aria-label="Page navigation">
+    <ul class="pagination pagination-md justify-content-center">
       <li class="page-item" [class.disabled]="currentPage === 1">
-        <a
-          class="cursor-pointer page-link rounded-start-pill rounded"
-          (click)="changePage(currentPage - 1)"
-        >
-          السابق
+        <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="d-none d-sm-inline ms-1 cursor-pointer">السابق</span>
         </a>
       </li>
-      <li
-        class="page-item"
-        *ngFor="let page of getDisplayedPages()"
-        [class.active]="page === currentPage"
-      >
-        <a class="cursor-pointer page-link" (click)="changePage(page)">{{
-          page
-        }}</a>
+      <li class="page-item cursor-pointer" *ngFor="let page of getDisplayedPages()" [class.active]="page === currentPage">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
       </li>
-      <li class="page-item" [class.disabled]="currentPage === totalPages">
-        <a
-          class="cursor-pointer page-link rounded-end-pill rounded"
-          (click)="changePage(currentPage + 1)"
-        >
-          التالي
+      <li class="page-item cursor-pointer" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+          <span class="d-none d-sm-inline me-1 cursor-pointer">التالي</span>
+          <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
     </ul>
   </nav>
 </section>
+

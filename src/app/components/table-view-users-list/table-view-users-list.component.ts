@@ -3,7 +3,7 @@ import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { AuthService } from '../../core/services/auth.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NgClass, NgFor } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../core/services/excel.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ import { UploadFormComponent } from '../upload-form/upload-form.component';
 @Component({
   selector: 'app-table-view-users-list',
   standalone: true,
-  imports: [ReactiveFormsModule,NgFor,MatDialogModule],
+  imports: [ReactiveFormsModule,NgFor,MatDialogModule,NgIf],
   templateUrl: './table-view-users-list.component.html',
   styleUrl: './table-view-users-list.component.scss'
 })
@@ -30,7 +30,7 @@ export class TableViewUsersListComponent {
       isCollapsed: boolean = true;
       pagedItems: any[] = [];
       currentPage: number = 1;
-      pageSize: number = 15;
+      pageSize: number = 20;
       totalPages: number = 0;
       pages: number[] = [];
       //#endregion
@@ -153,6 +153,81 @@ export class TableViewUsersListComponent {
         timer: 1500,
         timerProgressBar: true,
       })
+
+      confirmation(id: number = -1, status: string = 'UNDER_REVIEW', item?: any) {
+        const procedure = status === 'ACCEPTED' ? 'قبول' : 
+                         (status === 'UNDER_REVIEW' ? 'مراجعة' : 'رفض');
+        
+        const commonSwalConfig = {
+            title: "هل انت متأكد؟",
+            icon: "warning" as const,
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "الغاء",
+            allowOutsideClick: () => !Swal.isLoading()
+        };
+    
+        if (status === 'REJECTED') {
+            Swal.fire({
+                ...commonSwalConfig,
+                title: "ادخل سبب رفض هذا الطلب",
+                input: "text",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
+                confirmButtonText: `${procedure} هذا الطلب؟`,
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('يجب ادخال سبب الرفض');
+                        return false;
+                    }
+                    return reason;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  console.log("thats a rejection reason",result.value);
+                    this.DecideAr(id, status, item);
+                }
+            });
+        } else {
+            Swal.fire({
+                ...commonSwalConfig,
+                confirmButtonText: `${procedure} هذا الطلب؟`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.DecideAr(id, status, item);
+                }
+            });
+        }
+    }
+
+      getLevel(level:string){
+        if(level.includes('first'))
+        {
+          return '1'
+        }
+        else if(level.includes('second'))
+        {
+          return '2'
+        }
+        else if(level.toLowerCase().includes('third'))
+        {
+          return '3'
+        }
+        else if(level.includes('fourth'))
+        {
+          return '4'
+        }
+        else if(level.includes('fifth'))
+        {
+          return '5'
+        }
+        else
+        {
+          return level
+        }
+      }
   
     DecideAr(id:number = -1,status:string = 'UNDER_REVIEW',item?:any) {
       if (id === -1) 
