@@ -1,3 +1,4 @@
+import { ArService } from './../../core/services/ar.service';
 import { Component, ElementRef, HostListener, inject, ViewChild } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -23,6 +24,9 @@ export class UserNavbarComponent {
     this.el.nativeElement.classList.add('shadow-lg', 'additional-class');
   }
 }
+
+
+
 
 logout(){
   this.auth.logout();

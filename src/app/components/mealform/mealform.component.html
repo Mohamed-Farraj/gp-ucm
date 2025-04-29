@@ -1,0 +1,58 @@
+<section class=" container my-5 p-4 rounded-4" dir="rtl">
+<div class="modal-header">
+    <h5 class="modal-title">اضافة</h5>
+  </div>
+  
+  <div class="modal-body">
+    <form [formGroup]="mealForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="mealDate" class="form-label">تاريخ الوجبة</label>
+        <input type="date" class="form-control" id="mealDate" formControlName="mealDate"
+               [class.is-invalid]="mealForm.get('mealDate')?.invalid && mealForm.get('mealDate')?.touched">
+        @if (mealForm.get('mealDate')?.hasError('required') && mealForm.get('mealDate')?.touched) {
+        <div class="invalid-feedback">مطلوب</div>
+        }
+      </div>
+  
+      <div class="mb-3">
+        <label for="mealType" class="form-label">نوع الوجبة</label>
+        <select class="form-select" id="mealType" formControlName="mealType"
+                [class.is-invalid]="mealForm.get('mealType')?.invalid && mealForm.get('mealType')?.touched">
+          <option value="" selected disabled >Select meal type</option>
+          @for (type of mealTypes; track $index) {
+          <option [value]="type">{{ type }}</option>
+          }
+        </select>
+        @if (mealForm.get('mealType')?.hasError('required') && mealForm.get('mealType')?.touched) {
+        <div class="invalid-feedback">مطلوب</div>
+        }
+      </div>
+  
+      <div class="mb-3">
+        <label for="description" class="form-label">وصف</label>
+        <textarea class="form-control" id="description" rows="3" formControlName="description"
+                  [class.is-invalid]="mealForm.get('description')?.invalid && mealForm.get('description')?.touched"></textarea>
+        @if (mealForm.get('description')?.hasError('required') && mealForm.get('description')?.touched) {
+        <div class="invalid-feedback">الوصف مطلوب</div>
+        }
+      </div>
+  
+      <div class="mb-3">
+        <label for="image" class="form-label">رابط الصورة</label>
+        <input type="url" class="form-control" id="image" placeholder="https://example.com/image.jpg"
+               formControlName="image">
+      </div>
+       <div class="modal-footer">
+    <button type="button" class="btn btn-secondary m-1" (click)="onClose()">الغاء</button>
+    <button type="submit" class="btn btn-primary m-1">  اضافة
+      <!-- @if (isSubmitting) {
+      <span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>
+      }
+      {{ data ? 'Update' : 'Save' }} -->
+    </button>
+  </div>
+    </form>
+  </div>
+  
+ 
+</section>

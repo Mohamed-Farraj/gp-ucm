@@ -1,0 +1,106 @@
+<div class="mb-3" dir="rtl">
+    <div [formGroup]="formGroup" class="flex flex-col gap-4"> <!-- تأكد من إضافة formGroup -->
+      <h1 class="text-main mb-3 font-semibold"> بيانات الإقامة والتواصل </h1>
+  
+      <!-- الدولة -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">الدولة</label>
+        <select formControlName="country" class="form-select rounded-lg  shadow-sm">
+          <option value="" disabled>اختر الدولة</option>
+          @for (c of countriesList; track c.isoCode) { <!-- استخدم Input countriesList -->
+            <option [value]="c.isoCode">
+              {{ c.name }}
+            </option>
+          }
+        </select>
+        <!-- Validation for country -->
+         @if (country?.errors && (country?.dirty || country?.touched)) {
+          <div class="text-danger mt-1">
+            @if (country?.hasError('required')) {
+              <p class="m-0">الدولة مطلوبة</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- المحافظة (تظهر فقط لمصر) -->
+      @if (shouldShowGovernorate) { <!-- استخدم helper -->
+        <div class="flex flex-col">
+          <label class=" mb-2 font-semibold">المحافظة</label>
+          <select formControlName="governorate" class="form-select rounded-lg  shadow-sm" [disabled]="isGovernorateDisabled"> <!-- استخدم helper -->
+            <option value="" selected disabled>اختر المحافظة</option>
+             @for (gov of governoratesList; track gov.id) { <!-- استخدم Input governoratesList -->
+              <option [value]="gov.id">
+                {{ gov.governorate_name_ar }}
+              </option>
+            }
+          </select>
+          <!-- Validation for governorate -->
+           @if (governorate?.errors && (governorate?.dirty || governorate?.touched)) {
+            <div class="text-danger mt-1">
+              @if (governorate?.hasError('required')) {
+                <p class="m-0">المحافظة مطلوبة</p>
+              }
+            </div>
+           }
+        </div>
+      }
+  
+      <!-- المدينة (تظهر فقط عند اختيار محافظة) -->
+      @if (shouldShowCity) { <!-- استخدم helper -->
+        <div class="flex flex-col">
+          <label class=" mb-2 font-semibold">المدينة</label>
+          <select formControlName="city" class="form-select rounded-lg  shadow-sm" [disabled]="isCityDisabled"> <!-- استخدم helper -->
+            <option value="" selected disabled>اختر المدينة</option>
+             @for (cItem of citiesList; track cItem.id) { <!-- استخدم Input citiesList -->
+              <option [value]="cItem.id">
+                {{ cItem.city_name_ar }}
+              </option>
+            }
+          </select>
+          <!-- Validation for city -->
+           @if (city?.errors && (city?.dirty || city?.touched)) {
+            <div class="text-danger mt-1">
+              @if (city?.hasError('required')) {
+                <p class="m-0">المدينة مطلوبة</p>
+              }
+            </div>
+           }
+        </div>
+      }
+  
+      <!-- العنوان بالتفصيل -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">العنوان بالتفصيل</label>
+        <input formControlName="detailedAddress" type="text" class="form-control rounded-lg  shadow-sm" />
+        <!-- Validation for detailedAddress -->
+        @if (detailedAddress?.errors && (detailedAddress?.dirty || detailedAddress?.touched)) {
+          <div class="text-danger mt-1">
+            @if (detailedAddress?.hasError('required')) {
+              <p class="m-0">العنوان بالتفصيل مطلوب</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- الموبايل -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">الموبايل</label>
+        <input formControlName="mobileNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
+        <!-- Validation for mobileNumber -->
+         @if (mobileNumber?.errors && (mobileNumber?.dirty || mobileNumber?.touched)) {
+          <div class="text-danger mt-1">
+            @if (mobileNumber?.hasError('required')) {
+              <p class="m-0">رقم الموبايل مطلوب</p>
+            } @else if (mobileNumber?.hasError('pattern')) {
+               <p class="m-0">صيغة رقم الموبايل غير صحيحة</p>
+            } @else if (mobileNumber?.hasError('mobileNumber')) {
+               <p class="m-0">رقم الموبايل غير صحيح</p>
+            }
+          </div>
+        }
+      </div>
+  
+    
+    </div>
+  </div>

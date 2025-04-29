@@ -64,7 +64,6 @@ export class DeadlinsFormComponent  implements OnInit{
   updateDeadline(id:number , deadline: Ideadlins) {
     this._deadlineService.updateDeadLine(id,deadline).subscribe({
       next: (res:any) => {
-        this.toastr.success(res.message);
         this.getDeadLine();
       },
       error: (err) => {console.log(err);},

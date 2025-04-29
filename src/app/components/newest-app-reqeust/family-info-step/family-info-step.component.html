@@ -1,0 +1,139 @@
+<div class="mb-3" dir="rtl">
+    <div [formGroup]="formGroup" class="flex flex-col gap-4">
+  
+      <h1 class="text-main mb-3 font-semibold">بيانات العائلة</h1>
+  
+      <!-- اسم الأب -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">اسم الأب</label>
+        <input formControlName="fatherName" type="text" class="form-control rounded-lg  shadow-sm" />
+        @if (fatherName?.errors && (fatherName?.dirty || fatherName?.touched)) {
+          <div class="text-danger mt-1">
+            @if (fatherName?.hasError('required')) {
+              <p class="m-0">اسم الأب مطلوب</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- رقم قومي للأب -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">رقم قومي للأب</label>
+        <input formControlName="fatherNationalId" type="text" class="form-control rounded-lg  shadow-sm" />
+        @if (fatherNationalId?.errors && (fatherNationalId?.dirty || fatherNationalId?.touched)) {
+          <div class="text-danger mt-1">
+            @if (fatherNationalId?.hasError('required')) {
+              <p class="m-0">رقم قومي للأب مطلوب</p>
+            }
+            @else if (fatherNationalId?.hasError('pattern')) {
+              <p class="m-0">يجب أن يكون 14 رقم</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- وظيفة الأب -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">وظيفة الأب</label>
+        <input formControlName="fatherOccupation" type="text" class="form-control rounded-lg  shadow-sm" />
+        @if (fatherOccupation?.errors && (fatherOccupation?.dirty || fatherOccupation?.touched)) {
+          <div class="text-danger mt-1">
+            @if (fatherOccupation?.hasError('required')) {
+              <p class="m-0">وظيفة الأب مطلوبة</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- موبايل الأب -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">موبايل الأب</label>
+        <input formControlName="fatherPhoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
+        @if (fatherPhoneNumber?.errors && (fatherPhoneNumber?.dirty || fatherPhoneNumber?.touched)) {
+          <div class="text-danger mt-1">
+            @if (fatherPhoneNumber?.hasError('required')) {
+              <p class="m-0">رقم موبايل الأب مطلوب</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- اسم ولي الأمر -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">اسم ولي الأمر</label>
+        <input formControlName="guardianName" type="text" class="form-control rounded-lg  shadow-sm" />
+        @if (guardianName?.errors && (guardianName?.dirty || guardianName?.touched)) {
+          <div class="text-danger mt-1">
+            @if (guardianName?.hasError('required')) {
+              <p class="m-0">اسم ولي الأمر مطلوب</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- موبايل ولي الأمر -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">موبايل ولي الأمر</label>
+        <input formControlName="guardianPhoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
+        @if (guardianPhoneNumber?.errors && (guardianPhoneNumber?.dirty || guardianPhoneNumber?.touched)) {
+          <div class="text-danger mt-1">
+            @if (guardianPhoneNumber?.hasError('required')) {
+              <p class="m-0">رقم موبايل ولي الأمر مطلوب</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- رقم قومي لولي الأمر -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">رقم قومي لولي الأمر</label>
+        <input formControlName="guardianNationalId" type="text" class="form-control rounded-lg  shadow-sm" />
+        @if (guardianNationalId?.errors && (guardianNationalId?.dirty || guardianNationalId?.touched)) {
+          <div class="text-danger mt-1">
+            @if (guardianNationalId?.hasError('required')) {
+              <p class="m-0">رقم قومي لولي الأمر مطلوب</p>
+            }
+            @else if (guardianNationalId?.hasError('pattern')) {
+              <p class="m-0">يجب أن يكون 14 رقم</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- حالة الوالدين -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">حالة الوالدين</label>
+        <select formControlName="parentsStatus" class="form-select rounded-lg  shadow-sm">
+          <option value="">اختر</option>
+          <option value="ALIVE">على قيد الحياة</option>
+          <option value="FATHER_DECEASED">الأب متوفى</option>
+          <option value="MOTHER_DECEASED">الأم متوفاة</option>
+          <option value="BOTH_DECEASED">الوالدين متوفيين</option>
+          <option value="DIVORCED">منفصلين</option>
+        </select>
+        @if (parentsStatus?.errors && (parentsStatus?.dirty || parentsStatus?.touched)) {
+          <div class="text-danger mt-1">
+            @if (parentsStatus?.hasError('required')) {
+              <p class="m-0">برجاء تحديد حالة الوالدين</p>
+            }
+          </div>
+        }
+      </div>
+<div class="form-check form-switch mt-2 custom-form-switch"> 
+    <input
+      class="form-check-input"
+      type="checkbox"
+      id="cbx-familyAbroad-toggle"
+      formControlName="familyAbroad"
+    >
+    <label
+      class="form-check-label fw-bold " 
+      for="cbx-familyAbroad-toggle"
+    >
+      الأسرة بالخارج
+    </label>
+     
+  </div>
+  
+  </div>
+ <!-- أضفنا كلاس custom-form-switch للتحكم بالستايل -->

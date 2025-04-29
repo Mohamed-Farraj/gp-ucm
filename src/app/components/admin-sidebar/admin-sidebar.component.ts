@@ -69,6 +69,7 @@ export class AdminSidebarComponent {
     { id: 'assign-to-rooms', icon: 'fa-person-shelter', label: ' التسكين ' },
     { id: 'guidelines', icon: 'fa-rectangle-list', label: 'الإرشادات' },
     { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
+    { id: 'meals', icon: 'fa-utensils', label: ' الوجبات' },
   ];
   
   // showSideContent = false;
