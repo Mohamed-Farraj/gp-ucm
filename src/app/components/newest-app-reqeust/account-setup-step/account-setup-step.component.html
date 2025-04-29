@@ -1,0 +1,128 @@
+<div class="mb-3" dir="rtl">
+    <div [formGroup]="formGroup" class="flex flex-col gap-4"> <!-- تأكد من وجود formGroup -->
+      <h1 class="text-main mb-3 font-semibold"> إنشاء الحساب </h1>
+      
+
+
+        <!-- البريد الإلكتروني -->
+        <div class="flex flex-col">
+          <label class=" mb-2 font-semibold">البريد الإلكتروني</label>
+          <input formControlName="username" type="email" class="form-control rounded-lg  shadow-sm" />
+           <!-- Validation for username (email) -->
+           @if (username?.errors && (username?.dirty || username?.touched)) {
+            <div class="text-danger mt-1">
+              @if (username?.hasError('required')) {
+                <p class="m-0">البريد الإلكتروني مطلوب</p>
+              } @else if (username?.hasError('email')) {
+                <p class="m-0">صيغة البريد الإلكتروني غير صحيحة</p>
+              }
+            </div>
+          }
+        </div>
+    
+      <!-- كلمة المرور -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">كلمة المرور</label>
+        <input formControlName="password" type="password" class="form-control rounded-lg  shadow-sm" />
+        @if (password?.errors && (password?.dirty || password?.touched)) {
+          <div class="text-danger mt-1">
+            @if (password?.hasError('required')) {
+              <p class="m-0">كلمة المرور مطلوبة</p>
+            } @else if (password?.hasError('pattern')) {
+              <!-- رسالة الخطأ للـ pattern من المثال السابق -->
+              <p class="m-0 text-xs">
+                كلمة المرور يجب أن تتكون من 8 أحرف على الأقل، وتحتوي على:
+                حرف كبير، حرف صغير، رقم، ورمز خاص (!#$%^&*)
+              </p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- تأكيد كلمة المرور -->
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">تأكيد كلمة المرور</label>
+        <input formControlName="rePassword" type="password" class="form-control rounded-lg  shadow-sm" />
+        <!-- خطأ عدم التطابق (من الـ formGroup validator) -->
+        @if (formGroup.hasError('mismatch') && (rePassword?.dirty || rePassword?.touched)) {
+          <div class="text-danger mt-1">
+             <p class="m-0">كلمتا المرور غير متطابقتين</p>
+          </div>
+        }
+         <!-- خطأ الحقل مطلوب (إذا كان rePassword مطلوبًا بحد ذاته) -->
+        @if (rePassword?.errors && (rePassword?.dirty || rePassword?.touched)) {
+          <div class="text-danger mt-1">
+            @if (rePassword?.hasError('required')) {
+              <p class="m-0">تأكيد كلمة المرور مطلوب</p>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="confirmDataAccuracyCheckbox"
+          formControlName="confirmDataAccuracy"                    />
+        <label
+          class="form-check-label fw-semibold text-secondary"
+          for="confirmDataAccuracyCheckbox"
+        >
+          أقر بأن البيانات (محل الإقامة - التقدير - الفرقة/الكلية)
+          صحيحة طبقاً للأوراق الرسمية على أن أقدم هذه الأوراق عند
+          حضوري للمدينة في حالة القبول وإذا ثبت أي خطأ في البيانات
+          يتم تحويلي للشئون القانونية وفصلي نهائياً من المدينة.
+        </label>
+      </div>
+      <!-- رسالة التحقق الخاصة بالـ Checkbox -->
+      <div class="text-danger mt-1 d-block validation-message-confirm ps-4">
+        @if (confirmDataAccuracy?.hasError('requiredTrue')) {
+          <p class="m-0" style="font-size: 0.85rem">
+            * يجب الإقرار بصحة البيانات للمتابعة.
+          </p>
+        }
+      </div>
+
+
+  <div class="pt-3">
+   <!-- الإقرار بصحة البيانات -->
+   <ng-container  *ngIf="!isEditMode"> <!-- افترض أن isEditMode معرف -->
+    <div
+    class="alert alert-warning p-3  rounded shadow-sm"
+    role="alert"
+  >
+    <!-- استخدام alert-heading لعنوان الملاحظات -->
+    <h5
+      class="alert-heading fw-bolder d-inline-flex align-items-center mb-3"
+    >
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      <!-- أيقونة تحذير اختيارية -->
+      ملاحظات هامة
+    </h5>
+    <!-- استخدام padding start للـ ul لمحاذاة أفضل للنقاط -->
+    <ul class="fw-semibold ps-3 mb-0">
+      <!-- استخدام fw-semibold لتقليل الوزن قليلاً عن العنوان -->
+      <li class="mb-2">
+        يجب الاحتفاظ بكلمة المرور لأهميتها فى تعديل بياناتك كما
+        سيتم استخدامها لاحقا عند إقامتك بالمدينة.
+      </li>
+      <li class="mb-2">
+        لوحظ أن العديد من الطلاب يختارون السكن المميز ويجب الإشارة
+        بأن السكن المميز له تكلفة عالية بالنسبة للسكن العادى.
+      </li>
+      <li class="mb-2">
+        ذوي الاحتياجات الخاصة لا يدخلون في التنسيق.
+      </li>
+    </ul>
+  </div>
+     <!-- قسم الإقرار -->
+    
+  </ng-container>
+
+
+
+  </div>
+   
+    </div>
+  </div>

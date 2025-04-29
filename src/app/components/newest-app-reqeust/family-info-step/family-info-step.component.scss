@@ -1,0 +1,50 @@
+.custom-form-switch {
+    // تقليل حجم الخط لتقليل حجم الـ switch والـ label
+    font-size: 1.1rem; // عدنا للحجم الافتراضي، يمكنك جعله 1.1rem مثلاً إذا أردت أكبر قليلاً
+  
+    // لضمان محاذاة الليبل بشكل جيد
+    // .form-check-label {
+    //   // يمكن إزالة هذا إذا كان الحجم الافتراضي مناسباً
+    //   // padding-top: 0.1em; 
+    // }
+  
+    .form-check-input {
+      cursor: pointer;
+      background-color: #adb5bd; 
+      border-color: #adb5bd; 
+      
+      // *** إضافة Transition هنا ***
+      transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, background-position 0.15s ease-in-out; 
+      // background-position هو ما يحركه Bootstrap داخلياً
+      // يمكنك تعديل المدة (0.2s) والـ timing function (ease-in-out)
+  
+      &:checked {
+        background-color: #4F2EDC; 
+        border-color: #4F2EDC;
+      }
+      
+      &:focus {
+         box-shadow: none; 
+         // border-color: #947ADA; 
+         // box-shadow: 0 0 0 0.25rem rgba(79, 46, 220, 0.25); 
+      }
+    }
+  
+    // تعديل تباعد رسالة التحقق لتكون تحت الليبل
+    .validation-message-switch {
+        // ضبط المسافة البادئة - قد تحتاج لتعديلها بناءً على حجم الخط الجديد
+        padding-right: 2.5em; 
+        // حجم خط رسالة الخطأ
+        font-size: 0.75rem; // استخدام text-xs المعادل
+    }
+  }
+  
+  .text-gray-700 { 
+    color: #4a5568; 
+  } 
+  .text-danger {
+      p { color: #dc3545; } 
+  }
+  .text-xs { font-size: 0.75rem; } // تأكد من أن text-xs هو 0.75rem
+  .fw-bold { font-weight: bold; }
+  // ... باقي الستايلات المساعدة

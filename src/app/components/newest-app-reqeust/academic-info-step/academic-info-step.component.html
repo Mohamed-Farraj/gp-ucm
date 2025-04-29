@@ -1,0 +1,187 @@
+<div class="mb-3" dir="rtl">
+    <div [formGroup]="formGroup" class="flex flex-col gap-4">
+      <h1 class="text-main mb-3 font-semibold">بيانات دراسية</h1>
+  
+      <!-- الكلية -->
+      <div class="flex flex-col">
+        <label class="text-gray-700 mb-2 font-semibold">الكلية</label>
+        <select formControlName="faculty" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+          <option value="">اختر الكلية</option>
+          <option value="كلية الآداب">كلية الآداب</option>
+          <option value="كلية الاقتصاد المنزلي">كلية الاقتصاد المنزلي</option>
+          <option value="كلية التربية">كلية التربية</option>
+          <option value="كلية التمريض">كلية التمريض</option>
+          <option value="كلية الحاسبات والذكاء الاصطناعي">كلية الحاسبات والذكاء الاصطناعي</option>
+          <option value="كلية الخدمة الاجتماعية">كلية الخدمة الاجتماعية</option>
+          <option value="كلية الصيدلة">كلية الصيدلة</option>
+          <option value="كلية الطب">كلية الطب</option>
+          <option value="كلية العلوم">كلية العلوم</option>
+          <option value="كلية الفنون التطبيقية">كلية الفنون التطبيقية</option>
+          <option value="كلية الفنون الجميلة">كلية الفنون الجميلة</option>
+          <option value="كلية التربية الرياضية بنين">كلية التربية الرياضية بنين</option>
+          <option value="كلية التربية الرياضية بنات">كلية التربية الرياضية بنات</option>
+          <option value="كلية الهندسة بالمطرية">كلية الهندسة بالمطرية</option>
+          <option value="كلية الهندسة بحلوان">كلية الهندسة بحلوان</option>
+          <option value="كلية التجارة وإدارة الأعمال">كلية التجارة وإدارة الأعمال</option>
+          <option value="كلية الحقوق">كلية الحقوق</option>
+          <option value="كلية التربية الموسيقية">كلية التربية الموسيقية</option>
+          <option value="كلية التربية الفنية">كلية التربية الفنية</option>
+          <option value="كلية السياحة والفنادق">كلية السياحة والفنادق</option>
+          <option value="كلية التعليم الصناعي">كلية التعليم الصناعي</option>
+          <option value="المعهد القومي للملكية الفكرية">المعهد القومي للملكية الفكرية</option>
+        </select>
+        @if (faculty?.errors && (faculty?.dirty || faculty?.touched)) {
+          <div class="text-danger mt-1">
+            @if (faculty?.hasError('required')) {
+              <p class="m-0">الكلية مطلوبة</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- الفرقة -->
+      <div class="flex flex-col">
+        <label class="text-gray-700 mb-2 font-semibold">الفرقة</label>
+        <select formControlName="level" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+          <option value="" selected disabled>اختر الفرقة</option>
+          @for (levelItem of levels; track levelItem.value) { 
+            <option [value]="levelItem.value">{{ levelItem.label }}</option>
+          }
+        </select>
+        @if (level?.errors && (level?.dirty || level?.touched)) {
+          <div class="text-danger mt-1">
+            @if (level?.hasError('required')) {
+              <p class="m-0">الفرقة مطلوبة</p>
+            }
+          </div>
+        }
+      </div>
+  
+      <!-- بيانات الطلاب المستجدين -->
+      @if (studentType === 'new') {
+        <!-- شعبة الثانوية -->
+        <div class="flex flex-col">
+          <label class="text-gray-700 mb-2 font-semibold">شعبة الثانوية</label>
+          <select formControlName="secondaryDivision" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+            <option value="" disabled selected>اختر الشعبة</option>
+            <option value="---">---</option>
+            <option value="علمي علوم">علمي علوم</option>
+            <option value="علمي رياضة">علمي رياضة</option>
+            <option value="أدبي">أدبي</option>
+            <option value="أزهري علمي">أزهري علمي</option>
+            <option value="أزهري أدبي">أزهري أدبي</option>
+            <option value="معاهد مهنية ثلاث سنوات">معاهد مهنية ثلاث سنوات</option>
+            <option value="معاهد مهنية أربع سنوات">معاهد مهنية أربع سنوات</option>
+            <option value="معاهد مهنية خمس سنوات">معاهد مهنية خمس سنوات</option>
+            <option value="دبلومات مهنية">دبلومات مهنية</option>
+            <option value="شهادات معادلة">شهادات معادلة</option>
+            <option value="مدارس STEM للعلوم والتكنولوجيا">مدارس STEM للعلوم والتكنولوجيا</option>
+            <option value="مدارس النيل للعلوم والتكنولوجيا">مدارس النيل للعلوم والتكنولوجيا</option>
+            <option value="تحويل ورقي">تحويل ورقي</option>
+          </select>
+          @if (secondaryDivision?.errors && (secondaryDivision?.dirty || secondaryDivision?.touched)) {
+            <div class="text-danger mt-1">
+              @if (secondaryDivision?.hasError('required')) {
+                <p class="m-0">شعبة الثانوية مطلوبة</p>
+              }
+            </div>
+          }
+        </div>
+  
+        <!-- مجموع الثانوية العامة -->
+        <div class="flex flex-col">
+          <label class="text-gray-700 mb-2 font-semibold">مجموع الثانوية العامة</label>
+          <input 
+            formControlName="totalGradesHighSchool"
+            type="number"
+            class="form-control rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm"
+            placeholder=" % "
+          />
+          @if (totalGradesHighSchool?.errors && (totalGradesHighSchool?.dirty || totalGradesHighSchool?.touched)) {
+            <div class="text-danger mt-1">
+              @if (totalGradesHighSchool?.hasError('required')) {
+                <p class="m-0">مجموع الثانوية العامة مطلوب</p>
+              }
+            </div>
+          }
+        </div>
+      }
+  
+      <!-- بيانات الطلاب القدامى -->
+      @if (studentType === 'old') {
+        <!-- نسبة التقدير العام الماضي -->
+        <div class="flex flex-col">
+          <label class="text-gray-700 mb-2 font-semibold">نسبة التقدير العام الماضي</label>
+          <input
+            formControlName="previousAcademicYearGpa"
+            type="number"
+            class="form-control rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm"
+            placeholder=" % "
+          />
+          @if (previousAcademicYearGpa?.errors && (previousAcademicYearGpa?.dirty || previousAcademicYearGpa?.touched)) {
+            <div class="text-danger mt-1">
+              @if (previousAcademicYearGpa?.hasError('required')) {
+                <p class="m-0">نسبة التقدير العام الماضي مطلوبة</p>
+              }
+            </div>
+          }
+        </div>
+  
+        <!-- السكن في الأعوام السابقة -->
+        <div class="flex flex-col">
+          <label class="text-gray-700 mb-2 font-semibold">السكن في الأعوام السابقة</label>
+          <select formControlName="housingInPreviousYears" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+            <option value="" selected disabled>اختر</option>
+            <option value="سكن قديم">سكن قديم</option>
+            <option value="سكن مستجد">سكن مستجد</option>
+            <option value="سكن منقطع">سكن منقطع</option>
+          </select>
+          @if (housingInPreviousYears?.errors && (housingInPreviousYears?.dirty || housingInPreviousYears?.touched)) {
+            <div class="text-danger mt-1">
+              @if (housingInPreviousYears?.hasError('required')) {
+                <p class="m-0">السكن في الأعوام السابقة مطلوب</p>
+              }
+            </div>
+          }
+        </div>
+      }
+
+
+      <!-- <div class="flex flex-col">
+        <label class="text-gray-700 mb-2 font-semibold">نوع السكن</label>
+        <select formControlName="housingType" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+          <option value="" disabled selected>اختر نوع السكن</option>
+          <option value="سكن عادي">سكن عادي</option>
+          <option value="سكن عادي">سكن مميز</option>
+        </select> -->
+        <!-- @if (housingType?.errors && (housingType?.dirty || housingType?.touched)) {
+          <div class="text-danger mt-1">
+            @if (housingType?.hasError('required')) {
+              <p class="m-0">نوع السكن مطلوب</p>
+            }
+          </div>
+        } -->
+      </div>
+  
+
+      <!-- <div class="form-check form-switch mt-2 custom-form-switch"> 
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="cbx-familyAbroad-toggle"
+          formControlName="housingWithoutFeeding"
+        >
+        <label
+          class="form-check-label fw-bold text-gray-700" 
+          for="cbx-familyAbroad-toggle"
+        >
+        سكن بدون تغذية  
+        </label>
+         
+      </div> -->
+      
+
+      <!-- سكن بدون تغذية -->
+    
+  
+    </div>

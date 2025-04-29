@@ -1,0 +1,85 @@
+<div class="container py-4">
+    <!-- Header Section -->
+    <header class="text-center mb-5 py-4 rounded-3" 
+            style="background: linear-gradient(130deg, #191727, #202f52); color: white;">
+      <h1>الوجبات</h1>
+      <p class="mb-0">"اكتشف، واحفظ، ونظم وجباتك "</p>
+    </header>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>اداره الوجبات</h2>
+        <button class="btn btn-main" (click)="openDialog()">
+          
+        <i class="fa-solid fa-plus"></i>  
+        </button>
+      </div>   
+    <!-- Loading State -->
+    @if (isLoading) {
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    } 
+    @else {
+      <!-- Meals Grid -->
+      <div class="row  row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @for (meal of meals; track $index) {
+          <div class="col">
+            <div class="card h-100 meal-card shadow-sm border-0">
+              <!-- Meal Image -->
+              <div class="meal-img-container position-relative">
+                <img [src]="meal?.image || 'https://via.placeholder.com/400x320'" 
+                     class="card-img-top" 
+                     alt="{{ meal?.mealType }}"
+                     style="height: 200px; object-fit: cover;">
+                <span class="position-absolute top-0 end-0 m-2 badge bg-warning text-dark">
+                  {{ meal?.mealType }}
+                </span>
+              </div>
+              
+              <!-- Meal Info -->
+              <div class="card-body">
+                <h5 class="card-title">{{ meal?.mealType }}</h5>
+                <p class="card-text text-muted meal-description">
+                  {{ meal?.description }}
+                </p>
+              </div>
+              
+              <!-- Meal Meta -->
+              <div class="card-footer bg-transparent border-top-0">
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">
+                    <i class="bi bi-calendar me-1"></i>
+                    {{ meal?.mealDate }}
+                  </small>
+                  <div class="btn-group btn-group ">
+                    <button class="btn btn-primary " (click)="openDialog(meal)">
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="btn btn-primary-delete" (click)="deleteMeal(meal.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+        @empty {
+          <div class="col-12">
+            <div class="text-center py-5">
+              <img src="https://via.placeholder.com/200x200" alt="No meals found" class="img-fluid mb-3">
+              <p class="text-muted">No meals found. Add a new meal to get started!</p>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  
+    <!-- Add Meal Button -->
+    <!-- <button class="add-meal-button btn btn-primary rounded-circle p-0 d-flex align-items-center justify-content-center"
+            (click)="openDialog()">
+      <i class="bi bi-plus fs-3"></i>
+    </button> -->
+  </div>

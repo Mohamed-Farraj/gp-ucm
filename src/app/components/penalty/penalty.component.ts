@@ -12,7 +12,7 @@ import { UsersSideListComponent } from "../users-side-list/users-side-list.compo
 @Component({
   selector: 'app-penalty',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, UsersSideListComponent],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './penalty.component.html',
   styleUrl: './penalty.component.scss'
 })

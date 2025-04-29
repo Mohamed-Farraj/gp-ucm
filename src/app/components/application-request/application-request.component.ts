@@ -1,24 +1,29 @@
-import { Component, signal , WritableSignal , computed, Signal, inject   } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { single } from 'rxjs';
-import countries from '../../../assets/country (1).json';
-import rawGovernorates from '../../../assets/cities (1).json';  // لاحظ أن البيانات تأتي من ملف cities.json
-import rawCities from '../../../assets/states (1).json';  // لاحظ أن البيانات تأتي من ملف states.json
-import { AuthService } from '../../core/services/auth.service';
+import { Component, signal, WritableSignal, computed, Signal, inject, OnInit, HostListener } from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+import { ArService } from './../../core/services/ar.service';
+import { AuthService } from '../../core/services/auth.service';
+import countries from '../../../assets/country (1).json';
+import rawGovernorates from '../../../assets/cities (1).json';
+import rawCities from '../../../assets/states (1).json';
+import { BasicInfoStepComponent } from "../newest-app-reqeust/basic-info-step/basic-info-step.component";
+import { FamilyInfoStepComponent } from "../newest-app-reqeust/family-info-step/family-info-step.component";
+import { AcademicInfoStepComponent } from "../newest-app-reqeust/academic-info-step/academic-info-step.component";
+import { ContactInfoStepComponent } from "../newest-app-reqeust/contact-info-step/contact-info-step.component";
+import { AccountSetupStepComponent } from "../newest-app-reqeust/account-setup-step/account-setup-step.component";
+import { MatStepperModule } from '@angular/material/stepper';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-application-request',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [NgIf, ReactiveFormsModule, MatStepperModule, BasicInfoStepComponent, FamilyInfoStepComponent, AcademicInfoStepComponent, ContactInfoStepComponent, AccountSetupStepComponent],
   templateUrl: './application-request.component.html',
   styleUrl: './application-request.component.scss'
 })
-export class ApplicationRequestComponent {
-
+export class ApplicationRequestComponent implements OnInit {
   Toast = Swal.mixin({
     toast: true,
     position: 'top',
@@ -29,200 +34,214 @@ export class ApplicationRequestComponent {
     showConfirmButton: false,
     timer: 1500,
     timerProgressBar: true,
-  })
+  });
 
-  private readonly _AuthService= inject(AuthService)
-  private readonly router = inject(Router)
-  errmsg:string='';
-   
+  private readonly _AuthService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly ArService = inject(ArService);
+  errmsg: string = '';
+  isEditMode = false;
+  showPasswordFields = true;
+  studentType: 'old' | 'new' | null = null;
+  activeButton: 'old' | 'new' | null = null;
+
+  // FormGroups لكل خطوة
+  personalInfoGroup: FormGroup;
+  familyInfoGroup: FormGroup;
+  academicInfoGroup: FormGroup;
+  contactInfoGroup: FormGroup;
+  accountSetupGroup: FormGroup;
+  AppRequest: FormGroup;
+
   // قائمة محافظات مصر مع أكوادها في الرقم القومي
   governoratesCodes: { [key: string]: string } = {
-    '01': 'القاهره',
-    '02': 'الاسكندريه',
-    '03': 'بورسعيد',
-    '04': 'السويس',
-    '11': 'دمياط',
-    '12': 'الدقهلية',
-    '13': 'الشرقيه',
-    '14': 'القليوبيه',
-    '15': 'كفرالشيخ',
-    '16': 'الغربيه',
-    '17': 'المنوفيه',
-    '18': 'البحيرة',
-    '19': 'الاسماعيلية',
-    '21': 'الجيزه',
-    '22': 'بني سويف',
-    '23': 'الفيوم',
-    '24': 'المنيا',
-    '25': 'اسيوط',
-    '26': 'سوهاج',
-    '27': 'قنــا',
-    '28': 'اسوان',
-    '29': 'الاقصـر',
-    '31': 'البحر الاحمر',
-    '32': 'الوادي الجديد',
-    '33': 'مرسي مطروح',
-    '34': 'شمال سيناء',
-    '35': 'جنوب سيناء',
-    '88': 'خارج مصر'
+    '01': 'القاهره', '02': 'الاسكندريه', '03': 'بورسعيد', '04': 'السويس',
+    '11': 'دمياط', '12': 'الدقهلية', '13': 'الشرقيه', '14': 'القليوبيه',
+    '15': 'كفرالشيخ', '16': 'الغربيه', '17': 'المنوفيه', '18': 'البحيرة',
+    '19': 'الاسماعيلية', '21': 'الجيزه', '22': 'بني سويف', '23': 'الفيوم',
+    '24': 'المنيا', '25': 'اسيوط', '26': 'سوهاج', '27': 'قنــا', '28': 'اسوان',
+    '29': 'الاقصـر', '31': 'البحر الاحمر', '32': 'الوادي الجديد', '33': 'مرسي مطروح',
+    '34': 'شمال سيناء', '35': 'جنوب سيناء', '88': 'خارج مصر'
   };
-
- AppRequest : FormGroup = new FormGroup({
-    firstName: new FormControl(null ,[Validators.required]),
-    lastName: new FormControl(null , [Validators.required]),
-    username: new FormControl(null , [Validators.required , Validators.email]),//emails
-    password: new FormControl(null , [Validators.required , Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]),
-    rePassword: new FormControl(null , [Validators.required ]),
-
-    role: new FormControl("USER"),
-    universityId: new FormControl("1"),
-    nationalId: new FormControl(null , [Validators.required ,Validators.pattern(/^\d{14}$/)]),
-    mobileNumber: new FormControl(null , [Validators.required , Validators.pattern(/^01[0-25]\d{8}$/)]),
-    faculty: new FormControl(null , [Validators.required ]),
-    level: new FormControl(null , [Validators.required]),
-    dateOfBirth: new FormControl(null , [Validators.required]),
-    residenceAddress: new FormControl(null, [Validators.required]),
-    detailedAddress: new FormControl(null, [Validators.required]),
-    placeOfBirth: new FormControl(null, [Validators.required]),
-    gender: new FormControl(null, [Validators.required]),
-    religion: new FormControl(null, [Validators.required]),
-    fatherName: new FormControl(null, [Validators.required]),
-    fatherNationalId: new FormControl(null, [Validators.required ,Validators.pattern(/^\d{14}$/)]),
-    fatherOccupation: new FormControl(null, [Validators.required]),
-    fatherPhoneNumber: new FormControl(null, [Validators.required]),
-    guardianName: new FormControl(null, [Validators.required]),
-    guardianNationalId: new FormControl(null, [Validators.required , Validators.pattern(/^\d{14}$/)]),
-    guardianPhoneNumber: new FormControl(null, [Validators.required]),
-    parentsStatus: new FormControl(null, [Validators.required]),
-    previousAcademicYearGpa: new FormControl(null),
-    status: new FormControl(2),
-    housingInPreviousYears: new FormControl(null),
-    familyAbroad: new FormControl(null),
-    specialNeeds: new FormControl(null),
-    secondaryDivision: new FormControl(null),
-    totalGradesHighSchool: new FormControl(null),
-    country: new FormControl(null), //  
-    governorate: new FormControl(null ),
-    city: new FormControl(null)
- 
-  } , this.passwordConfirmation)
-
-
 
   // الكليات التي لديها 5 فرق دراسية
   fiveYearFaculties: string[] = ['كلية الهندسة بالمطرية', 'كلية الهندسة بحلوان', 'كلية الطب'];
-
-  // استخدام Signal لتحديث الفرق عند تغيير الكلية
   facultySelected: WritableSignal<string | null> = signal(null);
   levels: Signal<{ value: string; label: string }[]> = computed(() => {
     const faculty = this.facultySelected();
     if (faculty && this.fiveYearFaculties.includes(faculty)) {
       return [
-        { value: 'first', label: 'الأولى' },
-        { value: 'second', label: 'الثانية' },
-        { value: 'third', label: 'الثالثة' },
-        { value: 'fourth', label: 'الرابعة' },
+        { value: 'first', label: 'الأولى' }, { value: 'second', label: 'الثانية' },
+        { value: 'third', label: 'الثالثة' }, { value: 'fourth', label: 'الرابعة' },
         { value: 'fifth', label: 'الخامسة' }
       ];
     }
     return [
-      { value: 'first', label: 'الأولى' },
-      { value: 'second', label: 'الثانية' },
-      { value: 'third', label: 'الثالثة' },
-      { value: 'fourth', label: 'الرابعة' }
+      { value: 'first', label: 'الأولى' }, { value: 'second', label: 'الثانية' },
+      { value: 'third', label: 'الثالثة' }, { value: 'fourth', label: 'الرابعة' }
     ];
   });
 
-  constructor() {
+  countries = countries;
+  selectedCountry: WritableSignal<string | null> = signal(null);
+  selectedGovernorate: WritableSignal<string | null> = signal(null);
+  governorates = rawGovernorates.find(entry => entry.type === 'table' && entry.name === 'governorates')?.data || [];
+  filteredGovernorates: Signal<any[]> = computed(() => {
+    return this.selectedCountry() === "EG" ? this.governorates.filter(gov => gov.countryCode === "EG") : [];
+  });
+  cities = rawCities.find(entry => entry.type === 'table' && entry.name === 'cities')?.data || [];
+  filteredCities: Signal<any[]> = computed(() => {
+    const govId = this.selectedGovernorate();
+    return govId ? this.cities.filter(city => city.governorate_id === govId) : [];
+  });
+
+  isMobile = window.innerWidth < 768;
+
+  constructor(private fb: FormBuilder) {
+    // تهيئة FormGroups لكل خطوة
+    this.personalInfoGroup = this.fb.group({
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      nationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
+      dateOfBirth: [null, Validators.required],
+      gender: [null, Validators.required],
+      religion: [null, Validators.required],
+      placeOfBirth: [null, Validators.required]
+    });
+
+    this.familyInfoGroup = this.fb.group({
+      fatherName: [null, Validators.required],
+      fatherNationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
+      fatherOccupation: [null, Validators.required],
+      fatherPhoneNumber: [null, Validators.required],
+      guardianName: [null, Validators.required],
+      guardianNationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
+      guardianPhoneNumber: [null, Validators.required],
+      parentsStatus: [null, Validators.required],
+      familyAbroad: [null]
+    });
+
+    this.academicInfoGroup = this.fb.group({
+      faculty: [null, Validators.required],
+      level: [null, Validators.required],
+      previousAcademicYearGpa: [null],
+      totalGradesHighSchool: [null],
+      secondaryDivision: [null],
+      housingInPreviousYears: [null]
+    });
+
+    this.contactInfoGroup = this.fb.group({
+      mobileNumber: [null, [Validators.required, Validators.pattern(/^01[0-25]\d{8}$/)]],
+      residenceAddress: [null, Validators.required],
+      detailedAddress: [null, Validators.required],
+      country: [null],
+      governorate: [null],
+      city: [null]
+    });
+
+    this.accountSetupGroup = this.fb.group({
+      username: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
+      rePassword: [null, Validators.required],
+      role: ['USER'],
+      universityId: ['1'],
+      status: [2],
+      securityCheck: ['PENDING'],
+      confirmDataAccuracy: [true, Validators.requiredTrue]
+    }, { validators: this.passwordConfirmation.bind(this) });
+
+    // النموذج الكامل
+    this.AppRequest = this.fb.group({
+      personalInfo: this.personalInfoGroup,
+      familyInfo: this.familyInfoGroup,
+      academicInfo: this.academicInfoGroup,
+      contactInfo: this.contactInfoGroup,
+      accountSetup: this.accountSetupGroup
+    });
+
     // استمع لتغييرات الكلية
-    this.AppRequest.get('faculty')?.valueChanges.subscribe(faculty => {
+    this.academicInfoGroup.get('faculty')?.valueChanges.subscribe(faculty => {
       this.facultySelected.set(faculty);
-      this.AppRequest.get('level')?.setValue(null); // إعادة تعيين قيمة الفرق
+      this.academicInfoGroup.get('level')?.setValue(null);
     });
 
-    this.AppRequest.get('country')?.valueChanges.subscribe(country => {
-      console.log("تم اختيار الدولة:", country);
+    // استمع لتغييرات الدولة والمحافظة والمدينة
+    this.contactInfoGroup.get('country')?.valueChanges.subscribe(country => {
       this.selectedCountry.set(country);
-      this.AppRequest.get('governorate')?.setValue(null);
-      this.AppRequest.get('city')?.setValue(null);
-      this.AppRequest.get('residenceAddress')?.setValue(null); // ✅ إعادة تعيين العنوان
+      this.contactInfoGroup.get('governorate')?.setValue(null);
+      this.contactInfoGroup.get('city')?.setValue(null);
+      this.contactInfoGroup.get('residenceAddress')?.setValue(null);
     });
-
-    this.AppRequest.get('governorate')?.valueChanges.subscribe(governorate => {
-      console.log("تم اختيار المحافظة:", governorate);
+    this.contactInfoGroup.get('governorate')?.valueChanges.subscribe(governorate => {
       this.selectedGovernorate.set(governorate);
-      this.AppRequest.get('city')?.setValue(null);
+      this.contactInfoGroup.get('city')?.setValue(null);
       this.updateResidenceAddress();
     });
-
-    this.AppRequest.get('city')?.valueChanges.subscribe(() => {
+    this.contactInfoGroup.get('city')?.valueChanges.subscribe(() => {
       this.updateResidenceAddress();
     });
 
     // استمع لتغييرات الرقم القومي
-    this.AppRequest.get('nationalId')?.valueChanges.subscribe(nationalId => {
+    this.personalInfoGroup.get('nationalId')?.valueChanges.subscribe(nationalId => {
       if (nationalId && nationalId.length === 14) {
         this.extractDataFromNationalId(nationalId);
       }
     });
 
     // استمع لتغييرات الرقم القومي للأب
-    this.AppRequest.get('fatherNationalId')?.valueChanges.subscribe(fatherNationalId => {
+    this.familyInfoGroup.get('fatherNationalId')?.valueChanges.subscribe(fatherNationalId => {
       if (fatherNationalId && fatherNationalId.length === 14) {
         this.extractFatherDataFromNationalId(fatherNationalId);
       }
     });
+
+    // استمع لتغييرات كلمة المرور
+    this.accountSetupGroup.get('password')?.valueChanges.subscribe(() => {
+      this.accountSetupGroup.get('rePassword')?.updateValueAndValidity();
+    });
   }
 
-  // formatDate(dateString: string): string {
-  //   if (!dateString) return '';
-    
-  //   // تحويل التاريخ من yyyy-mm-dd إلى mm/dd/yyyy
-  //   const parts = dateString.split('-');
-  //   if (parts.length === 3) {
-  //     return `${parts[1]}/${parts[2]}/${parts[0]}`;
-  //   }
-    
-  //   return dateString;
-  // }
-  
+  ngOnInit(): void {
+    this.loadUserData();
+  }
 
-  // استخراج البيانات من الرقم القومي
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.isMobile = window.innerWidth < 768;
+  }
+
+  passwordConfirmation(g: AbstractControl) {
+    if (!g.get('password')?.value || g.get('password')?.value === '') {
+      return null;
+    }
+    return g.get('password')?.value === g.get('rePassword')?.value ? null : { mismatch: true };
+  }
+
   extractDataFromNationalId(nationalId: string) {
     if (nationalId && nationalId.length === 14) {
       try {
-        // استخراج تاريخ الميلاد
         const century = nationalId.charAt(0) === '2' ? '19' : '20';
         const year = century + nationalId.substring(1, 3);
         const month = nationalId.substring(3, 5);
         const day = nationalId.substring(5, 7);
         const dateOfBirth = `${year}-${month}-${day}`;
-        
-        // استخراج النوع (الجنس)
         const genderCode = parseInt(nationalId.substring(12, 13));
         const gender = genderCode % 2 === 1 ? 'MALE' : 'FEMALE';
-        
-        // استخراج محافظة الميلاد
         const governorateCode = nationalId.substring(7, 9);
         const placeOfBirth = this.governoratesCodes[governorateCode] || 'القاهره';
-        
-        // تعيين القيم في النموذج
-        this.AppRequest.get('dateOfBirth')?.setValue(dateOfBirth);
-        this.AppRequest.get('gender')?.setValue(gender);
-        this.AppRequest.get('placeOfBirth')?.setValue(placeOfBirth);
-        
-        console.log('تم استخراج البيانات من الرقم القومي:', { dateOfBirth, gender, placeOfBirth });
+
+        this.personalInfoGroup.get('dateOfBirth')?.setValue(dateOfBirth);
+        this.personalInfoGroup.get('gender')?.setValue(gender);
+        this.personalInfoGroup.get('placeOfBirth')?.setValue(placeOfBirth);
       } catch (error) {
         console.error('خطأ في استخراج البيانات من الرقم القومي:', error);
       }
     }
   }
 
-  // استخراج بيانات الأب من الرقم القومي
   extractFatherDataFromNationalId(nationalId: string) {
     if (nationalId && nationalId.length === 14) {
       try {
-        // استخراج النوع للتأكد من أنه ذكر
         const genderCode = parseInt(nationalId.substring(12, 13));
         if (genderCode % 2 !== 1) {
           console.warn('الرقم القومي المدخل ليس لذكر');
@@ -238,137 +257,292 @@ export class ApplicationRequestComponent {
   }
 
   updateResidenceAddress() {
-    const country = this.selectedCountry() === "EG" ? "مصر" : this.selectedCountry();
-    const governorate = this.AppRequest.get('governorate')?.value 
-      ? this.governorates.find(gov => gov.id === this.AppRequest.get('governorate')?.value)?.governorate_name_ar
-      : "";
-    const city = this.AppRequest.get('city')?.value 
-      ? this.cities.find(city => city.id === this.AppRequest.get('city')?.value)?.city_name_ar
-      : "";
-
-    const fullAddress = [country, governorate, city].filter(Boolean).join(" - ");
-    this.AppRequest.get('residenceAddress')?.setValue(fullAddress);
-    console.log("العنوان المحفوظ:", fullAddress);
-  }
-  countries = countries;
-
-  selectedCountry: WritableSignal<string | null> = signal(null);
-  selectedGovernorate: WritableSignal<string | null> = signal(null);
-
-  // ✅ تحميل المحافظات المرتبطة بمصر فقط
-  governorates = rawGovernorates.find(entry => entry.type === 'table' && entry.name === 'governorates')?.data || [];
-  filteredGovernorates: Signal<any[]> = computed(() => {
-    return this.selectedCountry() === "EG" ? this.governorates.filter(gov => gov.countryCode === "EG") : [];
-  });
-
-  // ✅ تحميل جميع المدن وربطها بالمحافظة المختارة
-  cities = rawCities.find(entry => entry.type === 'table' && entry.name === 'cities')?.data || [];
-  filteredCities: Signal<any[]> = computed(() => {
-    const govId = this.selectedGovernorate();
-    return govId ? this.cities.filter(city => city.governorate_id === govId) : [];
-  });
-
-  passwordConfirmation(g:AbstractControl)
-  {
-    if(g.get("password")?.value === g.get("rePassword")?.value){
-      return null
+    let countryName = "مصر";
+    if (this.selectedCountry() !== "EG") {
+      const countryObj = this.countries.find(c => c.isoCode === this.selectedCountry());
+      if (countryObj) {
+        countryName = countryObj.name;
+      }
     }
-    else
-      return {mismatch:true}
+    const governorateId = this.contactInfoGroup.get('governorate')?.value;
+    let governorateName = "";
+    if (governorateId) {
+      const governorate = this.governorates.find(gov => gov.id === governorateId);
+      if (governorate) {
+        governorateName = governorate.governorate_name_ar;
+      }
+    }
+    const cityId = this.contactInfoGroup.get('city')?.value;
+    let cityName = "";
+    if (cityId) {
+      const city = this.cities.find(city => city.id === cityId);
+      if (city) {
+        cityName = city.city_name_ar;
+      }
+    }
+    const fullAddress = [countryName, governorateName, cityName].filter(Boolean).join(" - ");
+    this.contactInfoGroup.get('residenceAddress')?.setValue(fullAddress);
   }
 
-  registerSubmit(){
-    if(this.AppRequest.valid){
-      console.log(this.AppRequest.value)
-      this._AuthService.setRegisterForm(this.AppRequest.value).subscribe({
-        next:(res:any)=>{
-          if(res.body.success === false) {
-            this.errmsg=res.body.message
-            console.log(res)
-            this.Toast.fire({
-              icon: 'error',
-              title: this.errmsg,
-            })   
-          }
-          else{
-            this.Toast.fire({
-              icon: 'success',
-              title: 'تم الارسال بنجاح يمكنك تسجيل الدخول',
-            })
+  loadUserData(): void {
+    const userId: any = localStorage.getItem('Uid');
+    if (userId) {
+      console.log('تم العثور على معرف المستخدم:', userId);
+      this.ArService.getArById(userId).subscribe({
+        next: (res: any) => {
+          if (res && res.data) {
+            console.log('تم استرجاع بيانات المستخدم:', res.data);
+            this.isEditMode = true;
 
-            console.log('register res:',res);
-            
-            setTimeout(() => {
-              this.router.navigate(['/guest/login']);
-            }, 3000);
-            
+            // تعديل التحقق من حقول كلمة المرور في وضع التعديل
+            this.accountSetupGroup.get('password')?.clearValidators();
+            this.accountSetupGroup.get('password')?.setValidators(
+              Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+            );
+            this.accountSetupGroup.get('password')?.updateValueAndValidity();
+            this.accountSetupGroup.get('rePassword')?.clearValidators();
+            this.accountSetupGroup.get('rePassword')?.updateValueAndValidity();
+
+            // تعبئة النماذج الفرعية بالبيانات
+            this.personalInfoGroup.patchValue({
+              firstName: res.data.firstName,
+              lastName: res.data.lastName,
+              nationalId: res.data.nationalId,
+              dateOfBirth: res.data.dateOfBirth,
+              gender: res.data.gender,
+              religion: res.data.religion,
+              placeOfBirth: res.data.placeOfBirth
+            });
+            this.familyInfoGroup.patchValue({
+              fatherName: res.data.fatherName,
+              fatherNationalId: res.data.fatherNationalId,
+              fatherOccupation: res.data.fatherOccupation,
+              fatherPhoneNumber: res.data.fatherPhoneNumber,
+              guardianName: res.data.guardianName,
+              guardianNationalId: res.data.guardianNationalId,
+              guardianPhoneNumber: res.data.guardianPhoneNumber,
+              parentsStatus: res.data.parentsStatus,
+              familyAbroad: res.data.familyAbroad
+            });
+            this.academicInfoGroup.patchValue({
+              faculty: res.data.faculty,
+              level: res.data.level,
+              previousAcademicYearGpa: res.data.previousAcademicYearGpa,
+              totalGradesHighSchool: res.data.totalGradesHighSchool,
+              secondaryDivision: res.data.secondaryDivision,
+              housingInPreviousYears: res.data.housingInPreviousYears
+            });
+            this.contactInfoGroup.patchValue({
+              mobileNumber: res.data.mobileNumber,
+              residenceAddress: res.data.residenceAddress,
+              detailedAddress: res.data.detailedAddress,
+              country: res.data.country,
+              governorate: res.data.governorate,
+              city: res.data.city
+            });
+            this.accountSetupGroup.patchValue({
+              username: res.data.username,
+              confirmDataAccuracy: res.data.confirmDataAccuracy
+            });
+
+            // تحليل عنوان الإقامة
+            this.parseResidenceAddress(res.data.residenceAddress);
+
+            // تحديد نوع الطالب
+            if (res.data.previousAcademicYearGpa !== null && res.data.previousAcademicYearGpa !== undefined) {
+              this.selectStudentType('old');
+            } else if (res.data.totalGradesHighSchool !== null && res.data.totalGradesHighSchool !== undefined) {
+              this.selectStudentType('new');
+            }
           }
-        
         },
-
-        error:(err:HttpErrorResponse)=>{
-          
-          console.log(err)
-          this.Toast.fire({
-            icon: 'error',
-            title: err.message,
-          })   
+        error: (error) => {
+          console.error('خطأ في استرجاع بيانات المستخدم:', error);
         }
-
-      })
-        console.log(this.AppRequest)
+      });
     }
+  }
+
+  parseResidenceAddress(residenceAddress: string): void {
+    if (!residenceAddress) return;
+    console.log('تحليل عنوان الإقامة:', residenceAddress);
+    const parts = residenceAddress.split(' - ');
+    if (parts.length >= 1) {
+      const countryName = parts[0];
+      if (countryName === 'مصر') {
+        this.selectedCountry.set('EG');
+        this.contactInfoGroup.get('country')?.setValue('EG');
+        console.log('تم تحديد الدولة: مصر (EG)');
+      }
+    }
+    setTimeout(() => {
+      if (parts.length >= 2 && this.selectedCountry() === 'EG') {
+        const governorateName = parts[1];
+        const governoratesData = this.governorates;
+        const governorate = governoratesData.find(g =>
+          g.governorate_name_ar === governorateName ||
+          g.governorate_name_ar.replace('ة', 'ه') === governorateName.replace('ة', 'ه')
+        );
+        if (governorate) {
+          this.selectedGovernorate.set(governorate.id);
+          this.contactInfoGroup.get('governorate')?.setValue(governorate.id);
+          console.log('تم تحديد المحافظة:', governorate.id, governorateName);
+          setTimeout(() => {
+            if (parts.length >= 3) {
+              const cityName = parts[2];
+              const citiesData = this.cities;
+              const city = citiesData.find(c =>
+                c.governorate_id === governorate.id &&
+                (c.city_name_ar === cityName ||
+                  c.city_name_ar.replace('ة', 'ه') === cityName.replace('ة', 'ه'))
+              );
+              if (city) {
+                this.contactInfoGroup.get('city')?.setValue(city.id);
+                console.log('تم تحديد المدينة:', city.id, cityName);
+              } else {
+                console.log('لم يتم العثور على المدينة:', cityName);
+              }
+            }
+          }, 300);
+        } else {
+          console.log('لم يتم العثور على المحافظة:', governorateName);
+        }
+      }
+    }, 300);
+  }
+
+  selectStudentType(type: 'old' | 'new') {
+    this.studentType = type;
+    this.activeButton = type;
+    this.updateValidation(type);
+    this.clearFormBasedOnType();
   }
 
   updateValidation(studentType: 'old' | 'new') {
-    const previousAcademicYearGpaControl = this.AppRequest.get('previousAcademicYearGpa');
-    const highSchoolGradeControl = this.AppRequest.get('totalGradesHighSchool');
-    const secondaryDivisionControl = this.AppRequest.get('secondaryDivision');
-    const housingInPreviousYearsControl = this.AppRequest.get('housingInPreviousYears')
-    
+    const previousAcademicYearGpaControl = this.academicInfoGroup.get('previousAcademicYearGpa');
+    const highSchoolGradeControl = this.academicInfoGroup.get('totalGradesHighSchool');
+    const secondaryDivisionControl = this.academicInfoGroup.get('secondaryDivision');
+    const housingInPreviousYearsControl = this.academicInfoGroup.get('housingInPreviousYears');
+
     if (studentType === 'old') {
-      // إضافة التحقق من الصحة لحقول القدامى
       previousAcademicYearGpaControl?.setValidators([Validators.required]);
       housingInPreviousYearsControl?.setValidators([Validators.required]);
-      // إزالة التحقق من الصحة لحقول الجدد
       highSchoolGradeControl?.clearValidators();
       secondaryDivisionControl?.clearValidators();
     } else if (studentType === 'new') {
-      // إضافة التحقق من الصحة لحقول الجدد
       highSchoolGradeControl?.setValidators([Validators.required]);
       secondaryDivisionControl?.setValidators([Validators.required]);
-
-      // إزالة التحقق من الصحة لحقول القدامى
       previousAcademicYearGpaControl?.clearValidators();
       housingInPreviousYearsControl?.clearValidators();
     }
-
-    // تحديث حالة التحقق من الصحة
     previousAcademicYearGpaControl?.updateValueAndValidity();
     highSchoolGradeControl?.updateValueAndValidity();
     secondaryDivisionControl?.updateValueAndValidity();
     housingInPreviousYearsControl?.updateValueAndValidity();
   }
 
-
-  studentType: 'old' | 'new' | null = null; // لتحديد نوع الطالب
-  activeButton: 'old' | 'new' | null = null; // لتحديد الزر النشط
-
-  selectStudentType(type: 'old' | 'new') {
-    this.studentType = type;
-    this.activeButton = type; // تحديث الزر النشط
-
-    this.clearFormBasedOnType();
-  }
-
-  // دالة لمسح الحقول بناءً على نوع الطالب
   clearFormBasedOnType() {
     if (this.studentType === 'old') {
-      this.AppRequest.get('totalGradesHighSchool')?.reset();
-      this.AppRequest.get('secondaryDivision')?.reset();
+      this.academicInfoGroup.get('totalGradesHighSchool')?.reset();
+      this.academicInfoGroup.get('secondaryDivision')?.reset();
     } else if (this.studentType === 'new') {
-      this.AppRequest.get('previousAcademicYearGpa')?.reset();
-      this.AppRequest.get('housingInPreviousYearsControl')?.reset();
+      this.academicInfoGroup.get('previousAcademicYearGpa')?.reset();
+      this.academicInfoGroup.get('housingInPreviousYears')?.reset();
     }
+  }
+
+  handleSubmit() {
+    if (this.AppRequest.valid) {
+      if (this.isEditMode) {
+        this.updateApplication();
+        console.log(this.AppRequest.value);
+
+      } else {
+        this.registerSubmit();
+       console.log(this.AppRequest.value);
+      }
+    } else {
+      console.log('Form is invalid. Check each step.');
+      this.Toast.fire({
+        icon: 'error',
+        title: 'يرجى ملء جميع الحقول المطلوبة',
+      });
+    }
+  }
+
+  registerSubmit() {
+    if (this.AppRequest.valid) {
+      // تحويل البيانات المتداخلة إلى هيكل مسطح للإرسال
+      const formData = this.flattenFormData(this.AppRequest.value);
+      console.log('Form Data to submit:', formData);
+      this._AuthService.setRegisterForm(formData).subscribe({
+        next: (res: any) => {
+          if (res.body.success === false) {
+            this.errmsg = res.body.message;
+            console.log(res);
+            this.Toast.fire({
+              icon: 'error',
+              title: this.errmsg,
+            });
+          } else {
+            this.Toast.fire({
+              icon: 'success',
+              title: 'تم الارسال بنجاح يمكنك تسجيل الدخول',
+            });
+            console.log('register res:', res);
+            setTimeout(() => {
+              this.router.navigate(['/guest/login']);
+            }, 3000);
+          }
+        },
+        error: (err: HttpErrorResponse) => {
+          console.log(err);
+          this.Toast.fire({
+            icon: 'error',
+            title: err.message,
+          });
+        }
+      });
+    }
+  }
+
+  updateApplication() {
+    const userId: any = localStorage.getItem('Uid');
+    if (userId && this.AppRequest.valid) {
+      const formData = this.flattenFormData(this.AppRequest.value);
+      delete formData.rePassword;
+      if (!formData.password || formData.password === '' || formData.password === null) {
+        delete formData.password;
+      }
+      console.log('البيانات المرسلة للتحديث:', formData);
+      this.ArService.updateAr(userId, formData).subscribe({
+        next: (res: any) => {
+          console.log('تم تحديث البيانات بنجاح:', res);
+          this.Toast.fire({
+            icon: 'success',
+            title: 'تم تحديث البيانات بنجاح',
+          });
+        },
+        error: (err: HttpErrorResponse) => {
+          console.error('خطأ في تحديث البيانات:', err);
+          this.Toast.fire({
+            icon: 'error',
+            title: err.message || 'حدث خطأ أثناء تحديث البيانات',
+          });
+        }
+      });
+    }
+  }
+
+  // دالة لتحويل البيانات المتداخلة إلى هيكل مسطح
+  flattenFormData(formData: any): any {
+    const result: any = {};
+    Object.keys(formData).forEach(key => {
+      const nestedData = formData[key];
+      Object.keys(nestedData).forEach(nestedKey => {
+        result[nestedKey] = nestedData[nestedKey];
+      });
+    });
+    return result;
   }
 }

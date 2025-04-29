@@ -29,21 +29,30 @@ import { RoomsComponent } from './components/rooms/rooms.component';
 import { BuildingsListComponent } from './components/buildings-list/buildings-list.component';
 import { AdminLandingPageComponent } from './components/admin-landing-page/admin-landing-page.component';
 import { AddPenaltyComponent } from './components/add-penalty/add-penalty.component';
+import { MealsComponent } from './components/meals/meals.component';
+import { StepperComponent } from './components/stepper/stepper.component';
+
 
 export const routes: Routes = [
 
     {path:"",redirectTo:"guest",pathMatch:"full"},
+    
     {path:"guest",component:GuestLayoutComponent,children:[
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
+
     {path:"app-request",component:ApplicationRequestComponent},
     {path:"login",canActivate:[loggedGuard],component:LoginComponent},
-   
+
+
+        
     ]},
     {path:"hu",component:HuLayoutComponent, canActivate:[authGuard] ,children:[
         {path:"",redirectTo:"user-dashboard",pathMatch:"full"},
         {path:"user-dashboard",component:UserDashboardComponent,},
         {path:"complaints",component:DisplayComplaintsComponent},
+        {path:"app-request",component:ApplicationRequestComponent},
+
     ]},
     {path:"hnu",component:HnuLayoutComponent,children:[
 
@@ -51,6 +60,7 @@ export const routes: Routes = [
     {path:"admin",component:AdminLayoutComponent, canActivate:[adminGuard],children:[
         {path:"",redirectTo:"home",pathMatch:"full"},
         {path:"home",component:AdminLandingPageComponent},
+        {path:"stepper",component:StepperComponent},
         {path:"ar",component:TableViewUsersListComponent},
         {path:"details/:id",component:ArDisplayComponent},
         {path:"guidelines",component:AddGuideLinesComponent},
@@ -58,9 +68,13 @@ export const routes: Routes = [
         {path:"penalty",component:AddPenaltyComponent},
         {path:"complaints",component:DisplayComplaintsComponent},
         {path:'buildings',component: RoomsComponent,},
+        {path:'meals',component: MealsComponent,},
         {path:'',component: BuildingsListComponent, outlet: 'side' },
 
     ]},
-    {path:"**",component:NotfoundComponent}
+    {path:"**",component:NotfoundComponent},
+
+
+
 
 ];
