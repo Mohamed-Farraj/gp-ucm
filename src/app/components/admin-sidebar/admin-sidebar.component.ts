@@ -66,6 +66,7 @@ export class AdminSidebarComponent {
     { id: 'penalty', icon: 'fa-triangle-exclamation', label: 'الجزاءات و العقوبات' },
     { id: 'complaints', icon: 'fa-face-angry', label: 'الشكاوى' },
     { id: 'buildings', icon: 'fa-building', label: 'المباني و الغرف' },
+    { id: 'assign-to-rooms', icon: 'fa-person-shelter', label: ' التسكين ' },
     { id: 'guidelines', icon: 'fa-rectangle-list', label: 'الإرشادات' },
     { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
     { id: 'meals', icon: 'fa-utensils', label: ' الوجبات' },

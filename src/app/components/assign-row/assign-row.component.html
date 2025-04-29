@@ -1,0 +1,52 @@
+<section class="d-flex align-items-center gap-2">
+  <div class="col-5">
+    <select
+      [disabled]="student?.room?.building?.id"
+      (change)="selectBuilding($event)"
+      (click)="$event.stopPropagation()"
+      class="form-select"
+      [value]="buildingId || ''"
+      style="width: 100%;white-space: nowrap; text-overflow: ellipsis;"
+    >
+      <option disabled value="" hidden>اختر مبني</option>
+      <option *ngFor="let item of filteredBuildings" [value]="item.id">
+        {{ item.name }}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-4">
+    <select
+      [class.invisible]="!buildingId"
+      (change)="selectRoom($event)"
+      [disabled]="student?.room"
+      class="form-select"
+      (click)="$event.stopPropagation()"
+      [value]="student?.room?.id || ''"
+      style="width: 100%;"
+    >
+      <option disabled value="" hidden>اختر غرفة</option>
+      @if(student?.room)
+      { 
+        <option>
+          {{ student.room.roomNumber }}
+        </option>
+      }
+      @else {
+        <option *ngFor="let room of resRooms" [value]="room.id">
+          {{ room.roomNumber }}
+        </option>
+      }
+    </select>
+  </div>
+
+  <div class="col-3">
+    <button
+      (click)="removeStudentAssign(); $event.stopPropagation()"
+      [class.invisible]="!student.room"
+      class="rounded-circle btn btn-outline-danger"
+    >
+      <i class="fa-solid fa-trash"></i>
+    </button>
+  </div>
+</section>

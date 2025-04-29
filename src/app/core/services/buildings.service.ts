@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -72,6 +72,10 @@ export class BuildingsService {
     const url = `${this.baseUrl}/public/rooms/getAll/${buildingId}`;
     return this.http.get(url);
   }
+  getAvailableRooms(buildingId: number, roomType: string): Observable<any> {
+    const url = `${this.baseUrl}/admin/view/rooms/get-available/${buildingId}/${roomType}`;
+    return this.http.get(url);
+  }
 
   /**
    * Delete a room by buildingId and roomId.
@@ -81,6 +85,18 @@ export class BuildingsService {
     const url = `${this.baseUrl}/admin/rooms/delete?buildingId=${buildingId}&roomId=${roomId}`;
     return this.http.delete(url);
   }
+  assignStudentSpecificRoom(studentId: number, roomId: number): Observable<any> {
+    const url = `${this.baseUrl}/admin/edit/rooms/assign-student-specific-room?studentId=${studentId}&roomId=${roomId}`;
+    return this.http.post(url,null);
+  }
+
+  removeStudentFromRoom(studentId: number, roomId: number): Observable<any> {
+    const url = `${this.baseUrl}/admin/rooms/remove-student?studentId=${studentId}&roomId=${roomId}`;
+    return this.http.delete(url);
+  }
+
+
+
 
   
 }

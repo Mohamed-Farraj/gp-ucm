@@ -1,0 +1,251 @@
+<!-- export-form.component.html -->
+<div dir="rtl" class="container-fluid my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <form class="export-form">
+        <!-- Faculty Selection -->
+        <div class="card mb-4">
+          <div class="card-header bg-main text-white">
+            <h5 class="mb-0">اختر الكلية او الفرقة</h5>
+          </div>
+          <div class="card-body d-flex gap-3">
+            <div class="col-md-8">
+              <select
+                name="faculty"
+                class="form-control form-select"
+                id="faculty"
+                [(ngModel)]="selectedFaculty"
+                (change)="addFaculty()"
+              >
+                <option value="ALL" selected>كل الكليات</option>
+                <option value="كلية الآداب">كلية الآداب</option>
+                <option value="كلية الاقتصاد المنزلي">
+                  كلية الاقتصاد المنزلي
+                </option>
+                <option value="كلية التربية">كلية التربية</option>
+                <option value="كلية التمريض">كلية التمريض</option>
+                <option value="كلية الحاسبات والذكاء الاصطناعي">
+                  كلية الحاسبات والذكاء الاصطناعي
+                </option>
+                <option value="كلية الخدمة الاجتماعية">
+                  كلية الخدمة الاجتماعية
+                </option>
+                <option value="كلية الصيدلة">كلية الصيدلة</option>
+                <option value="كلية الطب">كلية الطب</option>
+                <option value="كلية العلوم">كلية العلوم</option>
+                <option value="كلية الفنون التطبيقية">
+                  كلية الفنون التطبيقية
+                </option>
+                <option value="كلية الفنون الجميلة">كلية الفنون الجميلة</option>
+                <option value="كلية التربية الرياضية بنين">
+                  كلية التربية الرياضية بنين
+                </option>
+                <option value="كلية التربية الرياضية بنات">
+                  كلية التربية الرياضية بنات
+                </option>
+                <option value="كلية الهندسة بالمطرية">
+                  كلية الهندسة بالمطرية
+                </option>
+                <option value="كلية الهندسة بحلوان">كلية الهندسة بحلوان</option>
+                <option value="كلية التجارة وإدارة الأعمال">
+                  كلية التجارة وإدارة الأعمال
+                </option>
+                <option value="كلية الحقوق">كلية الحقوق</option>
+                <option value="كلية التربية الموسيقية">
+                  كلية التربية الموسيقية
+                </option>
+                <option value="كلية التربية الفنية">كلية التربية الفنية</option>
+                <option value="كلية السياحة والفنادق">
+                  كلية السياحة والفنادق
+                </option>
+                <option value="كلية التعليم الصناعي">
+                  كلية التعليم الصناعي
+                </option>
+                <option value="المعهد القومي للملكية الفكرية">
+                  المعهد القومي للملكية الفكرية
+                </option>
+              </select>
+              <!-- Display selected faculties -->
+              <div class="mt-2" *ngIf="facultiesArray.length > 0">
+                <div class="d-flex flex-wrap gap-2">
+                  <div
+                    *ngFor="let faculty of facultiesArray"
+                    class="badge d-flex align-items-center"
+                  >
+                    {{ faculty === "ALL" ? "كل الكليات" : faculty }}
+                    <button
+                      class="btn-close btn-close-white ms-2"
+                      (click)="removeFaculty(faculty)"
+                      aria-label="إزالة"
+                    ></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex-grow-1">
+              <select
+                name="level"
+                class="form-control form-select"
+                id="level"
+                [(ngModel)]="selectedLevel"
+                (change)="addLevel()"
+              >
+                <option value="ALL" selected>كل الفرق</option>
+                <option value="first">الفرقة الاولى</option>
+                <option value="second">الفرقة الثانية</option>
+                <option value="third">الفرقة الثالثه</option>
+                <option value="fourth">الفرقة الرابعه</option>
+                <option value="fifth">الفرقة الخامسة</option>
+              </select>
+
+              <!-- Badges for selected levels -->
+              <div class="mt-2" *ngIf="levelsArray !== 'ALL'">
+                <div class="d-flex flex-wrap gap-2">
+                  <div
+                    *ngFor="let level of levelsArray.split(',')"
+                    class="badge d-flex align-items-center"
+                  >
+                    {{ getLevelLabel(level) }}
+                    <button
+                      class="btn-close btn-close-white ms-2"
+                      (click)="removeLevel(level)"
+                      aria-label="إزالة"
+                    ></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gender Selection -->
+        <div class="card mb-4">
+          <div class="card-header bg-main text-white">
+            <h5 class="mb-0">اختر النوع</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4" *ngFor="let gender of genders">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="gender"
+                    id="{{ gender.value }}"
+                    [value]="gender.value"
+                    [(ngModel)]="selectedGender"
+                  />
+                  <label class="form-check-label" [for]="gender.value">
+                    {{ gender.label }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Selection -->
+        <div class="card mb-4">
+          <div class="card-header bg-main text-white">
+            <h5 class="mb-0">اختر الحالة</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-3" *ngFor="let status of statuses">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="status"
+                    [id]="status.value"
+                    [value]="status.value"
+                    [checked]="isSelected(status.value)"
+                    (change)="onStatusChange(status.value, $event)"
+                  />
+                  <label class="form-check-label" [for]="status.value">
+                    {{ status.label }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Selection -->
+        <div class="card mb-4">
+          <div class="card-header bg-main text-white">
+            <h5 class="mb-0"> الاستعلام الامني</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-3" *ngFor="let security of securityCheck">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="security"
+                    [id]="security.value"
+                    [value]="security.value"
+                    [checked]="isSelectedSecurity(security.value)"
+                    (change)="onSecurityChange(security.value, $event)"
+                  />
+                  <label class="form-check-label" [for]="security.value">
+                    {{ security.label }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- hasPenalty Selection -->
+        <div class="card mb-4">
+          <div class="card-header bg-main text-white">
+            <h5 class="mb-0">حالة الجزاءات</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4" *ngFor="let penalty of penalties">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="penalty"
+                    id="{{ penalty.value }}"
+                    [value]="penalty.value"
+                    [(ngModel)]="selectedPenalty"
+                  />
+                  <label class="form-check-label" [for]="penalty.value">
+                    {{ penalty.label }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Download Button -->
+        <div class="d-grid gap-2">
+          <button
+            style="width: fit-content"
+            class="btn-main-gold rounded-pill btn-md mx-auto"
+            (click)="onDownload()"
+            [disabled]="isDownloading"
+          >
+            <span *ngIf="!isDownloading">تحميل ملف الاكسيل</span>
+            <span *ngIf="isDownloading">
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Downloading...
+            </span>
+          </button>
+        </div>
+
+        
+      </form>
+    </div>
+  </div>
+</div>

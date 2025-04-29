@@ -29,6 +29,7 @@ import { RoomsComponent } from './components/rooms/rooms.component';
 import { BuildingsListComponent } from './components/buildings-list/buildings-list.component';
 import { AdminLandingPageComponent } from './components/admin-landing-page/admin-landing-page.component';
 import { AddPenaltyComponent } from './components/add-penalty/add-penalty.component';
+import { AssignRoomsComponent } from './components/assign-rooms/assign-rooms.component';
 import { MealsComponent } from './components/meals/meals.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 
@@ -68,6 +69,7 @@ export const routes: Routes = [
         {path:"penalty",component:AddPenaltyComponent},
         {path:"complaints",component:DisplayComplaintsComponent},
         {path:'buildings',component: RoomsComponent,},
+        {path:'assign-to-rooms',component: AssignRoomsComponent,},
         {path:'meals',component: MealsComponent,},
         {path:'',component: BuildingsListComponent, outlet: 'side' },
 

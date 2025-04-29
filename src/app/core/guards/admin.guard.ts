@@ -11,7 +11,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
 
   if (isPlatformBrowser(platformId)) 
   {
-    if (localStorage.getItem('role') === 'ADMIN') {
+    if (localStorage.getItem('role')?.includes('ADMIN')) {
     return true;
   }
 

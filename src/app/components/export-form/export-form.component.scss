@@ -1,0 +1,49 @@
+/* export-form.component.css */
+.export-form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+  
+  .card {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .card-header {
+    border-radius: 8px 8px 0 0 !important;
+  }
+  
+  .form-check-input:checked {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+  }
+  
+  .form-check-label {
+    font-weight: 500;
+    margin-left: 8px;
+  }
+  
+  .btn-lg {
+    padding: 12px 24px;
+    font-size: 1.1rem;
+  }
+
+  .badge {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 20px;
+    background-color: var(--main-color);
+  }
+  
+  .btn-close {
+    filter: invert(1);
+    opacity: 0.8;
+    transform: scale(0.7);
+  }
+  
+  .btn-close:hover {
+    opacity: 1;
+  }
