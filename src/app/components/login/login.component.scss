@@ -8,6 +8,7 @@
 
 .box-area{
     width: 75rem;
+    height: 50rem;
 }
 
 /*------------ Right box ------------*/
@@ -44,27 +45,27 @@
 
      .box-area{
         margin: 10px;
-
+      height: 45rem;
      }
 
 
-     .desktop-img {
-        display: none; /* Hide the large image */
-      }
-      .logo-small-screen {
-        display: block; /* Show the logo */
-        text-align: right; /* Align the logo to the right */
-        margin-bottom: 20px; /* Add some spacing */
-      }
+    //  .desktop-img {
+    //   }
+      // .logo-small-screen {
+      //   display: block; /* Show the logo */
+      //   text-align: right; /* Align the logo to the right */
+      //   margin-bottom: 20px; /* Add some spacing */
+      //   display: none;
+      // }
      .left-box{
-        height: 200px;
+        height: 300px;
         width: 100%;
         margin: 0px;
         padding: 0px;
         border-radius: 0;
         overflow: hidden;
         order: 1;
-
+      object-fit:cover ;
      }
      .right-box{
         padding: 20px;

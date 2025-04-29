@@ -1,7 +1,25 @@
 <div class="mb-3" dir="rtl">
     <div [formGroup]="formGroup" class="flex flex-col gap-4"> <!-- تأكد من وجود formGroup -->
       <h1 class="text-main mb-3 font-semibold"> إنشاء الحساب </h1>
-  
+      
+
+
+        <!-- البريد الإلكتروني -->
+        <div class="flex flex-col">
+          <label class=" mb-2 font-semibold">البريد الإلكتروني</label>
+          <input formControlName="username" type="email" class="form-control rounded-lg  shadow-sm" />
+           <!-- Validation for username (email) -->
+           @if (username?.errors && (username?.dirty || username?.touched)) {
+            <div class="text-danger mt-1">
+              @if (username?.hasError('required')) {
+                <p class="m-0">البريد الإلكتروني مطلوب</p>
+              } @else if (username?.hasError('email')) {
+                <p class="m-0">صيغة البريد الإلكتروني غير صحيحة</p>
+              }
+            </div>
+          }
+        </div>
+    
       <!-- كلمة المرور -->
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">كلمة المرور</label>
@@ -41,6 +59,30 @@
         }
       </div>
 
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="confirmDataAccuracyCheckbox"
+          formControlName="confirmDataAccuracy"                    />
+        <label
+          class="form-check-label fw-semibold text-secondary"
+          for="confirmDataAccuracyCheckbox"
+        >
+          أقر بأن البيانات (محل الإقامة - التقدير - الفرقة/الكلية)
+          صحيحة طبقاً للأوراق الرسمية على أن أقدم هذه الأوراق عند
+          حضوري للمدينة في حالة القبول وإذا ثبت أي خطأ في البيانات
+          يتم تحويلي للشئون القانونية وفصلي نهائياً من المدينة.
+        </label>
+      </div>
+      <!-- رسالة التحقق الخاصة بالـ Checkbox -->
+      <div class="text-danger mt-1 d-block validation-message-confirm ps-4">
+        @if (confirmDataAccuracy?.hasError('requiredTrue')) {
+          <p class="m-0" style="font-size: 0.85rem">
+            * يجب الإقرار بصحة البيانات للمتابعة.
+          </p>
+        }
+      </div>
 
 
   <div class="pt-3">

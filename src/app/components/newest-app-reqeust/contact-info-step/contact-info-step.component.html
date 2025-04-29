@@ -101,21 +101,6 @@
         }
       </div>
   
-      <!-- البريد الإلكتروني -->
-      <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">البريد الإلكتروني</label>
-        <input formControlName="username" type="email" class="form-control rounded-lg  shadow-sm" />
-         <!-- Validation for username (email) -->
-         @if (username?.errors && (username?.dirty || username?.touched)) {
-          <div class="text-danger mt-1">
-            @if (username?.hasError('required')) {
-              <p class="m-0">البريد الإلكتروني مطلوب</p>
-            } @else if (username?.hasError('email')) {
-              <p class="m-0">صيغة البريد الإلكتروني غير صحيحة</p>
-            }
-          </div>
-        }
-      </div>
-  
+    
     </div>
   </div>

@@ -3,18 +3,17 @@
     <div style="height: 90px"></div>
     <section class="bg-white shadow-lg container mx-auto my-5 p-4 rounded-4">
       <div class="flex flex-col">
-      
         <div class="title fw-bold border-bottom mb-4">
           <p>
             @if(!isEditMode) {
               <h2 class="text-black p-3 font-semibold">تقديم طلب الالتحاق</h2>
               قم باختيار (قدامى/مستجدين) وملء بياناتك ثم
-            الموافقة على الإقرار بالأسفل مع ملاحظة ان الطلاب المستجدين هم طلاب
-            الفرق الأولى أو الاعدادية، الطلاب القدامى هم طلاب مابعد الفرق الأولى
-            أو الاعدادية } @else { 
+              الموافقة على الإقرار بالأسفل مع ملاحظة ان الطلاب المستجدين هم طلاب
+              الفرق الأولى أو الاعدادية، الطلاب القدامى هم طلاب مابعد الفرق الأولى
+              أو الاعدادية } @else { 
               <h2 class="text-black p-3 font-semibold">تعديل طلب الالتحاق</h2>
               يمكنك تعديل بياناتك ثم الضغط على زر "تعديل
-            طلب الالتحاق" لحفظ التغييرات }
+              طلب الالتحاق" لحفظ التغييرات }
           </p>
         </div>
         <div class="mb-3 row border-bottom p-2">
@@ -46,286 +45,225 @@
           </div>
         </div>
         @if (studentType !== null) {
-
-        <form [formGroup]="AppRequest" (ngSubmit)="handleSubmit()">
+        <form [formGroup]="AppRequest">
           <div class="flex flex-col">
             <!-- Vertical stepper for large screens -->
             <mat-vertical-stepper
-            *ngIf="!isMobile"
+              *ngIf="!isMobile"
               #stepperLarge
-              class="bg-white p-4 w-100 "
+              class="bg-white p-4 w-100"
               labelPosition="bottom"
-              [linear]="false"
+              [linear]="true"
             >
-              <mat-step>
+              <mat-step [stepControl]="personalInfoGroup">
                 <ng-template matStepLabel>Personal Information</ng-template>
                 <app-basic-info-step
-                  [formGroup]="AppRequest"
+                  [formGroup]="personalInfoGroup"
                 ></app-basic-info-step>
+                <div *ngIf="personalInfoGroup.invalid && personalInfoGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                 <div>
-                  <button class="btn btn-main" mat-button matStepperNext>
-                    التالي
+                  <button class="btn btn-main" mat-button matStepperNext [disabled]="personalInfoGroup.invalid">
+                    <i class="fa-solid fa-forward"></i> التالي
                   </button>
                 </div>
               </mat-step>
-
-              <mat-step>
+              <mat-step [stepControl]="familyInfoGroup">
                 <ng-template matStepLabel>Family Information</ng-template>
                 <app-family-info-step
-                  [formGroup]="AppRequest"
+                  [formGroup]="familyInfoGroup"
                 ></app-family-info-step>
+                <div *ngIf="familyInfoGroup.invalid && familyInfoGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperNext>
-                    التالي
+                  <button class="btn btn-main m-1" matStepperNext [disabled]="familyInfoGroup.invalid">
+                    <i class="fa-solid fa-forward"></i> التالي
                   </button>
                   <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق
+                     السابق <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
               </mat-step>
-
-              <mat-step>
+              <mat-step [stepControl]="academicInfoGroup">
                 <ng-template matStepLabel>Academic Information</ng-template>
                 <app-academic-info-step
-                  [formGroup]="AppRequest"
+                  [formGroup]="academicInfoGroup"
                   [levels]="levels()"
                   [studentType]="studentType"
                 ></app-academic-info-step>
+                <div *ngIf="academicInfoGroup.invalid && academicInfoGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperNext>
-                    التالي
+                  <button class="btn btn-main m-1" matStepperNext [disabled]="academicInfoGroup.invalid">
+                    <i class="fa-solid fa-forward"></i> التالي
                   </button>
                   <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق
+                     السابق <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
               </mat-step>
-
-              <mat-step>
+              <mat-step [stepControl]="contactInfoGroup">
                 <ng-template matStepLabel>Contact Information</ng-template>
                 <app-contact-info-step
-                  [formGroup]="AppRequest"
+                  [formGroup]="contactInfoGroup"
                   [countriesList]="countries"
                   [governoratesList]="filteredGovernorates()"
                   [citiesList]="filteredCities()"
                   [currentCountryCode]="selectedCountry()"
                   [currentGovernorateId]="selectedGovernorate()"
                 ></app-contact-info-step>
-
+                <div *ngIf="contactInfoGroup.invalid && contactInfoGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperNext>
-                    التالي
+                  <button class="btn btn-main m-1" matStepperNext [disabled]="contactInfoGroup.invalid">
+                    <i class="fa-solid fa-forward"></i> التالي
                   </button>
                   <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق
+                     السابق <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
               </mat-step>
-
-              <mat-step>
+              <mat-step [stepControl]="accountSetupGroup">
                 <ng-template matStepLabel>Account Setup</ng-template>
                 <app-account-setup-step
-                  [formGroup]="AppRequest"
+                  [formGroup]="accountSetupGroup"
                   [isEditMode]="isEditMode"
                 ></app-account-setup-step>
+                <div *ngIf="accountSetupGroup.invalid && accountSetupGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                
-                  <div class="col-12 border-top pt-3 mt-3">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="confirmDataAccuracyCheckbox"
-                        formControlName="confirmDataAccuracy"
-                      />
-                      <label
-                        class="form-check-label fw-semibold text-secondary"
-                        for="confirmDataAccuracyCheckbox"
-                      >
-                        أقر بأن البيانات (محل الإقامة - التقدير - الفرقة/الكلية)
-                        صحيحة طبقاً للأوراق الرسمية على أن أقدم هذه الأوراق عند
-                        حضوري للمدينة في حالة القبول وإذا ثبت أي خطأ في البيانات
-                        يتم تحويلي للشئون القانونية وفصلي نهائياً من المدينة.
-                      </label>
-                    </div>
-              
-                    <!-- رسالة التحقق الخاصة بالـ Checkbox -->
-                   
-                    <div
-                      class="text-danger mt-1 d-block validation-message-confirm ps-4"
-                    >
-                      @if
-                      (AppRequest.hasError('required'))
-                      {
-                      <p class="m-0" style="font-size: 0.85rem">
-                        * يجب الإقرار بصحة البيانات للمتابعة.
-                      </p>
-                      }
-                    </div>
-                    
-                  </div>
-                    
-               
-              
-
                 <div class="d-flex justify-content-between w-100">
                   <div class="d-flex justify-content-between w-100 mt-4">
-
                     @if (!isEditMode) {
-                       <button [disabled]="AppRequest.invalid" class="btn-main">
-                     
-                      تسجيل طلب الالتحاق
-                      
-                    </button>
-                    <button class="btn btn-main m-1" matStepperPrevious>
-                      السابق
-                    </button>
+                      <button type="submit" [disabled]="AppRequest.invalid" (click)="handleSubmit()" class="btn-main">
+                        <i class="fa-solid fa-right-to-bracket"></i> تسجيل طلب الالتحاق
+                      </button>
+                      <button class="btn-main" matStepperPrevious>
+                        السابق <i class="fa-solid fa-backward"></i>
+                      </button>
                     }
-                   
                   </div>
                 </div>
               </mat-step>
-           
-
             </mat-vertical-stepper>
-
             <!-- Horizontal stepper for mobile -->
             <mat-horizontal-stepper
-            *ngIf="isMobile"
+              *ngIf="isMobile"
               #stepperMobile
-              class="bg-white p-4 w-100 "
+              class="bg-white p-4 w-100"
               labelPosition="bottom"
-              [linear]="false"
+              [linear]="true"
             >
-              <mat-step>
+              <mat-step [stepControl]="personalInfoGroup">
                 <ng-template matStepLabel></ng-template>
                 <app-basic-info-step
-                  [formGroup]="AppRequest"
+                  [formGroup]="personalInfoGroup"
                 ></app-basic-info-step>
+                <div *ngIf="personalInfoGroup.invalid && personalInfoGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                 <div>
-                  <button class="btn btn-main" matStepperNext>التالي</button>
+                  <button class="btn btn-main" matStepperNext [disabled]="personalInfoGroup.invalid">التالي</button>
                 </div>
               </mat-step>
-
-              <mat-step>
+              <mat-step [stepControl]="familyInfoGroup">
                 <ng-template matStepLabel></ng-template>
                 <app-family-info-step
-                  [formGroup]="AppRequest"
+                  [formGroup]="familyInfoGroup"
                 ></app-family-info-step>
+                <div *ngIf="familyInfoGroup.invalid && familyInfoGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperNext>
-                    التالي
+                  <button class="btn btn-main m-1" matStepperNext [disabled]="familyInfoGroup.invalid">
+                    <i class="fa-solid fa-forward"></i> التالي
                   </button>
                   <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق
+                    السابق <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
               </mat-step>
-
-              <mat-step>
+              <mat-step [stepControl]="academicInfoGroup">
                 <ng-template matStepLabel></ng-template>
                 <app-academic-info-step
+                  [formGroup]="academicInfoGroup"
                   [levels]="levels()"
-                  [formGroup]="AppRequest"
                   [studentType]="studentType"
                 ></app-academic-info-step>
+                <div *ngIf="academicInfoGroup.invalid && academicInfoGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperNext>
-                    التالي
+                  <button class="btn btn-main m-1" matStepperNext [disabled]="academicInfoGroup.invalid">
+                    <i class="fa-solid fa-forward"></i> التالي
                   </button>
                   <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق
+                    السابق <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
               </mat-step>
-
-              <mat-step>
+              <mat-step [stepControl]="contactInfoGroup">
                 <ng-template matStepLabel></ng-template>
                 <app-contact-info-step
+                  [formGroup]="contactInfoGroup"
                   [countriesList]="countries"
                   [governoratesList]="filteredGovernorates()"
                   [citiesList]="filteredCities()"
                   [currentCountryCode]="selectedCountry()"
                   [currentGovernorateId]="selectedGovernorate()"
-                  [formGroup]="AppRequest"
                 ></app-contact-info-step>
+                <div *ngIf="contactInfoGroup.invalid && contactInfoGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperNext>
-                    التالي
+                  <button class="btn btn-main m-1" matStepperNext [disabled]="contactInfoGroup.invalid">
+                    <i class="fa-solid fa-forward"></i> التالي
                   </button>
                   <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق
+                    السابق <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
               </mat-step>
-
-              <mat-step>
+              <mat-step [stepControl]="accountSetupGroup">
                 <ng-template matStepLabel></ng-template>
                 <app-account-setup-step
-                  [formGroup]="AppRequest"
+                  [formGroup]="accountSetupGroup"
                   [isEditMode]="isEditMode"
                 ></app-account-setup-step>
+                <div *ngIf="accountSetupGroup.invalid && accountSetupGroup.touched" class="text-danger mt-2">
+                  <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
+                </div>
                 <div class="col-12 border-top pt-3 mt-3">
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      id="confirmDataAccuracyCheckbox"
-                      formControlName="confirmDataAccuracy"
-                    />
-                    <label
-                      class="form-check-label fw-semibold text-secondary"
-                      for="confirmDataAccuracyCheckbox"
-                    >
-                      أقر بأن البيانات (محل الإقامة - التقدير - الفرقة/الكلية)
-                      صحيحة طبقاً للأوراق الرسمية على أن أقدم هذه الأوراق عند
-                      حضوري للمدينة في حالة القبول وإذا ثبت أي خطأ في البيانات
-                      يتم تحويلي للشئون القانونية وفصلي نهائياً من المدينة.
-                    </label>
-                  </div>
             
-                  <!-- رسالة التحقق الخاصة بالـ Checkbox -->
-                 
-                  <div
-                    class="text-danger mt-1 d-block validation-message-confirm ps-4"
-                  >
-                    @if
-                    (AppRequest.hasError('required'))
-                    {
-                    <p class="m-0" style="font-size: 0.85rem">
-                      * يجب الإقرار بصحة البيانات للمتابعة.
-                    </p>
-                    }
-                  </div>
-                  
                 </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button [disabled]="AppRequest.invalid" class="btn-main">
-                    {{
-                      isEditMode ? "تعديل طلب الالتحاق" : "تسجيل طلب الالتحاق"
-                    }}
-                  </button>
-                  <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق
-                  </button>
+                  <div class="d-flex justify-content-between w-100 mt-4">
+                    @if (!isEditMode) {
+                      <button type="submit" [disabled]="AppRequest.invalid" (click)="handleSubmit()" class="btn-main">
+                        <i class="fa-solid fa-right-to-bracket"></i> تسجيل طلب الالتحاق
+                      </button>
+                      <button class="btn-main" matStepperPrevious>
+                        السابق <i class="fa-solid fa-backward"></i>
+                      </button>
+                    }
+                  </div>
                 </div>
               </mat-step>
-
             </mat-horizontal-stepper>
-          </div >
-
-          @if (isEditMode) { <div class="ps-5">
-            <button [disabled]="AppRequest.invalid" class="btn-main">
-          
-              تعديل طلب الالتحاق 
-           
-          </button>
-
-
-            </div>}
-           
-         
+          </div>
+          @if (isEditMode) {
+            <div class="ps-5">
+              <button [disabled]="AppRequest.invalid" (submit)="handleSubmit()" class="btn-main">
+                تعديل طلب الالتحاق
+              </button>
+            </div>
+          }
         </form>
-
         }
       </div>
     </section>

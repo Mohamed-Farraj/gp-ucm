@@ -12,6 +12,10 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class AccountSetupStepComponent {
   @Input() formGroup!: FormGroup;
   @Input() isEditMode: boolean = false;
+  
+  
+  get username() { return this.formGroup?.get('username'); }
+
   get password() {
     return this.formGroup?.get('password');
   }

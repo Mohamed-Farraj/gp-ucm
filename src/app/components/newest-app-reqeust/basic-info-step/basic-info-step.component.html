@@ -1,144 +1,110 @@
 <div class="mb-3" dir="rtl">
-    <div [formGroup]="formGroup" class="flex flex-col gap-4">
-        <h1 class="text-main mb-3 font-semibold">  بيانات شخصية</h1>
+  <div [formGroup]="formGroup" class="flex flex-col gap-4">
+    <h1 class="text-main mb-3 font-semibold">بيانات شخصية</h1>
 
-      <!-- الرقم القومي -->
-      <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">الرقم القومي</label>
-        <input formControlName="nationalId" type="text" class="form-control rounded-lg  shadow-sm" />
-        @if (nationalId && nationalId.errors && (nationalId.dirty || nationalId.touched)) {
-          <div class="text-danger mt-1">
-            @if (nationalId.hasError('required')) {
-              <p class="m-0">الرقم القومي مطلوب</p>
-            }
-            @else if (nationalId.hasError('pattern')) {
-              <p class="m-0">يجب أن يكون 14 رقم</p>
-            }
-          </div>
-        }
-        <small class="text-muted">يستخدم لاستخراج البيانات الأخرى</small>
+    <!-- الرقم القومي -->
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold">الرقم القومي</label>
+      <input formControlName="nationalId" type="text" class="form-control rounded-lg shadow-sm" />
+      <div *ngIf="nationalId?.invalid && (nationalId?.dirty || nationalId?.touched)" class="text-danger mt-1">
+        <p class="m-0" *ngIf="nationalId?.hasError('required')">الرقم القومي مطلوب</p>
+        <p class="m-0" *ngIf="nationalId?.hasError('pattern')">يجب أن يكون 14 رقمًا</p>
       </div>
-      
-      <!-- الاسم الأول -->
-      <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">الاسم الأول</label>
-        <input formControlName="firstName" type="text" class="form-control rounded-lg  shadow-sm" />
-        @if (firstName?.errors && (firstName?.dirty || firstName?.touched)) {
-          <div class="text-danger mt-1">
-            @if (firstName?.hasError('required')) {
-              <p class="m-0">الاسم الأول مطلوب</p>
-            }
-          </div>
-        }
-      </div>
-  
-      <!-- الاسم الثاني -->
-      <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">الاسم الثاني</label>
-        <input formControlName="lastName" type="text" class="form-control rounded-lg  shadow-sm" />
-        @if (lastName?.errors && (lastName?.dirty || lastName?.touched)) {
-          <div class="text-danger mt-1">
-            @if (lastName?.hasError('required')) {
-              <p class="m-0">الاسم الثاني مطلوب</p>
-            }
-          </div>
-        }
-      </div>
-  
-      <!-- تاريخ الميلاد -->
-      <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">تاريخ الميلاد</label>
-        <input formControlName="dateOfBirth" type="date" readonly class="form-control rounded-lg  shadow-sm" />
-        @if (dateOfBirth?.errors && (dateOfBirth?.dirty || dateOfBirth?.touched)) {
-          <div class="text-danger mt-1">
-            @if (dateOfBirth?.hasError('required')) {
-              <p class="m-0">تاريخ الميلاد مطلوب</p>
-            }
-          </div>
-        }
-        <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
-      </div>
-  
-      <!-- محل الميلاد -->
-      <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">محل الميلاد</label>
-        <select formControlName="placeOfBirth" class="form-select rounded-lg  shadow-sm">
-          <option value="">اختر</option>
-          <option value="القاهره">القاهره</option>
-          <option value="دمياط">دمياط</option>
-          <option value="الدقهلية" title="الدقهلية">الدقهلية</option>
-          <option value="الشرقيه" title="الشرقيه">الشرقيه</option>
-          <option value="القليوبيه" title="القليوبيه">القليوبيه</option>
-          <option value="كفرالشيخ" title="كفرالشيخ">كفرالشيخ</option>
-          <option value="الغربيه" title="الغربيه">الغربيه</option>
-          <option value="المنوفيه" title="المنوفيه">المنوفيه</option>
-          <option value="البحيرة" title="البحيرة">البحيرة</option>
-          <option value="الاسماعيلية" title="الاسماعيلية">الاسماعيلية</option>
-          <option value="الاسكندريه" title="الاسكندريه">الاسكندريه</option>
-          <option value="الجيزه" title="الجيزه">الجيزه</option>
-          <option value="الفيوم"title="الفيوم">الفيوم</option>
-          <option value="المنيا" title="المنيا">المنيا</option>
-          <option value="اسيوط" title="اسيوط">اسيوط</option>
-          <option value="سوهاج" title="سوهاج">سوهاج</option>
-          <option value="قنــا" title="قنــا">قنــا</option>
-          <option value="اسوان" title="اسوان">اسوان</option>
-          <option value="الاقصـر" title="الاقصـر">الاقصـر</option>
-          <option value="بورسعيد" title="بورسعيد">بورسعيد</option>
-          <option value="البحر الاحمر" title="البحر الاحمر">البحر الاحمر</option>
-          <option value="الوادي الجديد" title="الوادي الجديد">الوادى الجديد</option>
-          <option value="مرسي مطروح" title="مرسي مطروح">مرسى مطروح</option>
-          <option value="شمال سيناء" title="شمال سيناء">شمال سيناء</option>
-          <option value="جنوب سيناء" title="جنوب سيناء">جنوب سيناء</option>
-          <option value="سيناء" title="سيناء">سيناء</option>
-          <option value="السويس"title="السويس">السويس</option>
+      <small class="text-muted">يستخدم لاستخراج البيانات الأخرى</small>
+    </div>
 
-          <!-- باقي المحافظات -->
-        </select>
-        @if (placeOfBirth?.errors && (placeOfBirth?.dirty || placeOfBirth?.touched)) {
-          <div class="text-danger mt-1">
-            @if (placeOfBirth?.hasError('required')) {
-              <p class="m-0">محل الميلاد مطلوب</p>
-            }
-          </div>
-        }
-        <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
+    <!-- الاسم الأول -->
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold">الاسم الأول</label>
+      <input formControlName="firstName" type="text" class="form-control rounded-lg shadow-sm" />
+      <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="text-danger mt-1">
+        <p class="m-0" *ngIf="firstName?.hasError('required')">الاسم الأول مطلوب</p>
       </div>
-  
-      <!-- النوع -->
-      <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">النوع</label>
-        <select formControlName="gender"  class="form-select rounded-lg  shadow-sm">
-          <option value="">اختر</option>
-          <option value="MALE">ذكر</option>
-          <option value="FEMALE">أنثى</option>
-        </select>
-        @if (gender?.errors && (gender?.dirty || gender?.touched)) {
-          <div class="text-danger mt-1">
-            @if (gender?.hasError('required')) {
-              <p class="m-0">النوع مطلوب</p>
-            }
-          </div>
-        }
-        <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
+    </div>
+
+    <!-- الاسم الثاني -->
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold">الاسم الثاني</label>
+      <input formControlName="lastName" type="text" class="form-control rounded-lg shadow-sm" />
+      <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="text-danger mt-1">
+        <p class="m-0" *ngIf="lastName?.hasError('required')">الاسم الثاني مطلوب</p>
       </div>
-  
-      <!-- الديانة -->
-      <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">الديانة</label>
-        <select formControlName="religion" class="form-select rounded-lg  shadow-sm">
-          <option value="">اختر</option>
-          <option value="MUSLIM">مسلم</option>
-          <option value="CHRISTIAN">مسيحي</option>
-        </select>
-        @if (religion?.errors && (religion?.dirty || religion?.touched)) {
-          <div class="text-danger mt-1">
-            @if (religion?.hasError('required')) {
-              <p class="m-0">الديانة مطلوبة</p>
-            }
-          </div>
-        }
+    </div>
+
+    <!-- تاريخ الميلاد -->
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold">تاريخ الميلاد</label>
+      <input formControlName="dateOfBirth" type="date" readonly class="form-control rounded-lg shadow-sm" />
+      <div *ngIf="dateOfBirth?.invalid && (dateOfBirth?.dirty || dateOfBirth?.touched)" class="text-danger mt-1">
+        <p class="m-0" *ngIf="dateOfBirth?.hasError('required')">تاريخ الميلاد مطلوب</p>
       </div>
-  
+      <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
+    </div>
+
+    <!-- محل الميلاد -->
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold">محل الميلاد</label>
+      <select formControlName="placeOfBirth" class="form-select rounded-lg shadow-sm">
+        <option value="">اختر</option>
+        <option value="القاهره">القاهرة</option>
+        <option value="دمياط">دمياط</option>
+        <option value="الدقهلية">الدقهلية</option>
+        <option value="الشرقيه">الشرقية</option>
+        <option value="القليوبيه">القليوبية</option>
+        <option value="كفرالشيخ">كفر الشيخ</option>
+        <option value="الغربيه">الغربية</option>
+        <option value="المنوفيه">المنوفية</option>
+        <option value="البحيرة">البحيرة</option>
+        <option value="الاسماعيلية">الإسماعيلية</option>
+        <option value="الاسكندريه">الإسكندرية</option>
+        <option value="الجيزه">الجيزة</option>
+        <option value="الفيوم">الفيوم</option>
+        <option value="المنيا">المنيا</option>
+        <option value="اسيوط">أسيوط</option>
+        <option value="سوهاج">سوهاج</option>
+        <option value="قنــا">قنا</option>
+        <option value="اسوان">أسوان</option>
+        <option value="الاقصـر">الأقصر</option>
+        <option value="بورسعيد">بورسعيد</option>
+        <option value="البحر الاحمر">البحر الأحمر</option>
+        <option value="الوادي الجديد">الوادي الجديد</option>
+        <option value="مرسي مطروح">مرسى مطروح</option>
+        <option value="شمال سيناء">شمال سيناء</option>
+        <option value="جنوب سيناء">جنوب سيناء</option>
+        <option value="سيناء">سيناء</option>
+        <option value="السويس">السويس</option>
+      </select>
+      <div *ngIf="placeOfBirth?.invalid && (placeOfBirth?.dirty || placeOfBirth?.touched)" class="text-danger mt-1">
+        <p class="m-0" *ngIf="placeOfBirth?.hasError('required')">محل الميلاد مطلوب</p>
+      </div>
+      <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
+    </div>
+
+    <!-- النوع -->
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold">النوع</label>
+      <select formControlName="gender" class="form-select rounded-lg shadow-sm">
+        <option value="">اختر</option>
+        <option value="MALE">ذكر</option>
+        <option value="FEMALE">أنثى</option>
+      </select>
+      <div *ngIf="gender?.invalid && (gender?.dirty || gender?.touched)" class="text-danger mt-1">
+        <p class="m-0" *ngIf="gender?.hasError('required')">النوع مطلوب</p>
+      </div>
+      <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
+    </div>
+
+    <!-- الديانة -->
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold">الديانة</label>
+      <select formControlName="religion" class="form-select rounded-lg shadow-sm">
+        <option value="">اختر</option>
+        <option value="MUSLIM">مسلم</option>
+        <option value="CHRISTIAN">مسيحي</option>
+      </select>
+      <div *ngIf="religion?.invalid && (religion?.dirty || religion?.touched)" class="text-danger mt-1">
+        <p class="m-0" *ngIf="religion?.hasError('required')">الديانة مطلوبة</p>
+      </div>
     </div>
   </div>
-  
+</div>
