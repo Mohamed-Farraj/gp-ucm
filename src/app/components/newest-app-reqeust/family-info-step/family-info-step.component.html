@@ -70,6 +70,18 @@
           </div>
         }
       </div>
+
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">صلة ولي الأمر</label>
+        <input formControlName="guardianRelationship" type="text" class="form-control rounded-lg  shadow-sm" />
+        @if (guardianRelationship?.errors && (guardianRelationship?.dirty || guardianRelationship?.touched)) {
+          <div class="text-danger mt-1">
+            @if (guardianRelationship?.hasError('required')) {
+              <p class="m-0">صلة ولي الأمر مطلوب</p>
+            }
+          </div>
+        }
+      </div>
   
       <!-- موبايل ولي الأمر -->
       <div class="flex flex-col">

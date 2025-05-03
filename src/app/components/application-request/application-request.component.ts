@@ -115,6 +115,7 @@ export class ApplicationRequestComponent implements OnInit {
       fatherOccupation: [null, Validators.required],
       fatherPhoneNumber: [null, Validators.required],
       guardianName: [null, Validators.required],
+      guardianRelationship: [null, Validators.required],
       guardianNationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
       guardianPhoneNumber: [null, Validators.required],
       parentsStatus: [null, Validators.required],
@@ -126,12 +127,15 @@ export class ApplicationRequestComponent implements OnInit {
       level: [null, Validators.required],
       previousAcademicYearGpa: [null],
       totalGradesHighSchool: [null],
+      AnnualGrade: [null],
       secondaryDivision: [null],
-      housingInPreviousYears: [null]
+      housingInPreviousYears: [null],
+      houseTypeName: [null],
     });
 
     this.contactInfoGroup = this.fb.group({
       mobileNumber: [null, [Validators.required, Validators.pattern(/^01[0-25]\d{8}$/)]],
+      phoneNumber: [null , [Validators.required , Validators.pattern(/^0[2-9]\d{1,2}\d{6,7}$/)]] ,
       residenceAddress: [null, Validators.required],
       detailedAddress: [null, Validators.required],
       country: [null],

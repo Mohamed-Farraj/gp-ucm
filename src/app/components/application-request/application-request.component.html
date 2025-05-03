@@ -48,7 +48,7 @@
         <form [formGroup]="AppRequest">
           <div class="flex flex-col">
             <!-- Vertical stepper for large screens -->
-            <mat-vertical-stepper
+            <!-- <mat-vertical-stepper
               *ngIf="!isMobile"
               #stepperLarge
               class="bg-white p-4 w-100"
@@ -150,10 +150,10 @@
                   </div>
                 </div>
               </mat-step>
-            </mat-vertical-stepper>
+            </mat-vertical-stepper> -->
             <!-- Horizontal stepper for mobile -->
             <mat-horizontal-stepper
-              *ngIf="isMobile"
+              
               #stepperMobile
               class="bg-white p-4 w-100"
               labelPosition="bottom"
@@ -167,8 +167,8 @@
                 <div *ngIf="personalInfoGroup.invalid && personalInfoGroup.touched" class="text-danger mt-2">
                   <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
                 </div>
-                <div>
-                  <button class="btn btn-main" matStepperNext [disabled]="personalInfoGroup.invalid">التالي</button>
+                <div class="d-flex justify-content-between w-100">
+                  <button class="btn btn-main ms-auto" matStepperNext [disabled]="personalInfoGroup.invalid">التالي</button>
                 </div>
               </mat-step>
               <mat-step [stepControl]="familyInfoGroup">
@@ -180,11 +180,11 @@
                   <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
                 </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperNext [disabled]="familyInfoGroup.invalid">
-                    <i class="fa-solid fa-forward"></i> التالي
-                  </button>
                   <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق <i class="fa-solid fa-backward"></i>
+                    <i class="fa-solid fa-forward"></i>  السابق  
+                  </button>
+                  <button class="btn btn-main m-1" matStepperNext [disabled]="familyInfoGroup.invalid">
+                    التالي <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
               </mat-step>
@@ -199,11 +199,12 @@
                   <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
                 </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperNext [disabled]="academicInfoGroup.invalid">
-                    <i class="fa-solid fa-forward"></i> التالي
-                  </button>
+                 
                   <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق <i class="fa-solid fa-backward"></i>
+                    <i class="fa-solid fa-forward"></i> السابق 
+                  </button>
+                  <button class="btn btn-main m-1" matStepperNext [disabled]="academicInfoGroup.invalid">
+                    التالي <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
               </mat-step>
@@ -221,11 +222,12 @@
                   <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
                 </div>
                 <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperNext [disabled]="contactInfoGroup.invalid">
-                    <i class="fa-solid fa-forward"></i> التالي
-                  </button>
+                
                   <button class="btn btn-main m-1" matStepperPrevious>
-                    السابق <i class="fa-solid fa-backward"></i>
+                    <i class="fa-solid fa-forward"></i> السابق 
+                  </button>
+                  <button class="btn btn-main m-1" matStepperNext [disabled]="contactInfoGroup.invalid">
+                    التالي <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
               </mat-step>
@@ -244,11 +246,12 @@
                 <div class="d-flex justify-content-between w-100">
                   <div class="d-flex justify-content-between w-100 mt-4">
                     @if (!isEditMode) {
-                      <button type="submit" [disabled]="AppRequest.invalid" (click)="handleSubmit()" class="btn-main">
-                        <i class="fa-solid fa-right-to-bracket"></i> تسجيل طلب الالتحاق
-                      </button>
+                     
                       <button class="btn-main" matStepperPrevious>
-                        السابق <i class="fa-solid fa-backward"></i>
+                        <i class="fa-solid fa-forward"></i>  السابق 
+                      </button>
+                      <button type="submit" [disabled]="AppRequest.invalid" (click)="handleSubmit()" class="btn-main">
+                       تسجيل طلب الالتحاق <i class="fa-solid fa-left-to-bracket"></i> 
                       </button>
                     }
                   </div>
