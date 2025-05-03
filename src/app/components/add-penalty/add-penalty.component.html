@@ -31,7 +31,7 @@
             @if (penalties.length > 0) { 
               @for (item of penalties; track $index) {
                 <tr>
-                  <td>{{ item.user.firstName }}</td>
+                  <td class="fw-bold">{{ item.user.firstName }} {{ item.user.lastName }}</td>
                   <td>{{ item.penaltyTitle }}</td>
                   <td>{{ item.reason }}</td>
                   <td>{{ item.dateIssued | date : "yyyy/MM/dd" }}</td>
