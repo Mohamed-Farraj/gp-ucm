@@ -7,7 +7,7 @@
     novalidate
   >
     <div class="mb-5">
-      <label for="roomNumber" class="block mb-2"> رقم الغرفه </label>
+      <label for="roomNumber" class="block mb-2"> </label>
       <input
         type="text"
         id="roomNumber"
@@ -21,7 +21,63 @@
       }
     </div>
     <div class="mb-5">
-      <label for="capacity" class="block mb-2"> الكثافة </label>
+      <label for="floorNumber" class="block mb-2"> </label>
+      <input
+        type="text"
+        id="floorNumber"
+        class="form-control"
+        placeholder=" رقم الطابق  "
+        formControlName="floorNumber"
+      />
+      @if (addRoomForm.get('floorNumber')?.hasError('required') &&
+      addRoomForm.get('floorNumber')?.touched) {
+      <div class="text-danger">مطلوب</div>
+      }
+    </div>
+    <div class="mb-5">
+      <label for="wing" class="block mb-2">  </label>
+      <input
+        type="text"
+        id="wing"
+        class="form-control"
+        placeholder=" الجناح"
+        formControlName="wing"
+      />
+      @if (addRoomForm.get('wing')?.hasError('required') &&
+      addRoomForm.get('wing')?.touched) {
+      <div class="text-danger">مطلوب</div>
+      }
+    </div>
+    <div class="mb-5">
+      <label for="bedCount" class="block mb-2"> </label>
+      <input
+        type="text"
+        id="bedCount"
+        class="form-control"
+        placeholder="عدد السرر  "
+        formControlName="bedCount"
+      />
+      @if (addRoomForm.get('bedCount')?.hasError('required') &&
+      addRoomForm.get('bedCount')?.touched) {
+      <div class="text-danger">مطلوب</div>
+      }
+    </div>
+    <div class="mb-5">
+      <label for="occupiedBeds" class="block mb-2"> </label>
+      <input
+        type="text"
+        id="occupiedBeds"
+        class="form-control"
+        placeholder="السرر  المشغولة  "
+        formControlName="occupiedBeds"
+      />
+      @if (addRoomForm.get('occupiedBeds')?.hasError('required') &&
+      addRoomForm.get('occupiedBeds')?.touched) {
+      <div class="text-danger">مطلوب</div>
+      }
+    </div>
+    <div class="mb-5">
+      <label for="capacity" class="block mb-2"> </label>
       <input
         type="text"
         id="capacity"
@@ -35,7 +91,7 @@
       }
     </div>
     <div class="mb-5">
-      <label for="currentOccupancy" class="block mb-2"> الإشغال الحالي </label>
+      <label for="currentOccupancy" class="block mb-2"> </label>
       <input
         type="text"
         id="currentOccupancy"
@@ -49,7 +105,7 @@
       }
     </div>
     <div class="mb-5">
-      <label for="type" class="block mb-2">النوع</label>
+      <label for="type" class="block mb-2"></label>
       <select id="type" class="form-control" formControlName="type">
         <option value="" disabled selected>اختر النوع</option>
         <option value="SINGLE">مفردة</option>
@@ -63,7 +119,7 @@
     </div>
 
     <div class="mb-5">
-      <label for="status" class="block mb-2">الحالة</label>
+      <label for="status" class="block mb-2"></label>
       <select id="status" class="form-control" formControlName="status">
         <option value="" disabled selected>اختر الحالة</option>
         <option value="AVAILABLE">متاحة</option>

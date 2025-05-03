@@ -3,62 +3,62 @@
     <app-users-side-list></app-users-side-list>
   </section>
   <section class="col-md-7 flex-grow-1 main-content">
-    <section class="bg-main-light container my-5 p-4 rounded-4" dir="rtl">
-      <div class="flex justify-between items-center mb-2">
-        <h4 class="fw-bold m-auto mb-5">الجزاءات</h4>
-
+    <section class="premium-card my-4 p-4" dir="rtl">
+      <div class="card-header d-flex align-items-center justify-content-between mb-4">
+        <h4 class="section-title">الجزاءات</h4>
         <button
           [disabled]="!userData"
           type="button"
           (click)="openDialog()"
-          class="btn-main d-block me-auto"
+          class="btn-add"
         >
-          اضافه جزاء
+          <i class="fas fa-plus me-2"></i>اضافه جزاء
         </button>
       </div>
-      <div class="">
-        <table class="w-100">
-          <thead class="text-xs">
+      
+      <div class="table-responsive">
+        <table class="premium-table">
+          <thead>
             <tr>
-              <th scope="col" class="py-3">الاسم</th>
-              <th scope="col" class="py-3">اسم الجزاء</th>
-              <th scope="col" class="py-3">سبب الجزاء</th>
-              <th scope="col" class="py-3">تاريخ الجزاء</th>
-              <th scope="col" class="py-3">
-                <span class="">اضـافة او حـذف</span>
-              </th>
+              <th scope="col">الاسم</th>
+              <th scope="col">اسم الجزاء</th>
+              <th scope="col">سبب الجزاء</th>
+              <th scope="col">تاريخ الجزاء</th>
+              <th scope="col" class="text-center">إجراءات</th>
             </tr>
           </thead>
           <tbody>
-            @if (penalties.length > 0) { @for (item of penalties; track $index)
-            {
-            <tr class="border-bottom">
-              <th scope="row" class="py-4">
-                {{ item.user.firstName }}
-              </th>
-              <th scope="row" class="py-4">
-                {{ item.penaltyTitle }}
-              </th>
-              <td class="py-4">
-                {{ item.reason }}
-              </td>
-              <td class="py-4">
-                {{ item.dateIssued | date : "yyyy/MM/dd, hh:mm a" }}
-              </td>
-              <td class="py-4 text-right">
-                <button
-                  type="button"
-                  (click)="deletePenalty(item.id)"
-                  class="btn-main-delete"
-                >
-                  حذف
-                </button>
-              </td>
-            </tr>
-            }}
+            @if (penalties.length > 0) { 
+              @for (item of penalties; track $index) {
+                <tr>
+                  <td>{{ item.user.firstName }}</td>
+                  <td>{{ item.penaltyTitle }}</td>
+                  <td>{{ item.reason }}</td>
+                  <td>{{ item.dateIssued | date : "yyyy/MM/dd" }}</td>
+                  <td class="text-center">
+                    <button
+                      type="button"
+                      (click)="deletePenalty(item.id)"
+                      class="btn-delete"
+                      aria-label="حذف"
+                    >
+                     <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </td>
+                </tr>
+              }
+            } @else {
+              <tr>
+                <td colspan="5" class="empty-state">
+                  <div>
+                    <i class="far fa-clipboard fa-2x mb-3"></i>
+                    <p>لا توجد جزاءات حاليًا</p>
+                  </div>
+                </td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
     </section>
   </section>
-</section>

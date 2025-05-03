@@ -1,0 +1,218 @@
+::ng-deep .custom-dialog-container .mat-mdc-dialog-surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .custom-dialog-container .mdc-dialog__surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .custom-dialog-container .mat-mdc-dialog-container {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+  
+  /* Premium Penalties Table - Modern Simple Design */
+
+/* Main container styling */
+.main-content {
+    padding: 0 1.5rem;
+  }
+  
+  /* Card styling */
+  .premium-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: none;
+    overflow: hidden;
+  }
+  
+  .premium-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Card header styling */
+  .card-header {
+    border: none;
+    background: transparent;
+    padding: 0 0 1rem 0;
+    position: relative;
+  }
+  
+  /* Section title styling */
+  .section-title {
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin: 0;
+    position: relative;
+    padding-right: 1rem;
+  }
+  
+  .section-title::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(180deg, #9e8337, #9e8337);
+    border-radius: 2px;
+  }
+  
+  /* Add button styling */
+  .btn-add {
+    background-color:#9e8337;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn-add:hover:not([disabled]) {
+    background-color:#7c6329;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px  rgba(0, 0, 0, 0.2);
+  }
+  
+  .btn-add:active:not([disabled]) {
+    transform: translateY(0);
+  }
+  
+  .btn-add[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  /* Table styling */
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+  }
+  
+  .premium-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 1rem;
+  }
+  
+  /* Table header */
+  .premium-table thead {
+    background-color: #050f26;
+  }
+  
+  .premium-table th {
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    text-transform: none;
+    font-size: 0.875rem;
+    letter-spacing: 0;
+  }
+  
+  /* Table body */
+  .premium-table tbody td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    transition: background 0.2s ease;
+  }
+  
+  .premium-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .premium-table tbody tr:hover td {
+    background-color: #f8fafc;
+  }
+  
+  /* Delete button styling */
+  .btn-delete {
+    background-color: transparent;
+    color: #ef4444;
+    border: none;
+    width: 60px;
+    height: 32px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-delete:hover {
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+  
+  /* Empty state styling */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem !important;
+    color: #94a3b8;
+  }
+  
+  .empty-state div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .empty-state p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  /* RTL specific adjustments */
+  [dir="rtl"] .premium-table th,
+  [dir="rtl"] .premium-table td {
+    text-align: right;
+  }
+  
+  [dir="rtl"] .me-2 {
+    margin-left: 0.5rem !important;
+    margin-right: 0 !important;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .main-content {
+      padding: 0 0.75rem;
+    }
+    
+    .premium-card {
+      padding: 1rem !important;
+      margin: 1rem 0 !important;
+    }
+    
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start !important;
+    }
+    
+    .btn-add {
+      margin-top: 1rem;
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .section-title {
+      width: 100%;
+    }
+  }
+  

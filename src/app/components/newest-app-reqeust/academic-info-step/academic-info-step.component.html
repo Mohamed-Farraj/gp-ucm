@@ -109,13 +109,45 @@
   
       <!-- بيانات الطلاب القدامى -->
       @if (studentType === 'old') {
-        <!-- نسبة التقدير العام الماضي -->
+
+        <div class="flex flex-col">
+          <label for="AnnualGrade" class="col-sm-2 col-form-label"> تقدير العام الماضى </label> 
+             <select formControlName="AnnualGrade" class="form-control form-select rounded-lg  shadow-sm"  name="grades">
+               <option value="" selected disabled>---</option>
+               <option value="ACCEPTABLE">مقبول</option>
+               <option value="CARRY_SUBJECTS">محمول بمادة</option>
+               <option value="EXCUSED_ABSENCE">غياب بعذر</option>
+               <option value="PROMOTED_WITH_MAIN_AND_SECONDARY">مقبول (بمادة ومادة ثانوية)</option>
+               <option value="PASS">ناجح</option>
+               <option value="GOOD">جيد</option>
+               <option value="VERY_GOOD">جيد جدًا</option>
+               <option value="EXCELLENT">ممتاز</option>
+               <option value="PROMOTED_WITH_ONE_SUBJECT">منقول بمادة</option>
+               <option value="PROMOTED_WITH_TWO_SUBJECTS">منقول بمادتين</option>
+               <option value="FAIL">راسب</option>
+               <option value="SECOND_ROUND">دور ثان</option>
+               <option value=" PROMOTED_WITH_TWO_AND_ONE_MINOR ">منقول (بمادتين ومادة فرعيه)</option>
+               
+             </select>
+             @if(AnnualGrade?.errors && AnnualGrade?.touched ){
+               <div class=" m-1 p-2 alert-danger text-danger w-100">
+                 @if (AnnualGrade?.getError('required') ) {
+                   <p class="m-0"> * تقدير العام الماضى مطلوب</p>              
+                 }
+               </div>
+
+             }
+             </div>
+            
+
+
+
         <div class="flex flex-col">
           <label class="text-gray-700 mb-2 font-semibold">نسبة التقدير العام الماضي</label>
           <input
             formControlName="previousAcademicYearGpa"
             type="number"
-            class="form-control rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm"
+            class="form-control rounded-lg  shadow-sm"
             placeholder=" % "
           />
           @if (previousAcademicYearGpa?.errors && (previousAcademicYearGpa?.dirty || previousAcademicYearGpa?.touched)) {
@@ -126,11 +158,13 @@
             </div>
           }
         </div>
-  
+      }
+
+      
         <!-- السكن في الأعوام السابقة -->
         <div class="flex flex-col">
           <label class="text-gray-700 mb-2 font-semibold">السكن في الأعوام السابقة</label>
-          <select formControlName="housingInPreviousYears" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+          <select formControlName="housingInPreviousYears" class="form-select rounded-lg  shadow-sm">
             <option value="" selected disabled>اختر</option>
             <option value="سكن قديم">سكن قديم</option>
             <option value="سكن مستجد">سكن مستجد</option>
@@ -144,27 +178,27 @@
             </div>
           }
         </div>
-      }
+      
+      
 
-
-      <!-- <div class="flex flex-col">
+      <div class="flex flex-col">
         <label class="text-gray-700 mb-2 font-semibold">نوع السكن</label>
-        <select formControlName="housingType" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+        <select formControlName="houseTypeName" class="form-select rounded-lg shadow-sm">
           <option value="" disabled selected>اختر نوع السكن</option>
-          <option value="سكن عادي">سكن عادي</option>
-          <option value="سكن عادي">سكن مميز</option>
-        </select> -->
-        <!-- @if (housingType?.errors && (housingType?.dirty || housingType?.touched)) {
+          <option value="DORM">سكن عادي</option>
+          <option value="SINGLE">سكن مميز</option>
+        </select> 
+        @if (houseTypeName?.errors && (houseTypeName?.dirty || houseTypeName?.touched)) {
           <div class="text-danger mt-1">
-            @if (housingType?.hasError('required')) {
+            @if (houseTypeName?.hasError('required')) {
               <p class="m-0">نوع السكن مطلوب</p>
             }
           </div>
-        } -->
+        }
       </div>
   
 
-      <!-- <div class="form-check form-switch mt-2 custom-form-switch"> 
+      <div class="form-check form-switch mt-2 custom-form-switch"> 
         <input
           class="form-check-input"
           type="checkbox"
@@ -178,10 +212,5 @@
         سكن بدون تغذية  
         </label>
          
-      </div> -->
-      
-
-      <!-- سكن بدون تغذية -->
-    
-  
+      </div>
     </div>

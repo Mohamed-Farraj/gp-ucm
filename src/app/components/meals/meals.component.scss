@@ -61,18 +61,18 @@
   
   /* Button styles */
   .btn-primary {
-    background: #050f26    ;
+    background: #050504    ;
     border: none;
     color: white;
     border-radius: 8px;
     padding: 0.5rem 1rem;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(99, 102, 241, 0.25);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
   }
   
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(99, 102, 241, 0.35);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
   }
   
   .btn-primary-delete {

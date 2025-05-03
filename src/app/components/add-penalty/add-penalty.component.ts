@@ -133,6 +133,7 @@ export class AddPenaltyComponent  {
       const dialogRef = this.dialog.open(PenaltyComponent, {
         width: '50%', // Set the width of the dialog
         data: penalty || null, // Pass data to the dialog
+         panelClass: 'custom-dialog-container'
       });
   
       dialogRef.afterClosed().subscribe((result) => {

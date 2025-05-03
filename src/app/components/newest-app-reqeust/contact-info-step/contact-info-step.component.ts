@@ -21,6 +21,7 @@ get governorate() { return this.formGroup?.get('governorate'); }
 get city() { return this.formGroup?.get('city'); }
 get detailedAddress() { return this.formGroup?.get('detailedAddress'); }
 get mobileNumber() { return this.formGroup?.get('mobileNumber'); }
+get phoneNumber() { return this.formGroup?.get('phoneNumber'); }
 
 
 get shouldShowGovernorate(): boolean {

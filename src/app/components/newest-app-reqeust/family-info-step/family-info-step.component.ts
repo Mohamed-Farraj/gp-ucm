@@ -15,9 +15,12 @@ export class FamilyInfoStepComponent {
   get fatherOccupation() { return this.formGroup?.get('fatherOccupation'); }
   get fatherPhoneNumber() { return this.formGroup?.get('fatherPhoneNumber'); }
   get guardianName() { return this.formGroup?.get('guardianName'); }
+  get guardianRelationship() { return this.formGroup?.get('guardianRelationship'); }
+
   get guardianPhoneNumber() { return this.formGroup?.get('guardianPhoneNumber'); }
   get guardianNationalId() { return this.formGroup?.get('guardianNationalId'); }
   get parentsStatus() { return this.formGroup?.get('parentsStatus'); }
   get familyAbroad() { return this.formGroup?.get('familyAbroad'); }
+
 
 }

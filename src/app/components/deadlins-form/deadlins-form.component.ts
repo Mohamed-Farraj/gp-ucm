@@ -49,14 +49,12 @@ export class DeadlinsFormComponent  implements OnInit{
   deleteDeadline(id: number) {
     this._deadlineService.deleteDeadLine(id).subscribe({
       next: (res: any) => {
-        this.toastr.success(res.message);
   
         // Remove the deleted deadline from the local array
         this.deadlines = this.deadlines.filter(deadline => deadline.id !== id);
       },
       error: (err) => {
         console.log(err);
-        this.toastr.error('Failed to delete the deadline.');
       },
     });
   }
@@ -84,6 +82,8 @@ export class DeadlinsFormComponent  implements OnInit{
     const dialogRef = this.dialog.open(AddDeadlineComponent, {
       width: '50%', // Set the width of the dialog
       data: deadline || null, // Pass data to the dialog
+      panelClass: 'custom-dialog-container'
+
     });
 
     dialogRef.afterClosed().subscribe((result) => {

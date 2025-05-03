@@ -1,0 +1,180 @@
+/* Add Room Form Styling based on provided theme */
+:root {
+    --primary-color: #191727;
+    --secondary-color: #202f52;
+    --neutral-bg: #f9fafb;
+    --border-radius: 12px;
+    --input-shadow: 0 2px 4px rgba(19, 7, 7, 0.05);
+    --form-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+/* Form container styling */
+section.bg-main-light {
+    background-color: white !important;
+    box-shadow: var(--form-shadow) !important;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--border-radius) !important; /* Use var */
+    padding: 2rem !important; /* Added padding */
+}
+
+section.bg-main-light:hover {
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.12), 0 10px 15px -6px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Form title styling */
+section.bg-main-light h5 {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: var(--primary-color) !important;
+    margin-bottom: 1rem !important; /* Increased margin */
+    padding-bottom:   1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+/* Form element spacing */
+form .mb-5 {
+    margin-bottom: 0.2rem !important; /* Adjusted spacing */
+}
+
+/* Label styling */
+form label {
+    font-weight: 600 !important;
+    color: var(--secondary-color) !important;
+    margin-bottom: 0.5rem !important;
+    display: block !important;
+    font-size: 0.95rem; /* Slightly adjusted size */
+}
+
+/* Input and Select styling */
+form .form-control {
+    border-radius: var(--border-radius) !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    padding: 0.6rem 0.5rem !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+    box-shadow: var(--input-shadow) !important;
+    background-color: var(--neutral-bg) !important;
+    width: 100%;
+    color: #334155 !important;
+}
+
+form .form-control:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25) !important;
+    outline: none !important;
+    background-color: white !important; /* Changed focus background */
+}
+
+form .form-control::placeholder {
+    color: #9ca3af !important; /* Adjusted placeholder color */
+}
+
+/* Select specific styling */
+form select.form-control {
+    appearance: none; /* Remove default arrow */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 0.75rem center;
+    background-size: 16px 12px;
+    padding-left: 2.5rem !important;
+}
+
+[dir="rtl"] form select.form-control {
+    background-position: right 0.75rem center;
+    padding-right: 2.5rem !important;
+    padding-left: 1rem !important;
+}
+
+/* Validation message styling */
+// form .text-danger {
+//     color: var(--danger-color) !important;
+//     font-size: 0.85rem !important;
+//     margin-top: 0.5rem !important;
+//     display: block !important;
+// }
+
+/* Button container */
+form > button:last-of-type,
+form > button:nth-last-of-type(2) {
+    margin-top: 2rem; /* Space above buttons */
+}
+
+/* Add button styling (mapping to .btn-primary) */
+form .btn-main {
+    background: #9e8337 !important; /* Mapped from .btn-primary */
+    border: none !important;
+    color: white !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important; /* Adjusted shadow */
+    padding: 0.625rem 1.5rem !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    min-width: 120px;
+}
+
+form .btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15) !important; /* Adjusted hover shadow */
+    background-color: #7c6329 !important; /* Added slight hover color change */
+}
+
+/* Cancel button styling (mapping to .btn-secondary) */
+form .btn-main-delete {
+    background-color: #e5e7eb !important; /* Mapped from .btn-secondary */
+    border: none !important;
+    color: #4b5563 !important;
+    padding: 0.625rem 1.5rem !important;
+    font-weight: 600 !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+    min-width: 120px;
+}
+
+form .btn-main-delete:hover {
+    background-color: #d1d5db !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05) !important; /* Added subtle shadow */
+}
+
+/* Active button states */
+form .btn-main:active,
+form .btn-main-delete:active {
+    transform: translateY(0);
+}
+
+/* RTL specific adjustments */
+[dir="rtl"] .me-3 {
+    margin-left: 1rem !important;
+    margin-right: 0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    section.bg-main-light {
+        padding: 1.5rem !important;
+    }
+
+    form .btn-main,
+    form .btn-main-delete {
+        padding: 0.5rem 1.25rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    form {
+        padding: 0;
+    }
+
+    form .btn-main,
+    form .btn-main-delete {
+        width: 100%;
+        margin-bottom: 0.75rem;
+    }
+
+    [dir="rtl"] form .me-3 {
+        margin-left: 0 !important;
+    }
+}
