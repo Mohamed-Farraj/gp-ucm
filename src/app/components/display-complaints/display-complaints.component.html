@@ -1,41 +1,93 @@
-<section class="row flex-lg-nowrap">
+<section class="row justify-content-center py-4">
   <section class="col-md-3 py-3 px-3 side-content">
     <app-users-side-list></app-users-side-list>
   </section>
-  <section class="col-md-7 flex-grow-1 main-content">
-    <section class="container-fluid">
-      <div *ngIf="!isAdmin">
-        <h1>Complaint add form</h1>
+  <section class="col-11 col-sm-10 col-md-9 col-lg-8 main-content"> 
+    <div class="text-center" *ngIf="!isAdmin">
+      <!-- <h1 class="h3 mb-4">نموذج إضافة شكوى</h1>  -->
+    </div>
+    <section class="card shadow-sm border-0 complaints-card" dir="rtl"> 
+      <div class="card-header bg-main  text-white border-0"> 
+        <h4 class="card-title h5 mb-0"><i class="fas fa-exclamation-triangle me-2"></i>الشكاوي</h4>
       </div>
-      <div class="row gy-4">
+
+      <div class="card-body p-4"> 
+        <form [formGroup]="complaintsForm">
+          <div class="mb-4"> 
+            <label for="complaintText" class="form-label fw-semibold mb-2">نص الشكوى:</label> 
+            <textarea
+              id="complaintText"
+              class="form-control form-control-lg complaints-textarea" 
+              formControlName="complaintText"
+              rows="8" 
+              placeholder="أدخل نص الشكوى هنا..."
+            ></textarea>
+          
+             <div *ngIf="complaintsForm.get('complaintText')?.invalid && complaintsForm.get('complaintText')?.touched" class="invalid-feedback d-block mt-2">
+                <i class="fas fa-times-circle me-1"></i> نص الشكوى مطلوب.
+             </div>
+          </div>
+
+          <div class="text-center mt-4 pt-3 border-top"> 
+            <button
+              type="submit"
+              (click)="submitComplaint()"
+              [disabled]="complaintsForm.invalid"
+              class="btn bg-main  btn-lg complaints-submit-btn"
+            >
+              <i class="fas fa-paper-plane me-2"></i> إرسال الشكوى
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+
+    <section class="mt-5"> <!-- Add margin top for separation -->
+      <div class="row g-4"> <!-- Use g-4 for consistent gutters -->
         @for (item of filteredComplaints; track $index) {
-        <div class="col-md-6">
-          <div class="card">
-            <div class="card-header">
-              {{ item.createdAt | date : "dd/MM/yyyy, hh:mm a" }}
+        <div class="col-md-6 complaint-card-col">
+          <div class="card h-100 shadow-sm border-0 complaint-card"> <!-- Bootstrap card with full height and custom class -->
+            <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center"> <!-- Light header with flex alignment -->
+              <span class="text-muted lg fw-bold">
+                <i class="far fa-user  me-1"></i> {{ item.username }}
+              </span>
+              <span class="text-muted small fw-bold">
+                 <i class="far fa-clock me-1"></i> {{ item.createdAt | date : "dd/MM/yyyy, hh:mm a" }}
+              </span>
             </div>
-            <div class="card-body">
-              <h5 class="card-title">{{ item.username }}</h5>
-              <p class="card-text">
-                {{ item.complaintText }}
+            <div class="card-body d-flex flex-column"> <!-- Flex column to push buttons down -->
+              <!-- Removed card-title as username is in header -->
+              <p class="card-text complaint-text mb-4 flex-grow-1"> <!-- Flex grow pushes buttons down -->
+                {{ item.complaintText }}<!-- Limit text preview -->
               </p>
-              <button
-                (click)="readMore(item.complaintText)"
-                class="btn btn-primary"
-              >
-                عرض الشكوى
-              </button>
-              <button
-                (click)="deleteComplaint(item.id)"
-                class="btn btn-outline-danger mx-2"
-              >
-                مسح
-              </button>
+              <div class="mt-auto d-flex justify-content-end gap-2"> <!-- Buttons at the bottom right -->
+                <button
+                  (click)="readMore(item.complaintText)"
+                  class="btn btn-outline-custom-gold"
+                >
+                  <i class="far fa-eye me-1"></i> عرض الشكوى
+                </button>
+                <button
+                  (click)="deleteComplaint(item.id)"
+                  class="btn btn-sm btn-danger complaint-action-btn"
+                >
+                   <i class="far fa-trash-alt me-1"></i> مسح
+                </button>
+              </div>
             </div>
           </div>
         </div>
+        } @empty {
+          <div class="col-12">
+            <div class="alert alert-secondary text-center" role="alert">
+              <i class="fas fa-info-circle me-2"></i> لا توجد شكاوى لعرضها حاليًا.
+            </div>
+          </div>
         }
       </div>
     </section>
   </section>
+  
 </section>
+
