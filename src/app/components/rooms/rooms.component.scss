@@ -1,59 +1,328 @@
-.table,.card {
-    border-collapse: separate;
-    // border-spacing: 0 15px; /* Vertical spacing between rows */
-    width: 90%;
-    margin: auto;
+// .table,.card {
+//     border-collapse: separate;
+//     // border-spacing: 0 15px; /* Vertical spacing between rows */
+//     width: 90%;
+//     margin: auto;
+// }
+
+// /* Fix border radius and hover effects */
+// .table-hover tbody tr {
+//     background: white;
+//     transition: all 0.3s ease;
+// }
+//  td, th {
+//     padding:0.25rem;
+//     text-align: center;
+// }
+// h4{color:var(--main-color)}
+
+// .table-hover tbody tr:hover {
+//     transform: translateY(-2px); /* Optional hover lift effect */
+// }
+
+// .table-hover tbody tr:hover td{
+//       color: var(--main-color);
+// }
+
+// .table-hover tbody tr td.selected{
+//       color: var(--main-color);
+//       background-color: var(--light-color);
+
+// }
+
+// .active > .page-link, .page-link.active {
+//     background-color: var(--main-color);
+//     border-color: var(--main-color);
+//     color:white
+//   }
+//   .page-link:hover{
+//     color: var(--main-color)
+//   }
+//   .page-link{
+//     color: var(--main-color)
+//   }
+
+//   .form-control:focus {
+//     border-color: var(--main-color); /* Change to your desired color */
+//     box-shadow: 0 0 0 0.2rem #9f83376e; /* Adjust the spread and opacity */
+//   }
+//   .custom-checkbox:checked {
+//     accent-color: var(--main-color);
+
+//   }
+
+//   .females{
+//     color: palevioletred;
+//   }
+//   .bg-females{
+//     background-color: palevioletred;
+//   }
+
+  /* Premium Building & Rooms Management - Modern Design */
+
+  ::ng-deep .custom-dialog-container .mat-mdc-dialog-surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .custom-dialog-container .mdc-dialog__surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .custom-dialog-container .mat-mdc-dialog-container {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+  
+
+/* Main layout styling */
+.main-content {
+  padding: 1.5rem;
 }
 
-/* Fix border radius and hover effects */
-.table-hover tbody tr {
-    background: white;
-    transition: all 0.3s ease;
-}
- td, th {
-    padding:0.25rem;
-    text-align: center;
-}
-h4{color:var(--main-color)}
-
-.table-hover tbody tr:hover {
-    transform: translateY(-2px); /* Optional hover lift effect */
+/* Premium card styling */
+.card.shadow-sm {
+  background-color: white;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+  border: none !important;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
-.table-hover tbody tr:hover td{
-      color: var(--main-color);
+.card.shadow-sm:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
 }
 
-.table-hover tbody tr td.selected{
-      color: var(--main-color);
-      background-color: var(--light-color);
-
+/* Card header styling */
+.card-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.active > .page-link, .page-link.active {
-    background-color: var(--main-color);
-    border-color: var(--main-color);
-    color:white
-  }
-  .page-link:hover{
-    color: var(--main-color)
-  }
-  .page-link{
-    color: var(--main-color)
+.card-header.bg-info {
+  background: linear-gradient(135deg, #050f26 0%, #050f26 100%) !important;
+  color: white !important;
+}
+
+.card-header.bg-females {
+  background: linear-gradient(135deg, #ec4899 0%, #be185d 100%) !important;
+  color: white !important;
+}
+
+.card-header .card-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+/* Card body styling */
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Definition lists styling */
+.card-body dl.row dt {
+  color: #64748b !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.card-body dl.row dd {
+  color: #1e293b;
+  font-size: 1rem;
+}
+
+/* Badge styling */
+.card-body .badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: 6px !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+/* Actions section styling */
+.card-body .border-top {
+  border-top: 1px solid #e2e8f0 !important;
+  padding-top: 1.5rem !important;
+  margin-top: 1rem !important;
+}
+
+.card-body .text-muted.mb-3 {
+  color: #64748b !important;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem !important;
+}
+
+/* Button styling */
+.card-body .btn.btn-primary {
+  background: linear-gradient(135deg, #9e8337 0%, #9e8337 100%) !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.6rem 1.25rem !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.2) !important;
+}
+
+.card-body .btn.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #8b722e !important;
+}
+
+.card-body .btn.btn-success {
+  background: linear-gradient(135deg, #6c6251 0%, #6c6251 100%) !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.6rem 1.25rem !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 5px #5a5245 !important;
+}
+
+.card-body .btn.btn-success:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px #5a5245
+
+  !important;
+}
+
+.card-body .btn.btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.6rem 1.25rem !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  font-size: 0.9rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 5px rgba(220, 38, 38, 0.2) !important;
+}
+
+.card-body .btn.btn-danger:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25) !important;
+}
+
+button[disabled] {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Rooms table styling */
+section .table {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  background-color: white;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 1rem;
+  border: none !important; /* Remove default table border */
+}
+
+/* Table header */
+section .table thead {
+  background-color: #f8fafc;
+}
+
+section .table thead th {
+  padding: 0.85rem 1rem !important;
+  font-weight: 600 !important;
+  color: #475569 !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  text-align: right !important;
+  font-size: 1rem !important;
+  background-color: #f8fafc !important;
+  border-top: none !important; /* Remove default top border */
+}
+
+/* Styling for tbody elements without changing structure */
+section .table tbody tr {
+  border-bottom: 1px solid #f1f5f9 !important;
+  transition: background-color 0.2s ease;
+}
+
+section .table tbody tr:last-child {
+  border-bottom: none !important;
+}
+
+section .table tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+section .table tbody td,
+section .table tbody th {
+  padding: 0.75rem 1rem !important;
+  color: #334155 !important;
+  text-align: right !important;
+  vertical-align: middle !important;
+  border: none !important; /* Override default cell borders if any */
+}
+
+/* Delete button styling in table tbody */
+section .table tbody .btn.btn-danger.rounded-pill {
+  background: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: white !important;
+  transition: all 0.3s ease !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  padding: 0.4rem 1rem !important;
+  border-radius: 100px !important; /* Ensure pill shape */
+}
+
+section .table tbody .btn.btn-danger.rounded-pill:hover {
+  background: #dc2626 !important;
+  border-color: #dc2626 !important;
+  box-shadow: 0 4px 6px rgba(239, 68, 68, 0.25) !important;
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
   }
 
-  .form-control:focus {
-    border-color: var(--main-color); /* Change to your desired color */
-    box-shadow: 0 0 0 0.2rem #9f83376e; /* Adjust the spread and opacity */
-  }
-  .custom-checkbox:checked {
-    accent-color: var(--main-color);
-
+  .card-body .col-sm-6 {
+    margin-bottom: 1rem;
   }
 
-  .females{
-    color: palevioletred;
+  .card-body .d-flex.gap-3 {
+    flex-direction: column;
+    gap: 0.5rem !important;
   }
-  .bg-females{
-    background-color: palevioletred;
+
+  .card-body .d-flex.justify-content-end {
+    justify-content: flex-start !important; /* Stack buttons */
   }
+
+  .card-body .btn.btn-primary,
+  .card-body .btn.btn-success,
+  .card-body .btn.btn-danger {
+    width: 100%;
+  }
+
+  section .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}

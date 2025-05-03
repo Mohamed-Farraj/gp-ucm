@@ -128,6 +128,8 @@ openDialog(): void {
       const dialogRef = this.dialog.open(AddRoomComponent, {
         width: '50%', // Set the width of the dialog
         data: this.rooms || null, // Pass data to the dialog
+        panelClass: 'custom-dialog-container'
+
       });
   
       dialogRef.afterClosed().subscribe((result) => {
@@ -141,6 +143,8 @@ openDialog(): void {
       const dialogRef = this.dialog.open(AddBuildingComponent, {
         width: '50%', // Set the width of the dialog
         data: this.building || null, // Pass data to the dialog
+        panelClass: 'custom-dialog-container'
+
       });
   
       dialogRef.afterClosed().subscribe((result) => {
