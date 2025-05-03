@@ -171,7 +171,7 @@
           <td>{{ getLevel(item?.level) }}</td>
           <td>
             <div class="d-flex flex-wrap gap-2 justify-content-center">
-              <button *ngIf="item?.securityCheckStatues" 
+              <button *ngIf="item?.securityCheckStatues === 'ACCEPTED'" 
                 [class.d-none]="item?.status === 'ACCEPTED'" 
                 (click)="confirmation(item?.userId,'ACCEPTED',item);$event.stopPropagation()" 
                 class="btn btn-sm btn-outline-success">

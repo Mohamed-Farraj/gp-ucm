@@ -369,7 +369,7 @@
     
     <!-- Buttons Section -->
     <div class="d-flex justify-content-center gap-3 mt-4 mb-4">
-      <button *ngIf="applicationRequest?.securityCheckStatues" [class.d-none]="applicationRequest?.status === 'ACCEPTED'" (click)="DecideAr(applicationRequest?.userId,'ACCEPTED')" class="btn btn-success px-4 py-2">
+      <button *ngIf="applicationRequest?.securityCheckStatues === 'ACCEPTED'" [class.d-none]="applicationRequest?.status === 'ACCEPTED'" (click)="DecideAr(applicationRequest?.userId,'ACCEPTED')" class="btn btn-success px-4 py-2">
         <i class="fa-solid fa-check me-2"></i> قبول الطلب
       </button>
       <button [class.d-none]="applicationRequest?.status === 'REJECTED'" (click)="DecideAr(applicationRequest?.userId,'REJECTED')" class="btn btn-danger px-4 py-2">
