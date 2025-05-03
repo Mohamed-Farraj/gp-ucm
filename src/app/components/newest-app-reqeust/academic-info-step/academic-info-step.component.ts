@@ -39,6 +39,14 @@ export class AcademicInfoStepComponent {
   get housingInPreviousYears() {
     return this.formGroup?.get('housingInPreviousYears');
   }
+
+  get houseTypeName() {
+    return this.formGroup?.get('houseTypeName');
+  }
+
+  get AnnualGrade() {
+    return this.formGroup?.get('AnnualGrade');
+  }
  
 
 }

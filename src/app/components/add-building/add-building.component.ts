@@ -41,6 +41,9 @@ export class AddBuildingComponent {
 
     addBuildingForm:FormGroup= this._formBuilder.group({
       name: ['', Validators.required],
+      floorsCount: ['', Validators.required],
+      wingsCount: ['', Validators.required],
+
       type: ['', Validators.required],
       universityId: [''],
       // buildingId: [this.buildingData?.id],

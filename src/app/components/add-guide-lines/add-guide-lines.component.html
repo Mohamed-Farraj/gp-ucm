@@ -1,60 +1,54 @@
-<section class="bg-main-light container my-5 p-4 rounded-4" dir="rtl">
-  <div class="title fw-bold mb-4">
-    <h1 class="border-bottom pb-2">أضف الإرشادات</h1>
-
-    <div>
-      <form [formGroup]="guidelineForm">
-        <!-- Textarea for the guideline -->
-        <textarea class="textarea"
+<section class="premium-card my-4 p-4" dir="rtl">
+  <div class="card-header mb-4">
+    <h4 class="section-title">أضف الإرشادات</h4>
+  </div>
+  
+  <div class="card-body">
+    <form [formGroup]="guidelineForm">
+      <!-- Textarea for the guideline -->
+      <div class="form-group mb-3">
+        <textarea 
+          class="premium-textarea"
           formControlName="guidelines"
           rows="10"
-          cols="50"
           placeholder="أدخل إرشاداتك هنا.
-
-
-
-
 
 
 
           "
         ></textarea>
-    
-        <!-- Validation message -->
+      
+        <!-- Validation message
         <div
           *ngIf="guidelineForm.get('guidelines')?.invalid && guidelineForm.get('guidelines')?.touched"
-          class="error-message fs-5"
+          class="error-message"
         >
-        النص الإرشادي مطلوب.
+          <i class="fas fa-exclamation-circle me-1"></i>النص الإرشادي مطلوب.
+        </div> -->
       </div>
-        <div >
-          <!-- Save/Update Button -->
-          <button type="submit"
-            
-            (click)="saveGuideline()"
-            [disabled]="guidelineForm.invalid"
-            class="btn-main d-block m-auto"
-          >
-            {{ guidelineExists ? 'تعـديل' : 'حـفظ' }}
-          </button>
       
-          <!-- Delete Button (only shown if a guideline exists) -->
-          <button 
-            (click)="deleteGuideline()"
-            *ngIf="guidelineExists"
-            class=" btn-main-delete d-block m-auto mt-2 "
-          >
-            حـذف
-          </button>
-        </div>
-      </form>
+      <div class="form-actions-row">
+        <!-- Save/Update Button -->
+        <button 
+          type="submit"
+          (click)="saveGuideline()"
+          [disabled]="guidelineForm.invalid"
+          class="btn-save"
+        >
+          <i class="fas fa-save me-2"></i>{{ guidelineExists ? 'تعـديل' : 'حـفظ' }}
+        </button>
     
-      <!-- Buttons for Save/Update and Delete -->
-     
-    </div>
-
-
-
+        <!-- Delete Button (only shown if a guideline exists) -->
+        <button 
+          (click)="deleteGuideline()"
+          *ngIf="guidelineExists"
+          class="btn-delete-lg"
+        >
+          <i class="fas fa-trash-alt me-2"></i>حـذف
+        </button>
+      </div>
+    </form>
+  </div>
 
 <!-- 
     
@@ -99,5 +93,4 @@
       <button *ngIf="err" class="btn-main d-block m-auto" type="submit">ارسـال</button>
       <button  *ngIf="!err" class="btn-main d-block m-auto" type="submit">تعـديل</button>
     </form> -->
-  </div>
 </section>

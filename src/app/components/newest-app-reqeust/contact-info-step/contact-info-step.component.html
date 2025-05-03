@@ -100,6 +100,24 @@
           </div>
         }
       </div>
+
+      <div class="flex flex-col">
+        <label class=" mb-2 font-semibold">التليفون</label>
+        <input formControlName="phoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
+        <!-- Validation for phoneNumber -->
+         @if (phoneNumber?.errors && (phoneNumber?.dirty || phoneNumber?.touched)) {
+          <div class="text-danger mt-1">
+            @if (phoneNumber?.hasError('required')) {
+              <p class="m-0">رقم التليفون مطلوب</p>
+            } @else if (phoneNumber?.hasError('pattern')) {
+               <p class="m-0">صيغة رقم التليفون غير صحيحة</p>
+            } @else if (phoneNumber?.hasError('phoneNumber')) {
+               <p class="m-0">رقم التليفون غير صحيح</p>
+            }
+          </div>
+        }
+      </div>
+  
   
     
     </div>

@@ -30,3 +30,202 @@
     border-color: #333333;
   }
   
+  /* Premium Guidelines Form - Modern Simple Design */
+
+/* Card styling */
+.premium-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  border: none;
+  overflow: hidden;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.premium-card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Card header styling */
+.card-header {
+  border: none;
+  background: transparent;
+  padding: 0 0 1rem 0;
+  position: relative;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Section title styling */
+.section-title {
+  color: #1e293b;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0;
+  position: relative;
+  padding-right: 1rem;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background: linear-gradient(180deg, #9e8337, #9e8337);
+  border-radius: 2px;
+}
+
+/* Card body styling */
+.card-body {
+  padding: 1rem 0;
+}
+
+/* Textarea styling */
+.premium-textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+  resize: vertical;
+  min-height: 200px;
+  color: #334155;
+}
+
+.premium-textarea:focus {
+  outline: none;
+  border-color: #9e8337;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+  background-color: white;
+}
+
+.premium-textarea::placeholder {
+  color: #94a3b8;
+}
+
+/* Form actions container - horizontal layout */
+.form-actions-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+/* Save button styling */
+.btn-save {
+  background: linear-gradient(135deg, #9e8337 0%, #9e8337 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+}
+
+.btn-save:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-save:active:not([disabled]) {
+  transform: translateY(0);
+}
+
+.btn-save[disabled] {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+/* Delete button styling */
+.btn-delete-lg {
+  background-color: white;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+}
+
+.btn-delete-lg:hover {
+  background-color: #ef4444;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(239, 68, 68, 0.2);
+}
+
+.btn-delete-lg:active {
+  transform: translateY(0);
+}
+
+/* Error message styling */
+.error-message {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+/* RTL specific adjustments */
+[dir="rtl"] .premium-textarea {
+  text-align: right;
+}
+
+[dir="rtl"] .me-1,
+[dir="rtl"] .me-2 {
+  margin-left: 0.25rem !important;
+  margin-right: 0 !important;
+}
+
+[dir="rtl"] .me-1 {
+  margin-left: 0.25rem !important;
+}
+
+[dir="rtl"] .me-2 {
+  margin-left: 0.5rem !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .premium-card {
+    padding: 1rem !important;
+    margin: 1rem 0 !important;
+  }
+  
+  .premium-textarea {
+    min-height: 150px;
+  }
+  
+  /* Stack buttons on very small screens */
+  @media (max-width: 480px) {
+    .form-actions-row {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .btn-save,
+    .btn-delete-lg {
+      width: 100%;
+    }
+  }
+}
+
