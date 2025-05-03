@@ -1,26 +1,116 @@
 <section>
-    <div class="filteration container-fluid p-3">
-      <div class="row justify-content-start">
-        <!-- Search input -->
-        <div class="col-12 col-sm-10 col-md-8 col-lg-4 mb-3">
+  <div class="container-fluid py-3">
+    <div class="row g-3">
+      <!-- Search input -->
+      <div class="col-12 col-md-4">
+        <div class="input-group">
           <input
             type="text"
-            class="form-control rounded-pill"
+            class="form-control "
             placeholder="ابحث بالاسم أو الرقم القومي"
             [formControl]="searchControl"
           />
         </div>
+      </div>
   
-        <!-- Sort dropdown -->
-        <div class="col-12 col-sm-10 col-md-8 col-lg-2 mb-3">
-          <select class="form-select" [formControl]="sortControl">
-            <option value="normal">الاقدم اولا</option>
-            <option value="reverse">الاحدث اولا</option>
-          </select>
+      <!-- Sort dropdown -->
+      <div class="col-12 col-md-2">
+        <select class="form-select" [formControl]="sortControl">
+          <option value="normal">الاقدم اولا</option>
+          <option value="reverse">الاحدث اولا</option>
+        </select>
+      </div>
+  
+      <!-- Status filters -->
+      <div class="col-12 col-md-3">
+        <div class="btn-group w-100" role="group" aria-label="Status filter buttons">
+          <!-- تحت المراجعة -->
+          <input
+            type="checkbox"
+            value="UNDER_REVIEW"
+            id="underReview"
+            class="btn-check"
+            (change)="onStatusChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-warning" for="underReview">
+            تحت المراجعة
+          </label>
+  
+          <!-- مقبول -->
+          <input
+            type="checkbox"
+            value="ACCEPTED"
+            id="accepted"
+            class="btn-check"
+            (change)="onStatusChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-success" for="accepted">
+            مقبول
+          </label>
+  
+          <!-- مرفوض -->
+          <input
+            type="checkbox"
+            value="REJECTED"
+            id="rejected"
+            class="btn-check"
+            (change)="onStatusChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-danger" for="rejected">
+            مرفوض
+          </label>
         </div>
+      </div>
   
+      <!-- Gender filters -->
+      <div class="col-12 col-md-1">
+        <div class="btn-group w-100" role="group" aria-label="Gender filter buttons">
+          <!-- Male -->
+          <input
+            type="checkbox"
+            value="MALE"
+            id="male"
+            class="btn-check"
+            (change)="onGenderChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-primary" for="male">
+            ذكر
+          </label>
+  
+          <!-- Female -->
+          <input
+            type="checkbox"
+            value="FEMALE"
+            id="female"
+            class="btn-check"
+            (change)="onGenderChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-info" for="female">
+            أنثى
+          </label>
+        </div>
+      </div>
+  
+      <!-- Action buttons -->
+      <div class="col-12 col-md-2">
+        <div class="d-flex gap-2">
+          <button
+            type="button"
+            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openUploadDialog()"
+          >
+            <i class="fa-solid fa-upload"></i>
+            <span>رفع</span>
+          </button>
+        </div>
       </div>
     </div>
+  </div>
   
     <h4 class="text-center">
       عدد الطلبات:

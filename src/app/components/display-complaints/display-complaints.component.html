@@ -1,5 +1,5 @@
 <section class="row flex-lg-nowrap">
-  <section class="col-md-3 py-3 px-3 side-content">
+  <section *ngIf="isAdmin" class="col-md-3 py-3 px-3 side-content">
     <app-users-side-list></app-users-side-list>
   </section>
   <section class="col-md-7 flex-grow-1 main-content">

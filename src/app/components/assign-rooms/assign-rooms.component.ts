@@ -11,6 +11,7 @@ import { ExportFormComponent } from '../export-form/export-form.component';
 import { BuildingsService } from '../../core/services/buildings.service';
 import { AssignRowComponent } from "../assign-row/assign-row.component";
 import { ArService } from '../../core/services/ar.service';
+import { UploadFormComponent } from '../upload-form/upload-form.component';
 
 @Component({
   selector: 'app-assign-rooms',
@@ -38,13 +39,13 @@ export class AssignRoomsComponent {
       pages: number[] = [];
       //#endregion
      
-        //#region filtration attributes
-        searchControl = new FormControl('');
-        sortControl = new FormControl('normal');// متغير للفرز: "normal" أو "reverse"
-        buildingControl = new FormControl();
-        selectedStatuses: string[] = [];// مصفوفة لتخزين الحالات المختارة من checkboxes
-        filteredItems: any[] = [];
-        //#endregion
+          //#region filtration attributes
+          searchControl = new FormControl('');
+          sortControl = new FormControl('normal');// متغير للفرز: "normal" أو "reverse"
+          selectedStatuses: string[] = [];// مصفوفة لتخزين الحالات المختارة من checkboxes
+          selectedGenders: string[] = [];// مصفوفة لتخزين gender المختارة من checkboxes
+          filteredItems: any[] = [];
+          //#endregion
     
         activeTab: string = 'home';
         objectData: any ;
@@ -217,6 +218,21 @@ export class AssignRoomsComponent {
       }
       this.applyFilters();
     }
+
+
+    // Updated change handler
+onGenderChange(event: any): void {
+  const checked = event.target.checked;
+  const value = event.target.value;
+  if (checked) {
+    this.selectedGenders.push(value);
+  } else {
+    this.selectedGenders = this.selectedGenders.filter(gender => gender !== value);
+  }
+  this.applyFilters();
+}
+
+    
   
     // دالة لتطبيق الفلاتر (البحث وحالة الـ checkboxes)
     applyFilters(): void {
@@ -238,7 +254,12 @@ export class AssignRoomsComponent {
         filtered = filtered.filter((item: any) => this.selectedStatuses.includes(item.status));
       }
     
-     
+      // Gender filter
+  if (this.selectedGenders.length > 0) {
+    filtered = filtered.filter((item: any) => 
+      this.selectedGenders.includes(item.gender)
+    );
+  }
   
   
        // تطبيق الفرز: استخدام نسخة من المصفوفة لعكس الترتيب لتجنب التعديل على المصفوفة الأصلية
@@ -256,6 +277,37 @@ export class AssignRoomsComponent {
       this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
       this.updatePagedItems();
     }
+
+
+
+       openUploadDialog():void{
+          const dialogRef = this.dialog.open(UploadFormComponent, {
+            width: '50%', // Set the width of the dialog
+            
+            // panelClass: 'custom-dialog-container'
+    
+          });
+      
+          dialogRef.afterClosed().subscribe((result:any) => {
+            if (result) {
+              // this.getDeadLine(); // Refresh the list after the dialog is closed
+            }
+          });
+        }
+    
+        openDialog(): void {
+            const dialogRef = this.dialog.open(ExportFormComponent, {
+              width: '50%', // Set the width of the dialog
+              panelClass: 'custom-dialog-container'
+    
+            });
+        
+            dialogRef.afterClosed().subscribe((result:any) => {
+              if (result) {
+                // this.getDeadLine(); // Refresh the list after the dialog is closed
+              }
+            });
+          }
   
    
     // removeSelection()

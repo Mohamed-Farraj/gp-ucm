@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ComplaintsService } from '../../core/services/complaints.service';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe, Location, NgIf } from '@angular/common';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersSideListComponent } from "../users-side-list/users-side-list.component";
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-display-complaints',
@@ -17,10 +18,13 @@ export class DisplayComplaintsComponent implements OnInit {
 
   private readonly complaintsService = inject(ComplaintsService);
   private readonly dataService = inject(SharedDataService)
+  private readonly router = inject(Router)
+  private readonly route = inject(ActivatedRoute)
+  private readonly location = inject(Location)
   complaints: any[] = [];
   filteredComplaints: any[] = [];
   selected: any;
-  @Input() isAdmin: boolean = false;
+  isAdmin: boolean = false;
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
 
   constructor(private cd: ChangeDetectorRef) {
@@ -37,6 +41,15 @@ export class DisplayComplaintsComponent implements OnInit {
 
  ngOnInit() {
     this.checkAuthAndLoadData();
+    // if(localStorage.getItem('role')?.includes('ADMIN')) this.isAdmin = true
+    
+    // الحصول على المسار الحالي بدون query parameters
+    let currentPath = this.location.path();
+    console.log('Current Path:', currentPath);
+    if(currentPath.includes('admin')) this.isAdmin = true
+
+    console.log("isAdmin",this.isAdmin);
+  
   }
 
 
