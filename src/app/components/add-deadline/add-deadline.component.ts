@@ -60,14 +60,13 @@ export class AddDeadlineComponent implements OnChanges {
       if (this.data) {
         this._deadlineService.updateDeadLine(this.data.id, this.deadlineForm.value).subscribe({
           next: (res: any) => {
-            this.toastr.success(res.message);
             this.dialogRef.close(true); // Close the dialog and return true
           },
         });
       } else {
         this._deadlineService.addDeadLine(this.deadlineForm.value).subscribe({
           next: (res: any) => {
-            this.toastr.success(res.message);
+           
             this.dialogRef.close(true); // Close the dialog and return true
           },
         });

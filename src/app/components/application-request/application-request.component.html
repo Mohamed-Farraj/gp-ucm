@@ -261,7 +261,7 @@
           </div>
           @if (isEditMode) {
             <div class="ps-5">
-              <button [disabled]="AppRequest.invalid" (submit)="handleSubmit()" class="btn-main">
+              <button  type="submit" [disabled]="AppRequest.invalid" (click)="handleSubmit()" class="btn-main">
                 تعديل طلب الالتحاق
               </button>
             </div>
