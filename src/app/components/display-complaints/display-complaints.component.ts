@@ -87,7 +87,7 @@ export class DisplayComplaintsComponent implements OnInit {
   
     
   
-    if (role === 'ADMIN') {
+    if (role?.includes('ADMIN')) {
 
       this.complaintsService.getAllComplaints().subscribe({
         next: (response: any) => {
@@ -108,7 +108,7 @@ export class DisplayComplaintsComponent implements OnInit {
       const uid:number = Number(localStorage?.getItem('Uid')) || 0;
     console.log(uid);
     this.isAdmin = false;
-    this.complaintsService.getComplaintsByUser(uid).subscribe({
+    this.complaintsService.getMyComplaints(uid).subscribe({
       next: (response: any) => {
         console.log('user complaints', response);
         this.complaints = response.data;

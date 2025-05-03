@@ -50,8 +50,7 @@ export class ExcelService {
     }
 
     importAdmissionRequests(formData: FormData): Observable<any> {
-      // const formData = new FormData();
-      // formData.append('file', file);
+ 
       return this.http.post(`${environment.baseUrl}/admin/upload-admission-request`, formData,{
         reportProgress: true,
         observe: 'response'
@@ -73,5 +72,30 @@ export class ExcelService {
         })
       );
     }
+
+    downloadAssignRoomsTemplate(buildingType:string,RoomType:string): Observable<Blob> {
+      const apiUrl = `${environment.baseUrl}/admin/view/room-assignment/export-available-rooms?buildingId=${buildingType}&roomType=${RoomType}`;
+      return this.http.get(apiUrl, {
+        responseType: 'blob',
+        headers: new HttpHeaders({
+          'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        })
+      }).pipe(
+        catchError(error => {
+          console.error('Error downloading template:', error);
+          throw error;
+        })
+      );
+    }
+
+
+    uploadAssignRoom(formData: FormData): Observable<any> {
+       return this.http.post(`${environment.baseUrl}/admin/edit/room-assignment/upload-student-housing-info`, formData,{
+        reportProgress: true,
+        observe: 'response'
+      });
+    }
+
+
   
 }

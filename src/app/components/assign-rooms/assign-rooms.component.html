@@ -21,49 +21,6 @@
         </select>
       </div>
   
-      <!-- Status filters -->
-      <div class="col-12 col-md-3">
-        <div class="btn-group w-100" role="group" aria-label="Status filter buttons">
-          <!-- تحت المراجعة -->
-          <input
-            type="checkbox"
-            value="UNDER_REVIEW"
-            id="underReview"
-            class="btn-check"
-            (change)="onStatusChange($event)"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-warning" for="underReview">
-            تحت المراجعة
-          </label>
-  
-          <!-- مقبول -->
-          <input
-            type="checkbox"
-            value="ACCEPTED"
-            id="accepted"
-            class="btn-check"
-            (change)="onStatusChange($event)"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-success" for="accepted">
-            مقبول
-          </label>
-  
-          <!-- مرفوض -->
-          <input
-            type="checkbox"
-            value="REJECTED"
-            id="rejected"
-            class="btn-check"
-            (change)="onStatusChange($event)"
-            autocomplete="off"
-          />
-          <label class="btn btn-outline-danger" for="rejected">
-            مرفوض
-          </label>
-        </div>
-      </div>
   
       <!-- Gender filters -->
       <div class="col-12 col-md-1">
@@ -105,7 +62,7 @@
             (click)="openUploadDialog()"
           >
             <i class="fa-solid fa-upload"></i>
-            <span>رفع</span>
+            <span>تسكين</span>
           </button>
         </div>
       </div>
@@ -128,6 +85,7 @@
           <th scope="col">الرقم القومي</th>
           <th scope="col">الاسم</th>
           <th scope="col">الموبايل</th>
+          <th scope="col">التسكين التلقائي</th>
           <th scope="col">المبنى و الغرفة</th>
         </tr>
       </thead>
@@ -143,6 +101,15 @@
           <th scope="row">{{ item?.nationalId }}</th>
           <td>{{ item?.firstName }} {{ item?.lastName }}</td>
           <td>{{ item?.mobileNumber }}</td>
+          <td>
+            <button
+            (click)="autoAssignRoom(item);$event.stopPropagation()"
+             [disabled]="item?.room"
+             type="button"
+             class="btn btn-success">
+              تسكين
+          </button>
+        </td>
           <td class="py-0">
             <app-assign-row [student]="item" [resBuildings]="resBuildings"></app-assign-row>
           </td>

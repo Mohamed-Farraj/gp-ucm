@@ -35,6 +35,53 @@ export class ArDisplayComponent {
     timer: 1500,
     timerProgressBar: true,
   })
+    confirmation(id: number = -1, status: string = 'UNDER_REVIEW', item?: any) {
+          const procedure = status === 'ACCEPTED' ? 'قبول' : 
+                           (status === 'UNDER_REVIEW' ? 'مراجعة' : 'رفض');
+          
+          const commonSwalConfig = {
+              title: "هل انت متأكد؟",
+              icon: "warning" as const,
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              cancelButtonText: "الغاء",
+              allowOutsideClick: () => !Swal.isLoading()
+          };
+      
+          if (status === 'REJECTED') {
+              Swal.fire({
+                  ...commonSwalConfig,
+                  title: "ادخل سبب رفض هذا الطلب",
+                  input: "text",
+                  inputAttributes: {
+                      autocapitalize: "off"
+                  },
+                  confirmButtonText: `${procedure} هذا الطلب؟`,
+                  preConfirm: (reason) => {
+                      if (!reason) {
+                          Swal.showValidationMessage('يجب ادخال سبب الرفض');
+                          return false;
+                      }
+                      return reason;
+                  }
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                    console.log("thats a rejection reason",result.value);
+                      this.DecideAr(id, status);
+                  }
+              });
+          } else {
+              Swal.fire({
+                  ...commonSwalConfig,
+                  confirmButtonText: `${procedure} هذا الطلب؟`,
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      this.DecideAr(id, status);
+                  }
+              });
+          }
+      }
 DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
   if (id === -1) 
     {

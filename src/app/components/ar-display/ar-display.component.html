@@ -369,13 +369,13 @@
     
     <!-- Buttons Section -->
     <div class="d-flex justify-content-center gap-3 mt-4 mb-4">
-      <button *ngIf="applicationRequest?.securityCheckStatues === 'ACCEPTED'" [class.d-none]="applicationRequest?.status === 'ACCEPTED'" (click)="DecideAr(applicationRequest?.userId,'ACCEPTED')" class="btn btn-success px-4 py-2">
+      <button *ngIf="applicationRequest?.securityCheckStatues === 'ACCEPTED'" [class.d-none]="applicationRequest?.status === 'ACCEPTED'" (click)="confirmation(applicationRequest?.userId,'ACCEPTED',applicationRequest)" class="btn btn-success px-4 py-2">
         <i class="fa-solid fa-check me-2"></i> قبول الطلب
       </button>
-      <button [class.d-none]="applicationRequest?.status === 'REJECTED'" (click)="DecideAr(applicationRequest?.userId,'REJECTED')" class="btn btn-danger px-4 py-2">
+      <button [class.d-none]="applicationRequest?.status === 'REJECTED'" (click)="confirmation(applicationRequest?.userId,'REJECTED',applicationRequest)" class="btn btn-danger px-4 py-2">
         <i class="fa-solid fa-times me-2"></i> رفض الطلب
       </button>
-      <button [class.d-none]="applicationRequest?.status === 'UNDER_REVIEW'" (click)="DecideAr(applicationRequest?.userId,'UNDER_REVIEW')" class="btn btn-warning px-4 py-2">
+      <button [class.d-none]="applicationRequest?.status === 'UNDER_REVIEW'" (click)="confirmation(applicationRequest?.userId,'UNDER_REVIEW',applicationRequest)" class="btn btn-warning px-4 py-2">
         <i class="fa-solid fa-clock me-2"></i> تحت المراجعة
       </button>
     </div>

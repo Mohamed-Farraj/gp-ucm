@@ -67,10 +67,13 @@ export class ComplaintsService {
   // جلب كل الشكاوى الخاصة بمستخدم معين (Admin)
   getComplaintsByUser(userId: number): Observable<any> {
     const url = `${environment.baseUrl}/admin/view/get-user-complaints/${userId}`;
-    // this.token = localStorage.getItem('userToken')!;
-    // const headers = new HttpHeaders({
-    //   'Authorization': `Bearer ${this.token}`
-    // });
     return this.http.get(url);
   }
+
+  getMyComplaints(userId: number): Observable<any> {
+    const url = `${environment.baseUrl}/user/my-complaints/${userId}`;
+    return this.http.get(url);
+  }
+
+
 }
