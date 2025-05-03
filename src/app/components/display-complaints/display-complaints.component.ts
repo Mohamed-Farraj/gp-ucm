@@ -6,11 +6,13 @@ import { SharedDataService } from '../../core/services/shared-data.service';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersSideListComponent } from "../users-side-list/users-side-list.component";
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { userInfo } from 'os';
 
 @Component({
   selector: 'app-display-complaints',
   standalone: true,
-  imports: [DatePipe, NgIf, UsersSideListComponent],
+  imports: [DatePipe, NgIf, UsersSideListComponent , ReactiveFormsModule ] ,
   templateUrl: './display-complaints.component.html',
   styleUrl: './display-complaints.component.scss'
 })
@@ -26,7 +28,7 @@ export class DisplayComplaintsComponent implements OnInit {
   selected: any;
   isAdmin: boolean = false;
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
-
+  private readonly _formBuilder= inject(FormBuilder)
   constructor(private cd: ChangeDetectorRef) {
     this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
       console.log('complaint data:', data);
@@ -35,6 +37,32 @@ export class DisplayComplaintsComponent implements OnInit {
       // Filter only when we have complaints
       if (this.complaints.length) {
         this.filteredComplaints = this.filterComplaints(this.complaints);
+      }
+    });
+  }
+
+
+
+
+  complaintsForm :FormGroup = this._formBuilder.group({
+    complaintText: ['', Validators.required],
+
+    
+  });
+
+
+  submitComplaint() {
+    const userId: any = localStorage.getItem('Uid');
+    console.log(this.complaintsForm.value);
+    this.complaintsService.createComplaint(userId,this.complaintsForm.value).subscribe({
+      next: (response: any) => {
+        console.log('complaint added', response);
+        this.complaints.push(response.data);
+        this.complaintsForm.reset();
+        this.cd.detectChanges();
+      },
+      error: (error: any) => {
+        console.error(error);
       }
     });
   }
