@@ -32,6 +32,7 @@ import { AddPenaltyComponent } from './components/add-penalty/add-penalty.compon
 import { AssignRoomsComponent } from './components/assign-rooms/assign-rooms.component';
 import { MealsComponent } from './components/meals/meals.component';
 import { StepperComponent } from './components/stepper/stepper.component';
+import { LogsComponent } from './components/logs/logs.component';
 
 
 export const routes: Routes = [
@@ -71,6 +72,7 @@ export const routes: Routes = [
         {path:'buildings',component: RoomsComponent,},
         {path:'assign-to-rooms',component: AssignRoomsComponent,},
         {path:'meals',component: MealsComponent,},
+        {path:'logs',component:LogsComponent},
         {path:'',component: BuildingsListComponent, outlet: 'side' },
 
     ]},

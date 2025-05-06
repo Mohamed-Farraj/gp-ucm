@@ -10,7 +10,7 @@ export class ExcelService {
 
   constructor(private http: HttpClient) { }
 
-    exportAdmissionRequests(status: string, securityCheck: string, gender: string,penalty:string,faculty: string,level:string): Observable<Blob> {
+    exportAdmissionRequests(status: string, securityCheck: string, gender: string,penalty:string,faculty: string,columns:string,level:string): Observable<Blob> {
       let apiUrl = `${environment.baseUrl}/admin/view/admission-requests/export`;
       let params = new HttpParams();
       if (status && status !== 'ALL') {
@@ -27,6 +27,9 @@ export class ExcelService {
       }
       if (faculty && faculty !== 'ALL') {
         params = params.append('faculty', faculty);
+      }
+      if (columns && columns !== 'ALL') {
+        params = params.append('columns', columns);
       }
       if (level && level !== 'ALL') {
         params = params.append('level', level);
