@@ -44,9 +44,9 @@ export class AddRoomComponent {
       floorNumber: ['', Validators.required],
       wing: ['', Validators.required],
       bedCount: ['', Validators.required],
-      occupiedBeds: ['', Validators.required],
+      // occupiedBeds: ['', Validators.required],
       capacity: ['', Validators.required],
-      currentOccupancy: ['', Validators.required],
+      // currentOccupancy: ['', Validators.required],
       type: ['', Validators.required],
       status: ['', Validators.required],
       buildingId: [this.buildingData?.id], // Use optional chaining to avoid errors
