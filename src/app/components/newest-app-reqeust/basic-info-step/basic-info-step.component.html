@@ -6,7 +6,7 @@
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">الرقم القومي</label>
       <input formControlName="nationalId" type="text" class="form-control rounded-lg shadow-sm" />
-      <div *ngIf="nationalId?.invalid && (nationalId?.dirty || nationalId?.touched)" class="text-danger mt-1">
+      <div *ngIf="nationalId?.invalid && ( nationalId?.touched)" class="text-danger mt-1">
         <p class="m-0" *ngIf="nationalId?.hasError('required')">الرقم القومي مطلوب</p>
         <p class="m-0" *ngIf="nationalId?.hasError('pattern')">يجب أن يكون 14 رقمًا</p>
       </div>
@@ -17,7 +17,7 @@
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">الاسم الأول</label>
       <input formControlName="firstName" type="text" class="form-control rounded-lg shadow-sm" />
-      <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="text-danger mt-1">
+      <div *ngIf="firstName?.invalid && (firstName?.touched)" class="text-danger mt-1">
         <p class="m-0" *ngIf="firstName?.hasError('required')">الاسم الأول مطلوب</p>
       </div>
     </div>
@@ -26,7 +26,7 @@
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">الاسم الثاني</label>
       <input formControlName="lastName" type="text" class="form-control rounded-lg shadow-sm" />
-      <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="text-danger mt-1">
+      <div *ngIf="lastName?.invalid && (lastName?.touched)" class="text-danger mt-1">
         <p class="m-0" *ngIf="lastName?.hasError('required')">الاسم الثاني مطلوب</p>
       </div>
     </div>
@@ -35,7 +35,7 @@
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">تاريخ الميلاد</label>
       <input formControlName="dateOfBirth" type="date" readonly class="form-control rounded-lg shadow-sm" />
-      <div *ngIf="dateOfBirth?.invalid && (dateOfBirth?.dirty || dateOfBirth?.touched)" class="text-danger mt-1">
+      <div *ngIf="dateOfBirth?.invalid && (dateOfBirth?.touched)" class="text-danger mt-1">
         <p class="m-0" *ngIf="dateOfBirth?.hasError('required')">تاريخ الميلاد مطلوب</p>
       </div>
       <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
@@ -74,7 +74,7 @@
         <option value="سيناء">سيناء</option>
         <option value="السويس">السويس</option>
       </select>
-      <div *ngIf="placeOfBirth?.invalid && (placeOfBirth?.dirty || placeOfBirth?.touched)" class="text-danger mt-1">
+      <div *ngIf="placeOfBirth?.invalid && (placeOfBirth?.touched)" class="text-danger mt-1">
         <p class="m-0" *ngIf="placeOfBirth?.hasError('required')">محل الميلاد مطلوب</p>
       </div>
       <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
@@ -88,7 +88,7 @@
         <option value="MALE">ذكر</option>
         <option value="FEMALE">أنثى</option>
       </select>
-      <div *ngIf="gender?.invalid && (gender?.dirty || gender?.touched)" class="text-danger mt-1">
+      <div *ngIf="gender?.invalid && (gender?.touched)" class="text-danger mt-1">
         <p class="m-0" *ngIf="gender?.hasError('required')">النوع مطلوب</p>
       </div>
       <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
@@ -102,7 +102,7 @@
         <option value="MUSLIM">مسلم</option>
         <option value="CHRISTIAN">مسيحي</option>
       </select>
-      <div *ngIf="religion?.invalid && (religion?.dirty || religion?.touched)" class="text-danger mt-1">
+      <div *ngIf="religion?.invalid && (religion?.touched)" class="text-danger mt-1">
         <p class="m-0" *ngIf="religion?.hasError('required')">الديانة مطلوبة</p>
       </div>
     </div>

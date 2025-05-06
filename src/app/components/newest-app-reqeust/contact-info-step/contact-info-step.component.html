@@ -14,7 +14,7 @@
           }
         </select>
         <!-- Validation for country -->
-         @if (country?.errors && (country?.dirty || country?.touched)) {
+         @if (country?.errors && (country?.touched)) {
           <div class="text-danger mt-1">
             @if (country?.hasError('required')) {
               <p class="m-0">الدولة مطلوبة</p>
@@ -24,7 +24,7 @@
       </div>
   
       <!-- المحافظة (تظهر فقط لمصر) -->
-      @if (shouldShowGovernorate) { <!-- استخدم helper -->
+        <!-- استخدم helper -->
         <div class="flex flex-col">
           <label class=" mb-2 font-semibold">المحافظة</label>
           <select formControlName="governorate" class="form-select rounded-lg  shadow-sm" [disabled]="isGovernorateDisabled"> <!-- استخدم helper -->
@@ -36,7 +36,7 @@
             }
           </select>
           <!-- Validation for governorate -->
-           @if (governorate?.errors && (governorate?.dirty || governorate?.touched)) {
+           @if (governorate?.errors && (governorate?.touched)) {
             <div class="text-danger mt-1">
               @if (governorate?.hasError('required')) {
                 <p class="m-0">المحافظة مطلوبة</p>
@@ -44,10 +44,10 @@
             </div>
            }
         </div>
-      }
+      
   
       <!-- المدينة (تظهر فقط عند اختيار محافظة) -->
-      @if (shouldShowCity) { <!-- استخدم helper -->
+      <!-- استخدم helper -->
         <div class="flex flex-col">
           <label class=" mb-2 font-semibold">المدينة</label>
           <select formControlName="city" class="form-select rounded-lg  shadow-sm" [disabled]="isCityDisabled"> <!-- استخدم helper -->
@@ -59,7 +59,7 @@
             }
           </select>
           <!-- Validation for city -->
-           @if (city?.errors && (city?.dirty || city?.touched)) {
+           @if (city?.errors && (city?.touched)) {
             <div class="text-danger mt-1">
               @if (city?.hasError('required')) {
                 <p class="m-0">المدينة مطلوبة</p>
@@ -67,14 +67,14 @@
             </div>
            }
         </div>
-      }
+      
   
       <!-- العنوان بالتفصيل -->
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">العنوان بالتفصيل</label>
         <input formControlName="detailedAddress" type="text" class="form-control rounded-lg  shadow-sm" />
         <!-- Validation for detailedAddress -->
-        @if (detailedAddress?.errors && (detailedAddress?.dirty || detailedAddress?.touched)) {
+        @if (detailedAddress?.errors && ( detailedAddress?.touched)) {
           <div class="text-danger mt-1">
             @if (detailedAddress?.hasError('required')) {
               <p class="m-0">العنوان بالتفصيل مطلوب</p>
@@ -88,12 +88,12 @@
         <label class=" mb-2 font-semibold">الموبايل</label>
         <input formControlName="mobileNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
         <!-- Validation for mobileNumber -->
-         @if (mobileNumber?.errors && (mobileNumber?.dirty || mobileNumber?.touched)) {
+         @if (mobileNumber?.errors && (mobileNumber?.touched)) {
           <div class="text-danger mt-1">
             @if (mobileNumber?.hasError('required')) {
               <p class="m-0">رقم الموبايل مطلوب</p>
             } @else if (mobileNumber?.hasError('pattern')) {
-               <p class="m-0">صيغة رقم الموبايل غير صحيحة</p>
+               <p class="m-0">صيغة رقم الموبايل غير صحيحة يجب ان يكون رقم مصري يبدأ بـ 01</p>
             } @else if (mobileNumber?.hasError('mobileNumber')) {
                <p class="m-0">رقم الموبايل غير صحيح</p>
             }
@@ -105,12 +105,12 @@
         <label class=" mb-2 font-semibold">التليفون</label>
         <input formControlName="phoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
         <!-- Validation for phoneNumber -->
-         @if (phoneNumber?.errors && (phoneNumber?.dirty || phoneNumber?.touched)) {
+         @if (phoneNumber?.errors && (phoneNumber?.touched)) {
           <div class="text-danger mt-1">
             @if (phoneNumber?.hasError('required')) {
               <p class="m-0">رقم التليفون مطلوب</p>
             } @else if (phoneNumber?.hasError('pattern')) {
-               <p class="m-0">صيغة رقم التليفون غير صحيحة</p>
+               <p class="m-0">صيغة رقم التليفون غير صحيحة يجب ان يبدأ بـكود المحافظة مثل 02</p>
             } @else if (phoneNumber?.hasError('phoneNumber')) {
                <p class="m-0">رقم التليفون غير صحيح</p>
             }

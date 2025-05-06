@@ -7,7 +7,7 @@
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">اسم الأب</label>
         <input formControlName="fatherName" type="text" class="form-control rounded-lg  shadow-sm" />
-        @if (fatherName?.errors && (fatherName?.dirty || fatherName?.touched)) {
+        @if (fatherName?.errors && (fatherName?.touched)) {
           <div class="text-danger mt-1">
             @if (fatherName?.hasError('required')) {
               <p class="m-0">اسم الأب مطلوب</p>
@@ -20,7 +20,7 @@
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">رقم قومي للأب</label>
         <input formControlName="fatherNationalId" type="text" class="form-control rounded-lg  shadow-sm" />
-        @if (fatherNationalId?.errors && (fatherNationalId?.dirty || fatherNationalId?.touched)) {
+        @if (fatherNationalId?.errors && (fatherNationalId?.touched)) {
           <div class="text-danger mt-1">
             @if (fatherNationalId?.hasError('required')) {
               <p class="m-0">رقم قومي للأب مطلوب</p>
@@ -36,7 +36,7 @@
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">وظيفة الأب</label>
         <input formControlName="fatherOccupation" type="text" class="form-control rounded-lg  shadow-sm" />
-        @if (fatherOccupation?.errors && (fatherOccupation?.dirty || fatherOccupation?.touched)) {
+        @if (fatherOccupation?.errors && (fatherOccupation?.touched)) {
           <div class="text-danger mt-1">
             @if (fatherOccupation?.hasError('required')) {
               <p class="m-0">وظيفة الأب مطلوبة</p>
@@ -49,7 +49,7 @@
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">موبايل الأب</label>
         <input formControlName="fatherPhoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
-        @if (fatherPhoneNumber?.errors && (fatherPhoneNumber?.dirty || fatherPhoneNumber?.touched)) {
+        @if (fatherPhoneNumber?.errors && (fatherPhoneNumber?.touched)) {
           <div class="text-danger mt-1">
             @if (fatherPhoneNumber?.hasError('required')) {
               <p class="m-0">رقم موبايل الأب مطلوب</p>
@@ -62,7 +62,7 @@
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">اسم ولي الأمر</label>
         <input formControlName="guardianName" type="text" class="form-control rounded-lg  shadow-sm" />
-        @if (guardianName?.errors && (guardianName?.dirty || guardianName?.touched)) {
+        @if (guardianName?.errors && (guardianName?.touched)) {
           <div class="text-danger mt-1">
             @if (guardianName?.hasError('required')) {
               <p class="m-0">اسم ولي الأمر مطلوب</p>
@@ -74,7 +74,7 @@
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">صلة ولي الأمر</label>
         <input formControlName="guardianRelationship" type="text" class="form-control rounded-lg  shadow-sm" />
-        @if (guardianRelationship?.errors && (guardianRelationship?.dirty || guardianRelationship?.touched)) {
+        @if (guardianRelationship?.errors && (guardianRelationship?.touched)) {
           <div class="text-danger mt-1">
             @if (guardianRelationship?.hasError('required')) {
               <p class="m-0">صلة ولي الأمر مطلوب</p>
@@ -87,7 +87,7 @@
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">موبايل ولي الأمر</label>
         <input formControlName="guardianPhoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
-        @if (guardianPhoneNumber?.errors && (guardianPhoneNumber?.dirty || guardianPhoneNumber?.touched)) {
+        @if (guardianPhoneNumber?.errors && ( guardianPhoneNumber?.touched)) {
           <div class="text-danger mt-1">
             @if (guardianPhoneNumber?.hasError('required')) {
               <p class="m-0">رقم موبايل ولي الأمر مطلوب</p>
@@ -100,7 +100,7 @@
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">رقم قومي لولي الأمر</label>
         <input formControlName="guardianNationalId" type="text" class="form-control rounded-lg  shadow-sm" />
-        @if (guardianNationalId?.errors && (guardianNationalId?.dirty || guardianNationalId?.touched)) {
+        @if (guardianNationalId?.errors && (guardianNationalId?.touched)) {
           <div class="text-danger mt-1">
             @if (guardianNationalId?.hasError('required')) {
               <p class="m-0">رقم قومي لولي الأمر مطلوب</p>
@@ -123,7 +123,7 @@
           <option value="BOTH_DECEASED">الوالدين متوفيين</option>
           <option value="DIVORCED">منفصلين</option>
         </select>
-        @if (parentsStatus?.errors && (parentsStatus?.dirty || parentsStatus?.touched)) {
+        @if (parentsStatus?.errors && (parentsStatus?.touched)) {
           <div class="text-danger mt-1">
             @if (parentsStatus?.hasError('required')) {
               <p class="m-0">برجاء تحديد حالة الوالدين</p>
