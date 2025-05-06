@@ -9,7 +9,7 @@
           <label class=" mb-2 font-semibold">البريد الإلكتروني</label>
           <input formControlName="username" type="email" class="form-control rounded-lg  shadow-sm" />
            <!-- Validation for username (email) -->
-           @if (username?.errors && (username?.dirty || username?.touched)) {
+           @if (username?.errors && (username?.touched)) {
             <div class="text-danger mt-1">
               @if (username?.hasError('required')) {
                 <p class="m-0">البريد الإلكتروني مطلوب</p>
@@ -24,7 +24,7 @@
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">كلمة المرور</label>
         <input formControlName="password" type="password" class="form-control rounded-lg  shadow-sm" />
-        @if (password?.errors && (password?.dirty || password?.touched)) {
+        @if (password?.errors && (password?.touched)) {
           <div class="text-danger mt-1">
             @if (password?.hasError('required')) {
               <p class="m-0">كلمة المرور مطلوبة</p>
@@ -44,13 +44,13 @@
         <label class=" mb-2 font-semibold">تأكيد كلمة المرور</label>
         <input formControlName="rePassword" type="password" class="form-control rounded-lg  shadow-sm" />
         <!-- خطأ عدم التطابق (من الـ formGroup validator) -->
-        @if (formGroup.hasError('mismatch') && (rePassword?.dirty || rePassword?.touched)) {
+        @if (formGroup.hasError('mismatch') && (rePassword?.touched)) {
           <div class="text-danger mt-1">
              <p class="m-0">كلمتا المرور غير متطابقتين</p>
           </div>
         }
          <!-- خطأ الحقل مطلوب (إذا كان rePassword مطلوبًا بحد ذاته) -->
-        @if (rePassword?.errors && (rePassword?.dirty || rePassword?.touched)) {
+        @if (rePassword?.errors && (rePassword?.touched)) {
           <div class="text-danger mt-1">
             @if (rePassword?.hasError('required')) {
               <p class="m-0">تأكيد كلمة المرور مطلوب</p>

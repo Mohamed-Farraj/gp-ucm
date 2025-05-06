@@ -55,6 +55,7 @@ $gp-ucm-theme: mat.define-light-theme((
   --bs-primary: #9F8437;
   --main-color: #9F8437;
   --hover-color: #11bd11;
+  --main-base-color: #f5f5f5;
   --light-color: #f0f3f2;
   --light-base-color: #ffffff;
   --light-parent-color: #F7F8F8;
@@ -69,6 +70,7 @@ $gp-ucm-theme: mat.define-light-theme((
   --font-family: "Encode Sans Expanded", sans-serif;
   --rating-color: #ffc908;
 }
+
 /* Add scroll margin to all anchor targets */
 #application-deadline,
 #guidlines,
@@ -92,6 +94,7 @@ html {
   
   scroll-behavior: smooth;
 }
+
 body {
   font-family: var(--font-family) !important;
   overflow-x: hidden;
