@@ -167,8 +167,10 @@
           <input
             formControlName="previousAcademicYearGpa"
             type="number"
-            class="form-control rounded-lg  shadow-sm"
-            placeholder=" % "
+            class="form-control rounded-lg shadow-sm"
+            placeholder=""
+            max="4"
+            min="0"
           />
           @if (previousAcademicYearGpa?.errors && (previousAcademicYearGpa?.touched)) {
             <div class="text-danger mt-1">
