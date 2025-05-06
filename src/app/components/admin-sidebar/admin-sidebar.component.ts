@@ -70,7 +70,8 @@ export class AdminSidebarComponent {
     { id: 'guidelines', icon: 'fa-rectangle-list', label: 'الإرشادات' },
     { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
     { id: 'meals', icon: 'fa-utensils', label: ' الوجبات' },
-    { id: 'register-admin', icon: 'fa-user-tie', label: ' admin' },
+    { id: 'logs', icon: 'fa-folder', label: ' السجل' },
+    { id: 'register-admin', icon: 'fa-user-tie', label: ' المشرفين' },
 
   ];
   

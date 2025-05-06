@@ -2,12 +2,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ExcelService } from '../../core/services/excel.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { KeyValuePipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-export-form',
   standalone: true,
-  imports: [FormsModule,NgIf,NgFor],
+  imports: [FormsModule,NgIf,NgFor,KeyValuePipe],
   templateUrl: './export-form.component.html',
   styleUrls: ['./export-form.component.scss']
 })
@@ -32,7 +32,7 @@ export class ExportFormComponent implements OnInit {
   ];
 
   securityCheck = [
-    { value: 'UNDER_REVIEW', label: 'غير متوفر' },
+    { value: 'PENDING', label: 'غير متوفر' },
     { value: 'REJECTED', label: 'مرفوض' },
     { value: 'ACCEPTED', label: 'مقبول' },
     { value: 'ALL', label: 'الكل' }
@@ -48,6 +48,40 @@ export class ExportFormComponent implements OnInit {
     { value: 'fifth', label: 'الفرقة الخامسة' }
   ];
 
+  columnHeaders: { [key: string]: string } = {
+    ALL: "الاعمدة الافتراضية",
+    fullName: "الاسم كامل",
+    email: "البريد الالكتروني",
+    universityName: "الجامعة",
+    nationalId: "الرقم القومي",
+    mobileNumber: "رقم الهاتف",
+    faculty: "الكلية",
+    level: "السنة الدراسية",
+    dateOfBirth: "تاريخ الميلاد",
+    studentType: "النوع",
+    residenceAddress: "عنوان السكن",
+    detailedAddress: "العنوان التفصيلي",
+    placeOfBirth: "محل الميلاد",
+    gender: "النوع",
+    religion: "الديانه",
+    fatherName: "اسم الاب",
+    fatherNationalId: "الرقم القومى الاب",
+    fatherOccupation: "وظيفه الاب",
+    fatherPhoneNumber: "رقم هاتف الاب",
+    guardianName: "اسم الوصي",
+    guardianNationalId: "الرقم القومى الوصي",
+    guardianPhoneNumber: "رقم هاتف الوصي",
+    previousAcademicYearGpa: "المعدل التراكمي",
+    status: "حاله الطلب",
+    housingInPreviousYears: "السكن في السنوات السابقة",
+    familyAbroad: "الأسرة في الخارج",
+    specialNeeds: "ذوي الاحتياجات الخاصة",
+    secondaryDivision: "المرحلة الثانوية",
+    totalGradesHighSchool: "مجموع الثانوية العامة",
+    passportNumber: "رقم الجواز",
+    passportIssuingAuthority: "جهة إصدار الجواز",
+    securityCheck: "الفحص الامني"
+  };
   
 
 
@@ -61,6 +95,8 @@ export class ExportFormComponent implements OnInit {
   levelsArray: string = 'ALL';
   isDownloading = false;
   currentDate = "";
+  selectedKey: string = 'ALL';
+  selectedColumns: string[] = [];
   constructor(private excel:ExcelService ) { }
 
 
@@ -128,6 +164,36 @@ export class ExportFormComponent implements OnInit {
     this.facultiesArray = this.facultiesArray.filter(f => f !== faculty);
   }
 
+  addColumn() {
+    if (this.selectedKey === 'ALL') {
+      this.selectedColumns = ['ALL'];
+      return;
+    }
+  
+    if (this.selectedColumns.includes('ALL')) {
+      this.selectedColumns = [];
+    }
+  
+    if (!this.selectedColumns.includes(this.selectedKey)) {
+      this.selectedColumns = [...this.selectedColumns, this.selectedKey];
+    }
+  
+    this.selectedKey = 'ALL';
+  }
+
+
+// دالة إزالة العمود
+removeColumn(key: string) {
+  const index = this.selectedColumns.indexOf(key);
+  if (index > -1) {
+    this.selectedColumns.splice(index, 1);
+  }
+}
+
+// دالة مساعدة للحصول على مفاتيح الأعمدة
+getColumnKeys(): string[] {
+  return Object.keys(this.columnHeaders).filter(k => k !== 'ALL');
+}
   
   // تغيير النوع إلى كائن لتتبع الحالات المختارة
   
@@ -201,7 +267,9 @@ export class ExportFormComponent implements OnInit {
     this.isDownloading = true;
     this.currentDate = new Date().toLocaleDateString();
 
-    this.selectedFaculty = this.facultiesArray.join(',');
+    const facultyToSend = this.facultiesArray.join(',');
+    const columnsToSend = this.selectedColumns.join(',');
+    console.log("this.ؤخم",this.selectedColumns);
     console.log("this.selectedFaculties",this.facultiesArray);
     console.log("this.selectedFaculty",this.selectedFaculty);
     console.log("this.selectedLevel",this.selectedLevel);
@@ -211,7 +279,7 @@ export class ExportFormComponent implements OnInit {
     console.log("this.selectedSecurityCheck",this.selectedSecurityCheck);
     console.log("this.selectedGender",this.selectedGender);
     console.log("this.selectedPenalty",this.selectedPenalty);
-    this.excel.exportAdmissionRequests(this.selectedStatus,this.selectedSecurityCheck ,this.selectedGender,this.selectedPenalty,this.selectedFaculty,this.selectedLevel ).subscribe({
+    this.excel.exportAdmissionRequests(this.selectedStatus,this.selectedSecurityCheck ,this.selectedGender,this.selectedPenalty,facultyToSend,columnsToSend,this.selectedLevel ).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');

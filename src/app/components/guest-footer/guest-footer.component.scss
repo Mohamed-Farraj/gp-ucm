@@ -71,7 +71,7 @@
     color: #fff;
   }
   footer h2{
-    font-size: 6vw;
+    font-size: 4rem;
   }
   footer p {
     // font-weight: 100;
@@ -89,4 +89,37 @@ footer nav {
 footer nav a 
 {
   color: #fff;
+}
+/* Add these CSS modifications */
+.btn-main {
+  width: auto;
+  max-width: 250px;
+  aspect-ratio: unset; /* Remove square aspect ratio */
+  transition: all 0.3s ease;
+}
+
+.btn-text {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .btn-text {
+    font-size: 1.5rem;
+  }
+  .btn-main {
+    padding: 1.5rem !important;
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn-text {
+    font-size: 1.25rem;
+  }
+  .btn-main {
+    max-width: 180px;
+    padding: 1rem !important;
+  }
 }

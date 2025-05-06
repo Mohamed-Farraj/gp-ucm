@@ -1,0 +1,36 @@
+<div class="card" [ngClass]="getBgColor(actionLog.actionType)">
+    <div class="card-header">
+      <div class="action-icon-container">
+        <span class="action-icon" [ngClass]="getTextColor(actionLog.actionType)">
+          <i [ngClass]="getActionIcon(actionLog.actionType)"></i>
+        </span>
+        <h3 class="action-title" [ngClass]="getTextColor(actionLog.actionType)">
+          {{actionLog.actionType}} {{actionLog.entityName}}
+        </h3>
+      </div>
+      <span class="id-badge">ID: {{actionLog.id}}</span>
+    </div>
+    
+    <div class="card-content">
+      <div class="info-row">
+        <span class="info-label">Entity ID:</span>
+        <span class="info-value">{{actionLog.entityId}}</span>
+      </div>
+      
+      <div class="info-row">
+        <span class="info-label">Description:</span>
+        <span class="info-value">{{actionLog.description}}</span>
+      </div>
+      
+      <div class="info-row">
+        <i class="fas fa-user icon-small"></i>
+        <span class="info-label">Performed By:</span>
+        <span class="info-value">{{actionLog.performedBy}}</span>
+      </div>
+      
+      <div class="timestamp-row">
+        <i class="fas fa-clock icon-small"></i>
+        <span class="timestamp-text">{{formatDate(actionLog.timestamp)}}</span>
+      </div>
+    </div>
+  </div>

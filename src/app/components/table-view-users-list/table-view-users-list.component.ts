@@ -364,7 +364,6 @@ onGenderChange(event: any): void {
     removeSelection()
     {
       this.dataService.changeStudentData(null);
-  
     }
 
     deleteAr(id:number,id2:number)
@@ -399,7 +398,8 @@ onGenderChange(event: any): void {
       const dialogRef = this.dialog.open(UploadFormComponent, {
         width: '50%', // Set the width of the dialog
         
-        panelClass: 'transparent-dialog',
+        // panelClass: 'custom-dialog-container'
+
       });
   
       dialogRef.afterClosed().subscribe((result:any) => {
@@ -412,6 +412,8 @@ onGenderChange(event: any): void {
     openDialog(): void {
         const dialogRef = this.dialog.open(ExportFormComponent, {
           width: '50%', // Set the width of the dialog
+          panelClass: 'custom-dialog-container'
+
         });
     
         dialogRef.afterClosed().subscribe((result:any) => {

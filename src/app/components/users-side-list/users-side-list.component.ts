@@ -51,6 +51,7 @@ export class UsersSideListComponent {
 
 
   ngOnInit(): void {
+    this.removeSelection()
     this._AuthService.getApplications().subscribe({
       next: (res: any) => {
        

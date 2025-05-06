@@ -90,10 +90,19 @@ export class BuildingsService {
     return this.http.post(url,null);
   }
 
+  autoAssignRoom( userId: number,roomType: string): Observable<any> {
+    const url = `${this.baseUrl}/admin/edit/rooms/assign-room`;
+    const body = { 'userId': userId , 'roomType': roomType };
+    return this.http.post(url,body);
+  }
+
   removeStudentFromRoom(studentId: number, roomId: number): Observable<any> {
     const url = `${this.baseUrl}/admin/rooms/remove-student?studentId=${studentId}&roomId=${roomId}`;
     return this.http.delete(url);
   }
+
+
+  
 
 
 

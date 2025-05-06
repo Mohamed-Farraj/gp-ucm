@@ -1,3 +1,28 @@
+
+::ng-deep .custom-dialog-container .mat-mdc-dialog-surface {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+::ng-deep .custom-dialog-container .mdc-dialog__surface {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+::ng-deep .custom-dialog-container .mat-mdc-dialog-container {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+
+
+
 .table,.card {
     border-collapse: separate;
     // border-spacing: 0 15px; /* Vertical spacing between rows */

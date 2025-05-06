@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ComplaintsService } from '../../core/services/complaints.service';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe, Location, NgIf } from '@angular/common';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { Subject, takeUntil } from 'rxjs';
 import { UsersSideListComponent } from "../users-side-list/users-side-list.component";
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { userInfo } from 'os';
 
@@ -19,10 +20,13 @@ export class DisplayComplaintsComponent implements OnInit {
 
   private readonly complaintsService = inject(ComplaintsService);
   private readonly dataService = inject(SharedDataService)
+  private readonly router = inject(Router)
+  private readonly route = inject(ActivatedRoute)
+  private readonly location = inject(Location)
   complaints: any[] = [];
   filteredComplaints: any[] = [];
   selected: any;
-  @Input() isAdmin: boolean = false;
+  isAdmin: boolean = false;
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
   private readonly _formBuilder= inject(FormBuilder)
   constructor(private cd: ChangeDetectorRef) {
@@ -65,6 +69,15 @@ export class DisplayComplaintsComponent implements OnInit {
 
  ngOnInit() {
     this.checkAuthAndLoadData();
+    // if(localStorage.getItem('role')?.includes('ADMIN')) this.isAdmin = true
+    
+    // الحصول على المسار الحالي بدون query parameters
+    let currentPath = this.location.path();
+    console.log('Current Path:', currentPath);
+    if(currentPath.includes('admin')) this.isAdmin = true
+
+    console.log("isAdmin",this.isAdmin);
+  
   }
 
 
@@ -74,7 +87,7 @@ export class DisplayComplaintsComponent implements OnInit {
   
     
   
-    if (role === 'ADMIN') {
+    if (role?.includes('ADMIN')) {
 
       this.complaintsService.getAllComplaints().subscribe({
         next: (response: any) => {
@@ -95,7 +108,7 @@ export class DisplayComplaintsComponent implements OnInit {
       const uid:number = Number(localStorage?.getItem('Uid')) || 0;
     console.log(uid);
     this.isAdmin = false;
-    this.complaintsService.getComplaintsByUser(uid).subscribe({
+    this.complaintsService.getMyComplaints(uid).subscribe({
       next: (response: any) => {
         console.log('user complaints', response);
         this.complaints = response.data;

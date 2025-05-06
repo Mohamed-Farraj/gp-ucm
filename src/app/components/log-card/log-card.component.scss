@@ -1,0 +1,139 @@
+::ng-deep .custom-dialog-container .mat-mdc-dialog-surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .custom-dialog-container .mdc-dialog__surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .custom-dialog-container .mat-mdc-dialog-container {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+  }
+.card {
+    border-radius: 0.5rem;
+    border-width: 1px;
+    padding: 1rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  
+  .action-icon-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .action-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    background-color: white;
+    margin-right: 0.5rem;
+  }
+  
+  .action-title {
+    font-weight: bold;
+  }
+  
+  .id-badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    color: rgb(75, 85, 99);
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  .info-label {
+    font-weight: 500;
+    min-width: 6rem;
+  }
+  
+  .info-value {
+    margin-left: 0.5rem;
+  }
+  
+  .timestamp-row {
+    display: flex;
+    align-items: flex-start;
+    color: rgb(107, 114, 128);
+    margin-top: 1rem;
+  }
+  
+  .icon-small {
+    margin-top: 0.25rem;
+    margin-right: 0.25rem;
+    font-size: 0.75rem;
+  }
+  
+  .timestamp-text {
+    font-size: 0.75rem;
+  }
+  
+  /* Color Classes */
+  .bg-red-50 {
+    background-color: rgb(254, 242, 242);
+    border-color: rgb(252, 165, 165);
+  }
+  
+  .bg-green-50 {
+    background-color: rgb(240, 253, 244);
+    border-color: rgb(134, 239, 172);
+  }
+  
+  .bg-blue-50 {
+    background-color: rgb(239, 246, 255);
+    border-color: rgb(147, 197, 253);
+  }
+  
+  .bg-gray-50 {
+    background-color: rgb(249, 250, 251);
+    border-color: rgb(209, 213, 219);
+  }
+  
+  .text-red-700 {
+    color: rgb(185, 28, 28);
+  }
+  
+  .text-green-700 {
+    color: rgb(21, 128, 61);
+  }
+  
+  .text-blue-700 {
+    color: rgb(29, 78, 216);
+  }
+  
+  .text-gray-700 {
+    color: rgb(55, 65, 81);
+  }
