@@ -6,135 +6,180 @@
     (ngSubmit)="onSubmit()"
     novalidate
   >
-    <div class="mb-5">
-      <label for="roomNumber" class="block mb-2"> </label>
+    <!-- Room Number with floating label -->
+    <div class="form-floating mb-4">
       <input
         type="text"
         id="roomNumber"
         class="form-control"
-        placeholder=" رقم الغرفه  "
+        [ngClass]="{
+          'is-valid': addRoomForm.get('roomNumber')?.valid && addRoomForm.get('roomNumber')?.touched,
+          'is-invalid': addRoomForm.get('roomNumber')?.invalid && addRoomForm.get('roomNumber')?.touched
+        }"
+        placeholder=" "
         formControlName="roomNumber"
       />
-      @if (addRoomForm.get('roomNumber')?.hasError('required') &&
-      addRoomForm.get('roomNumber')?.touched) {
-      <div class="text-danger">مطلوب</div>
-      }
+      <label for="roomNumber">رقم الغرفة</label>
+
+
     </div>
-    <div class="mb-5">
-      <label for="floorNumber" class="block mb-2"> </label>
+
+    <!-- Floor Number with floating label -->
+    <div class="form-floating mb-4">
       <input
         type="text"
         id="floorNumber"
         class="form-control"
-        placeholder=" رقم الطابق  "
+        [ngClass]="{
+          'is-valid': addRoomForm.get('floorNumber')?.valid && addRoomForm.get('floorNumber')?.touched,
+          'is-invalid': addRoomForm.get('floorNumber')?.invalid && addRoomForm.get('floorNumber')?.touched
+        }"
+        placeholder=" "
         formControlName="floorNumber"
       />
-      @if (addRoomForm.get('floorNumber')?.hasError('required') &&
-      addRoomForm.get('floorNumber')?.touched) {
-      <div class="text-danger">مطلوب</div>
-      }
+      <label for="floorNumber">رقم الطابق</label>
+
+
     </div>
-    <div class="mb-5">
-      <label for="wing" class="block mb-2">  </label>
+
+    <!-- Wing with floating label -->
+    <div class="form-floating mb-4">
       <input
         type="text"
         id="wing"
         class="form-control"
-        placeholder=" الجناح"
+        [ngClass]="{
+          'is-valid': addRoomForm.get('wing')?.valid && addRoomForm.get('wing')?.touched,
+          'is-invalid': addRoomForm.get('wing')?.invalid && addRoomForm.get('wing')?.touched
+        }"
+        placeholder=" "
         formControlName="wing"
       />
-      @if (addRoomForm.get('wing')?.hasError('required') &&
-      addRoomForm.get('wing')?.touched) {
-      <div class="text-danger">مطلوب</div>
-      }
+      <label for="wing">الجناح</label>
+
+
     </div>
-    <div class="mb-5">
-      <label for="bedCount" class="block mb-2"> </label>
+
+    <!-- Bed Count with floating label -->
+    <div class="form-floating mb-4">
       <input
         type="text"
         id="bedCount"
         class="form-control"
-        placeholder="عدد السرر  "
+        [ngClass]="{
+          'is-valid': addRoomForm.get('bedCount')?.valid && addRoomForm.get('bedCount')?.touched,
+          'is-invalid': addRoomForm.get('bedCount')?.invalid && addRoomForm.get('bedCount')?.touched
+        }"
+        placeholder=" "
         formControlName="bedCount"
       />
-      @if (addRoomForm.get('bedCount')?.hasError('required') &&
-      addRoomForm.get('bedCount')?.touched) {
-      <div class="text-danger">مطلوب</div>
-      }
+      <label for="bedCount">عدد السرر</label>
+
+
     </div>
-    <div class="mb-5">
-      <label for="occupiedBeds" class="block mb-2"> </label>
+
+    <!-- Occupied Beds with floating label -->
+    <div class="form-floating mb-4">
       <input
         type="text"
         id="occupiedBeds"
         class="form-control"
-        placeholder="السرر  المشغولة  "
+        [ngClass]="{
+          'is-valid': addRoomForm.get('occupiedBeds')?.valid && addRoomForm.get('occupiedBeds')?.touched,
+          'is-invalid': addRoomForm.get('occupiedBeds')?.invalid && addRoomForm.get('occupiedBeds')?.touched
+        }"
+        placeholder=" "
         formControlName="occupiedBeds"
       />
-      @if (addRoomForm.get('occupiedBeds')?.hasError('required') &&
-      addRoomForm.get('occupiedBeds')?.touched) {
-      <div class="text-danger">مطلوب</div>
-      }
+      <label for="occupiedBeds">السرر المشغولة</label>
+
+
     </div>
-    <div class="mb-5">
-      <label for="capacity" class="block mb-2"> </label>
+
+    <!-- Capacity with floating label -->
+    <div class="form-floating mb-4">
       <input
         type="text"
         id="capacity"
         class="form-control"
-        placeholder="  الكثافة"
+        [ngClass]="{
+          'is-valid': addRoomForm.get('capacity')?.valid && addRoomForm.get('capacity')?.touched,
+          'is-invalid': addRoomForm.get('capacity')?.invalid && addRoomForm.get('capacity')?.touched
+        }"
+        placeholder=" "
         formControlName="capacity"
       />
-      @if (addRoomForm.get('capacity')?.hasError('required') &&
-      addRoomForm.get('capacity')?.touched) {
-      <div class="text-danger">مطلوب</div>
-      }
+      <label for="capacity">الكثافة</label>
+
+
     </div>
-    <div class="mb-5">
-      <label for="currentOccupancy" class="block mb-2"> </label>
+
+    <!-- Current Occupancy with floating label -->
+    <div class="form-floating mb-4">
       <input
         type="text"
         id="currentOccupancy"
         class="form-control"
-        placeholder="الإشغال الحالي"
+        [ngClass]="{
+          'is-valid': addRoomForm.get('currentOccupancy')?.valid && addRoomForm.get('currentOccupancy')?.touched,
+          'is-invalid': addRoomForm.get('currentOccupancy')?.invalid && addRoomForm.get('currentOccupancy')?.touched
+        }"
+        placeholder=" "
         formControlName="currentOccupancy"
       />
-      @if (addRoomForm.get('currentOccupancy')?.hasError('required') &&
-      addRoomForm.get('currentOccupancy')?.touched) {
-      <div class="text-danger">مطلوب</div>
-      }
+      <label for="currentOccupancy">الإشغال الحالي</label>
+
+
     </div>
-    <div class="mb-5">
-      <label for="type" class="block mb-2"></label>
-      <select id="type" class="form-control" formControlName="type">
-        <option value="" disabled selected>اختر النوع</option>
+
+    <!-- Type with floating label -->
+    <div class="form-floating mb-4">
+      <select 
+        id="type" 
+        class="form-control"
+        [ngClass]="{
+          'is-valid': addRoomForm.get('type')?.valid && addRoomForm.get('type')?.touched,
+          'is-invalid': addRoomForm.get('type')?.invalid && addRoomForm.get('type')?.touched
+        }"
+        formControlName="type"
+      >
+        <option value="" disabled selected></option>
         <option value="SINGLE">مفردة</option>
         <option value="DOUBLE">مزدوجة</option>
         <option value="DORM">مسكن</option>
       </select>
-      @if (addRoomForm.get('type')?.hasError('required') &&
-      addRoomForm.get('type')?.touched) {
-      <div class="text-danger">مطلوب</div>
-      }
+      <label for="type">النوع</label>
+
+
     </div>
 
-    <div class="mb-5">
-      <label for="status" class="block mb-2"></label>
-      <select id="status" class="form-control" formControlName="status">
-        <option value="" disabled selected>اختر الحالة</option>
+    <!-- Status with floating label -->
+    <div class="form-floating mb-4">
+      <select 
+        id="status" 
+        class="form-control"
+        [ngClass]="{
+          'is-valid': addRoomForm.get('status')?.valid && addRoomForm.get('status')?.touched,
+          'is-invalid': addRoomForm.get('status')?.invalid && addRoomForm.get('status')?.touched
+        }"
+        formControlName="status"
+      >
+        <option value="" disabled selected></option>
         <option value="AVAILABLE">متاحة</option>
         <option value="OCCUPIED">مشغولة</option>
         <option value="MAINTENANCE">تحت الصيانة</option>
       </select>
-      @if (addRoomForm.get('status')?.hasError('required') &&
-      addRoomForm.get('status')?.touched) {
-      <div class="text-danger">مطلوب</div>
-      }
+      <label for="status">الحالة</label>
+
+
     </div>
 
-    <button type="submit" class="btn-main me-3">اضافه</button>
-    <button type="button" (click)="onClose()" class="btn-main-delete">
-      الغاء
-    </button>
+    <!-- Form buttons -->
+    <div class="mt-4">
+      <button type="submit" class="btn-main me-3">اضافة</button>
+      <button type="button" (click)="onClose()" class="btn-main-delete">
+        الغاء
+      </button>
+    </div>
   </form>
 </section>

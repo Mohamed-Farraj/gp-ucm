@@ -1,50 +1,82 @@
-<section class="bg-main-light container px-4 rtl py-5  " dir="rtl">
-
-
-    <h5 class="mb-5 ">اضافة مبني</h5>
-    <form [formGroup]="addBuildingForm" class="w-100" (ngSubmit)="onSubmit()" novalidate>
-      <div class="mb-5">
-        <label for="name" class="block mb-2">  اسم المبني</label>
-        <input type="text" id="name" class="form-control" placeholder="اكتب الاسم هنا" formControlName="name">
-        @if (addBuildingForm.get('name')?.hasError('required') && addBuildingForm.get('name')?.touched) {
-        <div class="text-danger">مطلوب</div>
-        }
-      </div>
-
-      <div class="mb-5">
-        <label for="floorsCount" class="block mb-2">  عدد الادوار</label>
-        <input type="text" id="floorsCount" class="form-control" placeholder=" عدد الادوار" formControlName="floorsCount">
-        @if (addBuildingForm.get('floorsCount')?.hasError('required') && addBuildingForm.get('floorsCount')?.touched) {
-        <div class="text-danger">مطلوب</div>
-        }
-      </div>
-
-      <div class="mb-5">
-        <label for="wingsCount" class="block mb-2">عدد الاجنحه </label>
-        <input type="text" id="wingsCount" class="form-control" placeholder="   عدد الاجنحه" formControlName="wingsCount">
-        @if (addBuildingForm.get('wingsCount')?.hasError('required') && addBuildingForm.get('wingsCount')?.touched) {
-        <div class="text-danger">مطلوب</div>
-        }
-      </div>
-
-      <div class="mb-5">
-        <label for="type" class="block mb-2">النوع</label>
-        <select id="type" class="form-control" formControlName="type">
-          <option value="" disabled selected>اختر النوع</option>
-          <option value="MALE">ذكور</option>
-          <option value="FEMALE">إناث</option>
-        </select>
-        @if (addBuildingForm.get('type')?.hasError('required') && addBuildingForm.get('type')?.touched) {
-          <div class="text-danger">مطلوب</div>
-        }
-      </div>
-      
+<section class="bg-main-light container px-4 rtl py-5" dir="rtl">
+  <h5 class="mb-5">اضافة مبني</h5>
+  <form [formGroup]="addBuildingForm" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+    
+    <!-- Floating label for name field -->
+    <div class="form-floating mb-4">
+      <input 
+        type="text" 
+        id="name" 
+        class="form-control" 
+        placeholder=" " 
+        formControlName="name"
+        [ngClass]="{
+          'is-valid': addBuildingForm.get('name')?.valid && addBuildingForm.get('name')?.touched,
+          'is-invalid': addBuildingForm.get('name')?.invalid && addBuildingForm.get('name')?.touched
+        }"
+      >
+      <label for="name">اسم المبني</label>
      
-         <button type="submit"
-        class="btn-main me-3 ">اضافه</button>
-      <button type="button" (click)="onClose()"
-        class="btn-main-delete ">الغاء</button>
+    </div>
+    
+    <!-- Floating label for floorsCount field -->
+    <div class="form-floating mb-4">
+      <input 
+        type="text" 
+        id="floorsCount" 
+        class="form-control" 
+        placeholder=" " 
+        formControlName="floorsCount"
+        [ngClass]="{
+          'is-valid': addBuildingForm.get('floorsCount')?.valid && addBuildingForm.get('floorsCount')?.touched,
+          'is-invalid': addBuildingForm.get('floorsCount')?.invalid && addBuildingForm.get('floorsCount')?.touched
+        }"
+      >
+      <label for="floorsCount">عدد الادوار</label>
      
-    </form>
-  </section>
-  
+    </div>
+    
+    <!-- Floating label for wingsCount field -->
+    <div class="form-floating mb-4">
+      <input 
+        type="text" 
+        id="wingsCount" 
+        class="form-control" 
+        placeholder=" " 
+        formControlName="wingsCount"
+        [ngClass]="{
+          'is-valid': addBuildingForm.get('wingsCount')?.valid && addBuildingForm.get('wingsCount')?.touched,
+          'is-invalid': addBuildingForm.get('wingsCount')?.invalid && addBuildingForm.get('wingsCount')?.touched
+        }"
+      >
+      <label for="wingsCount">عدد الاجنحه</label>
+     
+    </div>
+    
+    <!-- Floating label for type field -->
+    <div class="form-floating mb-4">
+      <select 
+        id="type" 
+        class="form-control" 
+        formControlName="type"
+        [ngClass]="{
+          'is-valid': addBuildingForm.get('type')?.valid && addBuildingForm.get('type')?.touched,
+          'is-invalid': addBuildingForm.get('type')?.invalid && addBuildingForm.get('type')?.touched
+        }"
+      >
+        <option value="" disabled selected></option>
+        <option value="MALE">ذكور</option>
+        <option value="FEMALE">إناث</option>
+      </select>
+      <label for="type">النوع</label>
+     
+    </div>
+    
+    <!-- Buttons -->
+    <div class="mt-4">
+      <button type="submit" class="btn-main me-3">اضافه</button>
+      <button type="button" (click)="onClose()" class="btn-main-delete">الغاء</button>
+    </div>
+    
+  </form>
+</section>

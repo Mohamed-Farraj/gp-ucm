@@ -66,8 +66,8 @@ form .form-control {
 }
 
 form .form-control:focus {
-    border-color: var(--accent-color) !important;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25) !important;
+    border-color:#9e8337 !important;
+    box-shadow: 0 0 0 4px rgba(94, 88, 8, 0.25) !important;
     outline: none !important;
     background-color: white !important;
 }
@@ -93,12 +93,12 @@ form select.form-control {
 }
 
 /* Validation message styling */
-form .text-danger {
-    color: var(--danger-color) !important;
-    font-size: 0.85rem !important;
-    margin-top: 0.5rem !important;
-    display: block !important;
-}
+// form .text-danger {
+//     color: var(--danger-color) !important;
+//     font-size: 0.85rem !important;
+//     margin-top: 0.5rem !important;
+//     display: block !important;
+// }
 
 /* Button container */
 form > button:last-of-type,
@@ -182,3 +182,4 @@ form .btn-main-delete:active {
         margin-left: 0 !important;
     }
 }
+
