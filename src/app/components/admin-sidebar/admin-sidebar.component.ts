@@ -71,6 +71,8 @@ export class AdminSidebarComponent {
     { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
     { id: 'meals', icon: 'fa-utensils', label: ' الوجبات' },
     { id: 'logs', icon: 'fa-folder', label: ' السجل' },
+    { id: 'register-admin', icon: 'fa-user-tie', label: ' المشرفين' },
+
   ];
   
   // showSideContent = false;

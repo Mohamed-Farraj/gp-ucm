@@ -30,7 +30,7 @@
           <option value="كلية التعليم الصناعي">كلية التعليم الصناعي</option>
           <option value="المعهد القومي للملكية الفكرية">المعهد القومي للملكية الفكرية</option>
         </select>
-        @if (faculty?.errors && (faculty?.dirty || faculty?.touched)) {
+        @if (faculty?.errors && (faculty?.touched)) {
           <div class="text-danger mt-1">
             @if (faculty?.hasError('required')) {
               <p class="m-0">الكلية مطلوبة</p>
@@ -48,7 +48,7 @@
             <option [value]="levelItem.value">{{ levelItem.label }}</option>
           }
         </select>
-        @if (level?.errors && (level?.dirty || level?.touched)) {
+        @if (level?.errors && (level?.touched)) {
           <div class="text-danger mt-1">
             @if (level?.hasError('required')) {
               <p class="m-0">الفرقة مطلوبة</p>
@@ -79,7 +79,7 @@
             <option value="مدارس النيل للعلوم والتكنولوجيا">مدارس النيل للعلوم والتكنولوجيا</option>
             <option value="تحويل ورقي">تحويل ورقي</option>
           </select>
-          @if (secondaryDivision?.errors && (secondaryDivision?.dirty || secondaryDivision?.touched)) {
+          @if (secondaryDivision?.errors && (secondaryDivision?.touched)) {
             <div class="text-danger mt-1">
               @if (secondaryDivision?.hasError('required')) {
                 <p class="m-0">شعبة الثانوية مطلوبة</p>
@@ -97,7 +97,7 @@
             class="form-control rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm"
             placeholder=" % "
           />
-          @if (totalGradesHighSchool?.errors && (totalGradesHighSchool?.dirty || totalGradesHighSchool?.touched)) {
+          @if (totalGradesHighSchool?.errors && (totalGradesHighSchool?.touched)) {
             <div class="text-danger mt-1">
               @if (totalGradesHighSchool?.hasError('required')) {
                 <p class="m-0">مجموع الثانوية العامة مطلوب</p>
@@ -150,7 +150,7 @@
             class="form-control rounded-lg  shadow-sm"
             placeholder=" % "
           />
-          @if (previousAcademicYearGpa?.errors && (previousAcademicYearGpa?.dirty || previousAcademicYearGpa?.touched)) {
+          @if (previousAcademicYearGpa?.errors && (previousAcademicYearGpa?.touched)) {
             <div class="text-danger mt-1">
               @if (previousAcademicYearGpa?.hasError('required')) {
                 <p class="m-0">نسبة التقدير العام الماضي مطلوبة</p>
@@ -170,7 +170,7 @@
             <option value="سكن مستجد">سكن مستجد</option>
             <option value="سكن منقطع">سكن منقطع</option>
           </select>
-          @if (housingInPreviousYears?.errors && (housingInPreviousYears?.dirty || housingInPreviousYears?.touched)) {
+          @if (housingInPreviousYears?.errors && (housingInPreviousYears?.touched)) {
             <div class="text-danger mt-1">
               @if (housingInPreviousYears?.hasError('required')) {
                 <p class="m-0">السكن في الأعوام السابقة مطلوب</p>
@@ -188,7 +188,7 @@
           <option value="DORM">سكن عادي</option>
           <option value="SINGLE">سكن مميز</option>
         </select> 
-        @if (houseTypeName?.errors && (houseTypeName?.dirty || houseTypeName?.touched)) {
+        @if (houseTypeName?.errors && (houseTypeName?.touched)) {
           <div class="text-danger mt-1">
             @if (houseTypeName?.hasError('required')) {
               <p class="m-0">نوع السكن مطلوب</p>

@@ -34,6 +34,7 @@ import { MealsComponent } from './components/meals/meals.component';
 import { StepperComponent } from './components/stepper/stepper.component';
 import { LogsComponent } from './components/logs/logs.component';
 
+import { registeradminComponent } from './components/registeradmin/registeradmin.component';
 
 export const routes: Routes = [
 
@@ -73,6 +74,8 @@ export const routes: Routes = [
         {path:'assign-to-rooms',component: AssignRoomsComponent,},
         {path:'meals',component: MealsComponent,},
         {path:'logs',component:LogsComponent},
+        {path:'register-admin',component:registeradminComponent,},
+
         {path:'',component: BuildingsListComponent, outlet: 'side' },
 
     ]},
