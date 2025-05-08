@@ -44,13 +44,13 @@ form .mb-5 {
 }
 
 /* Label styling */
-form label {
-    font-weight: 600 !important;
-    color: var(--secondary-color) !important;
-    margin-bottom: 0.5rem !important;
-    display: block !important;
-    font-size: 0.95rem;
-}
+// form label {
+//     font-weight: 600 !important;
+//     color: var(--secondary-color) !important;
+//     margin-bottom: 0.5rem !important;
+//     display: block !important;
+//     font-size: 0.95rem;
+// }
 
 /* Input and Select styling */
 form .form-control {
@@ -66,8 +66,8 @@ form .form-control {
 }
 
 form .form-control:focus {
-    border-color: var(--accent-color) !important;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25) !important;
+    border-color: #9e8337 !important;
+    box-shadow: 0 0 0 1px #9e8337 !important;
     outline: none !important;
     background-color: white !important;
 }
@@ -93,12 +93,12 @@ form select.form-control {
 }
 
 /* Validation message styling */
-form .text-danger {
-    color: var(--danger-color) !important;
-    font-size: 0.85rem !important;
-    margin-top: 0.5rem !important;
-    display: block !important;
-}
+// form .text-danger {
+//     color: var(--danger-color) !important;
+//     font-size: 0.85rem !important;
+//     margin-top: 0.5rem !important;
+//     display: block !important;
+// }
 
 /* Button container */
 form > button:last-of-type,
@@ -182,3 +182,61 @@ form .btn-main-delete:active {
         margin-left: 0 !important;
     }
 }
+
+/* إضافة تنسيق للـ floating labels */
+.form-floating {
+    position: relative;
+  }
+  
+  /* تنسيق الـ label داخل form-floating */
+  .form-floating > label {
+    position: absolute;
+    top: 0;
+    right: 0; /* مهم للـ RTL */
+    height: 100%;
+    padding: 1rem 0.75rem;
+    pointer-events: none;
+    border: 1px solid transparent;
+    transform-origin: 0 0;
+    transition: opacity .1s ease-in-out, transform .1s ease-in-out;
+    color: #000000;
+    font-size: 1rem;
+    z-index: 1; /* للتأكد من أن الـ label فوق الـ input */
+  }
+  
+  /* تنسيق الـ input داخل form-floating */
+  .form-floating > .form-control {
+    height: calc(3.5rem + 2px);
+    padding: 1.625rem 0.75rem 0.625rem !important; /* زيادة المسافة العلوية للنص */
+  }
+  
+  /* تحريك الـ label عندما يكون الـ input مركزًا أو يحتوي على نص */
+  .form-floating > .form-control:focus ~ label,
+  .form-floating > .form-control:not(:placeholder-shown) ~ label {
+    // opacity: 0.65;
+    transform: scale(0.85) translateY(-0.75rem);
+    background-color: rgb(255, 255, 255);
+    padding: 0 0.5rem;
+    margin-right: 0.75rem;
+    height: auto;
+    color: #000000;
+    z-index: 3; /* للتأكد من ظهور الـ label فوق الحقل */
+    border-radius: 4px;
+  }
+  
+  /* تنسيق خاص للـ select مع floating label */
+  .form-floating > select.form-control {
+    padding-top: 1.625rem !important;
+    padding-bottom: 0.625rem !important;
+  }
+  
+  .form-floating > select.form-control ~ label {
+    opacity: 0.65;
+    transform: scale(0.85) translateY(-0.75rem);
+    background-color: white;
+    padding: 0 0.5rem;
+    margin-right: 0.75rem;
+    height: auto;
+    border-radius: 4px;
+  }
+  

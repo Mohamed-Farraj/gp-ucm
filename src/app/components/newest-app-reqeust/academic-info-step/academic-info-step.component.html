@@ -5,7 +5,7 @@
       <!-- الكلية -->
       <div class="flex flex-col">
         <label class="text-gray-700 mb-2 font-semibold">الكلية</label>
-        <select formControlName="faculty" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+        <select formControlName="faculty" class="form-select rounded-lg shadow-sm">
           <option value="">اختر الكلية</option>
           <option value="كلية الآداب">كلية الآداب</option>
           <option value="كلية الاقتصاد المنزلي">كلية الاقتصاد المنزلي</option>
@@ -42,7 +42,7 @@
       <!-- الفرقة -->
       <div class="flex flex-col">
         <label class="text-gray-700 mb-2 font-semibold">الفرقة</label>
-        <select formControlName="level" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+        <select formControlName="level" class="form-select rounded-lg shadow-sm">
           <option value="" selected disabled>اختر الفرقة</option>
           @for (levelItem of levels; track levelItem.value) { 
             <option [value]="levelItem.value">{{ levelItem.label }}</option>
@@ -62,7 +62,7 @@
         <!-- شعبة الثانوية -->
         <div class="flex flex-col">
           <label class="text-gray-700 mb-2 font-semibold">شعبة الثانوية</label>
-          <select formControlName="secondaryDivision" class="form-select rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm">
+          <select formControlName="secondaryDivision" class="form-select rounded-lg shadow-sm">
             <option value="" disabled selected>اختر الشعبة</option>
             <option value="---">---</option>
             <option value="علمي علوم">علمي علوم</option>
@@ -94,7 +94,7 @@
           <input 
             formControlName="totalGradesHighSchool"
             type="number"
-            class="form-control rounded-lg border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 shadow-sm"
+            class="form-control rounded-lg shadow-sm"
             placeholder=" % "
           />
           @if (totalGradesHighSchool?.errors && (totalGradesHighSchool?.touched)) {
@@ -148,7 +148,9 @@
             formControlName="previousAcademicYearGpa"
             type="number"
             class="form-control rounded-lg  shadow-sm"
-            placeholder=" % "
+            placeholder="4.0"
+            min="0"
+            max="4.0"
           />
           @if (previousAcademicYearGpa?.errors && (previousAcademicYearGpa?.touched)) {
             <div class="text-danger mt-1">
@@ -158,26 +160,29 @@
             </div>
           }
         </div>
+
+
+                <!-- السكن في الأعوام السابقة -->
+                <div class="flex flex-col">
+                  <label class="text-gray-700 mb-2 font-semibold">السكن في الأعوام السابقة</label>
+                  <select formControlName="housingInPreviousYears" class="form-select rounded-lg  shadow-sm">
+                    <option value="" selected disabled>اختر</option>
+                    <option value="سكن قديم">سكن قديم</option>
+                    <option value="سكن مستجد">سكن مستجد</option>
+                    <option value="سكن منقطع">سكن منقطع</option>
+                  </select>
+                  @if (housingInPreviousYears?.errors && (housingInPreviousYears?.touched)) {
+                    <div class="text-danger mt-1">
+                      @if (housingInPreviousYears?.hasError('required')) {
+                        <p class="m-0">السكن في الأعوام السابقة مطلوب</p>
+                      }
+                    </div>
+                  }
+                </div>
       }
 
       
-        <!-- السكن في الأعوام السابقة -->
-        <div class="flex flex-col">
-          <label class="text-gray-700 mb-2 font-semibold">السكن في الأعوام السابقة</label>
-          <select formControlName="housingInPreviousYears" class="form-select rounded-lg  shadow-sm">
-            <option value="" selected disabled>اختر</option>
-            <option value="سكن قديم">سكن قديم</option>
-            <option value="سكن مستجد">سكن مستجد</option>
-            <option value="سكن منقطع">سكن منقطع</option>
-          </select>
-          @if (housingInPreviousYears?.errors && (housingInPreviousYears?.touched)) {
-            <div class="text-danger mt-1">
-              @if (housingInPreviousYears?.hasError('required')) {
-                <p class="m-0">السكن في الأعوام السابقة مطلوب</p>
-              }
-            </div>
-          }
-        </div>
+
       
       
 

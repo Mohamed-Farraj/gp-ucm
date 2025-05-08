@@ -1,8 +1,11 @@
 .table {
     border-collapse: separate;
-    border-spacing: 0 15px; /* Vertical spacing between rows */
+    // border-spacing: 0 15px; /* Vertical spacing between rows */
     width: 90%;
     margin: auto;
+}
+tr{
+  background-color: transparent !important;
 }
 
 /* Fix border radius and hover effects */
