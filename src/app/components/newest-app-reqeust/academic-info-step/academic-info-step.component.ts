@@ -26,6 +26,9 @@ export class AcademicInfoStepComponent {
   get secondaryDivision() {
     return this.formGroup?.get('secondaryDivision');
   }
+  get wantFood() {
+    return this.formGroup?.get('wantFood');
+  }
 
   get totalGradesHighSchool() {
     return this.formGroup?.get('totalGradesHighSchool');
@@ -44,8 +47,8 @@ export class AcademicInfoStepComponent {
     return this.formGroup?.get('houseTypeName');
   }
 
-  get AnnualGrade() {
-    return this.formGroup?.get('AnnualGrade');
+  get annualGrade() {
+    return this.formGroup?.get('annualGrade');
   }
  
 

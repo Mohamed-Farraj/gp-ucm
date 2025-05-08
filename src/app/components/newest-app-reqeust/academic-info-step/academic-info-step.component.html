@@ -111,8 +111,8 @@
       @if (studentType === 'old') {
 
         <div class="flex flex-col">
-          <label for="AnnualGrade" class="col-sm-2 col-form-label"> تقدير العام الماضى </label> 
-             <select formControlName="AnnualGrade" class="form-control form-select rounded-lg  shadow-sm"  name="grades">
+          <label for="annualGrade" class="col-sm-2 col-form-label"> تقدير العام الماضى </label> 
+             <select formControlName="annualGrade" class="form-control form-select rounded-lg  shadow-sm"  name="grades">
                <option value="" selected disabled>---</option>
                <option value="ACCEPTABLE">مقبول</option>
                <option value="CARRY_SUBJECTS">محمول بمادة</option>
@@ -129,9 +129,9 @@
                <option value=" PROMOTED_WITH_TWO_AND_ONE_MINOR ">منقول (بمادتين ومادة فرعيه)</option>
                
              </select>
-             @if(AnnualGrade?.errors && AnnualGrade?.touched ){
+             @if(annualGrade?.errors && annualGrade?.touched ){
                <div class=" m-1 p-2 alert-danger text-danger w-100">
-                 @if (AnnualGrade?.getError('required') ) {
+                 @if (annualGrade?.getError('required') ) {
                    <p class="m-0"> * تقدير العام الماضى مطلوب</p>              
                  }
                </div>
@@ -208,7 +208,7 @@
           class="form-check-input"
           type="checkbox"
           id="cbx-familyAbroad-toggle"
-          formControlName="housingWithoutFeeding"
+          formControlName="wantFood"
         >
         <label
           class="form-check-label fw-bold text-gray-700" 
@@ -216,6 +216,10 @@
         >
         سكن بدون تغذية  
         </label>
+         
+      </div>
+
+     
          
       </div>
     </div>

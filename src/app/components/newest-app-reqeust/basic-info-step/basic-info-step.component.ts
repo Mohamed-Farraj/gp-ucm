@@ -25,6 +25,10 @@ export class BasicInfoStepComponent implements OnInit {
   get lastName() {
     return this.formGroup?.get('lastName');
   }
+
+  get studentCode() {
+    return this.formGroup?.get('studentCode');
+  }
   get dateOfBirth() {
     return this.formGroup?.get('dateOfBirth');
   }
@@ -39,5 +43,51 @@ export class BasicInfoStepComponent implements OnInit {
   }
   get religion() {
     return this.formGroup?.get('religion');
+  }
+
+
+
+
+
+
+
+
+
+
+
+  selectedMedia: File[] = [];
+  
+  onMediaSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files) {
+      for (let i = 0; i < input.files.length; i++) {
+        this.selectedMedia.push(input.files[i]);
+      }
+    }
+  }
+  
+  removeMedia(index: number): void {
+    this.selectedMedia.splice(index, 1);
+  }
+  
+  isImage(file: File): boolean {
+    return file.type.startsWith('image/');
+  }
+  
+  getFilePreview(file: File): string {
+    return URL.createObjectURL(file);
+  }
+  
+  uploadMedia(): void {
+    // هنا يمكنك إرسال الملفات إلى الخادم
+    const formData = new FormData();
+    this.selectedMedia.forEach((file, index) => {
+      formData.append(`media_${index}`, file);
+    });
+    
+    // استدعاء الخدمة لرفع الملفات
+    // this.mediaService.uploadFiles(formData).subscribe(response => {
+    //   console.log('تم رفع الملفات بنجاح', response);
+    // });
   }
 }
