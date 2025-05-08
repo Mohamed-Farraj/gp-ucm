@@ -31,31 +31,27 @@ loginSubmit(){
     console.log(this.loginForm.value)
     this._AuthService.setLoginForm(this.loginForm.value).subscribe({
       next:(res:any)=>{
-        if(res.body.success === false) {
-           this.errmsg=res.body.message
-        console.log(res)
-        }
-        else{
+      
           setTimeout(() => {
             console.log('loginresponse',res);
             //save Token
-            localStorage.setItem('userToken' , res?.body?.data?.token)
-            localStorage.setItem('role' , res?.body?.data?.role)
-            localStorage.setItem('Uid' , res?.body?.data?.userID)
+            localStorage.setItem('userToken' , res?.data?.token)
+            localStorage.setItem('role' , res?.data?.role)
+            localStorage.setItem('Uid' , res?.data?.userID)
 
             //decode Token
-            this._AuthService.saveUserData(res.body.data)
+            this._AuthService.saveUserData(res?.data)
             //navigate to home
-            if(res?.body?.data?.role ==='USER')
+            if(res?.data?.role ==='USER')
             {
               this.router.navigate(['/hu/user-dashboard'])
             }
-            if(res?.body?.data?.role.includes('ADMIN'))
+            if(res?.data?.role.includes('ADMIN'))
             {
               this.router.navigate(['/admin/'])
             }
           }, 1000);
-        }
+        
        
       },
 

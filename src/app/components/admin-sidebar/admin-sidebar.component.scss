@@ -1,7 +1,6 @@
 section.sidebar
 {
     min-height: 100vh;
-    // max-width: fit-content;
     background-color: var(--light-color);
     z-index: 999;
 }
@@ -37,7 +36,7 @@ section.sidebar
   ::ng-deep .mat-tooltip {
     font-size: 1.2rem  !important; 
     color: inherit !important;
-    white-space: nowrap; /* إذا كان النص لا يظهر في سطر واحد */
+    white-space: nowrap;
   }
 
 
@@ -46,7 +45,7 @@ section.sidebar
 
 .table {
     border-collapse: separate;
-    border-spacing: 0 15px; /* Vertical spacing between rows */
+    border-spacing: 0 15px; 
     width: 90%;
     margin: auto;
 }
@@ -56,9 +55,6 @@ h4{color:var(--main-color)}
 
 
   .toggle-btn {
-    // position: absolute;
-    // left: 100%;
-    // top: 10px;
     border: none;
     padding: 8px;
     border-radius: 4px;
@@ -66,12 +62,12 @@ h4{color:var(--main-color)}
     z-index: 1000;
   }
   
-  /* Add to your stylesheet */
 .sidebar {
     position: relative;
     // transition: all 0.3s ease;
     max-width: 350px; 
     aspect-ratio: 400 / 895;
+    transform-origin: top center;
   }
 
   
@@ -79,17 +75,6 @@ h4{color:var(--main-color)}
     width: 80px;
   }
   
-  // .toggle-btn {
-  //   // position: absolute;
-  //   // left: 100%;
-  //   // top: 10px;
-  //   border: none;
-  //   background: transparent;
-  //   padding: 8px;
-  //   border-radius: 4px;
-  //   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  //   z-index: 1000;
-  // }
   
   .sidebar.collapsed .fs-3 {
     display: none !important;

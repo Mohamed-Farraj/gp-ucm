@@ -47,4 +47,8 @@ export class ArService {
     return this._HttpClient.get(`${environment.baseUrl}/admin/view/sorted-applicants`);
   }
 
+  getArStatistics(){
+    return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-analysis`);
+  }
+
 }
