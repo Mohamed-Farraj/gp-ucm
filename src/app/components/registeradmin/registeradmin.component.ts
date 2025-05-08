@@ -17,7 +17,7 @@ export class registeradminComponent implements OnInit {
   roleOptions = [
     { id: 1, name: 'ADMIN' },
     { id: 2, name: 'EDIT_ADMIN' },
-    { id: 3, name: 'VIEW_ADMIN' }
+    { id: 3, name: 'ViEW_ADMIN' }
   ];
 
   constructor(private fb: FormBuilder) {}

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ExcelService } from '../../core/services/excel.service';
 import { NgClass, NgIf } from '@angular/common';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-upload-form',
@@ -12,6 +13,7 @@ import { NgClass, NgIf } from '@angular/common';
 export class UploadFormComponent {
 
   excel = inject(ExcelService);
+  dialogRef = inject(MatDialogRef);
 
   // Add these properties to your component class
 isUploading = false;
@@ -94,6 +96,7 @@ private handleUploadSuccess(response: any) {
   this.uploadSuccess = true;
   this.uploadStatus = 'تم رفع الملف بنجاح';
   this.clearFileInput();
+  this.dialogRef.close(true); 
 }
 
 // معالجة الخطأ

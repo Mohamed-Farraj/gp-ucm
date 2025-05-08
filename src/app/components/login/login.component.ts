@@ -50,7 +50,7 @@ loginSubmit(){
             {
               this.router.navigate(['/hu/user-dashboard'])
             }
-            if(res?.body?.data?.role ==='ADMIN' || res?.body?.data?.role ==='SUPERADMIN' || res?.body?.data?.role ==='Edit_ADMIN')
+            if(res?.body?.data?.role.includes('ADMIN'))
             {
               this.router.navigate(['/admin/'])
             }

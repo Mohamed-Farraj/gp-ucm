@@ -6,10 +6,12 @@ import { FormBuilder } from '@angular/forms';
 import { AddDeadlineComponent } from "../add-deadline/add-deadline.component";
 import { EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { NgIf } from '@angular/common';
+import { AuthService } from '../../core/services/auth.service';
 @Component({
   selector: 'app-deadlins-form',
   standalone: true,
-  imports: [],
+  imports: [NgIf],
   templateUrl: './deadlins-form.component.html',
   styleUrl: './deadlins-form.component.scss'
 })
@@ -21,6 +23,7 @@ export class DeadlinsFormComponent  implements OnInit{
   deadlines: Ideadlins[] = [];
   deadline!: Ideadlins;
    private readonly _deadlineService=inject(DeadlineService);
+   public readonly _AuthService = inject(AuthService)
     private readonly toastr=inject(ToastrService);
     private readonly _formBuilder= inject(FormBuilder)
     public  dialog = inject(MatDialog);

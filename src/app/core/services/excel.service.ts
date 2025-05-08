@@ -56,6 +56,7 @@ export class ExcelService {
  
       return this.http.post(`${environment.baseUrl}/admin/upload-admission-request`, formData,{
         reportProgress: true,
+        responseType: 'text' as 'json',
         observe: 'response'
       });
     }

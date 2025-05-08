@@ -39,8 +39,6 @@ export class AuthService {
   }
 
 
-
-
   setRegisterForm(data:object):Observable<any>
   {
    return this._HttpClient.post(`${environment.baseUrl}/public/register` , data)
@@ -62,6 +60,10 @@ export class AuthService {
   }
 
 
+  getRole()
+  {
+    return localStorage?.getItem('role')
+  }
 
   saveUserData(input:any){
     if(localStorage.getItem('userToken') !== null){

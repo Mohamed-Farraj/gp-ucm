@@ -16,8 +16,8 @@
       <!-- Sort dropdown -->
       <div class="col-12 col-md-2">
         <select class="form-select" [formControl]="sortControl">
-          <option value="normal">الاقدم اولا</option>
-          <option value="reverse">الاحدث اولا</option>
+          <option value="normal">{{selectedSource == 'all' ? 'الاقدم اولا' : 'المستحق اولا'}}</option>
+          <option value="reverse">{{selectedSource == 'all' ? 'الاحدث اولا' : 'غير المستحق اولا'}}</option>
         </select>
       </div>
   
@@ -108,6 +108,7 @@
             <span>تنزيل</span>
           </button>
           <button
+            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
             type="button"
             class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
             (click)="openUploadDialog()"
@@ -116,6 +117,13 @@
             <span>الاستعلام الامني</span>
           </button>
         </div>
+      </div>
+      <div class="btn-group mb-3 mx-auto col-md-6" role="group" aria-label="Data Source Toggle">
+        <input type="radio" class="btn-check" name="dataSource" id="allData" [(ngModel)]="selectedSource" value="all" (change)="onSourceChange()">
+        <label class="btn btn-outline-primary" for="allData">كل الطلبات</label>
+      
+        <input type="radio" class="btn-check" name="dataSource" id="sortedData" [(ngModel)]="selectedSource" value="sorted" (change)="onSourceChange()">
+        <label class="btn btn-outline-primary" for="sortedData">الطلبات مرتبة تبعا للتنسيق</label>
       </div>
     </div>
   </div>
@@ -140,7 +148,7 @@
           <th scope="col">العنوان</th>
           <th scope="col">الكلية</th>
           <th scope="col">الفرقة</th>
-          <th scope="col" class="text-center">الإجراءات</th>
+          <th scope="col" class="text-center" *ngIf="!_AuthService.getRole()?.includes('ViEW')">الإجراءات</th>
         </tr>
       </thead>
       <tbody>
@@ -169,8 +177,8 @@
           <td>{{ item?.residenceAddress }}</td>
           <td>{{ item?.faculty }}</td>
           <td>{{ getLevel(item?.level) }}</td>
-          <td>
-            <div class="d-flex flex-wrap gap-2 justify-content-center">
+          <td *ngIf="!_AuthService.getRole()?.includes('ViEW')">
+            <div class="d-flex flex-wrap gap-2 justify-content-center" >
               <button *ngIf="item?.securityCheckStatues === 'ACCEPTED'" 
                 [class.d-none]="item?.status === 'ACCEPTED'" 
                 (click)="confirmation(item?.userId,'ACCEPTED',item);$event.stopPropagation()" 
