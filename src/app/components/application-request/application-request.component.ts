@@ -128,7 +128,7 @@ export class ApplicationRequestComponent implements OnInit {
       level: [null, Validators.required],
       previousAcademicYearGpa: [null],
       totalGradesHighSchool: [null],
-      annualGrade: [null , [Validators.required]],
+      annualGrade: [null],
       wantFood: [''],
       secondaryDivision: [null],
       housingInPreviousYears: [null],
@@ -436,15 +436,17 @@ export class ApplicationRequestComponent implements OnInit {
     const highSchoolGradeControl = this.academicInfoGroup.get('totalGradesHighSchool');
     const secondaryDivisionControl = this.academicInfoGroup.get('secondaryDivision');
     const housingInPreviousYearsControl = this.academicInfoGroup.get('housingInPreviousYears');
-
+    const annualGradeControl = this.academicInfoGroup.get('annualGrade');
     if (studentType === 'old') {
       previousAcademicYearGpaControl?.setValidators([Validators.required]);
       housingInPreviousYearsControl?.setValidators([Validators.required]);
+      annualGradeControl?.setValidators([Validators.required]);
       highSchoolGradeControl?.clearValidators();
       secondaryDivisionControl?.clearValidators();
     } else if (studentType === 'new') {
       highSchoolGradeControl?.setValidators([Validators.required]);
       secondaryDivisionControl?.setValidators([Validators.required]);
+      annualGradeControl?.clearValidators();
       previousAcademicYearGpaControl?.clearValidators();
       housingInPreviousYearsControl?.clearValidators();
     }
@@ -452,6 +454,7 @@ export class ApplicationRequestComponent implements OnInit {
     highSchoolGradeControl?.updateValueAndValidity();
     secondaryDivisionControl?.updateValueAndValidity();
     housingInPreviousYearsControl?.updateValueAndValidity();
+    annualGradeControl?.updateValueAndValidity();
   }
 
   clearFormBasedOnType() {
@@ -459,6 +462,7 @@ export class ApplicationRequestComponent implements OnInit {
       this.academicInfoGroup.get('totalGradesHighSchool')?.reset();
       this.academicInfoGroup.get('secondaryDivision')?.reset();
     } else if (this.studentType === 'new') {
+      this.academicInfoGroup.get('annualGrade')?.reset();
       this.academicInfoGroup.get('previousAcademicYearGpa')?.reset();
       this.academicInfoGroup.get('housingInPreviousYears')?.reset();
     }
