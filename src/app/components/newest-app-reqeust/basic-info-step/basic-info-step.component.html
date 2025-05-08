@@ -31,6 +31,14 @@
       </div>
     </div>
 
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold"> كود الطالب</label>
+      <input formControlName="studentCode" type="text" class="form-control rounded-lg shadow-sm" />
+      <div *ngIf="studentCode?.invalid && (studentCode?.touched)" class="text-danger mt-1">
+        <p class="m-0" *ngIf="studentCode?.hasError('required')">  كود الطالب مطلوب</p>
+      </div>
+    </div>
+
     <!-- تاريخ الميلاد -->
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">تاريخ الميلاد</label>
@@ -105,6 +113,48 @@
       <div *ngIf="religion?.invalid && (religion?.touched)" class="text-danger mt-1">
         <p class="m-0" *ngIf="religion?.hasError('required')">الديانة مطلوبة</p>
       </div>
+    </div>
+  </div>
+
+  <label for="mediaInput" class="form-label">تحميل الوسائط</label>
+  <input 
+    type="file" 
+    class="form-control" 
+    id="mediaInput"
+    
+    accept=".pdf,.doc,.docx"
+    multiple
+  />
+  <div class="mt-2 text-secondary">
+    <small>يمكنك تحميل    PDF، أو مستندات Word</small>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+  <div class="selected-files mt-3" *ngIf="selectedMedia && selectedMedia.length > 0">
+    <h6>الملفات المختارة:</h6>
+    <div class="d-flex flex-wrap gap-2">
+      <!-- <div *ngFor="let file of selectedMedia; let i = index" class="position-relative">
+        <img *ngIf="isImage(file)" [src]="getFilePreview(file)" class="img-thumbnail" style="max-width: 150px; max-height: 150px;" />
+        
+        <div *ngIf="!isImage(file)" class="file-icon p-3 border rounded text-center">
+          <i class="bi bi-file-earmark"></i>
+          <div>{{ file.name }}</div>
+        </div>
+        
+        <button type="button" class="btn btn-sm btn-danger position-absolute top-0 end-0" 
+                (click)="removeMedia(i)">
+          <i class="bi bi-x"></i>
+        </button>
+      </div> -->
     </div>
   </div>
 </div>

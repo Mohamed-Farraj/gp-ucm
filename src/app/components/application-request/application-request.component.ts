@@ -102,6 +102,7 @@ export class ApplicationRequestComponent implements OnInit {
     this.personalInfoGroup = this.fb.group({
       firstName: [null, Validators.required],
       lastName: [null, Validators.required],
+      studentCode: [null, Validators.required],
       nationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
       dateOfBirth: [null, Validators.required],
       gender: [null, Validators.required],
@@ -127,7 +128,8 @@ export class ApplicationRequestComponent implements OnInit {
       level: [null, Validators.required],
       previousAcademicYearGpa: [null],
       totalGradesHighSchool: [null],
-      AnnualGrade: [null],
+      annualGrade: [null , [Validators.required]],
+      wantFood: [''],
       secondaryDivision: [null],
       housingInPreviousYears: [null],
       houseTypeName: [null],
@@ -310,6 +312,7 @@ export class ApplicationRequestComponent implements OnInit {
             // تعبئة النماذج الفرعية بالبيانات
             this.personalInfoGroup.patchValue({
               firstName: res.data.firstName,
+              studentCode: res.data.studentCode,
               lastName: res.data.lastName,
               nationalId: res.data.nationalId,
               dateOfBirth: res.data.dateOfBirth,
@@ -324,6 +327,7 @@ export class ApplicationRequestComponent implements OnInit {
               fatherPhoneNumber: res.data.fatherPhoneNumber,
               guardianName: res.data.guardianName,
               guardianNationalId: res.data.guardianNationalId,
+              guardianRelationship: res.data.guardianRelationship,
               guardianPhoneNumber: res.data.guardianPhoneNumber,
               parentsStatus: res.data.parentsStatus,
               familyAbroad: res.data.familyAbroad
@@ -334,10 +338,15 @@ export class ApplicationRequestComponent implements OnInit {
               previousAcademicYearGpa: res.data.previousAcademicYearGpa,
               totalGradesHighSchool: res.data.totalGradesHighSchool,
               secondaryDivision: res.data.secondaryDivision,
-              housingInPreviousYears: res.data.housingInPreviousYears
+              housingInPreviousYears: res.data.housingInPreviousYears,
+              annualGrade: res.data.annualGrade, 
+              houseTypeName: res.data.houseTypeName,
+              wantFood: res.data.wantFood
+
             });
             this.contactInfoGroup.patchValue({
               mobileNumber: res.data.mobileNumber,
+              phoneNumber: res.data.phoneNumber,
               residenceAddress: res.data.residenceAddress,
               detailedAddress: res.data.detailedAddress,
               country: res.data.country,
@@ -346,7 +355,7 @@ export class ApplicationRequestComponent implements OnInit {
             });
             this.accountSetupGroup.patchValue({
               username: res.data.username,
-              confirmDataAccuracy: res.data.confirmDataAccuracy
+              confirmDataAccuracy: true
             });
 
             // تحليل عنوان الإقامة
