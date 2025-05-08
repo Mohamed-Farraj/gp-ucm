@@ -7,6 +7,7 @@
       <div class="card-header d-flex align-items-center justify-content-between mb-4">
         <h4 class="section-title">الجزاءات</h4>
         <button
+        *ngIf="!_AuthService.getRole()?.includes('ViEW')"
           [disabled]="!userData"
           type="button"
           (click)="openDialog()"
@@ -24,7 +25,8 @@
               <th scope="col">اسم الجزاء</th>
               <th scope="col">سبب الجزاء</th>
               <th scope="col">تاريخ الجزاء</th>
-              <th scope="col" class="text-center">إجراءات</th>
+              <th scope="col" class="text-center" *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+              >إجراءات</th>
             </tr>
           </thead>
           <tbody>
@@ -37,6 +39,7 @@
                   <td>{{ item.dateIssued | date : "yyyy/MM/dd" }}</td>
                   <td class="text-center">
                     <button
+                    *ngIf="!_AuthService.getRole()?.includes('ViEW')"
                       type="button"
                       (click)="deletePenalty(item.id)"
                       class="btn-delete"

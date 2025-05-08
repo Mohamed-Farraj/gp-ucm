@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { AuthService } from '../../core/services/auth.service';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { ExcelService } from '../../core/services/excel.service';
@@ -11,11 +11,12 @@ import { AddDeadlineComponent } from '../add-deadline/add-deadline.component';
 import { ExportFormComponent } from '../export-form/export-form.component';
 import Swal from 'sweetalert2';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
+import { ArService } from '../../core/services/ar.service';
 
 @Component({
   selector: 'app-table-view-users-list',
   standalone: true,
-  imports: [ReactiveFormsModule,NgFor,MatDialogModule,NgIf],
+  imports: [ReactiveFormsModule,NgFor,MatDialogModule,NgIf,FormsModule],
   templateUrl: './table-view-users-list.component.html',
   styleUrl: './table-view-users-list.component.scss'
 })
@@ -41,6 +42,9 @@ export class TableViewUsersListComponent {
         selectedStatuses: string[] = [];// مصفوفة لتخزين الحالات المختارة من checkboxes
         selectedGenders: string[] = [];// مصفوفة لتخزين gender المختارة من checkboxes
         filteredItems: any[] = [];
+        sortedApplications: any[] = [];
+        selectedSource: 'all' | 'sorted' = 'all'; // القيمة الافتراضية
+
         //#endregion
     
         activeTab: string = 'home';
@@ -48,7 +52,8 @@ export class TableViewUsersListComponent {
     //#endregion
   
     private readonly dataService = inject(SharedDataService);
-    private readonly _AuthService = inject(AuthService);
+    public readonly _AuthService = inject(AuthService);
+    private readonly ar = inject(ArService);
     private readonly router = inject(Router);
     private readonly excel = inject(ExcelService);
     private readonly dialog = inject(MatDialog);
@@ -63,18 +68,9 @@ export class TableViewUsersListComponent {
   
   
     ngOnInit(): void {
-      this._AuthService.getApplications().subscribe({
-        next: (res: any) => {
-         
-          console.log(res);
-          this.res = res.data;
-          this.filteredItems = this.res;
-          console.log(this.res);
-          this.initPagination();
-        },
-        error: (err:any) => { console.log(err); },
-      });
-  
+      this.getApplication();
+
+
       // الاشتراك في تغييرات حقل البحث باستخدام Reactive Form مع debounceTime
       this.searchControl.valueChanges.pipe(
         debounceTime(1000)
@@ -87,7 +83,47 @@ export class TableViewUsersListComponent {
         this.applyFilters();
       });
     }
+
+
+    getApplication(){
+
+
+      this._AuthService.getApplications().subscribe({
+        next: (res: any) => {
+         
+          console.log(res);
+          this.res = res.data;
+          this.filteredItems = this.res;
+          console.log(this.res);
+          this.initPagination();
+        },
+        error: (err:any) => { console.log(err); },
+      });
+
+      
   
+    }
+
+
+    getSortedApplications(){
+      let returned : any;
+      this.ar.getSortedApplications().subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.res = [...res.data.oldStudents, ...res.data.newStudents];
+          this.applyFilters();
+        },
+        error:(err:any)=>{console.log(err);return returned;}
+      })      
+    }
+  
+    onSourceChange(): void {
+      if (this.selectedSource === 'all') {
+        this.getApplication();
+      } else if (this.selectedSource === 'sorted') {
+        this.getSortedApplications();
+      }
+    }
    
     //#region pagination methods
     initPagination(): void {
@@ -290,7 +326,7 @@ export class TableViewUsersListComponent {
     }
 
     // Updated change handler
-onGenderChange(event: any): void {
+    onGenderChange(event: any): void {
   const checked = event.target.checked;
   const value = event.target.value;
   if (checked) {
@@ -299,7 +335,7 @@ onGenderChange(event: any): void {
     this.selectedGenders = this.selectedGenders.filter(gender => gender !== value);
   }
   this.applyFilters();
-}
+    }
   
     // دالة لتحديث selectedStatuses عند تغيير حالة checkbox
     onStatusChange(event: any): void {
@@ -346,9 +382,11 @@ onGenderChange(event: any): void {
   
        // تطبيق الفرز: استخدام نسخة من المصفوفة لعكس الترتيب لتجنب التعديل على المصفوفة الأصلية
        const sortOption = this.sortControl.value;
+
        if (sortOption === 'reverse') {
          filtered = [...filtered].reverse(); // Create a new array to avoid mutation issues
        }
+
       // احفظ النتيجة المفلترة في this.filteredItems
   
       this.filteredItems = filtered;
@@ -407,6 +445,15 @@ onGenderChange(event: any): void {
           // this.getDeadLine(); // Refresh the list after the dialog is closed
         }
       });
+
+      dialogRef.afterClosed().subscribe((result:any) => {
+        console.log("result",result);
+        if (result) {
+          this.getApplication();
+        }
+      });
+
+      
     }
 
     openDialog(): void {
@@ -416,11 +463,7 @@ onGenderChange(event: any): void {
 
         });
     
-        dialogRef.afterClosed().subscribe((result:any) => {
-          if (result) {
-            // this.getDeadLine(); // Refresh the list after the dialog is closed
-          }
-        });
+      
       }
 
     ngOnDestroy(): void {

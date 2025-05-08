@@ -49,7 +49,7 @@ import { ActivationEnd, NavigationEnd, Router, RouterLink, RouterLinkActive, Rou
 })
 export class AdminSidebarComponent {
   
-  protected readonly _AuthService = inject(AuthService);
+  public readonly _AuthService = inject(AuthService);
   private readonly dataService = inject(SharedDataService);
   private readonly router = inject(Router);
   private readonly cd = inject(ChangeDetectorRef);
@@ -114,19 +114,21 @@ getActiveTab() {
 
 
   ngOnInit(): void {
-    this._AuthService.getApplications().subscribe({
-      next: (res: any) => {
-       
-        console.log(res);
-        this.res = res.data;
-        this.getAnalysis();
-        console.log(this.res);
-      },
-      error: (err) => { console.log(err); },
-    });
 
+    if(this._AuthService.getRole()?.includes('ViEW'))
+    {
+      this.navItems = [
+        { id: 'home', icon: 'fa-chart-line', label: 'لوحة التحكم' },
+        { id: 'ar', icon: 'fa-user', label: 'طلبات الألتحاق' },
+        { id: 'penalty', icon: 'fa-triangle-exclamation', label: 'الجزاءات و العقوبات' },
+        { id: 'complaints', icon: 'fa-face-angry', label: 'الشكاوى' },
+        { id: 'buildings', icon: 'fa-building', label: 'المباني و الغرف' },
+        { id: 'assign-to-rooms', icon: 'fa-person-shelter', label: ' التسكين ' },
+        { id: 'guidelines', icon: 'fa-rectangle-list', label: 'الإرشادات' },
+        { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
+      ];
+    }
     
-   
   }
 
 

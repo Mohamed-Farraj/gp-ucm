@@ -53,7 +53,7 @@ export class AssignRoomsComponent {
     //#endregion
   
     private readonly dataService = inject(SharedDataService);
-    private readonly _AuthService = inject(AuthService);
+    public readonly _AuthService = inject(AuthService)
     private readonly ar = inject(ArService);
     private readonly router = inject(Router);
     private readonly excel = inject(ExcelService);

@@ -43,4 +43,8 @@ export class ArService {
     return this._HttpClient.put(`${environment.baseUrl}/user/admission-requests/${id}`,data);
   }
 
+  getSortedApplications(){
+    return this._HttpClient.get(`${environment.baseUrl}/admin/view/sorted-applicants`);
+  }
+
 }

@@ -6,13 +6,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { PenaltyComponent } from '../penalty/penalty.component';
 import { SharedDataService } from '../../core/services/shared-data.service';
 import { filter, Subject, takeUntil, tap } from 'rxjs';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { UsersSideListComponent } from "../users-side-list/users-side-list.component";
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-add-penalty',
   standalone: true,
-  imports: [DatePipe, UsersSideListComponent],
+  imports: [DatePipe, UsersSideListComponent, NgIf],
   templateUrl: './add-penalty.component.html',
   styleUrl: './add-penalty.component.scss'
 })
@@ -25,6 +26,7 @@ export class AddPenaltyComponent  {
     penalty!: Ipenalty;
     allPenalties = []
      private readonly _PenaltyService=inject(PenaltyService);
+     public readonly _AuthService = inject(AuthService)
      private readonly _dataService = inject(SharedDataService);
      private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
       private readonly _formBuilder= inject(FormBuilder)

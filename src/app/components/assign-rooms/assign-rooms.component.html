@@ -57,6 +57,7 @@
       <div class="col-12 col-md-2">
         <div class="d-flex gap-2">
           <button
+            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
             type="button"
             class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
             (click)="openUploadDialog()"
@@ -85,8 +86,8 @@
           <th scope="col">الرقم القومي</th>
           <th scope="col">الاسم</th>
           <th scope="col">الموبايل</th>
-          <th scope="col">التسكين التلقائي</th>
-          <th scope="col">المبنى و الغرفة</th>
+          <th scope="col" *ngIf="!_AuthService.getRole()?.includes('ViEW')">التسكين التلقائي</th>
+          <th *ngIf="!_AuthService.getRole()?.includes('ViEW')" scope="col">المبنى و الغرفة</th>
         </tr>
       </thead>
       <tbody class="">
@@ -101,7 +102,7 @@
           <th scope="row">{{ item?.nationalId }}</th>
           <td>{{ item?.firstName }} {{ item?.lastName }}</td>
           <td>{{ item?.mobileNumber }}</td>
-          <td>
+          <td *ngIf="!_AuthService.getRole()?.includes('ViEW')">
             <button
             (click)="autoAssignRoom(item);$event.stopPropagation()"
              [disabled]="item?.room"
@@ -110,7 +111,7 @@
               تسكين
           </button>
         </td>
-          <td class="py-0">
+          <td class="py-0" *ngIf="!_AuthService.getRole()?.includes('ViEW')">
             <app-assign-row [student]="item" [resBuildings]="resBuildings"></app-assign-row>
           </td>
         </tr>

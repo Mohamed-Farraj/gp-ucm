@@ -8,6 +8,7 @@ import { UsersSideListComponent } from "../users-side-list/users-side-list.compo
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { userInfo } from 'os';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-display-complaints',
@@ -19,6 +20,7 @@ import { userInfo } from 'os';
 export class DisplayComplaintsComponent implements OnInit {
 
   private readonly complaintsService = inject(ComplaintsService);
+  public readonly _AuthService = inject(AuthService)
   private readonly dataService = inject(SharedDataService)
   private readonly router = inject(Router)
   private readonly route = inject(ActivatedRoute)
@@ -59,7 +61,7 @@ export class DisplayComplaintsComponent implements OnInit {
         console.log('complaint added', response);
         this.complaints.push(response.data);
         this.complaintsForm.reset();
-        this.cd.detectChanges();
+        this.getmyComplaints()
       },
       error: (error: any) => {
         console.error(error);
@@ -105,7 +107,12 @@ export class DisplayComplaintsComponent implements OnInit {
 
     } else if (role === 'USER') {
 
-      const uid:number = Number(localStorage?.getItem('Uid')) || 0;
+      this.getmyComplaints();
+    }
+  }
+
+  getmyComplaints(){
+    const uid:number = Number(localStorage?.getItem('Uid')) || 0;
     console.log(uid);
     this.isAdmin = false;
     this.complaintsService.getMyComplaints(uid).subscribe({
@@ -113,14 +120,13 @@ export class DisplayComplaintsComponent implements OnInit {
         console.log('user complaints', response);
         this.complaints = response.data;
         
-        this.filteredComplaints = this.complaints;
+        this.filteredComplaints = this.complaints.reverse();
         this.cd.detectChanges();
       },
       error: (error: any) => {
         console.error(error);
       }
     });
-    }
   }
 
   filterComplaints(complaints: any[]): any[] {

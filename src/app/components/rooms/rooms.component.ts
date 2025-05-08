@@ -10,6 +10,7 @@ import { AddRoomComponent } from '../add-room/add-room.component';
 import { Irooms } from '../../core/interfaces/irooms';
 import { AddBuildingComponent } from '../add-building/add-building.component';
 import { Ibuilding } from '../../core/interfaces/ibuilding';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-rooms',
@@ -25,7 +26,7 @@ export class RoomsComponent {
   @Output() refreshParent = new EventEmitter<void>();
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
   private readonly _BuildingsService=inject (BuildingsService);
-
+  public readonly _AuthService = inject(AuthService)
   public  dialog = inject(MatDialog);
   Irooms: Irooms[] = [];
   room!: Irooms;

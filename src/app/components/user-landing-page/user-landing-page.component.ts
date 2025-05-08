@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-landing-page',
@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './user-landing-page.component.scss'
 })
 export class UserLandingPageComponent {
+
+  @Input() user: string = '';
 
 }
