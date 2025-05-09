@@ -59,15 +59,12 @@
 </div>
 
   <section dir="rtl" style="padding-inline-end: 80px">
+    
     <section
+      [ngStyle]="{'transform': 'scale(' + sidebarScale + ')'}"
       class="position-fixed fixed-top sidebar gap-3 gap-lg-4 px-3 py-3 d-flex flex-column"
       [class.collapsed]="isCollapsed"
     >
-      <!-- <button class="toggle-btn btn"
-              (click)="toggleCollapsed()"
-              >
-        <i class="fas fa-xl fa-bars"></i>
-      </button> -->
       <button class="toggle-btn btn"
               type="button" data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasWithBothOptions"
@@ -127,16 +124,6 @@
     </section>
 
     <!-- --------------------------------------------------------------------------- -->
-
-    <!-- 
-    <section  class="col-md-3 py-3 px-3 side-content">
-  
-    </section>
-    
-    <section  class="col-md-7 flex-grow-1 main-content">
-
-    </section> 
-    -->
     <router-outlet></router-outlet>
     
     <!----------------------------------------------------------------- ------------- -->

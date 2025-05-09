@@ -1,6 +1,6 @@
 <section>
   <div class="container-fluid py-3">
-    <div class="row g-3">
+    <div class="row g-3 justify-content-center">
       <!-- Search input -->
       <div class="col-12 col-md-4">
         <div class="input-group">
@@ -21,8 +21,33 @@
         </select>
       </div>
   
+      
+  
+      <!-- Action buttons -->
+      <div class="col-12 col-md-4">
+        <div class="d-flex gap-2">
+          <button
+            type="button"
+            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openDialog()"
+          >
+            <i class="fa-solid fa-download"></i>
+            <span>تنزيل</span>
+          </button>
+          <button
+            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            type="button"
+            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openUploadDialog()"
+          >
+            <i class="fa-solid fa-upload"></i>
+            <span>الاستعلام الامني</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Status filters -->
-      <div class="col-12 col-md-3">
+      <div class="col-12 col-md-4">
         <div class="btn-group w-100" role="group" aria-label="Status filter buttons">
           <!-- تحت المراجعة -->
           <input
@@ -66,7 +91,7 @@
       </div>
   
       <!-- Gender filters -->
-      <div class="col-12 col-md-1">
+      <div class="col-12 col-md-2">
         <div class="btn-group w-100" role="group" aria-label="Gender filter buttons">
           <!-- Male -->
           <input
@@ -95,34 +120,13 @@
           </label>
         </div>
       </div>
-  
-      <!-- Action buttons -->
-      <div class="col-12 col-md-2">
-        <div class="d-flex gap-2">
-          <button
-            type="button"
-            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
-            (click)="openDialog()"
-          >
-            <i class="fa-solid fa-download"></i>
-            <span>تنزيل</span>
-          </button>
-          <button
-            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
-            type="button"
-            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
-            (click)="openUploadDialog()"
-          >
-            <i class="fa-solid fa-upload"></i>
-            <span>الاستعلام الامني</span>
-          </button>
-        </div>
-      </div>
-      <div class="btn-group mb-3 mx-auto col-md-6" role="group" aria-label="Data Source Toggle">
-        <input type="radio" class="btn-check" name="dataSource" id="allData" [(ngModel)]="selectedSource" value="all" (change)="onSourceChange()">
+
+
+      <div class="btn-group mb-3 col-md-4" role="group" aria-label="Data Source Toggle">
+        <input type="radio" class="btn-check source" name="dataSource" id="allData" [(ngModel)]="selectedSource" value="all" (change)="onSourceChange()">
         <label class="btn btn-outline-primary" for="allData">كل الطلبات</label>
       
-        <input type="radio" class="btn-check" name="dataSource" id="sortedData" [(ngModel)]="selectedSource" value="sorted" (change)="onSourceChange()">
+        <input type="radio" class="btn-check source" name="dataSource" id="sortedData" [(ngModel)]="selectedSource" value="sorted" (change)="onSourceChange()">
         <label class="btn btn-outline-primary" for="sortedData">الطلبات مرتبة تبعا للتنسيق</label>
       </div>
     </div>
@@ -162,13 +166,7 @@
                 [class.text-warning]="item?.status === 'UNDER_REVIEW'"
                 class="fa-solid fa-circle"
               ></i>
-              <!-- <span class="status-text d-none d-md-inline small ms-1 fw-bold" 
-                [class.text-success]="item?.status === 'ACCEPTED'"
-                [class.text-danger]="item?.status === 'REJECTED'"
-                [class.text-warning]="item?.status === 'UNDER_REVIEW'">
-                {{ item?.status === 'ACCEPTED' ? 'مقبول' : 
-                   item?.status === 'REJECTED' ? 'مرفوض' : 'تحت المراجعة' }}
-              </span> -->
+
             </span>
           </td>
           <th scope="row" class="fw-medium">{{ item?.nationalId }}</th>

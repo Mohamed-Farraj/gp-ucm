@@ -1,133 +1,172 @@
-<section class="d-flex h-100 gap-4 p-4 flex-md-nowrap flex-wrap">
-  <!-- Left Column - Charts -->
-  <div class="col-12 col-md-8 h-100">
-    <h2 class="mb-4 text-center text-md-start">احصائيات لطلبات الالتحاق</h2>
-    
-    <!-- Gender Distribution Section -->
-    <div class="card shadow mb-4">
-      <div class="card-body">
-        <h5 class="card-title text-center">اجمالي طلبات الالتحاق بالنوع</h5>
-        <div class="row g-3">
-          <!-- Bar Chart -->
-          <div class="col-12 col-md-6 order-2 order-md-1">
-            <div class="chart-container">
-              <canvas baseChart 
-                [type]="'bar'"
-                [data]="genderChartData"
-                [options]="barChartOptions"
-                height="200"
-                class="mx-0">
-              </canvas>
-            </div>
-          </div>
-
-          <!-- Pie Chart -->
-          <div class="col-12 col-md-6 order-1 order-md-2">
-            <div class="chart-container">
-              <canvas baseChart
-                [type]="'pie'"
-                [data]="genderPieData"
-                [options]="pieChartOptions"
-                height="200">
-              </canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Status Distribution Charts -->
-    <div class="row g-3">
-      <!-- Male Status Doughnut -->
-      <div class="col-12 col-md-6 mb-md-4">
-        <div class="card shadow h-100">
-          <div class="card-body">
-            <h5 class="card-title text-center">طلبات التحاق الذكور</h5>
-            <div class="chart-container">
-              <canvas baseChart
-                [type]="'doughnut'"
-                [data]="maleStatusData"
-                [options]="doughnutOptions">
-              </canvas>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Female Status Doughnut -->
-      <div class="col-12 col-md-6">
-        <div class="card shadow h-100">
-          <div class="card-body">
-            <h5 class="card-title text-center">طلبات التحاق الاناث</h5>
-            <div class="chart-container">
-              <canvas baseChart
-                [type]="'doughnut'"
-                [data]="femaleStatusData"
-                [options]="doughnutOptions">
-              </canvas>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="dashboard-container">
+  <!-- Dashboard Title -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="dashboard-title">احصائيات لطلبات الالتحاق</h2>
     </div>
   </div>
-
-  <!-- Right Column - Quick Stats -->
-  <div class="col-12 col-md-4 h-100">
-    <div class="card shadow h-100">
-      <div class="card-body">
-        <h2 class="card-title mb-4 text-center">احصائيات سريعة</h2>
-        
-        <!-- Total Applications -->
-        <div class="stat-box bg-primary text-white mb-4 p-3">
-          <h6 class="fs-6"> اجمالي طلبات الالتحاق</h6>
-          <h3 class="fs-4">{{ (data?.male?.total || 0) + (data?.female?.total || 0) }}</h3>
+  
+  <!-- Stats Row -->
+  <div class="row g-4 mb-4">
+    <div class="col-12 col-md-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="card-title">
+            <i class="fas fa-tachometer-alt me-2"></i>
+            احصائيات سريعة
+          </h5>
         </div>
-
-        <!-- Male/Female Comparison -->
-        <div class="row g-2 mb-4">
-          <div class="col-6">
-            <div class="stat-box bg-info text-white p-2">
-              <h6 class="fs-6">الذكور</h6>
-              <h4 class="fs-5">{{ data?.male?.total || 0 }}</h4>
+        <div class="card-body">
+          <!-- Total Applications -->
+          <div class="stat-box total-stat mb-4">
+            <h6>اجمالي طلبات الالتحاق</h6>
+            <h3 id="totalApplications">{{  (data?.male?.total||0) + (data?.female?.total||0) }}</h3>
+          </div>
+          
+          <!-- Male/Female Comparison -->
+          <div class="row g-3 mb-4">
+            <div class="col-6">
+              <div class="stat-box male-stat h-100">
+                <i class="fas fa-male mb-2" style="font-size: 1.5rem;"></i>
+                <h6>الذكور</h6>
+                <h4 id="maleTotal">{{ data?.male?.total || 0 }}</h4>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="stat-box female-stat h-100">
+                <i class="fas fa-female mb-2" style="font-size: 1.5rem;"></i>
+                <h6>الاناث</h6>
+                <h4 id="femaleTotal">{{ data?.female?.total || 0 }}</h4>
+              </div>
             </div>
           </div>
-          <div class="col-6">
-            <div style="background-color: palevioletred;" class="stat-box text-white p-2">
-              <h6 class="fs-6">الاناث</h6>
-              <h4 class="fs-5">{{ data?.female?.total || 0 }}</h4>
+          
+          <!-- Status Legend -->
+          <div class="status-legend mb-4">
+            <div class="legend-item rejected">
+              <span class="dot"></span>
+              المرفوض: <span id="totalRejected">{{ (data?.male?.rejected || 0) + (data?.female?.rejected || 0) }}</span>
+            </div>
+            <div class="legend-item under-review">
+              <span class="dot"></span>
+              تحت المراجعة: <span id="totalUnderReview">{{ (data?.male?.underReview || 0) + (data?.female?.underReview || 0) }}</span>
+            </div>
+            <div class="legend-item accepted">
+              <span class="dot"></span>
+              المقبول: <span id="totalAccepted">{{ (data?.male?.accepted || 0) + (data?.female?.accepted || 0) }}</span>
             </div>
           </div>
         </div>
-
-        <!-- Status Legend -->
-        <div class="status-legend mb-3">
-          <div class="legend-item rejected fs-6">
-            <span class="dot"></span>
-            المرفوض: {{ (data?.male?.REJECTED || 0) + (data?.female?.REJECTED || 0) }}
-          </div>
-          <div class="legend-item under-review fs-6">
-            <span class="dot"></span>
-            تحت المراجعة : {{ (data?.male?.UNDER_REVIEW || 0) + (data?.female?.UNDER_REVIEW || 0) }}
-          </div>
-          <div class="legend-item accepted fs-6">
-            <span class="dot"></span>
-            المقبول: {{ (data?.male?.ACCEPTED || 0) + (data?.female?.ACCEPTED || 0) }}
+      </div>
+    </div>
+    
+    <div class="col-12 col-md-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="card-title">
+            <i class="fas fa-chart-pie me-2"></i>
+            اجمالي طلبات الالتحاق بالنوع
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas baseChart 
+            class="mx-auto my-5"
+            [type]="'pie'"
+            [data]="genderPieData"
+            [options]="pieChartOptions">
+            </canvas>
           </div>
         </div>
-
-        <!-- Status Pie Chart -->
-        <div class="mt-3">
-          <h2 class="text-center mb-2 fs-5">توزيع حالة الطلبات</h2>
-          <div class="chart-container" style="height: 250px; min-height: 200px;">
-            <canvas baseChart
-              [type]="'pie'"
-              [data]="statusPieData"
-              [options]="statusPieOptions">
+      </div>
+    </div>
+    
+    <div class="col-12 col-md-4">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="card-title">
+            <i class="fas fa-chart-pie me-2"></i>
+            توزيع حالة الطلبات
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas baseChart 
+            class="mx-auto my-5"
+            [type]="'pie'"
+            [data]="statusPieData"
+            [options]="statusPieOptions">
             </canvas>
           </div>
         </div>
       </div>
     </div>
   </div>
-</section>
+  
+  <!-- Charts Row -->
+  <div class="row g-4">
+    <div class="col-12 col-md-6">
+      <div class="card h-100">
+        <div class="card-header">
+          <h5 class="card-title">
+            <i class="fas fa-chart-bar me-2"></i>
+            اجمالي طلبات الالتحاق بالنوع
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas baseChart 
+            [type]="'bar'"
+            [data]="genderChartData"
+            [options]="barChartOptions">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-12 col-md-6">
+      <div class="row g-4">
+        <div class="col-12 col-sm-6">
+          <div class="card h-100">
+            <div class="card-header">
+              <h5 class="card-title">
+                <i class="fas fa-male me-2"></i>
+                طلبات التحاق الذكور
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas baseChart 
+                [type]="'doughnut'"
+                [data]="maleStatusData"
+                [options]="doughnutOptions">
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-12 col-sm-6">
+          <div class="card h-100">
+            <div class="card-header">
+              <h5 class="card-title">
+                <i class="fas fa-female me-2"></i>
+                طلبات التحاق الاناث
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas baseChart 
+                [type]="'doughnut'"
+                [data]="femaleStatusData"
+                [options]="doughnutOptions">
+                </canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

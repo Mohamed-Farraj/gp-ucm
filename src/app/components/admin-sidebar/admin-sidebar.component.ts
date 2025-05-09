@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, inject } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { SharedDataService } from '../../core/services/shared-data.service';
-import { Location, NgClass, NgFor, NgIf } from '@angular/common';
+import { Location, NgClass, NgFor, NgIf, NgStyle } from '@angular/common';
 import { ArDisplayComponent } from "../ar-display/ar-display.component";
 import Aos from 'aos';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -43,6 +43,7 @@ import { ActivationEnd, NavigationEnd, Router, RouterLink, RouterLinkActive, Rou
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
+    NgStyle
   ],
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'] // تم تصحيح الاسم هنا
@@ -74,6 +75,18 @@ export class AdminSidebarComponent {
     { id: 'register-admin', icon: 'fa-user-tie', label: ' المشرفين' },
 
   ];
+
+  sidebarScale: number = 1;
+  @HostListener('window:resize')
+onResize() {
+  const vh = window.innerHeight;
+  if (vh < 800) {
+    this.sidebarScale = 0.85;
+  } else {
+    this.sidebarScale = 1;
+  }
+}
+
   
   // showSideContent = false;
   // currentRoute: string = '';
@@ -99,6 +112,7 @@ getActiveTab() {
   const activeTab = document.querySelector('.tab-pane.show.active');
   console.log('Active Tab:', activeTab?.id);
 }
+
 
 
   toggleCollapsed(): void {
