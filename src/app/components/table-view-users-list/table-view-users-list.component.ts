@@ -12,6 +12,7 @@ import { ExportFormComponent } from '../export-form/export-form.component';
 import Swal from 'sweetalert2';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import { ArService } from '../../core/services/ar.service';
+import { UploadStatusComponent } from '../upload-status/upload-status.component';
 
 @Component({
   selector: 'app-table-view-users-list',
@@ -428,6 +429,25 @@ export class TableViewUsersListComponent {
       //   });
     }
 
+    downloadSorted()
+    {
+      this.excel.downloadSorted().subscribe({
+        next: (blob: Blob) => {
+          // إنشاء ملف قابل للتحميل
+          const a = document.createElement('a');
+          const objectUrl = URL.createObjectURL(blob);
+          a.href = objectUrl;
+          a.download = 'sorted.xlsx'; // تحديد اسم الملف
+          a.click();
+          URL.revokeObjectURL(objectUrl);
+        },
+        error: (err:any) => {
+          console.error('فشل التحميل:', err);
+          // يمكنك إضافة معالجة الأخطاء هنا
+        }
+      })
+    }
+
     uploadFile() {
 
     }
@@ -456,15 +476,37 @@ export class TableViewUsersListComponent {
       
     }
 
+
+    openUploadStatusDialog():void{
+      const dialogRef = this.dialog.open(UploadStatusComponent, {
+        width: '50%', // Set the width of the dialog
+        
+        // panelClass: 'custom-dialog-container'
+
+      });
+  
+
+      dialogRef.afterClosed().subscribe((result:any) => {
+        console.log("result",result);
+        if (result) {
+          this.getApplication();
+        }
+      });
+
+      
+    }
+
     openDialog(): void {
         const dialogRef = this.dialog.open(ExportFormComponent, {
           width: '50%', // Set the width of the dialog
-          panelClass: 'custom-dialog-container'
+          // panelClass: 'custom-dialog-container'
 
         });
     
       
       }
+
+
 
     ngOnDestroy(): void {
       this.destroy$.next();

@@ -35,6 +35,25 @@
             <span>تنزيل</span>
           </button>
           <button
+            type="button"
+            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="downloadSorted()"
+          >
+            <i class="fa-solid fa-download"></i>
+            <span>التنسيق</span>
+          </button>
+
+          <button
+            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            type="button"
+            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openUploadStatusDialog()"
+          >
+            <i class="fa-solid fa-upload"></i>
+            <span> تعديل الحالة</span>
+          </button>
+
+          <button
             *ngIf="!_AuthService.getRole()?.includes('ViEW')"
             type="button"
             class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
