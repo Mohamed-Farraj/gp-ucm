@@ -60,7 +60,7 @@ export class AssignRoomsComponent {
     private readonly dialog = inject(MatDialog);
     private readonly _BuildingsService = inject(BuildingsService)
     private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
-  
+    autoAssignBtn: boolean = true;
     constructor() {
       this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
         console.log('Received data:', data);
@@ -328,6 +328,10 @@ onGenderChange(event: any): void {
               console.error(err);
             }
           });
+        }
+
+        onRoomAssigned(item: any): void {
+          this.getApplications();
         }
  
 

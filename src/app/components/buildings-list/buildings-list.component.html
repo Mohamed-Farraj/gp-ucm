@@ -64,7 +64,7 @@
       <table class="table table-hover">
         <tbody class="">
           @for (item of pagedItems|search:myModel:'name'; track $index) {
-          <tr>
+          <tr style="background-color: transparent;">
             <td
               (click)="handleClick(item)"
               class="cursor-pointer rounded-pill d-flex align-items-center"

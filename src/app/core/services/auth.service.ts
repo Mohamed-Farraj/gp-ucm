@@ -33,9 +33,16 @@ export class AuthService {
 
 
   DecideArState(UId:number,Status:string):Observable<any>{
-    return this._HttpClient.put(`${environment.baseUrl}/admin/edit/admission-requests/${UId}/status?status=${Status}`,
-      null,
-        );
+    const url = `${environment.baseUrl}/admin/edit/admission-requests/${UId}/status?status=${Status}`
+    let Body = {}
+    if(Status !== 'REJECTED')
+    {
+      Body = 
+      {
+        admissionStatusNotes: Status
+       }
+    }
+    return this._HttpClient.put(url,Body);
   }
 
 

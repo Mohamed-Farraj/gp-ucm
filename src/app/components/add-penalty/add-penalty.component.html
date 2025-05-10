@@ -25,7 +25,7 @@
               <th scope="col">اسم الجزاء</th>
               <th scope="col">سبب الجزاء</th>
               <th scope="col">تاريخ الجزاء</th>
-              <th scope="col" class="text-center" *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+              <th scope="col" class="text-center" *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')"
               >إجراءات</th>
             </tr>
           </thead>
@@ -39,7 +39,7 @@
                   <td>{{ item.dateIssued | date : "yyyy/MM/dd" }}</td>
                   <td class="text-center">
                     <button
-                    *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+                    *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')"
                       type="button"
                       (click)="deletePenalty(item.id)"
                       class="btn-delete"
