@@ -22,11 +22,25 @@ export class ArService {
   }
   
   
-    DecideArState(UId:number,Status:string):Observable<any>{
-      return this._HttpClient.put(`${environment.baseUrl}/admin/edit/admission-requests/${UId}/status?status=${Status}`,
-        null,
-          );
+  DecideArState(UId:number,Status:string,message?:string):Observable<any>{
+    const url = `${environment.baseUrl}/admin/edit/admission-requests/${UId}/status?status=${Status}`
+    let Body = {}
+    if(Status !== 'REJECTED')
+    {
+      Body = 
+      {
+        admissionStatusNotes: Status
+       }
     }
+    else
+    {
+      Body = 
+      {
+        admissionStatusNotes: message
+       }
+    }
+    return this._HttpClient.put(url,Body);
+  }
 
     getSpecificApplication(id:number):Observable<any>
     {

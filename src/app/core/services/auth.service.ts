@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
@@ -26,13 +26,16 @@ export class AuthService {
 
     
   
-  getApplications():Observable<any>
+  getApplications(currentPage?:number):Observable<any>
   {
-  return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests`);
+    let params = new HttpParams();
+    params = params.append('offset', currentPage || 0);  
+    params = params.append('limit', 20);
+  return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests`,{params});
   }
 
 
-  DecideArState(UId:number,Status:string):Observable<any>{
+  DecideArState(UId:number,Status:string,message?:string):Observable<any>{
     const url = `${environment.baseUrl}/admin/edit/admission-requests/${UId}/status?status=${Status}`
     let Body = {}
     if(Status !== 'REJECTED')
@@ -40,6 +43,13 @@ export class AuthService {
       Body = 
       {
         admissionStatusNotes: Status
+       }
+    }
+    else
+    {
+      Body = 
+      {
+        admissionStatusNotes: message
        }
     }
     return this._HttpClient.put(url,Body);

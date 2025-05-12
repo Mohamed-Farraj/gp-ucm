@@ -152,11 +152,9 @@
   </div>
 
   <h4 class="text-center">
-    عدد الطلبات:
+   اجمالي عدد الطلبات:
     {{
-      searchControl.value || selectedStatuses.length > 0 || selectedGenders.length > 0
-        ? filteredItems.length
-        : res.length
+      meta.totalElements
     }}
   </h4>
 
@@ -175,7 +173,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of pagedItems; track $index) {
+        @for (item of res; track $index) {
         <tr (click)="RowClick(item)" class="cursor-pointer align-middle">
           <td class="text-center">
             <span class="status-indicator">
@@ -232,7 +230,7 @@
         </a>
       </li>
       <li class="page-item cursor-pointer" *ngFor="let page of getDisplayedPages()" [class.active]="page === currentPage">
-        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+        <a [ngClass]="{'disabled': page === currentPage}" class="page-link" (click)="changePage(page)">{{ page }}</a>
       </li>
       <li class="page-item cursor-pointer" [class.disabled]="currentPage === totalPages">
         <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
