@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import { ArService } from '../../core/services/ar.service';
 import { UploadStatusComponent } from '../upload-status/upload-status.component';
+import { PaginationService } from '../../services/pagination.service';
 
 @Component({
   selector: 'app-table-view-users-list',
@@ -59,6 +60,7 @@ export class TableViewUsersListComponent {
     private readonly router = inject(Router);
     private readonly excel = inject(ExcelService);
     private readonly dialog = inject(MatDialog);
+    private readonly pagination = inject(PaginationService);
     private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
   
     constructor() {
@@ -137,49 +139,15 @@ export class TableViewUsersListComponent {
       this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
     }
   
-    // دالة لتحديث العناصر المعروضة حسب الصفحة الحالية
-    // updatePagedItems(): void {
-    //   const start = (this.currentPage - 1) * this.pageSize;
-    //   // استخدم المصفوفة المفلترة لو موجودة، وإلا استخدم this.res
-    //   const dataToPaginate = this.filteredItems ? this.filteredItems : this.res;
-    //   this.pagedItems = dataToPaginate.slice(start, start + this.pageSize);
-    // }
-    
-  
-    // تغيير الصفحة عند الضغط على رقم الصفحة أو Previous/Next
     changePage(page: number): void {
       if (page < 1 || page > this.totalPages) return;
       this.currentPage = page;
       this.getApplication(this.currentPage-1);
     }
   
-    // دالة لحساب الصفحات للعرض (اختياري)
     getDisplayedPages(): number[] {
-      const totalPages = this.totalPages;
-      const currentPage = this.currentPage;
-      let startPage: number, endPage: number;
-      
-      if (totalPages <= 5) {
-        startPage = 1;
-        endPage = totalPages;
-      } else {
-        if (currentPage <= 3) {
-          startPage = 1;
-          endPage = 5;
-        } else if (currentPage + 2 >= totalPages) {
-          startPage = totalPages - 4;
-          endPage = totalPages;
-        } else {
-          startPage = currentPage - 2;
-          endPage = currentPage + 2;
-        }
-      }
-      
-      const pages = [];
-      for (let i = startPage; i <= endPage; i++) {
-        pages.push(i);
-      }
-      return pages;
+      console.log(this.pagination.getDisplayedPages(this.totalPages, this.currentPage));
+      return this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
     }
     //#endregion
   

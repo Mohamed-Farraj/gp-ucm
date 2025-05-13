@@ -14,8 +14,10 @@ export class ArService {
     private readonly sharedDataService = inject(SharedDataService)
 
   constructor() { }
-  getApplications(params?: any): Observable<any> {
+  getApplications(params?: any,offset?:number): Observable<any> {
     let httpParams = new HttpParams({ fromObject: params || {} });
+    httpParams = httpParams.append('offset', offset || 0);
+    httpParams = httpParams.append('limit', 20);
     return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests`, {
       params: httpParams
     });
