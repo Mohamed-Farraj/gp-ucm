@@ -26,7 +26,9 @@
       <div class="text-danger">مطلوب</div>
       }
     </div>
-   
+  <div *ngIf="deadlineForm.hasError('dateRangeInvalid') && deadlineForm.touched">
+ <p class="text-danger"> يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء.</p> 
+</div>
        <button type="submit"
       class="btn-main me-3 ">اضافه</button>
     <button type="button" (click)="onClose()"
