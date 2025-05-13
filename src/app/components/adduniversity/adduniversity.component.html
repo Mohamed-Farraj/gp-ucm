@@ -1,0 +1,46 @@
+<!-- admin-form.component.html -->
+  <div class="container ">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="admin-form-card">
+        <div class="logo-container">
+          <div class="logo">
+            <i class="fa-solid fa-building-columns"></i>             
+        </div>
+        </div>
+        <h2 class="text-center">Add University</h2>
+        
+        <form [formGroup]="unviersityForm" (ngSubmit)="onSubmit()" class="mt-4">
+          <div class="form-floating mb-4">
+            <input 
+              type="text" 
+              class="form-control" 
+              id="name" 
+              placeholder="name of university"
+              formControlName="name"
+              [ngClass]="{'is-invalid': unviersityForm.get('name')?.invalid && unviersityForm.get('name')?.touched}">
+            <label for="name">Username</label>
+            @if (unviersityForm.get('name')?.invalid && unviersityForm.get('name')?.touched) {
+              <div class="invalid-feedback">
+                @if (unviersityForm.get('name')?.errors?.['required']) {
+                  name is required
+                } @else if (unviersityForm.get('name')?.errors?.['minlength']) {
+                  name must be at least 4 characters
+                }
+              </div>
+            }
+          </div>
+          
+        
+          
+         
+          
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">Add University</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

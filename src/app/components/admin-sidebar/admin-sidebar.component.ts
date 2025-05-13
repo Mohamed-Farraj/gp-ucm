@@ -72,7 +72,7 @@ export class AdminSidebarComponent {
     { id: 'meals', icon: 'fa-utensils', label: ' الوجبات' },
     { id: 'logs', icon: 'fa-folder', label: ' السجل' },
     { id: 'register-admin', icon: 'fa-user-tie', label: ' المشرفين' },
-
+    { id: 'add-university', icon: 'fa-building-columns', label: ' الجامعات' },
   ];
   
   // showSideContent = false;
