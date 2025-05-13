@@ -16,6 +16,11 @@ export class LoginComponent {
  private readonly _AuthService= inject(AuthService)
  private readonly router= inject(Router)
  
+
+
+  isRestPassword = false
+  isForgotPassword = false 
+
   errmsg:string='';
   showPassword: boolean = false;
 
@@ -26,41 +31,38 @@ export class LoginComponent {
 })
 
 
+
 loginSubmit(){
  if(this.loginForm.valid){
     console.log(this.loginForm.value)
     this._AuthService.setLoginForm(this.loginForm.value).subscribe({
       next:(res:any)=>{
-        if(res.body.success === false) {
-           this.errmsg=res.body.message
-        console.log(res)
-        }
-        else{
+
           setTimeout(() => {
             console.log('loginresponse',res);
             //save Token
-            localStorage.setItem('userToken' , res?.body?.data?.token)
-            localStorage.setItem('role' , res?.body?.data?.role)
-            localStorage.setItem('Uid' , res?.body?.data?.userID)
+            localStorage.setItem('userToken' , res?.data?.token)
+            localStorage.setItem('role' , res?.data?.role)
+            localStorage.setItem('Uid' , res?.data?.userID)
 
             //decode Token
-            this._AuthService.saveUserData(res.body.data)
+            this._AuthService.saveUserData(res?.data)
             //navigate to home
-            if(res?.body?.data?.role ==='USER')
+            if(res?.data?.role ==='USER')
             {
               this.router.navigate(['/hu/user-dashboard'])
             }
-            if(res?.body?.data?.role ==='ADMIN' || res?.body?.data?.role ==='SUPERADMIN' || res?.body?.data?.role ==='Edit_ADMIN')
+            if(res?.data?.role.includes('ADMIN'))
             {
               this.router.navigate(['/admin/'])
             }
           }, 1000);
-        }
-       
+
+
       },
 
       error:(err:HttpErrorResponse)=>{
-        
+
         console.log(err)
 
       }
@@ -73,6 +75,9 @@ loginSubmit(){
   }
  
 }
+
+
+
 
 togglePasswordVisibility() {
   this.showPassword = !this.showPassword;

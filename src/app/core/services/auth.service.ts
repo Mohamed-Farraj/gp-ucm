@@ -50,6 +50,16 @@ export class AuthService {
    return this._HttpClient.post(`${environment.baseUrl}/public/login` , data)
   }
 
+  setResetPassword(data:object):Observable<any>
+  {
+   return this._HttpClient.post(`${environment.baseUrl}/public/reset-password` , data)
+  }
+
+
+ setForgotPassword(data:object):Observable<any>
+  {
+   return this._HttpClient.post(`${environment.baseUrl}/public/forgot-password` , data)
+  }
 
   logout(){
     localStorage.removeItem('userToken')
