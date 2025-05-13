@@ -36,6 +36,7 @@ export class TableViewUsersListComponent {
       pageSize: number = 20;
       totalPages: number = 0;
       pages: number[] = [];
+      currentPagesArray:number[] = [];
       meta: any = {};
       //#endregion
      
@@ -47,7 +48,7 @@ export class TableViewUsersListComponent {
         filteredItems: any[] = [];
         sortedApplications: any[] = [];
         selectedSource: 'all' | 'sorted' = 'all'; // القيمة الافتراضية
-        
+        myFilters: any = {};
         //#endregion
         
         activeTab: string = 'home';
@@ -89,10 +90,10 @@ export class TableViewUsersListComponent {
     }
 
 
-    getApplication(offset?: number) {
+    getApplication({ filters, offset }: { filters?: any, offset?: number } = {}) {
+      console.log("this is getApplication",offset);
 
-
-      this._AuthService.getApplications(offset).subscribe({
+      this.ar.getApplications(filters,offset).subscribe({
         next: (res: any) => {
          
           console.log(res);
@@ -100,6 +101,8 @@ export class TableViewUsersListComponent {
           this.meta = res.meta;
           this.filteredItems = this.res;
           console.log(this.res);
+        if(this.sortControl.value === 'reverse')
+          this.res = [...this.res.reverse()];
           this.initPagination();
         },
         error: (err:any) => { console.log(err); },
@@ -137,17 +140,23 @@ export class TableViewUsersListComponent {
     initPagination(): void {
       this.totalPages = this.meta.totalPages;
       this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      this.currentPagesArray = this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
     }
   
     changePage(page: number): void {
       if (page < 1 || page > this.totalPages) return;
       this.currentPage = page;
-      this.getApplication(this.currentPage-1);
+      if(this.sortControl.value === 'normal') 
+        this.getApplication({'filters':this.myFilters,'offset':this.currentPage-1});
+      else
+      {
+        this.getApplication({'filters':this.myFilters,'offset':this.totalPages-this.currentPage});
+      }
     }
   
     getDisplayedPages(): number[] {
       console.log(this.pagination.getDisplayedPages(this.totalPages, this.currentPage));
-      return this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
+      return this.currentPagesArray;
     }
     //#endregion
   
@@ -342,64 +351,46 @@ export class TableViewUsersListComponent {
     
       // تطبيق فلترة الـ checkbox لحالة status
       if (this.selectedStatuses.length > 0) {
-        filtered = filtered.filter((item: any) => this.selectedStatuses.includes(item.status));
+        this.myFilters = {
+          ...this.myFilters,        
+          status: this.selectedStatuses.join(','), 
+        };
+        
+      }else {
+        // إزالة الفلتر عند عدم وجود حالات مختارة
+        if (this.myFilters?.status) {
+          delete this.myFilters.status;
+        }
       }
-    
+      
       // Gender filter
-  if (this.selectedGenders.length > 0) {
-    filtered = filtered.filter((item: any) => 
-      this.selectedGenders.includes(item.gender)
-    );
-  }
+      if (this.selectedGenders.length == 1) {
+        this.myFilters = {
+          ...this.myFilters,        
+          gender: this.selectedGenders.join(','), 
+        };
+      }else{ 
+        // إزالة الفلتر عند عدم وجود حالات مختارة
+        if (this.myFilters?.gender) {
+          delete this.myFilters.gender;
+        }
+      }
+ 
   
   
        // تطبيق الفرز: استخدام نسخة من المصفوفة لعكس الترتيب لتجنب التعديل على المصفوفة الأصلية
        const sortOption = this.sortControl.value;
-
+       let actualOffset = (this.currentPage - 1);
        if (sortOption === 'reverse') {
-         filtered = [...filtered].reverse(); // Create a new array to avoid mutation issues
+        this.getApplication({filters: this.myFilters, offset: this.totalPages-actualOffset-1});
+        return;
        }
 
-      // احفظ النتيجة المفلترة في this.filteredItems
-  
-      this.filteredItems = filtered;
-    
-      // إعادة تعيين Pagination بناءً على النتائج المفلترة
-      this.currentPage = 1;
-      this.totalPages = Math.ceil(filtered.length / this.pageSize);
-      this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-      // this.updatePagedItems();
-    }
-  
-   
-    removeSelection()
-    {
-      this.dataService.changeStudentData(null);
-    }
 
-    deleteAr(id:number,id2:number)
-    {
-        console.log("this is delete button");
+   
+      this.getApplication({filters: this.myFilters, offset: this.currentPage - 1});
     }
   
-    downloadFile() {
-      // this.excel.exportAdmissionRequests('ALL','ALL')
-      //   .subscribe({
-      //     next: (blob: Blob) => {
-      //       // إنشاء ملف قابل للتحميل
-      //       const a = document.createElement('a');
-      //       const objectUrl = URL.createObjectURL(blob);
-      //       a.href = objectUrl;
-      //       a.download = 'admission_requests.xlsx'; // تحديد اسم الملف
-      //       a.click();
-      //       URL.revokeObjectURL(objectUrl);
-      //     },
-      //     error: (err:any) => {
-      //       console.error('فشل التحميل:', err);
-      //       // يمكنك إضافة معالجة الأخطاء هنا
-      //     }
-      //   });
-    }
 
     downloadSorted()
     {

@@ -16,8 +16,9 @@ export class ArService {
   constructor() { }
   getApplications(params?: any,offset?:number): Observable<any> {
     let httpParams = new HttpParams({ fromObject: params || {} });
-    httpParams = httpParams.append('offset', offset || 0);
+    httpParams = httpParams.append('offset', offset ?? 0);
     httpParams = httpParams.append('limit', 20);
+    console.log('params in service',params,offset);
     return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests`, {
       params: httpParams
     });
