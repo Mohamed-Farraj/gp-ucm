@@ -6,6 +6,7 @@ import { HomeService } from '../../services/guest/home.service';
 import { NgIf } from '@angular/common';
 import { ImplicitReceiver } from '@angular/compiler';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-add-guide-lines',
@@ -16,6 +17,8 @@ import Swal from 'sweetalert2';
 })
 export class AddGuideLinesComponent implements OnInit {
   private readonly _formBuilder= inject(FormBuilder)
+  public readonly _AuthService = inject(AuthService)
+
   private readonly _GuidelinsService=inject(GuidelinsService)
   private readonly _HomeService=inject(HomeService)
 

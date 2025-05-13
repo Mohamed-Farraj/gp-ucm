@@ -2,6 +2,7 @@
   <div class="card-header d-flex align-items-center justify-content-between mb-4">
     <h4 class="section-title">اضافه وتعديل مواعيد التقديم</h4>
     <button 
+    *ngIf="!_AuthService.getRole()?.includes('ViEW')"
       type="button" 
       (click)="openDialog()"
       class="btn-add"
@@ -17,7 +18,7 @@
           <th scope="col">تاريخ بدء التـقديم</th>
           <th scope="col">تاريخ انتـهاء التـقديم</th>
           <th scope="col">نـوع الطالب</th>
-          <th scope="col" class="text-center">إجراءات</th>
+          <th *ngIf="!_AuthService.getRole()?.includes('ViEW')" scope="col" class="text-center">إجراءات</th>
         </tr>
       </thead>
       <tbody>
@@ -27,7 +28,7 @@
               <td>{{item.applicationStartDate}}</td>
               <td>{{item.applicationEndDate}}</td>
               <td>{{item.studentType}}</td>
-              <td class="actions-cell">
+              <td class="actions-cell" *ngIf="!_AuthService.getRole()?.includes('ViEW')">
                 <button 
                   type="button" 
                   (click)="loadDeadline(item)"
@@ -36,6 +37,7 @@
                   <i class="fas fa-edit me-1"></i>تعديل
                 </button>
                 <button 
+                *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')"
                   type="button" 
                   (click)="deleteDeadline(item.id)"
                   class="btn-delete-text"

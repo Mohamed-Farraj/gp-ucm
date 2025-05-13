@@ -56,6 +56,17 @@ export class ExcelService {
  
       return this.http.post(`${environment.baseUrl}/admin/upload-admission-request`, formData,{
         reportProgress: true,
+        responseType: 'text' as 'json',
+        observe: 'response'
+      });
+    }
+    uploadStudentsStatus(formData: FormData): Observable<any> {
+ 
+      return this.http.post(`${environment.baseUrl}/admin/upload-admission-request-status`,
+         formData,
+         {
+        reportProgress: true,
+        responseType: 'text' as 'json',
         observe: 'response'
       });
     }
@@ -86,6 +97,20 @@ export class ExcelService {
       }).pipe(
         catchError(error => {
           console.error('Error downloading template:', error);
+          throw error;
+        })
+      );
+    }
+    downloadSorted(): Observable<Blob> {
+      const apiUrl = `${environment.baseUrl}/admin/view/download-sorted-applicants`;
+      return this.http.get(apiUrl, {
+        responseType: 'blob',
+        headers: new HttpHeaders({
+          'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        })
+      }).pipe(
+        catchError(error => {
+          console.error('Error downloading sorted:', error);
           throw error;
         })
       );

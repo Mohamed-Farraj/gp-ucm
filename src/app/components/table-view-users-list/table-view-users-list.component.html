@@ -1,6 +1,6 @@
 <section>
   <div class="container-fluid py-3">
-    <div class="row g-3">
+    <div class="row g-3 justify-content-center">
       <!-- Search input -->
       <div class="col-12 col-md-4">
         <div class="input-group">
@@ -16,13 +16,57 @@
       <!-- Sort dropdown -->
       <div class="col-12 col-md-2">
         <select class="form-select" [formControl]="sortControl">
-          <option value="normal">الاقدم اولا</option>
-          <option value="reverse">الاحدث اولا</option>
+          <option value="normal">{{selectedSource == 'all' ? 'الاقدم اولا' : 'المستحق اولا'}}</option>
+          <option value="reverse">{{selectedSource == 'all' ? 'الاحدث اولا' : 'غير المستحق اولا'}}</option>
         </select>
       </div>
   
+      
+  
+      <!-- Action buttons -->
+      <div class="col-12 col-md-4">
+        <div class="d-flex gap-2">
+          <button
+            type="button"
+            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openDialog()"
+          >
+            <i class="fa-solid fa-download"></i>
+            <span>تنزيل</span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="downloadSorted()"
+          >
+            <i class="fa-solid fa-download"></i>
+            <span>التنسيق</span>
+          </button>
+
+          <button
+            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            type="button"
+            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openUploadStatusDialog()"
+          >
+            <i class="fa-solid fa-upload"></i>
+            <span> تعديل الحالة</span>
+          </button>
+
+          <button
+            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            type="button"
+            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openUploadDialog()"
+          >
+            <i class="fa-solid fa-upload"></i>
+            <span>الاستعلام الامني</span>
+          </button>
+        </div>
+      </div>
+
       <!-- Status filters -->
-      <div class="col-12 col-md-3">
+      <div class="col-12 col-md-4">
         <div class="btn-group w-100" role="group" aria-label="Status filter buttons">
           <!-- تحت المراجعة -->
           <input
@@ -66,7 +110,7 @@
       </div>
   
       <!-- Gender filters -->
-      <div class="col-12 col-md-1">
+      <div class="col-12 col-md-2">
         <div class="btn-group w-100" role="group" aria-label="Gender filter buttons">
           <!-- Male -->
           <input
@@ -95,37 +139,22 @@
           </label>
         </div>
       </div>
-  
-      <!-- Action buttons -->
-      <div class="col-12 col-md-2">
-        <div class="d-flex gap-2">
-          <button
-            type="button"
-            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
-            (click)="openDialog()"
-          >
-            <i class="fa-solid fa-download"></i>
-            <span>تنزيل</span>
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
-            (click)="openUploadDialog()"
-          >
-            <i class="fa-solid fa-upload"></i>
-            <span>الاستعلام الامني</span>
-          </button>
-        </div>
+
+
+      <div class="btn-group mb-3 col-md-4" role="group" aria-label="Data Source Toggle">
+        <input type="radio" class="btn-check source" name="dataSource" id="allData" [(ngModel)]="selectedSource" value="all" (change)="onSourceChange()">
+        <label class="btn btn-outline-primary" for="allData">كل الطلبات</label>
+      
+        <input type="radio" class="btn-check source" name="dataSource" id="sortedData" [(ngModel)]="selectedSource" value="sorted" (change)="onSourceChange()">
+        <label class="btn btn-outline-primary" for="sortedData">الطلبات مرتبة تبعا للتنسيق</label>
       </div>
     </div>
   </div>
 
   <h4 class="text-center">
-    عدد الطلبات:
+   اجمالي عدد الطلبات:
     {{
-      searchControl.value || selectedStatuses.length > 0 || selectedGenders.length > 0
-        ? filteredItems.length
-        : res.length
+      meta.totalElements
     }}
   </h4>
 
@@ -140,11 +169,11 @@
           <th scope="col">العنوان</th>
           <th scope="col">الكلية</th>
           <th scope="col">الفرقة</th>
-          <th scope="col" class="text-center">الإجراءات</th>
+          <th scope="col" class="text-center" *ngIf="!_AuthService.getRole()?.includes('ViEW')">الإجراءات</th>
         </tr>
       </thead>
       <tbody>
-        @for (item of pagedItems; track $index) {
+        @for (item of res; track $index) {
         <tr (click)="RowClick(item)" class="cursor-pointer align-middle">
           <td class="text-center">
             <span class="status-indicator">
@@ -154,13 +183,7 @@
                 [class.text-warning]="item?.status === 'UNDER_REVIEW'"
                 class="fa-solid fa-circle"
               ></i>
-              <!-- <span class="status-text d-none d-md-inline small ms-1 fw-bold" 
-                [class.text-success]="item?.status === 'ACCEPTED'"
-                [class.text-danger]="item?.status === 'REJECTED'"
-                [class.text-warning]="item?.status === 'UNDER_REVIEW'">
-                {{ item?.status === 'ACCEPTED' ? 'مقبول' : 
-                   item?.status === 'REJECTED' ? 'مرفوض' : 'تحت المراجعة' }}
-              </span> -->
+
             </span>
           </td>
           <th scope="row" class="fw-medium">{{ item?.nationalId }}</th>
@@ -169,8 +192,8 @@
           <td>{{ item?.residenceAddress }}</td>
           <td>{{ item?.faculty }}</td>
           <td>{{ getLevel(item?.level) }}</td>
-          <td>
-            <div class="d-flex flex-wrap gap-2 justify-content-center">
+          <td *ngIf="!_AuthService.getRole()?.includes('ViEW')">
+            <div class="d-flex flex-wrap gap-2 justify-content-center" >
               <button *ngIf="item?.securityCheckStatues === 'ACCEPTED'" 
                 [class.d-none]="item?.status === 'ACCEPTED'" 
                 (click)="confirmation(item?.userId,'ACCEPTED',item);$event.stopPropagation()" 
@@ -207,7 +230,7 @@
         </a>
       </li>
       <li class="page-item cursor-pointer" *ngFor="let page of getDisplayedPages()" [class.active]="page === currentPage">
-        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+        <a [ngClass]="{'disabled': page === currentPage}" class="page-link" (click)="changePage(page)">{{ page }}</a>
       </li>
       <li class="page-item cursor-pointer" [class.disabled]="currentPage === totalPages">
         <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">

@@ -37,7 +37,7 @@ loginSubmit(){
     console.log(this.loginForm.value)
     this._AuthService.setLoginForm(this.loginForm.value).subscribe({
       next:(res:any)=>{
-
+      
           setTimeout(() => {
             console.log('loginresponse',res);
             //save Token
@@ -57,8 +57,8 @@ loginSubmit(){
               this.router.navigate(['/admin/'])
             }
           }, 1000);
-
-
+        
+       
       },
 
       error:(err:HttpErrorResponse)=>{

@@ -59,15 +59,12 @@
 </div>
 
   <section dir="rtl" style="padding-inline-end: 80px">
+    
     <section
+      [ngStyle]="{'transform': 'scale(' + sidebarScale + ')'}"
       class="position-fixed fixed-top sidebar gap-3 gap-lg-4 px-3 py-3 d-flex flex-column"
       [class.collapsed]="isCollapsed"
     >
-      <!-- <button class="toggle-btn btn"
-              (click)="toggleCollapsed()"
-              >
-        <i class="fas fa-xl fa-bars"></i>
-      </button> -->
       <button class="toggle-btn btn"
               type="button" data-bs-toggle="offcanvas"
               data-bs-target="#offcanvasWithBothOptions"
@@ -75,26 +72,10 @@
               >
         <i class="fas fa-xl fa-bars"></i>
       </button>
-      <div
-        class="logo w-100 d-flex justify-content-center align-content-center"
-      >
-        <div
-          class="d-flex align-content-center"
-          [class.collapsed]="isCollapsed"
-        >
-          <h1 class="m-auto fw-bolder title">مسكني</h1>
-        </div>
-        <div class="image me-auto">
-          <img
-            src="./assets/light logo.png"
-            style="width: clamp(5rem, 6rem, 8rem)"
-          />
-        </div>
-      </div>
       <div dir="rtl">
         <div>
           <div
-            class="list-group d-flex flex-column gap-3"
+            class="list-group d-flex flex-column gap-2"
             id="list-tab"
             role="tablist"
           >
@@ -127,16 +108,6 @@
     </section>
 
     <!-- --------------------------------------------------------------------------- -->
-
-    <!-- 
-    <section  class="col-md-3 py-3 px-3 side-content">
-  
-    </section>
-    
-    <section  class="col-md-7 flex-grow-1 main-content">
-
-    </section> 
-    -->
     <router-outlet></router-outlet>
     
     <!----------------------------------------------------------------- ------------- -->

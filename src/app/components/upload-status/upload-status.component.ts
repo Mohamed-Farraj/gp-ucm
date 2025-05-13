@@ -1,16 +1,16 @@
-import { Component, inject } from '@angular/core';
-import { ExcelService } from '../../core/services/excel.service';
 import { NgClass, NgIf } from '@angular/common';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, inject } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ExcelService } from '../../core/services/excel.service';
 
 @Component({
-  selector: 'app-upload-form',
+  selector: 'app-upload-status',
   standalone: true,
   imports: [NgIf,NgClass],
-  templateUrl: './upload-form.component.html',
-  styleUrl: './upload-form.component.scss'
+  templateUrl: './upload-status.component.html',
+  styleUrl: './upload-status.component.scss'
 })
-export class UploadFormComponent {
+export class UploadStatusComponent {
 
   excel = inject(ExcelService);
   dialogRef = inject(MatDialogRef);
@@ -84,7 +84,7 @@ private startUpload(file: File) {
   const formData = new FormData();
   formData.append('file', file, file.name);
 
-  this.excel.importAdmissionRequests(formData).subscribe({
+  this.excel.uploadStudentsStatus(formData).subscribe({
     next: (response) => this.handleUploadSuccess(response),
     error: (err) => this.handleUploadError(err)
   });
@@ -145,6 +145,7 @@ downloadTemp() {
   });
 
 }
+
 
 
 }
