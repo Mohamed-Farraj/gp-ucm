@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDataService } from '../../core/services/shared-data.service';
@@ -13,11 +13,12 @@ import { AssignRowComponent } from "../assign-row/assign-row.component";
 import { ArService } from '../../core/services/ar.service';
 import { UploadFormComponent } from '../upload-form/upload-form.component';
 import { UploadAssignRoomsComponent } from '../upload-assign-rooms/upload-assign-rooms.component';
+import { PaginationService } from '../../services/pagination.service';
 
 @Component({
   selector: 'app-assign-rooms',
   standalone: true,
-  imports: [NgFor, NgIf, FormsModule, ReactiveFormsModule, AssignRowComponent],
+  imports: [NgFor, NgIf,NgClass, FormsModule, ReactiveFormsModule, AssignRowComponent],
   templateUrl: './assign-rooms.component.html',
   styleUrl: './assign-rooms.component.scss'
 })
@@ -38,6 +39,7 @@ export class AssignRoomsComponent {
       pageSize: number = 15;
       totalPages: number = 0;
       pages: number[] = [];
+      meta: any = {}; 
       //#endregion
      
           //#region filtration attributes
@@ -58,9 +60,10 @@ export class AssignRoomsComponent {
     private readonly router = inject(Router);
     private readonly excel = inject(ExcelService);
     private readonly dialog = inject(MatDialog);
+    private readonly pagination = inject(PaginationService);
     private readonly _BuildingsService = inject(BuildingsService)
     private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
-  
+    autoAssignBtn: boolean = true;
     constructor() {
       this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
         console.log('Received data:', data);
@@ -113,17 +116,19 @@ export class AssignRoomsComponent {
       });
     }
 
-    getApplications()
+    getApplications(offset?: number)
     {
-       this.ar.getApplications({ status: 'ACCEPTED',securityCheck:'ACCEPTED',hasPenalty:'false' }).subscribe({
+       this.ar.getApplications({ status: 'ACCEPTED',securityCheck:'ACCEPTED',hasPenalty:'false' },offset).subscribe({
         next: (res: any) => {
           this.getBuildings();
           console.log(res);
           this.res = res.data;
           this.filteredItems = this.res;
           console.log(this.res);
+          this.meta = res.meta;
+          console.log(this.meta);
           this.initPagination();
-          this.applyFilters();
+          // this.applyFilters();
 
         },
         error: (err:any) => { console.log(err); },
@@ -146,9 +151,9 @@ export class AssignRoomsComponent {
    
     //#region pagination methods
     initPagination(): void {
-      this.totalPages = Math.ceil(this.res.length / this.pageSize);
+      this.totalPages = this.meta.totalPages;
       this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-      this.updatePagedItems();
+      console.log('totalPages',this.pages);
     }
   
     // دالة لتحديث العناصر المعروضة حسب الصفحة الحالية
@@ -164,36 +169,13 @@ export class AssignRoomsComponent {
     changePage(page: number): void {
       if (page < 1 || page > this.totalPages) return;
       this.currentPage = page;
-      this.updatePagedItems();
+      this.getApplications(this.currentPage-1);
     }
   
     // دالة لحساب الصفحات للعرض (اختياري)
     getDisplayedPages(): number[] {
-      const totalPages = this.totalPages;
-      const currentPage = this.currentPage;
-      let startPage: number, endPage: number;
-      
-      if (totalPages <= 5) {
-        startPage = 1;
-        endPage = totalPages;
-      } else {
-        if (currentPage <= 3) {
-          startPage = 1;
-          endPage = 5;
-        } else if (currentPage + 2 >= totalPages) {
-          startPage = totalPages - 4;
-          endPage = totalPages;
-        } else {
-          startPage = currentPage - 2;
-          endPage = currentPage + 2;
-        }
-      }
-      
-      const pages = [];
-      for (let i = startPage; i <= endPage; i++) {
-        pages.push(i);
-      }
-      return pages;
+      console.log(this.pagination.getDisplayedPages(this.totalPages, this.currentPage));
+      return this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
     }
     //#endregion
   
@@ -328,6 +310,10 @@ onGenderChange(event: any): void {
               console.error(err);
             }
           });
+        }
+
+        onRoomAssigned(item: any): void {
+          this.getApplications();
         }
  
 

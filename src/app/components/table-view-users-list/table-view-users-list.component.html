@@ -35,6 +35,25 @@
             <span>تنزيل</span>
           </button>
           <button
+            type="button"
+            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="downloadSorted()"
+          >
+            <i class="fa-solid fa-download"></i>
+            <span>التنسيق</span>
+          </button>
+
+          <button
+            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            type="button"
+            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openUploadStatusDialog()"
+          >
+            <i class="fa-solid fa-upload"></i>
+            <span> تعديل الحالة</span>
+          </button>
+
+          <button
             *ngIf="!_AuthService.getRole()?.includes('ViEW')"
             type="button"
             class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
@@ -133,11 +152,9 @@
   </div>
 
   <h4 class="text-center">
-    عدد الطلبات:
+   اجمالي عدد الطلبات:
     {{
-      searchControl.value || selectedStatuses.length > 0 || selectedGenders.length > 0
-        ? filteredItems.length
-        : res.length
+      meta.totalElements
     }}
   </h4>
 
@@ -156,7 +173,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (item of pagedItems; track $index) {
+        @for (item of res; track $index) {
         <tr (click)="RowClick(item)" class="cursor-pointer align-middle">
           <td class="text-center">
             <span class="status-indicator">
@@ -213,7 +230,7 @@
         </a>
       </li>
       <li class="page-item cursor-pointer" *ngFor="let page of getDisplayedPages()" [class.active]="page === currentPage">
-        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+        <a [ngClass]="{'disabled': page === currentPage}" class="page-link" (click)="changePage(page)">{{ page }}</a>
       </li>
       <li class="page-item cursor-pointer" [class.disabled]="currentPage === totalPages">
         <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">

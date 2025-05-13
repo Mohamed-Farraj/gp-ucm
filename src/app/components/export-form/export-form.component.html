@@ -1,74 +1,82 @@
 <!-- export-form.component.html -->
-<div dir="rtl" class="container-fluid my-5">
+<div dir="rtl" class="container-fluid my-5 form-container">
   <div class="row justify-content-center">
     <div class="col-md-10">
       <form class="export-form">
 
-
-
-
-<div class="card mb-4">
-  <div class="card-header bg-main text-white">
-    <h5 class="mb-0">اختيار الأعمدة</h5>
-  </div>
-  <div class="card-body d-flex gap-3">
-    <div class="col-md-12">
-      <select
+        
+        <!-- Column Selection -->
+        <div class="card mb-4">
+          <div class="card-header bg-main text-white">
+            <h5 class="mb-0">اختيار الأعمدة</h5>
+          </div>
+          <div class="card-body d-flex gap-3">
+            <div class="col-md-12">
+              <select
                 name="column"
                 class="form-control form-select"
                 id="column"
                 [(ngModel)]="selectedKey"
                 (change)="addColumn()"
               >
-        <option value="ALL" selected >الاعمدة الافتراضية </option>
-        <option value="fullName">الاسم كامل</option>
-        <option value="email">البريد الالكتروني</option>
-        <option value="universityName">الجامعة</option>
-        <option value="nationalId">الرقم القومي</option>
-        <option value="mobileNumber">رقم الهاتف</option>
-        <option value="faculty">الكلية</option>
-        <option value="level">السنة الدراسية</option>
-        <option value="dateOfBirth">تاريخ الميلاد</option>
-        <option value="studentType">النوع</option>
-        <option value="residenceAddress">عنوان السكن</option>
-        <option value="detailedAddress">العنوان التفصيلي</option>
-        <option value="placeOfBirth">محل الميلاد</option>
-        <option value="gender">النوع</option>
-        <option value="religion">الديانه</option>
-        <option value="fatherName">اسم الاب</option>
-        <option value="fatherNationalId">الرقم القومى الاب</option>
-        <option value="fatherOccupation">وظيفه الاب</option>
-        <option value="fatherPhoneNumber">رقم هاتف الاب</option>
-        <option value="guardianName">اسم الوصي</option>
-        <option value="guardianNationalId">الرقم القومى الوصي</option>
-        <option value="guardianPhoneNumber">رقم هاتف الوصي</option>
-        <option value="previousAcademicYearGpa">المعدل التراكمي</option>
-        <option value="status">حاله الطلب</option>
-        <option value="housingInPreviousYears">السكن في السنوات السابقة</option>
-        <option value="familyAbroad">الأسرة في الخارج</option>
-        <option value="specialNeeds">ذوي الاحتياجات الخاصة</option>
-        <option value="secondaryDivision">المرحلة الثانوية</option>
-        <option value="totalGradesHighSchool">مجموع الثانوية العامة</option>
-        <option value="passportNumber">رقم الجواز</option>
-        <option value="passportIssuingAuthority">جهة إصدار الجواز</option>
-        <option value="securityCheck">الفحص الامني</option>
-    </select>
+                <option value="ALL" selected>الاعمدة الافتراضية</option>
+                <option value="fullName">الاسم كامل</option>
+                <option value="email">البريد الالكتروني</option>
+                <option value="universityName">الجامعة</option>
+                <option value="nationalId">الرقم القومي</option>
+                <option value="mobileNumber">رقم الهاتف</option>
+                <option value="faculty">الكلية</option>
+                <option value="level">السنة الدراسية</option>
+                <option value="dateOfBirth">تاريخ الميلاد</option>
+                <option value="studentType">النوع</option>
+                <option value="residenceAddress">عنوان السكن</option>
+                <option value="detailedAddress">العنوان التفصيلي</option>
+                <option value="placeOfBirth">محل الميلاد</option>
+                <option value="gender">النوع</option>
+                <option value="religion">الديانه</option>
+                <option value="fatherName">اسم الاب</option>
+                <option value="fatherNationalId">الرقم القومى الاب</option>
+                <option value="fatherOccupation">وظيفه الاب</option>
+                <option value="fatherPhoneNumber">رقم هاتف الاب</option>
+                <option value="guardianName">اسم الوصي</option>
+                <option value="guardianNationalId">الرقم القومى الوصي</option>
+                <option value="guardianPhoneNumber">رقم هاتف الوصي</option>
+                <option value="previousAcademicYearGpa">المعدل التراكمي</option>
+                <option value="status">حاله الطلب</option>
+                <option value="housingInPreviousYears">
+                  السكن في السنوات السابقة
+                </option>
+                <option value="familyAbroad">الأسرة في الخارج</option>
+                <option value="specialNeeds">ذوي الاحتياجات الخاصة</option>
+                <option value="secondaryDivision">المرحلة الثانوية</option>
+                <option value="totalGradesHighSchool">
+                  مجموع الثانوية العامة
+                </option>
+                <option value="passportNumber">رقم الجواز</option>
+                <option value="passportIssuingAuthority">
+                  جهة إصدار الجواز
+                </option>
+                <option value="securityCheck">الفحص الامني</option>
+              </select>
 
-      <div class="mt-2" *ngIf="selectedColumns.length > 0">
-        <div class="d-flex flex-wrap gap-2">
-          <div *ngFor="let key of selectedColumns" 
-               class="badge text-white d-flex align-items-center">
-            {{ columnHeaders[key] }}
-            <button class="btn-close btn-close-white ms-2" 
-                    (click)="removeColumn(key)" 
-                    aria-label="إزالة"></button>
+              <div class="mt-2" *ngIf="selectedColumns.length > 0">
+                <div class="d-flex flex-wrap gap-2">
+                  <div
+                    *ngFor="let key of selectedColumns"
+                    class="badge text-white d-flex align-items-center"
+                  >
+                    {{ columnHeaders[key] }}
+                    <button
+                      class="btn-close btn-close-white ms-2"
+                      (click)="removeColumn(key)"
+                      aria-label="إزالة"
+                    ></button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-        
 
         <!-- Faculty Selection -->
         <div class="card mb-4">
@@ -198,11 +206,11 @@
                     class="form-check-input"
                     type="radio"
                     name="gender"
-                    id="{{ gender.value }}"
+                    id="gender{{gender.value}}"
                     [value]="gender.value"
                     [(ngModel)]="selectedGender"
                   />
-                  <label class="form-check-label" [for]="gender.value">
+                  <label class="form-check-label" [for]="'gender'+gender.value">
                     {{ gender.label }}
                   </label>
                 </div>
@@ -224,12 +232,12 @@
                     class="form-check-input"
                     type="checkbox"
                     name="status"
-                    [id]="status.value"
+                    [id]="'status'+status.value"
                     [value]="status.value"
                     [checked]="isSelected(status.value)"
                     (change)="onStatusChange(status.value, $event)"
                   />
-                  <label class="form-check-label" [for]="status.value">
+                  <label class="form-check-label" [for]="'status'+status.value">
                     {{ status.label }}
                   </label>
                 </div>
@@ -241,7 +249,7 @@
         <!-- Security Selection -->
         <div class="card mb-4">
           <div class="card-header bg-main text-white">
-            <h5 class="mb-0"> الاستعلام الامني</h5>
+            <h5 class="mb-0">الاستعلام الامني</h5>
           </div>
           <div class="card-body">
             <div class="row">
@@ -251,12 +259,12 @@
                     class="form-check-input"
                     type="checkbox"
                     name="security"
-                    [id]="security.value"
+                    [id]="'security'+security.value"
                     [value]="security.value"
                     [checked]="isSelectedSecurity(security.value)"
                     (change)="onSecurityChange(security.value, $event)"
                   />
-                  <label class="form-check-label" [for]="security.value">
+                  <label class="form-check-label" [for]="'security'+security.value">
                     {{ security.label }}
                   </label>
                 </div>
@@ -278,11 +286,11 @@
                     class="form-check-input"
                     type="radio"
                     name="penalty"
-                    id="{{ penalty.value }}"
+                    id="penalty{{penalty.value}}"
                     [value]="penalty.value"
                     [(ngModel)]="selectedPenalty"
                   />
-                  <label class="form-check-label" [for]="penalty.value">
+                  <label class="form-check-label" [for]="'penalty'+penalty.value">
                     {{ penalty.label }}
                   </label>
                 </div>
@@ -310,8 +318,6 @@
             </span>
           </button>
         </div>
-
-        
       </form>
     </div>
   </div>

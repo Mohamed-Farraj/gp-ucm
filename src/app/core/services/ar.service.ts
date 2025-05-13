@@ -14,19 +14,36 @@ export class ArService {
     private readonly sharedDataService = inject(SharedDataService)
 
   constructor() { }
-  getApplications(params?: any): Observable<any> {
+  getApplications(params?: any,offset?:number): Observable<any> {
     let httpParams = new HttpParams({ fromObject: params || {} });
+    httpParams = httpParams.append('offset', offset ?? 0);
+    httpParams = httpParams.append('limit', 20);
+    console.log('params in service',params,offset);
     return this._HttpClient.get(`${environment.baseUrl}/admin/view/admission-requests`, {
       params: httpParams
     });
   }
   
   
-    DecideArState(UId:number,Status:string):Observable<any>{
-      return this._HttpClient.put(`${environment.baseUrl}/admin/edit/admission-requests/${UId}/status?status=${Status}`,
-        null,
-          );
+  DecideArState(UId:number,Status:string,message?:string):Observable<any>{
+    const url = `${environment.baseUrl}/admin/edit/admission-requests/${UId}/status?status=${Status}`
+    let Body = {}
+    if(Status !== 'REJECTED')
+    {
+      Body = 
+      {
+        admissionStatusNotes: Status
+       }
     }
+    else
+    {
+      Body = 
+      {
+        admissionStatusNotes: message
+       }
+    }
+    return this._HttpClient.put(url,Body);
+  }
 
     getSpecificApplication(id:number):Observable<any>
     {

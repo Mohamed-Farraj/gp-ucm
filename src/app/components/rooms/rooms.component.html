@@ -82,6 +82,7 @@
             </div>
             <div class="col-sm-6 d-flex justify-content-end">
               <button
+               *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')"
                 (click)="
                   deleteBuilding(
                     selectedBuilding?.university?.id,
@@ -136,7 +137,7 @@
                 تعديل
               </button>
             </td> -->
-            <td *ngIf="!_AuthService.getRole()?.includes('ViEW')">
+            <td *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')">
               <button
                 (click)="deleteRoom(item?.building?.id, item?.id)"
                 class="btn px-4 rounded rounded-pill btn-danger"

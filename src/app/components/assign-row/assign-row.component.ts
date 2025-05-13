@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, input, Input, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject, filter, takeUntil } from 'rxjs';
@@ -58,7 +58,8 @@ export class AssignRowComponent {
       private readonly dialog = inject(MatDialog);
       private readonly _BuildingsService = inject(BuildingsService)
       private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
-      
+      @Output() roomAssigned = new EventEmitter<void>();
+
 
       ngOnInit(): void {
 
@@ -129,6 +130,7 @@ export class AssignRowComponent {
         this._BuildingsService.assignStudentSpecificRoom(this.student?.userId,RoomId).subscribe({
           next: (res:any) => {
             console.log("resRooms assign",res);
+            this.roomAssigned.emit(); // إخطار للـ parent
             this.getSpecificStudent();
           },
           error: (err:any) => {

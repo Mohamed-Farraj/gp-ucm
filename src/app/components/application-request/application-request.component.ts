@@ -55,7 +55,7 @@ export class ApplicationRequestComponent implements OnInit {
 
   // قائمة محافظات مصر مع أكوادها في الرقم القومي
   governoratesCodes: { [key: string]: string } = {
-    '01': 'القاهره', '02': 'الاسكندريه', '03': 'بورسعيد', '04': 'السويس',
+    '01': 'القاهرة', '02': 'الاسكندريه', '03': 'بورسعيد', '04': 'السويس',
     '11': 'دمياط', '12': 'الدقهلية', '13': 'الشرقيه', '14': 'القليوبيه',
     '15': 'كفرالشيخ', '16': 'الغربيه', '17': 'المنوفيه', '18': 'البحيرة',
     '19': 'الاسماعيلية', '21': 'الجيزه', '22': 'بني سويف', '23': 'الفيوم',
@@ -234,7 +234,7 @@ export class ApplicationRequestComponent implements OnInit {
         const genderCode = parseInt(nationalId.substring(12, 13));
         const gender = genderCode % 2 === 1 ? 'MALE' : 'FEMALE';
         const governorateCode = nationalId.substring(7, 9);
-        const placeOfBirth = this.governoratesCodes[governorateCode] || 'القاهره';
+        const placeOfBirth = this.governoratesCodes[governorateCode] || 'القاهرة';
 
         this.personalInfoGroup.get('dateOfBirth')?.setValue(dateOfBirth);
         this.personalInfoGroup.get('gender')?.setValue(gender);

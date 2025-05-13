@@ -76,12 +76,12 @@ export class AdminSidebarComponent {
 
   ];
 
-  sidebarScale: number = 1;
+  sidebarScale: number   = 1;
   @HostListener('window:resize')
 onResize() {
   const vh = window.innerHeight;
   if (vh < 800) {
-    this.sidebarScale = 0.85;
+    // this.sidebarScale = 0.85;
   } else {
     this.sidebarScale = 1;
   }
@@ -129,7 +129,7 @@ getActiveTab() {
 
   ngOnInit(): void {
 
-    if(this._AuthService.getRole()?.includes('ViEW'))
+    if(this._AuthService.getRole()?.includes('ViEW')|| this._AuthService.getRole()?.includes('EDIT'))
     {
       this.navItems = [
         { id: 'home', icon: 'fa-chart-line', label: 'لوحة التحكم' },
