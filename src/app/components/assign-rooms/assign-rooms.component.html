@@ -14,12 +14,12 @@
       </div>
   
       <!-- Sort dropdown -->
-      <div class="col-12 col-md-2">
+      <!-- <div class="col-12 col-md-2">
         <select class="form-select" [formControl]="sortControl">
           <option value="normal">الاقدم اولا</option>
           <option value="reverse">الاحدث اولا</option>
         </select>
-      </div>
+      </div> -->
   
   
       <!-- Gender filters -->
@@ -51,6 +51,14 @@
             أنثى
           </label>
         </div>
+      </div>
+
+      <div class="btn-group mb-3 col-md-2" role="group" aria-label="Data Source Toggle">
+        <input type="radio" class="btn-check source" name="dataSource" id="allData" [(ngModel)]="selectedSource" value="old" (change)="onSourceChange()">
+        <label class="btn btn-outline-primary" for="allData">القدامى</label>
+      
+        <input type="radio" class="btn-check source" name="dataSource" id="sortedData" [(ngModel)]="selectedSource" value="new" (change)="onSourceChange()">
+        <label class="btn btn-outline-primary" for="sortedData">المستجدين</label>
       </div>
   
       <!-- Action buttons -->
@@ -120,6 +128,7 @@
     </table>
 
   <!-- Enhanced Pagination -->
+   
   <nav dir="rtl" class="py-4" aria-label="Page navigation">
     <ul class="pagination pagination-md justify-content-center">
       <li class="page-item" [class.disabled]="currentPage === 1">
@@ -139,5 +148,6 @@
       </li>
     </ul>
   </nav>
-  </section>
+  
+</section>
   

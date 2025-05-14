@@ -47,6 +47,9 @@ export class AssignRoomsComponent {
           sortControl = new FormControl('normal');// متغير للفرز: "normal" أو "reverse"
           selectedStatuses: string[] = [];// مصفوفة لتخزين الحالات المختارة من checkboxes
           selectedGenders: string[] = [];// مصفوفة لتخزين gender المختارة من checkboxes
+          selectedSource: 'old' | 'new' = 'old'; // القيمة الافتراضية
+          sourceData: any ;
+          mixedItems: any[] = [];
           filteredItems: any[] = [];
           //#endregion
     
@@ -78,7 +81,7 @@ export class AssignRoomsComponent {
 
 
     
-   
+
     selectBuilding(e:any|null){
 
       console.log("in selected building",e.value);
@@ -118,11 +121,13 @@ export class AssignRoomsComponent {
 
     getApplications(offset?: number)
     {
-       this.ar.getApplications({ status: 'ACCEPTED',securityCheck:'ACCEPTED',hasPenalty:'false' },offset).subscribe({
+       this.ar.getSortedApplications().subscribe({
         next: (res: any) => {
           this.getBuildings();
           console.log(res);
-          this.res = res.data;
+          this.sourceData = res.data;
+          this.mixedItems = [ ...res.data.oldStudents, ...res.data.newStudents ];
+          this.res = [ ...res.data.oldStudents ];
           this.filteredItems = this.res;
           console.log(this.res);
           this.meta = res.meta;
@@ -134,6 +139,21 @@ export class AssignRoomsComponent {
         error: (err:any) => { console.log(err); },
       });
     }
+
+      
+    onSourceChange(): void {
+      if (this.selectedSource === 'old')
+      {
+        this.res = [ ...this.sourceData.oldStudents ];
+      } 
+      else if (this.selectedSource === 'new') 
+      {
+        this.res = [ ...this.sourceData.newStudents ];
+      }
+    }
+   
+
+
   
 
     getBuildings(): void {
@@ -148,7 +168,7 @@ export class AssignRoomsComponent {
         error: (err) => { console.log(err); },
       });
     }
-   
+
     //#region pagination methods
     initPagination(): void {
       this.totalPages = this.meta.totalPages;
@@ -224,7 +244,16 @@ onGenderChange(event: any): void {
   
     // دالة لتطبيق الفلاتر (البحث وحالة الـ checkboxes)
     applyFilters(): void {
-      let filtered = this.res; // البيانات الأصلية
+      let filtered = this.mixedItems; // البيانات الأصلية
+
+      // لو مفيش ولا فلتر متطبق (لا بحث ولا جندر)، ارجع للسورس فقط
+  if (!this.searchControl.value && this.selectedGenders.length === 0) {
+      filtered = this.selectedSource === 'old' 
+      ? [...this.sourceData.oldStudents] 
+      : [...this.sourceData.newStudents];
+  } else 
+  // لو في فلاتر مفعّلة، فلتر من mixedItems
+  filtered = [...this.mixedItems];
     
       // تطبيق فلترة البحث
       const searchText = this.searchControl.value;
@@ -237,11 +266,7 @@ onGenderChange(event: any): void {
         );
       }
     
-      // تطبيق فلترة الـ checkbox لحالة status
-      if (this.selectedStatuses.length > 0) {
-        filtered = filtered.filter((item: any) => this.selectedStatuses.includes(item.status));
-      }
-    
+
       // Gender filter
   if (this.selectedGenders.length > 0) {
     filtered = filtered.filter((item: any) => 
@@ -249,15 +274,9 @@ onGenderChange(event: any): void {
     );
   }
   
+
   
-       // تطبيق الفرز: استخدام نسخة من المصفوفة لعكس الترتيب لتجنب التعديل على المصفوفة الأصلية
-       const sortOption = this.sortControl.value;
-       if (sortOption === 'reverse') {
-         filtered = [...filtered].reverse(); // Create a new array to avoid mutation issues
-       }
-      // احفظ النتيجة المفلترة في this.filteredItems
-  
-      this.filteredItems = filtered;
+      this.res = [...filtered];
     
       // إعادة تعيين Pagination بناءً على النتائج المفلترة
       this.currentPage = 1;
