@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+.bodysection{
+  background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 5%, rgba(5,15,39,1) 100%);}
+
+/*------------ Login container ------------*/
+
+.box-area{
+    width: 75rem;
+    height: 50rem;
+}
+
+/*------------ Right box ------------*/
+
+.right-box{
+    padding: 120px 70px 120px 120px;
+    order: 1;
+}
+.left-box {
+    order: 2; /* Move the image to the right */
+  }
+/*------------ Custom Placeholder ------------*/
+
+::placeholder{
+    font-size: 16px;
+}
+
+.rounded-4{
+    border-radius: 20px;
+}
+.rounded-5{
+    border-radius: 30px;
+}
+
+.logo-small-screen {
+    display: none;
+  }
+
+  
+
+/*------------ For small screens------------*/
+
+@media only screen and (max-width: 768px){
+
+     .box-area{
+        margin: 10px;
+      height: 45rem;
+     }
+
+
+    //  .desktop-img {
+    //   }
+      // .logo-small-screen {
+      //   display: block; /* Show the logo */
+      //   text-align: right; /* Align the logo to the right */
+      //   margin-bottom: 20px; /* Add some spacing */
+      //   display: none;
+      // }
+     .left-box{
+        height: 300px;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+        border-radius: 0;
+        overflow: hidden;
+        order: 1;
+      object-fit:cover ;
+     }
+     .right-box{
+        padding: 20px;
+        order: 2; /* Move the image to the right */
+
+     }
+
+}
+/* أضف هذه الأنماط إلى ملف CSS الخاص بك */
+
+.bodysection {
+  padding-top: 50px; /* إضافة مسافة في الأعلى لتجنب التداخل مع navbar */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.box-area {
+  max-height: 90vh; /* تحديد أقصى ارتفاع للعنصر */
+  overflow-y: auto; /* إضافة شريط تمرير عند الحاجة */
+}
+

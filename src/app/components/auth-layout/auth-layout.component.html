@@ -1,0 +1,32 @@
+<section class="bodysection" dir="rtl">
+  <!----------------------- Main Container -------------------------->
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+
+    <!----------------------- Login Container -------------------------->
+    <div class="row border rounded-5 bg-white shadow box-area" style="max-width: 1200px; width: 100%; margin: 0 auto; overflow: hidden;">
+
+      <!--------------------------- Left Box ----------------------------->
+      <div class="col-md-6 m-0 p-0 d-flex justify-content-center align-items-center flex-column left-box" style="overflow: hidden;">
+        <!-- Large Image for Larger Screens -->
+        <div class="featured-image w-100 h-100">
+          <img src="./assets/6310507.jpg" class="img-fluid w-100 h-100 rounded-start-0 desktop-img" alt="Login Image" style="object-fit: cover;">
+        </div>
+        <!-- Logo for Small Screens -->
+        <div class="logo-small-screen ">
+          <img src="./assets/lightlogo.png" alt="Logo" class="img-fluid" style="max-width: 120px;">
+        </div>
+      </div>
+
+      <!----------------------- Right Box ---------------------------->
+      <div class="col-md-6 m-0 p-0 right-box d-flex align-items-center">
+        <div class="w-100 p-4">
+       <ng-content #from ></ng-content>
+        
+         
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+

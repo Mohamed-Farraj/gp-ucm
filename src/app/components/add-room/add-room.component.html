@@ -16,7 +16,7 @@
         formControlName="roomNumber"
         [ngClass]="{
           'is-valid': addRoomForm.get('roomNumber')?.valid && addRoomForm.get('roomNumber')?.touched,
-          'is-invalid': addRoomForm.get('roomNumber')?.invalid && addRoomForm.get('roomNumber')?.touched
+          'is-invalid': addRoomForm.get('roomNumber')?.invalid && addRoomForm.get('roomNumber')?.touched 
         }"
       />
       <label for="roomNumber">رقم الغرفة</label>
@@ -50,10 +50,17 @@
         formControlName="wing"
         [ngClass]="{
           'is-valid': addRoomForm.get('wing')?.valid && addRoomForm.get('wing')?.touched,
-          'is-invalid': addRoomForm.get('wing')?.invalid && addRoomForm.get('wing')?.touched
+          'is-invalid': addRoomForm.get('wing')?.invalid && addRoomForm.get('wing')?.touched && addRoomForm.get('wing')?.errors?.['pattern']
         }"
+        [attr.title]="
+    addRoomForm.get('wing')?.touched && addRoomForm.get('wing')?.errors?.['pattern']
+      ? 'الرجاء إدخال  اسم الجناح بدون ارقام'
+      : null
+  "
+  data-bs-toggle="tooltip"
+  data-bs-placement="top"
       />
-      <label for="wing">الجناح</label>
+      <label for="wing">اسم الجناح </label>
 
     </div>
 

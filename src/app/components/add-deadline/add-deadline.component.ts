@@ -1,5 +1,5 @@
 import { Component, Inject, inject, Input, OnChanges, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { DeadlineService } from '../../core/services/deadline.service';
@@ -29,12 +29,30 @@ export class AddDeadlineComponent implements OnChanges {
   data: Ideadlins = inject(MAT_DIALOG_DATA);
   
   deadlineForm:FormGroup= this._formBuilder.group({
-    applicationStartDate: ['', Validators.required],
+    applicationStartDate: ['', Validators.required , ],
     applicationEndDate: ['', Validators.required],
     studentType: ['', Validators.required]
        
-  })
+  }, {
+     validators: [this.dateRangeValidator()]
+  }
+)
 
+dateRangeValidator(): ValidatorFn {
+  return (group: AbstractControl): ValidationErrors | null => {
+    const start = group.get('applicationStartDate')?.value;
+    const end = group.get('applicationEndDate')?.value;
+
+    if (!start || !end) return null; // Handled by required validators
+
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    return endDate >= startDate
+      ? null
+      : { dateRangeInvalid: true };
+  };
+}
 
 
   ngOnInit(): void {

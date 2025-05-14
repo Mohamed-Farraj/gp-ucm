@@ -4,11 +4,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
+import { AuthLayoutComponent } from "../auth-layout/auth-layout.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule , NgClass,RouterLink],
+  imports: [ReactiveFormsModule, NgClass, RouterLink, AuthLayoutComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -16,6 +17,11 @@ export class LoginComponent {
  private readonly _AuthService= inject(AuthService)
  private readonly router= inject(Router)
  
+
+
+  isRestPassword = false
+  isForgotPassword = false 
+
   errmsg:string='';
   showPassword: boolean = false;
 
@@ -24,6 +30,7 @@ export class LoginComponent {
   username: new FormControl(null ,[Validators.required ,Validators.email] ),
   password: new FormControl(null , [Validators.required , Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]),
 })
+
 
 
 loginSubmit(){
@@ -56,7 +63,7 @@ loginSubmit(){
       },
 
       error:(err:HttpErrorResponse)=>{
-        
+
         console.log(err)
 
       }
@@ -69,6 +76,9 @@ loginSubmit(){
   }
  
 }
+
+
+
 
 togglePasswordVisibility() {
   this.showPassword = !this.showPassword;
