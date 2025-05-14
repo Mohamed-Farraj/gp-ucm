@@ -4,11 +4,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../core/services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
+import { AuthLayoutComponent } from "../auth-layout/auth-layout.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule , NgClass,RouterLink],
+  imports: [ReactiveFormsModule, NgClass, RouterLink, AuthLayoutComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

@@ -36,17 +36,25 @@ import { LogsComponent } from './components/logs/logs.component';
 
 import { registeradminComponent } from './components/registeradmin/registeradmin.component';
 import {  UniversityComponent } from './components/university/university.component';
+import { ForgotpasswordComponent } from './components/password-recovery/forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './components/password-recovery/resetpassword/resetpassword.component';
 
 export const routes: Routes = [
 
+
+
+
     {path:"",redirectTo:"guest",pathMatch:"full"},
-    
+    {path:"public/reset-password",component:ResetpasswordComponent},
     {path:"guest",component:GuestLayoutComponent,children:[
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
 
     {path:"app-request",component:ApplicationRequestComponent},
     {path:"login",canActivate:[loggedGuard],component:LoginComponent},
+    {path:"forgot-password",component:ForgotpasswordComponent},
+     
+   
 
 
         

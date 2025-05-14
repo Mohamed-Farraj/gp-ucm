@@ -76,6 +76,14 @@ export class AuthService {
    return this._HttpClient.post(`${environment.baseUrl}/public/forgot-password` , data)
   }
 
+
+  
+
+
+
+
+
+
   logout(){
     localStorage.removeItem('userToken')
     localStorage.removeItem('role')
