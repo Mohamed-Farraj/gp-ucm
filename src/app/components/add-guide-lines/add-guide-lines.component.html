@@ -32,7 +32,7 @@
         <button 
           type="submit"
           (click)="saveGuideline()"
-          [disabled]="guidelineForm.invalid"
+          [disabled]="guidelineForm.invalid || !this.guidelineForm.dirty"
           class="btn-save"
         >
           <i class="fas fa-save me-2"></i>{{ guidelineExists ? 'تعـديل' : 'حـفظ' }}
