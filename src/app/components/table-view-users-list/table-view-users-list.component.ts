@@ -49,6 +49,8 @@ export class TableViewUsersListComponent {
         sortedApplications: any[] = [];
         selectedSource: 'all' | 'sorted' = 'all'; // القيمة الافتراضية
         myFilters: any = {};
+        selectedStudentTypes: string[] = []; // لتخزين الأنواع المختارة
+
         //#endregion
         
         activeTab: string = 'home';
@@ -375,6 +377,19 @@ export class TableViewUsersListComponent {
           delete this.myFilters.gender;
         }
       }
+
+      // Student Type filter
+if (this.selectedStudentTypes.length > 0) {
+  this.myFilters = {
+    ...this.myFilters,
+    studentType: this.selectedStudentTypes.join(','),
+  };
+} else {
+  if (this.myFilters?.studentType) {
+    delete this.myFilters.studentType;
+  }
+}
+
  
   
   
@@ -387,10 +402,22 @@ export class TableViewUsersListComponent {
        }
 
 
-   
+       if(this.selectedSource == "all")
       this.getApplication({filters: this.myFilters, offset: this.currentPage - 1});
+
+    
     }
   
+    onStudentTypeChange(event: any): void {
+  const value = event.target.value;
+  if (event.target.checked) {
+    this.selectedStudentTypes.push(value);
+  } else {
+    this.selectedStudentTypes = this.selectedStudentTypes.filter(v => v !== value);
+  }
+  this.applyFilters();
+}
+
 
     downloadSorted()
     {

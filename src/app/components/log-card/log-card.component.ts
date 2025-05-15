@@ -82,4 +82,15 @@ export class LogCardComponent {
     }
   }
 
+  getEmail(response:string): string {
+  const parts = response.split(',ip');
+  return parts[0]?.trim() || '';
+}
+
+getIp(response:string): string {
+  const parts = response.split(',ip');
+  return parts[1]?.trim() || '';
+}
+
+
 }

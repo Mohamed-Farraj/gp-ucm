@@ -30,6 +30,7 @@
           <th scope="col">الكيان</th>
           <th scope="col">معرف الكيان</th>
           <th scope="col">تم التنفيذ بواسطة</th>
+          <th scope="col">عنوان IP</th>
           <th scope="col">الوصف</th>
           <th scope="col">الوقت</th>
         </tr>
@@ -40,13 +41,14 @@
           <td>
             <span [class.text-success]="item.actionType === 'ADD'"
                   [class.text-danger]="item.actionType === 'DELETE'"
-                  [class.text-warning]="item.actionType === 'MODIFY'">
+                  [class.text-warning]="item.actionType === 'UPDATE'">
               {{ item.actionType }}
             </span>
           </td>
           <td>{{ item.entityName }}</td>
           <td>{{ item.entityId }}</td>
-          <td>{{ item.performedBy }}</td>
+          <td>{{ getEmail(item.performedBy) }}</td>
+          <td>{{ getIp(item.performedBy) }}</td>
           <td class="text-truncate" style="max-width: 300px;" [title]="item.description">
             {{ item.description }}
           </td>

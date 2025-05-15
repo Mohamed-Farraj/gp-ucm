@@ -124,7 +124,7 @@ uploadFile(event: any) {
   this.handleFile(file);
 }
 
-downloadTemp() {
+downloadDormTemp() {
   // Subscribe to the observable that downloads the template file
   this.excel.downloadAssignRoomsTemplate('18','DORM').subscribe({
     // Handle the response when it is received
@@ -132,7 +132,25 @@ downloadTemp() {
       // Create a link to download the file
       const link = document.createElement('a');
       link.href = URL.createObjectURL(response);
-      link.download = 'AssignRoomsTemplate.xlsx';
+      link.download = 'AssignDORMRoomsTemplate.xlsx';
+      link.click();
+    },
+    // Handle any errors that occur
+    error: (error: any) => {
+      console.error('Error downloading template:', error);
+    }
+  });
+
+}
+downloadSingleTemp() {
+  // Subscribe to the observable that downloads the template file
+  this.excel.downloadAssignRoomsTemplate('18','SINGLE').subscribe({
+    // Handle the response when it is received
+    next: (response: Blob) => {
+      // Create a link to download the file
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(response);
+      link.download = 'AssignSINGLERoomsTemplate.xlsx';
       link.click();
     },
     // Handle any errors that occur
