@@ -14,11 +14,12 @@ import { UploadFormComponent } from '../upload-form/upload-form.component';
 import { ArService } from '../../core/services/ar.service';
 import { UploadStatusComponent } from '../upload-status/upload-status.component';
 import { PaginationService } from '../../services/pagination.service';
+import { ArTableComponent } from "../ar-table/ar-table.component";
 
 @Component({
   selector: 'app-table-view-users-list',
   standalone: true,
-  imports: [ReactiveFormsModule,NgFor,MatDialogModule,NgIf,FormsModule,NgClass],
+  imports: [ReactiveFormsModule, NgFor, MatDialogModule, NgIf, FormsModule, NgClass, ArTableComponent],
   templateUrl: './table-view-users-list.component.html',
   styleUrl: './table-view-users-list.component.scss'
 })
@@ -77,7 +78,6 @@ export class TableViewUsersListComponent {
     ngOnInit(): void {
       this.getApplication();
 
-
       // الاشتراك في تغييرات حقل البحث باستخدام Reactive Form مع debounceTime
       this.searchControl.valueChanges.pipe(
         debounceTime(1000)
@@ -109,9 +109,6 @@ export class TableViewUsersListComponent {
         },
         error: (err:any) => { console.log(err); },
       });
-
-      
-  
     }
 
 
@@ -134,9 +131,6 @@ export class TableViewUsersListComponent {
         this.getSortedApplications();
       }
     }
-   
-
-
 
     //#region pagination methods
     initPagination(): void {
@@ -162,154 +156,6 @@ export class TableViewUsersListComponent {
     }
     //#endregion
   
-
-
-
-
-      Toast = Swal.mixin({
-        toast: true,
-        position: 'top',
-        iconColor: 'white',
-        customClass: {
-          popup: 'colored-toast',
-        },
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-      })
-
-      confirmation(id: number = -1, status: string = 'UNDER_REVIEW', item?: any) {
-        const procedure = status === 'ACCEPTED' ? 'قبول' : 
-                         (status === 'UNDER_REVIEW' ? 'مراجعة' : 'رفض');
-        
-        const commonSwalConfig = {
-            title: "هل انت متأكد؟",
-            icon: "warning" as const,
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            cancelButtonText: "الغاء",
-            allowOutsideClick: () => !Swal.isLoading()
-        };
-    
-        if (status === 'REJECTED') {
-            Swal.fire({
-                ...commonSwalConfig,
-                title: "ادخل سبب رفض هذا الطلب",
-                input: "text",
-                inputAttributes: {
-                    autocapitalize: "off"
-                },
-                confirmButtonText: `${procedure} هذا الطلب؟`,
-                preConfirm: (reason) => {
-                    if (!reason) {
-                        Swal.showValidationMessage('يجب ادخال سبب الرفض');
-                        return false;
-                    }
-                    return reason;
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                  console.log("thats a rejection reason",result.value);
-                    this.DecideAr(id, status, item,result.value);
-                }
-            });
-        } else {
-            Swal.fire({
-                ...commonSwalConfig,
-                confirmButtonText: `${procedure} هذا الطلب؟`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.DecideAr(id, status, item);
-                }
-            });
-        }
-    }
-
-      getLevel(level:string){
-        if(level.includes('first'))
-        {
-          return '1'
-        }
-        else if(level.includes('second'))
-        {
-          return '2'
-        }
-        else if(level.toLowerCase().includes('third'))
-        {
-          return '3'
-        }
-        else if(level.includes('fourth'))
-        {
-          return '4'
-        }
-        else if(level.includes('fifth'))
-        {
-          return '5'
-        }
-        else
-        {
-          return level
-        }
-      }
-  
-    DecideAr(id:number = -1,status:string = 'UNDER_REVIEW',item?:any, message?:string) {
-      if (id === -1) 
-        {
-          this.Toast.fire({
-          icon: 'error',
-          title: 'حدث خطأ في اختيار رقم المستخدم',
-        })   
-        }
-        else{
-    
-          this._AuthService.DecideArState(id, status,message ).subscribe({
-            next: (response) => {
-              console.log('Operation succeeded:', response);
-              item.status = status;
-              if (status === 'UNDER_REVIEW' ) {
-                this.Toast.fire({
-                  icon: 'success',
-                  title: 'هذا الطلب تحت المراجعة',
-                })   
-              }
-              
-              else if (status === 'ACCEPTED' ) {
-                this.Toast.fire({
-                  icon: 'success',
-                  title: 'قد تم قبول الطلب بنجاح',
-                })   
-              }
-              else if (status === 'REJECTED' ) {
-                this.Toast.fire({
-                  icon: 'success',
-                  title: 'قد تم رفض الطلب بنجاح',
-                })   
-              }
-            },
-            error: (err) => {
-              console.error('Operation failed:', err);
-              this.Toast.fire({
-                icon: 'error',
-                title: err.error.message,
-              })   
-            },
-          });
-        }
-    }
-    
-    handleClick(student: any): void {
-      console.log(student);
-      this.dataService.changeStudentData(student);
-    }
-  
-    RowClick(item:any): void {
-      console.log("hello there this is on row click", item);
-      this.handleClick(item);
-      this.router.navigate(['admin/details', item.userId]);
-    }
-
-    // Updated change handler
     onGenderChange(event: any): void {
   const checked = event.target.checked;
   const value = event.target.value;
@@ -418,7 +264,6 @@ if (this.selectedStudentTypes.length > 0) {
   this.applyFilters();
 }
 
-
     downloadSorted()
     {
       this.excel.downloadSorted().subscribe({
@@ -436,10 +281,6 @@ if (this.selectedStudentTypes.length > 0) {
           // يمكنك إضافة معالجة الأخطاء هنا
         }
       })
-    }
-
-    uploadFile() {
-
     }
 
     openUploadDialog():void{
@@ -495,8 +336,6 @@ if (this.selectedStudentTypes.length > 0) {
     
       
       }
-
-
 
     ngOnDestroy(): void {
       this.destroy$.next();
