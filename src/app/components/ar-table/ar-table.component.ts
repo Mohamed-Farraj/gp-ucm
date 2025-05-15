@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ArService } from '../../core/services/ar.service';
 import { AuthService } from '../../core/services/auth.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-ar-table',
   standalone: true,
-  imports: [],
+  imports: [NgIf,],
   templateUrl: './ar-table.component.html',
   styleUrl: './ar-table.component.scss'
 })
@@ -15,7 +16,7 @@ export class ArTableComponent {
 
   @Input({required: true}) res: any[] = [];
   private readonly router = inject(Router);
-  private readonly _AuthService = inject(AuthService);
+  public readonly _AuthService = inject(AuthService);
   private readonly ar = inject(ArService);
  
   
