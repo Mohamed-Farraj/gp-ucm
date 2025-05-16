@@ -17,12 +17,12 @@ token:string = '';
     if (localStorage.getItem('userToken') !== null) {
       this.token = localStorage.getItem('userToken')!;
     }
-   return this._HttpClient.post('http://localhost:8080/admin/edit/application-deadline/1' , data)
+   return this._HttpClient.post(`${environment.baseUrl}/admin/edit/application-deadline/1` , data)
  
   }
 
   getDeadLine(): Observable<any> {
-    return this._HttpClient.get('http://localhost:8080/public/all-deadlines/university/1');
+    return this._HttpClient.get(`${environment.baseUrl}/public/all-deadlines/university/1`);
   }
 
 

@@ -17,12 +17,12 @@ token:string = '';
     if (localStorage.getItem('userToken') !== null) {
       this.token = localStorage.getItem('userToken')!;
     }
-   return this._HttpClient.post('http://localhost:8080/admin/edit/add-penalty' , data)
+   return this._HttpClient.post(`${environment.baseUrl}/admin/edit/add-penalty` , data)
  
   }
 
   getAllpenalties(): Observable<any> {
-    return this._HttpClient.get('http://localhost:8080/admin/view/get-all-penalties');
+    return this._HttpClient.get(`${environment.baseUrl}/admin/view/get-all-penalties`);
   }
 
 
