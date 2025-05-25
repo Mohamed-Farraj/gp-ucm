@@ -35,7 +35,7 @@ import { StepperComponent } from './components/student/stepper/stepper.component
 import { LogsComponent } from './components/admin/display/logs/logs.component';
 
 import { registeradminComponent } from './components/admin/forms/registeradmin/registeradmin.component';
-import {  UniversityComponent } from './components/university/university.component';
+import {  UniversityComponent } from './components/admin/display/university/university.component';
 import { ForgotpasswordComponent } from './components/password-recovery/forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './components/password-recovery/resetpassword/resetpassword.component';
 

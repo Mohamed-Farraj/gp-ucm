@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthLayoutComponent } from "../../auth-layout/auth-layout.component";
+import { AuthLayoutComponent } from "../../admin/display/auth-layout/auth-layout.component";
 import { NgClass } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 

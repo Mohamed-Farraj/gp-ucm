@@ -1,10 +1,10 @@
 import { NgClass, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UniversityService } from '../../core/services/university.service';
-import { Iuniversity } from '../../core/interfaces/iuniversity';
+import { UniversityService } from '../../../../core/services/university.service';
+import { Iuniversity } from '../../../../core/interfaces/iuniversity';
 import { MatDialog } from '@angular/material/dialog';
-import { UniversityFormComponent } from '../university-form/university-form.component';
+import { UniversityFormComponent } from '../../../admin/forms/university-form/university-form.component';
 
 @Component({
   selector: 'app-university',

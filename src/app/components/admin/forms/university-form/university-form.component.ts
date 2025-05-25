@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Iuniversity } from '../../core/interfaces/iuniversity';
+import { Iuniversity } from '../../../../core/interfaces/iuniversity';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UniversityService } from '../../core/services/university.service';
+import { UniversityService } from '../../../../core/services/university.service';
 
 @Component({
   selector: 'app-university-form',
