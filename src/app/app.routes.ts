@@ -4,9 +4,9 @@ import { HuLayoutComponent } from './layouts/hu-layout/hu-layout.component';
 import { HnuLayoutComponent } from './layouts/hnu-layout/hnu-layout.component';
 import path from 'path';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { NotfoundComponent } from './components/notfound/notfound.component';
+import { NotfoundComponent } from './components/student/notfound/notfound.component';
 import { AcceptanceStatusComponent } from './components/index/acceptance-status/acceptance-status.component';
-import { ApplicationRequestComponent } from './components/application-request/application-request.component';
+import { ApplicationRequestComponent } from './components/student/application-request/application-request.component';
 import { LoginComponent } from './components/index/login/login.component';
 import { AddGuideLinesComponent } from './components/admin/forms/add-guide-lines/add-guide-lines.component';
   
@@ -31,7 +31,7 @@ import { AdminLandingPageComponent } from './components/admin/display/admin-land
 import { AddPenaltyComponent } from './components/admin/forms/add-penalty/add-penalty.component';
 import { AssignRoomsComponent } from './components/admin/display/assign-rooms/assign-rooms.component';
 import { MealsComponent } from './components/admin/display/meals/meals.component';
-import { StepperComponent } from './components/stepper/stepper.component';
+import { StepperComponent } from './components/student/stepper/stepper.component';
 import { LogsComponent } from './components/admin/display/logs/logs.component';
 
 import { registeradminComponent } from './components/admin/forms/registeradmin/registeradmin.component';

@@ -3,16 +3,16 @@ import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators, A
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { ArService } from './../../core/services/ar.service';
-import { AuthService } from '../../core/services/auth.service';
-import countries from '../../../assets/country (1).json';
-import rawGovernorates from '../../../assets/cities (1).json';
-import rawCities from '../../../assets/states (1).json';
-import { BasicInfoStepComponent } from "../newest-app-reqeust/basic-info-step/basic-info-step.component";
-import { FamilyInfoStepComponent } from "../newest-app-reqeust/family-info-step/family-info-step.component";
-import { AcademicInfoStepComponent } from "../newest-app-reqeust/academic-info-step/academic-info-step.component";
-import { ContactInfoStepComponent } from "../newest-app-reqeust/contact-info-step/contact-info-step.component";
-import { AccountSetupStepComponent } from "../newest-app-reqeust/account-setup-step/account-setup-step.component";
+import { ArService } from '../../../core/services/ar.service';
+import { AuthService } from '../../../core/services/auth.service';
+import countries from '../../../../assets/country (1).json';
+import rawGovernorates from '../../../../assets/cities (1).json';
+import rawCities from '../../../../assets/states (1).json';
+import { BasicInfoStepComponent } from "../../newest-app-reqeust/basic-info-step/basic-info-step.component";
+import { FamilyInfoStepComponent } from "../../newest-app-reqeust/family-info-step/family-info-step.component";
+import { AcademicInfoStepComponent } from "../../newest-app-reqeust/academic-info-step/academic-info-step.component";
+import { ContactInfoStepComponent } from "../../newest-app-reqeust/contact-info-step/contact-info-step.component";
+import { AccountSetupStepComponent } from "../../newest-app-reqeust/account-setup-step/account-setup-step.component";
 import { MatStepperModule } from '@angular/material/stepper';
 import { NgIf } from '@angular/common';
 
