@@ -1,0 +1,57 @@
+<div class="file-upload-container m-3">
+    <div
+      class="drop-zone"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onFileDrop($event)"
+      [class.dragover]="isDragging"
+      (click)="fileInput.click()"
+      role="button"
+      tabindex="0"
+    >
+      <div class="drop-zone-content">
+        <div class="file-icon-container">
+          <i class="fas fa-file-excel"></i>
+        </div>
+        <p>اسحب ملف Excel هنا</p>
+        <small>أو انقر للاختيار من جهازك</small>
+      </div>
+  
+      <input
+        type="file"
+        #fileInput
+        hidden
+        (change)="uploadFile($event)"
+        accept=".xlsx, .xls"
+      />
+    </div>
+  
+    <div class="card my-4 mx-3" *ngIf="isUploading || uploadStatus">
+      <div *ngIf="isUploading" class="status-message uploading">
+        <span class="custom-spinner"></span>
+        جاري الرفع...
+      </div>
+  
+      <div
+        *ngIf="uploadStatus"
+        class="status-message"
+        [ngClass]="uploadSuccess ? 'success' : 'error'"
+      >
+        <i *ngIf="uploadSuccess" class="fas fa-check-circle"></i>
+        <i *ngIf="!uploadSuccess" class="fas fa-exclamation-circle"></i>
+        {{ uploadStatus }}
+      </div>
+    </div>
+    <div style="background-color: rgba(159, 132, 55, 0.2); border: none;" class="alert  mt-3 text-center">
+        <strong>ملاحظة:</strong> يجب أن يتطابق ملف تسكين الطلبه المراد رفعه مع القالب المرفق.
+    </div>
+    <div class="d-flex gap-3 justify-content-center p-4">
+      <button (click)="downloadDormTemp()" class=" btn-main-gold rounded rounded-pill">
+        تحميل قالب التسكين عادي
+      </button>
+      <button (click)="downloadSingleTemp()" class=" btn-main-gold rounded rounded-pill">
+        تحميل قالب التسكين مميز
+      </button>
+    </div>
+  </div>
+  

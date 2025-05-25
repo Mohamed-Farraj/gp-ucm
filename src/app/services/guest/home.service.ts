@@ -11,16 +11,16 @@ export class HomeService {
   constructor(private _HttpClient:HttpClient) { }
 
   getDeadline():Observable<any> {
-    return this._HttpClient.get('http://localhost:8080/public/all-deadlines/university/1');
+    return this._HttpClient.get(`${environment.baseUrl}/public/all-deadlines/university/1`);
   }
 
   getGuidlines():Observable<any> {
-    return this._HttpClient.get(`http://localhost:8080/public/get-guidelines/1`);
+    return this._HttpClient.get(`${environment.baseUrl}/public/get-guidelines/1`);
   }
 
   getApplicationStatusById(id:string):Observable<any>
   {
-    return this._HttpClient.get(`http://localhost:8080/user/admission-requests/1/status?userId=${id}`);
+    return this._HttpClient.get(`${environment.baseUrl}/user/admission-requests/1/status?userId=${id}`);
   }
   getApplicationStatusByNationalId(id:string):Observable<any>
   {

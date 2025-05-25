@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { GuestNavComponent } from '../../components/guest-nav/guest-nav.component';
+import { GuestNavComponent } from '../../components/index/guest-nav/guest-nav.component';
 import { GuestFooterComponent } from '../../components/guest-footer/guest-footer.component';
-import { ApplicationDeadlineComponent } from '../../components/application-deadline/application-deadline.component';
-import { GuidlinesComponent } from '../../components/guidlines/guidlines.component';
-import { AcceptanceStatusComponent } from "../../components/acceptance-status/acceptance-status.component";
-import { HeroHelperComponent } from '../../components/hero-helper/hero-helper.component';
-import { HeroComponent } from '../../components/hero/hero.component';
+import { ApplicationDeadlineComponent } from '../../components/index/application-deadline/application-deadline.component';
+import { GuidlinesComponent } from '../../components/index/guidlines/guidlines.component';
+import { AcceptanceStatusComponent } from "../../components/index/acceptance-status/acceptance-status.component";
+import { HeroHelperComponent } from '../../components/index/hero-helper/hero-helper.component';
+import { HeroComponent } from '../../components/index/hero/hero.component';
 import { isPlatformBrowser, ViewportScroller } from '@angular/common';
 @Component({
   selector: 'app-guest-layout',

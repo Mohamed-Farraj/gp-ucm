@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { LoginComponent } from "../../login/login.component";
-import { AuthLayoutComponent } from "../../auth-layout/auth-layout.component";
+import { LoginComponent } from "../../../components/index/login/login.component";
+import { AuthLayoutComponent } from "../../admin/display/auth-layout/auth-layout.component";
 import { AuthService } from '../../../core/services/auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgClass } from '@angular/common';

@@ -1,0 +1,253 @@
+<section>
+  <div class="container-fluid py-3">
+    <div class="row g-3 justify-content-center">
+      <!-- Search input -->
+      <div class="col-12 col-md-4">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="ابحث بالاسم أو الرقم القومي"
+            [formControl]="searchControl"
+          />
+        </div>
+      </div>
+
+      <!-- Sort dropdown -->
+      <div class="col-12 col-md-2">
+        <select class="form-select" [formControl]="sortControl">
+          <option value="normal">
+            {{ selectedSource == "all" ? "الاقدم اولا" : "المستحق اولا" }}
+          </option>
+          <option value="reverse">
+            {{ selectedSource == "all" ? "الاحدث اولا" : "غير المستحق اولا" }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="col-12 col-md-6">
+        <div class="d-flex gap-2">
+          <button
+            type="button"
+            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openDialog()"
+          >
+            <i class="fa-solid fa-download"></i>
+            <span>تنزيل</span>
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="downloadSorted()"
+          >
+            <i class="fa-solid fa-download"></i>
+            <span>التنسيق</span>
+          </button>
+
+          <button
+            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            type="button"
+            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openUploadStatusDialog()"
+          >
+            <i class="fa-solid fa-upload"></i>
+            <span> تعديل الحالة</span>
+          </button>
+
+          <button
+            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            type="button"
+            class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
+            (click)="openUploadDialog()"
+          >
+            <i class="fa-solid fa-upload"></i>
+            <span>الاستعلام الامني</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Status filters -->
+      <div class="col-12 col-md-4">
+        <div
+          class="btn-group w-100"
+          role="group"
+          aria-label="Status filter buttons"
+        >
+          <!-- تحت المراجعة -->
+          <input
+            type="checkbox"
+            value="UNDER_REVIEW"
+            id="underReview"
+            class="btn-check"
+            (change)="onStatusChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-warning" for="underReview">
+            تحت المراجعة
+          </label>
+
+          <!-- مقبول -->
+          <input
+            type="checkbox"
+            value="ACCEPTED"
+            id="accepted"
+            class="btn-check"
+            (change)="onStatusChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-success" for="accepted"> مقبول </label>
+
+          <!-- مرفوض -->
+          <input
+            type="checkbox"
+            value="REJECTED"
+            id="rejected"
+            class="btn-check"
+            (change)="onStatusChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-danger" for="rejected"> مرفوض </label>
+        </div>
+      </div>
+
+      <!-- Gender filters -->
+      <div class="col-12 col-md-2">
+        <div
+          class="btn-group w-100"
+          role="group"
+          aria-label="Gender filter buttons"
+        >
+          <!-- Male -->
+          <input
+            type="checkbox"
+            value="MALE"
+            id="male"
+            class="btn-check"
+            (change)="onGenderChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-primary" for="male"> ذكر </label>
+
+          <!-- Female -->
+          <input
+            type="checkbox"
+            value="FEMALE"
+            id="female"
+            class="btn-check"
+            (change)="onGenderChange($event)"
+            autocomplete="off"
+          />
+          <label class="btn btn-outline-info" for="female"> أنثى </label>
+        </div>
+      </div>
+
+      <div
+        class="btn-group mb-3 col-md-2"
+        role="group"
+        aria-label="student Type Toggle"
+      >
+            <!-- Checkbox لطالب قديم -->
+        <input
+          type="checkbox"
+          class="btn-check"
+          id="oldStudent"
+          value="old"
+          (change)="onStudentTypeChange($event)"
+        />
+        <label class="btn btn-outline-secondary" for="oldStudent">قديم</label>
+
+        <!-- Checkbox لطالب جديد -->
+        <input
+          type="checkbox"
+          class="btn-check"
+          id="newStudent"
+          value="new"
+          (change)="onStudentTypeChange($event)"
+        />
+        <label class="btn btn-outline-secondary" for="newStudent">جديد</label>
+      </div>
+
+
+      <div
+      class="btn-group mb-3 col-md-4"
+      role="group"
+      aria-label="Data Source Toggle"
+      >
+      <input
+        type="radio"
+        class="btn-check source"
+        name="dataSource"
+        id="allData"
+        [(ngModel)]="selectedSource"
+        value="all"
+        (change)="onSourceChange()"
+      />
+        <label class="btn btn-outline-primary" for="allData">كل الطلبات</label>
+
+        <input
+          type="radio"
+          class="btn-check source"
+          name="dataSource"
+          id="sortedData"
+          [(ngModel)]="selectedSource"
+          value="sorted"
+          (change)="onSourceChange()"
+        />
+        <label class="btn btn-outline-primary" for="sortedData"
+          >الطلبات مرتبة تبعا للتنسيق</label
+        >
+      </div>
+    </div>
+  </div>
+
+  <h4 class="text-center">
+    اجمالي عدد الطلبات:
+    {{ meta.totalElements }}
+  </h4>
+
+  <div class="table-responsive overflow-x-auto shadow-lg">
+      <app-ar-table [res]="res"></app-ar-table>
+  </div>
+
+  <!-- Enhanced Pagination -->
+  <nav dir="rtl" class="py-4" aria-label="Page navigation">
+    <ul class="pagination pagination-md justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a
+          class="page-link"
+          (click)="changePage(currentPage - 1)"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&raquo;</span>
+          <span class="d-none d-sm-inline ms-1 cursor-pointer">السابق</span>
+        </a>
+      </li>
+      <li
+        class="page-item cursor-pointer"
+        *ngFor="let page of getDisplayedPages()"
+        [class.active]="page === currentPage"
+      >
+        <a
+          [ngClass]="{ disabled: page === currentPage }"
+          class="page-link"
+          (click)="changePage(page)"
+          >{{ page }}</a
+        >
+      </li>
+      <li
+        class="page-item cursor-pointer"
+        [class.disabled]="currentPage === totalPages"
+      >
+        <a
+          class="page-link"
+          (click)="changePage(currentPage + 1)"
+          aria-label="Next"
+        >
+          <span class="d-none d-sm-inline me-1 cursor-pointer">التالي</span>
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</section>

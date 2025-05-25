@@ -1,0 +1,57 @@
+swiper-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  swiper-slide {
+    background-position: center;
+    background-size: cover;
+  }
+
+  swiper-slide img {
+    display: block;
+    width: 100%;
+  }
+
+.home{
+    height: 100vh;
+}
+.background
+{
+    z-index: -1;
+    height: 100%;
+}
+.hero{
+    height: 100%;
+    background-image:linear-gradient(0deg, rgba(5,15,39,0.40388655462184875) 0%, rgba(5,15,39,1) 100%);
+
+    background-size: cover;
+    background-position: center center;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.hero-image .logo{
+    border-radius: 50%;
+    // aspect-ratio: 1/1;
+}
+
+
+.next button{
+    outline: none;
+    border: none;
+}
+
+.scale{
+    transition: all ease 0.5s;
+    cursor: pointer;
+}
+
+.scale:hover{
+    transform: scale(1.2);
+    transition: all ease 0.5s;
+}
