@@ -1,0 +1,60 @@
+<section class="premium-card my-4 p-4" dir="rtl">
+  <div class="card-header d-flex align-items-center justify-content-between mb-4">
+    <h4 class="section-title">اضافه وتعديل الجامعات </h4>
+    <button 
+      type="button" 
+      (click)="openDialog()"
+      class="btn-add"
+    >
+      <i class="fas fa-calendar-plus me-2"></i> اضافة جامعة
+    </button>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="premium-table">
+      <thead>
+        <tr>
+          <th scope="col">  ID</th>
+          <th scope="col">  اسم الجامعة</th>
+          <th scope="col" class="text-center">إجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (universities.length > 0) { 
+          @for (item of universities; track $index) {
+            <tr>
+              <td class="fw-semibold">{{item.id}}</td>
+              <td class="fw-bold" >{{item.name}}</td>
+             
+              <td class="actions-cell">
+                <button 
+                  type="button" 
+                  (click)="loaduniversity(item)"
+                  class="btn-edit"
+                >
+                  <i class="fas fa-edit me-1"></i>تعديل
+                </button>
+                <button 
+                  type="button" 
+                  (click)="deleteUniversity(item.id)"
+                  class="btn-delete-text"
+                >
+                  <i class="fas fa-trash-alt me-1"></i>حذف
+                </button>
+              </td>
+            </tr>
+          }
+        } @else {
+          <tr>
+            <td colspan="4" class="empty-state">
+              <div>
+                <i class="far fa-calendar-times fa-2x mb-3"></i>
+                <p>لا توجد  جامعات حاليًا</p>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

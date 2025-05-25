@@ -35,17 +35,26 @@ import { StepperComponent } from './components/student/stepper/stepper.component
 import { LogsComponent } from './components/admin/display/logs/logs.component';
 
 import { registeradminComponent } from './components/admin/forms/registeradmin/registeradmin.component';
+import {  UniversityComponent } from './components/university/university.component';
+import { ForgotpasswordComponent } from './components/password-recovery/forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './components/password-recovery/resetpassword/resetpassword.component';
 
 export const routes: Routes = [
 
+
+
+
     {path:"",redirectTo:"guest",pathMatch:"full"},
-    
+    {path:"public/reset-password",component:ResetpasswordComponent},
     {path:"guest",component:GuestLayoutComponent,children:[
     {path:"",redirectTo:"home",pathMatch:"full"},
     {path:"home",component:GuestHomeComponent},
 
     {path:"app-request",component:ApplicationRequestComponent},
     {path:"login",canActivate:[loggedGuard],component:LoginComponent},
+    {path:"forgot-password",component:ForgotpasswordComponent},
+     
+   
 
 
         
@@ -75,6 +84,7 @@ export const routes: Routes = [
         {path:'meals',component: MealsComponent,},
         {path:'logs',component:LogsComponent},
         {path:'register-admin',component:registeradminComponent,},
+        {path:'add-university',component:UniversityComponent,},
 
         {path:'',component: BuildingsListComponent, outlet: 'side' },
 

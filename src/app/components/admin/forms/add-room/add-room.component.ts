@@ -42,7 +42,7 @@ export class AddRoomComponent {
     addRoomForm:FormGroup= this._formBuilder.group({
       roomNumber: ['', Validators.required],
       floorNumber: ['', Validators.required],
-      wing: ['', Validators.required],
+      wing: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
       bedCount: ['', Validators.required],
       // occupiedBeds: ['', Validators.required],
       capacity: ['', Validators.required],

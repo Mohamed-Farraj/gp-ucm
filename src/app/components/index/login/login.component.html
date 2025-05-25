@@ -1,25 +1,6 @@
-<section class="bodysection" dir="rtl">
-  <!----------------------- Main Container -------------------------->
-  <div class="container d-flex justify-content-center align-items-center min-vh-100">
-
-    <!----------------------- Login Container -------------------------->
-    <div class="row border rounded-5 bg-white shadow box-area" style="max-width: 1200px; width: 100%; margin: 0 auto; overflow: hidden;">
-
-      <!--------------------------- Left Box ----------------------------->
-      <div class="col-md-6 m-0 p-0 d-flex justify-content-center align-items-center flex-column left-box" style="overflow: hidden;">
-        <!-- Large Image for Larger Screens -->
-        <div class="featured-image w-100 h-100">
-          <img src="./assets/6310507.jpg" class="img-fluid w-100 h-100 rounded-start-0 desktop-img" alt="Login Image" style="object-fit: cover;">
-        </div>
-        <!-- Logo for Small Screens -->
-        <div class="logo-small-screen ">
-          <img src="./assets/lightlogo.png" alt="Logo" class="img-fluid" style="max-width: 120px;">
-        </div>
-      </div>
-
-      <!----------------------- Right Box ---------------------------->
-      <div class="col-md-6 m-0 p-0 right-box d-flex align-items-center">
-        <div class="w-100 p-4">
+<app-auth-layout #form>
+   
+      
           <div class="header-text mb-4 text-start">
             <h2 class="fw-bold pb-2" > اهـلا بـك في مسكـني  </h2>
             <!-- <h5>    لأداره المدن الجامـعية لجامـعة حـلـوان  </h5> -->
@@ -39,10 +20,10 @@
             @if(loginForm.get('username')?.errors && loginForm.get('username')?.touched ){
               <div class=" m-1 p-2 text-danger text-danger w-100">
                 @if (loginForm.get('username')?.getError('required') ) {
-                  <p class="m-0"> *</p>              
+                              
                 }
                 @else if (loginForm.get('username')?.getError('email')) {
-                  <p class="m-0"> *</p>              
+                                
   
                 }
               </div>
@@ -72,10 +53,10 @@
             @if (loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
               <div class="m-1 p-2 text-danger w-100">
                 @if (loginForm.get('password')?.getError('required')) {
-                  <p class="m-0"> *</p>
+                  
                 }
                 @else if (loginForm.get('password')?.getError('pattern')) {
-                  <p class="m-0"> *</p>
+                  
                 }
               </div>
             }
@@ -86,14 +67,14 @@
               <label for="formCheck" class="form-check-label text-secondary"><small>تذكرني</small></label>
             </div> -->
             <div class="forgot">
-              <small><a  class="link-primary cursor-pointer" href="#">نسيت كلمة المرور؟</a></small>
+              <small><a  class="link-primary cursor-pointer" routerLink="/guest/forgot-password">نسيت كلمة المرور؟</a></small>
             </div>
           </div>
           <div class="input-group mb-3">
             <button class="btn btn-lg btn-main w-100 fs-6">تسجيل الدخول</button>
           </div>
           <!-- <div class="input-group mb-3">
-            <button class="btn btn-lg btn-light w-100 fs-6"><img src="images/google.png" style="width:20px" class="me-2"><small>تسجيل الدخول باستخدام Google</small></button>
+            <button class="btn btn-lg btn-light w-100 fs-6"><img src="images/google.png" style="width:1.25rem" class="me-2"><small>تسجيل الدخول باستخدام Google</small></button>
           </div> -->
           @if(errmsg){
             <p class=" m-0 alert alert-danger w-100 p-3  m-auto mb-2 text-center  fs-6 fw-semibold">
@@ -105,10 +86,6 @@
           </div>
           </Form>
          
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+   
+</app-auth-layout>
 

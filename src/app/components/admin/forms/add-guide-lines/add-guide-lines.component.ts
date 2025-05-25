@@ -107,8 +107,11 @@ export class AddGuideLinesComponent implements OnInit {
             title: 'تـم  تعديل الارشادات',
           })   
           console.log('Guideline updated:', response);
+         this.guidelineForm.markAsPristine();
 
         },
+
+
         error: (error) => {
           console.error('Error updating guideline:', error);
         },
@@ -127,6 +130,7 @@ export class AddGuideLinesComponent implements OnInit {
 
           
           this.guidelineExists = true; // Update the state
+            this.guidelineForm.markAsPristine();
         },
         error: (error) => {
           console.error('Error creating guideline:', error);

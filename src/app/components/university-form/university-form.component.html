@@ -1,0 +1,20 @@
+<section class="container px-4 py-5 rounded-4" dir="rtl">
+
+
+  <h5 class="mb-5 ">الجامعات</h5>
+  <form [formGroup]="universityForm" class="w-100" (ngSubmit)="onSubmit()" novalidate>
+    <div class="mb-5">
+      <label for="universityName" class="block mb-2"> اسم الجامعة </label>
+      <input type="text" id="universityName" class="form-control" placeholder="اسم الجامعة" formControlName="name">
+      @if (universityForm.get('universityName')?.hasError('required') && universityForm.get('universityName')?.touched) {
+      <div class="text-danger">مطلوب</div>
+      }
+    </div>
+   
+       <button type="submit"
+      class="btn-main me-3 ">اضافه</button>
+    <button type="button" (click)="onClose()"
+      class="btn-main-delete ">الغاء</button>
+   
+  </form>
+</section>
