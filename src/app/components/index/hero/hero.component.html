@@ -37,17 +37,49 @@
     <p class="fs-1 lead">
         لأدارة المدن الجامعية
         <strong>
-           لجامعة حلوان
+           ........... اختر جامعتك 
+        </strong> 
+        <strong>
+           لجامعة حلوان الحكومية
+        </strong> 
+        <strong>
+           لجامعة حلوان الاهلية  
+        </strong> 
+        <strong>
+           لجامعة حلوان التكنولوجية الدولية
         </strong> 
     </p>
   </div>
 
   <div data-aos="fade-down" class="hero-image  w-100">
-    <div style="width: 75vh;" class="logo flex-wrap p-0 p-md-3 mx-auto d-flex justify-content-between align-items-end">
-      <img src="./assets/hnuDarkLogo.png"    class="w-25 scale rounded rounded-5" alt="">
-      <img  src="./assets/dark logo.png" class="w-25 scale " alt=""  />
-      <img src="./assets/HituDarkLogo.png"   class="w-25 scale rounded rounded-5" alt="">
-    </div>
+    <div class="logo flex-wrap p-0 p-md-3 mx-auto d-flex gap-5 justify-content-center align-items-end">
+  <img
+    [ngClass]="{
+      'active': (local.university$ | async) === 'hnu',
+      'hidden': (local.university$ | async) !== null && (local.university$ | async) !== 'hnu'
+    }"
+    src="./assets/hnuDarkLogo.png"
+    (click)="addUniversity('hnu')"
+    class="logo-item  scale rounded rounded-5" alt="">
+
+  <img
+    [ngClass]="{
+      'active': (local.university$ | async) === 'hu',
+      'hidden': (local.university$ | async) !== null && (local.university$ | async) !== 'hu'
+    }"
+    src="./assets/dark logo.png"
+    (click)="addUniversity('hu')"
+    class="logo-item  scale" alt="">
+
+  <img
+    [ngClass]="{
+      'active': (local.university$ | async) === 'hitu',
+      'hidden': (local.university$ | async) !== null && (local.university$ | async) !== 'hitu'
+    }"
+    src="./assets/HituDarkLogo.png"
+    (click)="addUniversity('hitu')"
+    class="logo-item  scale rounded rounded-5" alt="">
+</div>
   </div>
 
   <div data-aos="fade-down" class="next">

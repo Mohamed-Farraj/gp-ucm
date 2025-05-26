@@ -35,23 +35,74 @@ swiper-container {
     bottom: 0;
 }
 
-.hero-image .logo{
-    border-radius: 50%;
-    // aspect-ratio: 1/1;
-}
 
 
 .next button{
-    outline: none;
-    border: none;
+  outline: none;
+  border: none;
 }
 
-.scale{
-    transition: all ease 0.5s;
-    cursor: pointer;
+.scale {
+  cursor: pointer;
+  transition: 
+  transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+  opacity 0.4s ease,
+  visibility 0.4s ease;
 }
 
 .scale:hover{
-    transform: scale(1.2);
-    transition: all ease 0.5s;
+  transform: scale(1.2);
+  transition: all ease 0.5s;
+}
+
+.hero-image .logo{
+    border-radius: 50%;
+    // aspect-ratio: 1/1;
+      position: relative;
+
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  img {
+    transition: inherit;
+    will-change: transform, opacity;
+  }
+}
+
+.logo-item {
+  opacity: 1;
+  width:10% !important;
+  visibility: visible;
+  transform: scale(1);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translateX(-50%) scale(0.8) !important;
+    pointer-events: none;
+    transition: 
+      opacity 0.4s ease 0.1s,
+      visibility 0.4s ease 0.1s,
+      transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    &:nth-child(3) {
+      transform: translateX(50%) scale(0.8) !important;
+    }
+  }
+
+  &.active {
+    transform: translateY(-5%) translateX(-50%);
+    position: absolute;
+    left: 50%;
+    z-index: 2;
+    transition: all 0.6s  cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+// التأخير على العناصر المخفية
+.logo-item.hidden {
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i}) {
+      transition-delay: #{$i * 0.1s};
+    }
+  }
 }
