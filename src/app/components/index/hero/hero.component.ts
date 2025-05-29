@@ -1,13 +1,13 @@
 import { Component , CUSTOM_ELEMENTS_SCHEMA, inject} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LocalStorageService } from '../../../services/local-storage.service';
-import { AsyncPipe, NgClass } from '@angular/common';
+import { AsyncPipe, NgClass, NgIf } from '@angular/common';
 
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [RouterLink,RouterLinkActive , NgClass , AsyncPipe],
+  imports: [RouterLink,RouterLinkActive , NgClass ,NgIf, AsyncPipe],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
