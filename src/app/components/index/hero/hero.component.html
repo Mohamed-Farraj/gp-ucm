@@ -43,7 +43,7 @@
           >لجامعة حلوان التكنولوجية الدولية</strong
           >
         </ng-container>
-        <strong *ngIf="!local.university$">... اختر جامعتك </strong>
+        <strong *ngIf="!(local.university$ | async) as university">... اختر جامعتك </strong>
       </p>
     </div>
 
