@@ -22,5 +22,10 @@ export class HeroComponent {
    {
      this.local.set('university',u);
    }
+   changUni()
+   {
+     this.local.remove('university');
+     console.log('uni removed');  
+   }
 
 }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { SharedDataService } from './shared-data.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +61,7 @@ export class AuthService {
   {
    return this._HttpClient.post(`${environment.baseUrl}/public/register` , data)
   }
+
   setLoginForm(data:object):Observable<any>
   {
    return this._HttpClient.post(`${environment.baseUrl}/public/login` , data)
