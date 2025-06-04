@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../core/environments/environment';
+import { LocalStorageService } from '../local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { environment } from '../../core/environments/environment';
 export class HomeService {
 
   constructor(private _HttpClient:HttpClient) { }
+     public readonly local = inject(LocalStorageService);
+
 
   getDeadline():Observable<any> {
     return this._HttpClient.get(`${environment.baseUrl}/public/all-deadlines/university/1`);

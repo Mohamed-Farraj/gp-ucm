@@ -1,5 +1,5 @@
 <app-hero></app-hero>
-<div dir="rtl" class="my-container">
+<div *ngIf="(local.university$ | async) as university" dir="rtl" class="my-container">
     <div style="height: 90px;"></div>
     <app-hero-helper id="hero-helper"></app-hero-helper>
     <app-application-deadline id="application-deadline"></app-application-deadline>
