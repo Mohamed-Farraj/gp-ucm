@@ -17,6 +17,8 @@ export class UserDashboardComponent {
 
   private readonly ar = inject(ArService)
   name:string ='';
+  uid:number = 0;
+  id:number = 0;
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -26,6 +28,8 @@ export class UserDashboardComponent {
         next: (res) => {
           console.log(res);
           this.name = res.data.firstName;
+          this.id = res.data.userId;
+          this.uid = res.data.university.id;
         },
         error: (err) => {
           console.log(err);

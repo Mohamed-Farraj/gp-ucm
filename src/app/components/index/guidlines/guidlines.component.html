@@ -1,17 +1,28 @@
-<section  class="my-section p-md-5 py-5 px-2">
-    <h1>تعليمات القبول</h1>
-    <div class="accordion fs-5 lh-lg " id="accordionExample">
-        <div class="accordion-item p-md-5 px-2">
-          <h2 class="accordion-header">
-            <button class="accordion-button fs-2 rounded-pill" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              التعليمات و الارشادات
-            </button>
-          </h2>
-          <div id="collapseOne"  class="accordion-collapse collapse hide" data-bs-parent="#accordionExample">
-            <div  *ngIf="res[0]?.guidelines"  class="accordion-body">
-              {{res[0]?.guidelines}}
-            </div>
-          </div>
+<section class="my-section p-md-5 py-5 px-2">
+  <h1>تعليمات القبول</h1>
+  <div class="accordion fs-5 lh-lg" id="accordionExample">
+    <div class="accordion-item p-md-5 px-2">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button fs-2 rounded-pill"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne"
+          aria-expanded="true"
+          aria-controls="collapseOne"
+        >
+          التعليمات و الارشادات
+        </button>
+      </h2>
+      <div
+        id="collapseOne"
+        class="accordion-collapse collapse show"
+        data-bs-parent="#accordionExample"
+      >
+        <div *ngIf="res[0]?.guidelines" class="accordion-body">
+          {{ res[0]?.guidelines }}
         </div>
       </div>
+    </div>
+  </div>
 </section>

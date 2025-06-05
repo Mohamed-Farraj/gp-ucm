@@ -92,7 +92,16 @@
       </div>
     </div>
 
-    <div data-aos="fade-down" class="next">
+    <div *ngIf="(local.university$ | async) as university" data-aos="fade-down" class="">
+      <button
+        class="nav-link"
+        class="p-2 btn btn-outline-light"
+        (click)="changUni()"
+      >
+        تغيير الجامعة
+      </button>
+    </div>
+    <div *ngIf="(local.university$ | async) as university" data-aos="fade-down" class="next ">
       <button
         class="nav-link"
         [routerLink]="['/']"

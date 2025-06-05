@@ -26,7 +26,8 @@ export class AddGuideLinesComponent implements OnInit {
   err:any=null
   result:any=[]
   text: string = '';
-  id:any=null
+  id:any=null;
+  uid:number=1;
   guidelineExists: boolean = false;
   Toast = Swal.mixin({
       toast: true,
@@ -71,11 +72,12 @@ export class AddGuideLinesComponent implements OnInit {
  
 
   ngOnInit(): void {
-    this.fetchGuideline();
+    this.fetchGuideline(1);
   }
 
-  fetchGuideline(): void {
-    this._GuidelinsService.getGuidelines().subscribe({
+  fetchGuideline(uid: number): void {
+    this.uid = uid;
+    this._GuidelinsService.getGuidelines(this.uid).subscribe({
       next: (response: any) => {
         console.log('response.data.length:',response.data.length);
         if (response.data.length > 0) {
@@ -89,6 +91,10 @@ export class AddGuideLinesComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching guideline:', error);
+        // 🔴 في حالة الخطأ: نظّف الحالة والفورم
+      this.guidelineExists = false;
+      this.id = null;
+      this.guidelineForm.reset();
       },
     });
   }
@@ -100,7 +106,7 @@ export class AddGuideLinesComponent implements OnInit {
     const text = this.guidelineForm.value;
     if (this.guidelineExists) {
       // Update the existing guideline
-      this._GuidelinsService.updateGuideline(this.id,text).subscribe({
+      this._GuidelinsService.updateGuideline(this.uid,this.id,text).subscribe({
         next: (response) => {
           this.Toast.fire({
             icon: 'success',
@@ -118,7 +124,7 @@ export class AddGuideLinesComponent implements OnInit {
       });
     } else {
       // Create a new guideline
-      this._GuidelinsService.setguideForm(this.guidelineForm.value).subscribe({
+      this._GuidelinsService.setguideForm(this.uid,this.guidelineForm.value).subscribe({
         next: (response:any) => {
           console.log('resssss:', response);
           this.id = response.data.guideLinesId; 
@@ -155,7 +161,7 @@ export class AddGuideLinesComponent implements OnInit {
       if (result.isConfirmed) {
         // User confirmed, proceed with deletion
         console.log('id for delete', this.id);
-        this._GuidelinsService.deleteGuideline(this.id).subscribe({
+        this._GuidelinsService.deleteGuideline(this.uid,this.id).subscribe({
           next: (response) => {
             // Show success message
             Swal.fire({
