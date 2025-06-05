@@ -21,9 +21,9 @@ export class HomeService {
     return this._HttpClient.get(`${environment.baseUrl}/public/get-guidelines/${this.local.get<string>('university')?.length!-1}`);
   }
 
-  getApplicationStatusById(id:string):Observable<any>
+  getApplicationStatusById(uid:number,id:string):Observable<any>
   {
-    return this._HttpClient.get(`${environment.baseUrl}/user/admission-requests/${this.local.get<string>('university')?.length!-1}/status?userId=${id}`);
+    return this._HttpClient.get(`${environment.baseUrl}/user/admission-requests/${uid}/status?userId=${id}`);
   }
   getApplicationStatusByNationalId(id:string):Observable<any>
   {
