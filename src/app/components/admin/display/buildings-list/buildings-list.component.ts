@@ -55,8 +55,8 @@ export class BuildingsListComponent {
       });
     }
 
-    getBuildings(): void {
-      this._BuildingsService.getAllBuildings(1).subscribe({
+    getBuildings(uid:number = 1): void {
+      this._BuildingsService.getAllBuildings(uid).subscribe({
         next: (res: any) => {
          
           console.log('building result',res);
@@ -65,7 +65,20 @@ export class BuildingsListComponent {
           console.log(this.res);
           this.initPagination();
         },
-        error: (err) => { console.log(err); },
+        error: (err) => 
+          {
+           console.log(err);
+           // 🧹 تنظيف البيانات القديمة
+      this.res = [];
+      this.filteredItems = [];
+      this.pagedItems = [];
+      this.currentPage = 1;
+      this.totalPages = 0;
+      this.pages = [];
+
+      // 👀 ممكن كمان تعرض رسالة للمستخدم
+      // alert('لم يتم العثور على بيانات للمباني');
+           },
       });
     }
   

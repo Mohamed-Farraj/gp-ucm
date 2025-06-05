@@ -20,6 +20,7 @@ export class DeadlinsFormComponent  implements OnInit{
 
 
   isModelOpen = false;
+  uid:number = 1;
   deadlines: Ideadlins[] = [];
   deadline!: Ideadlins;
    private readonly _deadlineService=inject(DeadlineService);
@@ -32,15 +33,19 @@ export class DeadlinsFormComponent  implements OnInit{
     this.getDeadLine();
   }
 
-  getDeadLine(){
-    this._deadlineService.getDeadLine().subscribe({
+  getDeadLine(uid:number = 1) {
+    this.uid = uid
+    this._deadlineService.getDeadLine(this.uid).subscribe({
       next: (res:any) => {
         if (res.data) {
           this.deadlines = res.data;
           console.log(this.deadlines);
         }
       },
-      error: (err) => {console.log(err);},
+      error: (err) => {
+        console.log(err);
+        this.deadlines = [];
+      },
     });
   }
 
@@ -50,7 +55,7 @@ export class DeadlinsFormComponent  implements OnInit{
   }
 
   deleteDeadline(id: number) {
-    this._deadlineService.deleteDeadLine(id).subscribe({
+    this._deadlineService.deleteDeadLine(this.uid,id).subscribe({
       next: (res: any) => {
   
         // Remove the deleted deadline from the local array
@@ -63,7 +68,7 @@ export class DeadlinsFormComponent  implements OnInit{
   }
 
   updateDeadline(id:number , deadline: Ideadlins) {
-    this._deadlineService.updateDeadLine(id,deadline).subscribe({
+    this._deadlineService.updateDeadLine(this.uid,id,deadline).subscribe({
       next: (res:any) => {
         this.getDeadLine();
       },
@@ -84,14 +89,17 @@ export class DeadlinsFormComponent  implements OnInit{
   openDialog(deadline?: Ideadlins): void {
     const dialogRef = this.dialog.open(AddDeadlineComponent, {
       width: '50%', // Set the width of the dialog
-      data: deadline || null, // Pass data to the dialog
+     data: {
+      ...deadline,
+      uid: this.uid // ← أضف الـ uid هنا
+    }, // Pass data to the dialog
       panelClass: 'custom-dialog-container'
 
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.getDeadLine(); // Refresh the list after the dialog is closed
+        this.getDeadLine(this.uid); // Refresh the list after the dialog is closed
       }
     });
   }

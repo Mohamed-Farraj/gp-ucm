@@ -181,6 +181,17 @@ export class TableViewUsersListComponent {
       }
       this.applyFilters();
     }
+
+       onStudentTypeChange(event: any): void {
+  const value = event.target.value;
+  if (event.target.checked) {
+    this.selectedStudentTypes.push(value);
+  } else {
+    this.selectedStudentTypes = this.selectedStudentTypes.filter(v => v !== value);
+  }
+  this.applyFilters();
+}
+
   
     // دالة لتطبيق الفلاتر (البحث وحالة الـ checkboxes)
     applyFilters(): void {
@@ -254,16 +265,7 @@ if (this.selectedStudentTypes.length > 0) {
     
     }
   
-    onStudentTypeChange(event: any): void {
-  const value = event.target.value;
-  if (event.target.checked) {
-    this.selectedStudentTypes.push(value);
-  } else {
-    this.selectedStudentTypes = this.selectedStudentTypes.filter(v => v !== value);
-  }
-  this.applyFilters();
-}
-
+ 
     downloadSorted()
     {
       this.excel.downloadSorted().subscribe({

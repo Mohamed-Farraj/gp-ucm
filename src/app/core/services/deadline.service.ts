@@ -12,30 +12,30 @@ private readonly _HttpClient = inject(HttpClient)
 token:string = '';
 
 
-  addDeadLine(data:object):Observable<any>
+  addDeadLine(uid:number,data:object):Observable<any>
   {
     if (localStorage.getItem('userToken') !== null) {
       this.token = localStorage.getItem('userToken')!;
     }
-   return this._HttpClient.post(`${environment.baseUrl}/admin/edit/application-deadline/1` , data)
+   return this._HttpClient.post(`${environment.baseUrl}/admin/edit/application-deadline/${uid}` , data)
  
   }
 
-  getDeadLine(): Observable<any> {
-    return this._HttpClient.get(`${environment.baseUrl}/public/all-deadlines/university/1`);
+  getDeadLine(uid:number): Observable<any> {
+    return this._HttpClient.get(`${environment.baseUrl}/public/all-deadlines/university/${uid}`);
   }
 
 
-  deleteDeadLine(id: number): Observable<any> 
+  deleteDeadLine(uid:number,id: number): Observable<any> 
   {
     
-    return this._HttpClient.delete(`${environment.baseUrl}/admin/delete-application-deadline?universityId=1&deadlineId=${id}`);
+    return this._HttpClient.delete(`${environment.baseUrl}/admin/delete-application-deadline?universityId=${uid}&deadlineId=${id}`);
   }
 
 
-  updateDeadLine(id: number, data: object): Observable<any>
+  updateDeadLine(uid:number,id: number, data: object): Observable<any>
   {
-    return this._HttpClient.put(`${environment.baseUrl}/admin/edit/update-application-deadline?deadlineId=${id}&universityId=1`, data);
+    return this._HttpClient.put(`${environment.baseUrl}/admin/edit/update-application-deadline?deadlineId=${id}&universityId=${uid}`, data);
   }
 
 

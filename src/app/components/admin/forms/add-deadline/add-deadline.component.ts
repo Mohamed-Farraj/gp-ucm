@@ -26,7 +26,7 @@ export class AddDeadlineComponent implements OnChanges {
   private readonly toastr=inject(ToastrService);
   private readonly _formBuilder= inject(FormBuilder)
   dialogRef = inject(MatDialogRef<AddDeadlineComponent>);
-  data: Ideadlins = inject(MAT_DIALOG_DATA);
+  data: any = inject(MAT_DIALOG_DATA);
   
   deadlineForm:FormGroup= this._formBuilder.group({
     applicationStartDate: ['', Validators.required , ],
@@ -56,6 +56,7 @@ dateRangeValidator(): ValidatorFn {
 
 
   ngOnInit(): void {
+    console.log('this.data',this.data);
     if (this.data) {
       this.deadlineForm.patchValue(this.data); // Patch form with data if editing
     }
@@ -75,14 +76,16 @@ dateRangeValidator(): ValidatorFn {
   onSubmit() {
     console.log('local storage before submission',localStorage.getItem('userToken'));
     if (this.deadlineForm.valid) {
-      if (this.data) {
-        this._deadlineService.updateDeadLine(this.data.id, this.deadlineForm.value).subscribe({
+      console.log('this.data.id',this.data.id);
+      console.log('this.data.id',typeof this.data.id);
+      if (typeof this.data.id === 'number') {
+        this._deadlineService.updateDeadLine(this.data.universityResponseDTO.id,this.data.id, this.deadlineForm.value).subscribe({
           next: (res: any) => {
             this.dialogRef.close(true); // Close the dialog and return true
           },
         });
       } else {
-        this._deadlineService.addDeadLine(this.deadlineForm.value).subscribe({
+        this._deadlineService.addDeadLine(this.data.uid,this.deadlineForm.value).subscribe({
           next: (res: any) => {
            
             this.dialogRef.close(true); // Close the dialog and return true

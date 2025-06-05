@@ -11,25 +11,25 @@ export class GuidelinsService {
   private readonly _HttpClient = inject(HttpClient)
 
 
-  setguideForm(data:object): Observable<any>
+  setguideForm(uid:number,data:object): Observable<any>
   {
-   return this._HttpClient.post(`${environment.baseUrl}/admin/edit/add-guidelines/1` , data)
+   return this._HttpClient.post(`${environment.baseUrl}/admin/edit/add-guidelines/${uid}` , data)
  
   }
 
-  getGuidelines(): Observable<any> {
-    return this._HttpClient.get(`${environment.baseUrl}/public/get-guidelines/1`);
+  getGuidelines(uid:number = 1): Observable<any> {
+    return this._HttpClient.get(`${environment.baseUrl}/public/get-guidelines/${uid}`);
   }
 
 
-  deleteGuideline(id: number): Observable<any> 
+  deleteGuideline(uid:number,id: number): Observable<any> 
   {
-    return this._HttpClient.delete(`${environment.baseUrl}/admin/delete-guidelines?universityId=1&guidelineId=${id}`);
+    return this._HttpClient.delete(`${environment.baseUrl}/admin/delete-guidelines?universityId=${uid}&guidelineId=${id}`);
   }
 
 
-  updateGuideline(id: number, data: object): Observable<any>
+  updateGuideline(uid:number,id: number, data: object): Observable<any>
   {
-    return this._HttpClient.put(`${environment.baseUrl}/admin/edit/update-guidelines?universityId=1&guidelineId=${id}`, data);
+    return this._HttpClient.put(`${environment.baseUrl}/admin/edit/update-guidelines?universityId=${uid}&guidelineId=${id}`, data);
   }
 }
