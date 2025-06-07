@@ -45,7 +45,7 @@ export class AddBuildingComponent {
       wingsCount: ['', Validators.required],
 
       type: ['', Validators.required],
-      universityId: [''],
+      universityId: ['1', Validators.required],
       // buildingId: [this.buildingData?.id],
        
     })
