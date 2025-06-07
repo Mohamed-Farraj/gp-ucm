@@ -1,17 +1,16 @@
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-basic-info-step',
   standalone: true,
-  imports: [NgIf,ReactiveFormsModule],
+  imports: [NgIf ,ReactiveFormsModule],
   templateUrl: './basic-info-step.component.html',
   styleUrl: './basic-info-step.component.scss'
 })
 export class BasicInfoStepComponent implements OnInit {
   @Input() formGroup!: FormGroup;
-
   ngOnInit(): void {
     // فحص للتأكد من أن formGroup تم تمريره
     if (!this.formGroup) {
@@ -19,6 +18,12 @@ export class BasicInfoStepComponent implements OnInit {
     }
   }
 
+
+  nameOfUniversities = [
+  { value: '1', label: 'جامعة حلوان' },
+  { value: '2', label: 'جامعه حلوان الاهلية' },
+  { value: '3', label: 'جامعه حلوان التكنولوجية' }
+];
   get firstName() {
     return this.formGroup?.get('firstName');
   }
@@ -44,8 +49,6 @@ export class BasicInfoStepComponent implements OnInit {
   get religion() {
     return this.formGroup?.get('religion');
   }
-
-
 
 
 

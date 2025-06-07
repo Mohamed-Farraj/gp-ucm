@@ -10,7 +10,8 @@
               قم باختيار (قدامى/مستجدين) وملء بياناتك ثم
               الموافقة على الإقرار بالأسفل مع ملاحظة ان الطلاب المستجدين هم طلاب
               الفرق الأولى أو الاعدادية، الطلاب القدامى هم طلاب مابعد الفرق الأولى
-              أو الاعدادية } @else { 
+              أو الاعدادية } 
+              @else { 
               <h2 class="text-black p-3 font-semibold">تعديل طلب الالتحاق</h2>
               يمكنك تعديل بياناتك ثم الضغط على زر "تعديل
               طلب الالتحاق" لحفظ التغييرات }
@@ -43,6 +44,9 @@
               </button>
             </div>
           </div>
+          
+       
+
         </div>
         @if (studentType !== null) {
         <form [formGroup]="AppRequest">
@@ -196,6 +200,9 @@
                 <app-academic-info-step
                   [formGroup]="academicInfoGroup"
                   [levels]="levels()"
+                  [faculties]="faculties"
+                  [nameOfUniversities]="nameOfUniversities"
+                  [facultiesMap]="facultiesMap"
                   [studentType]="studentType"
                 ></app-academic-info-step>
                 <div *ngIf="academicInfoGroup.invalid && academicInfoGroup.touched" class="text-danger mt-2">

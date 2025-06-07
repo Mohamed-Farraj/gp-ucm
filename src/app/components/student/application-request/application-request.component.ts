@@ -14,12 +14,12 @@ import { AcademicInfoStepComponent } from "../../newest-app-reqeust/academic-inf
 import { ContactInfoStepComponent } from "../../newest-app-reqeust/contact-info-step/contact-info-step.component";
 import { AccountSetupStepComponent } from "../../newest-app-reqeust/account-setup-step/account-setup-step.component";
 import { MatStepperModule } from '@angular/material/stepper';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-application-request',
   standalone: true,
-  imports: [NgIf, ReactiveFormsModule, MatStepperModule, BasicInfoStepComponent, FamilyInfoStepComponent, AcademicInfoStepComponent, ContactInfoStepComponent, AccountSetupStepComponent],
+  imports: [NgIf, NgFor, ReactiveFormsModule, MatStepperModule, BasicInfoStepComponent, FamilyInfoStepComponent, AcademicInfoStepComponent, ContactInfoStepComponent, AccountSetupStepComponent],
   templateUrl: './application-request.component.html',
   styleUrl: './application-request.component.scss'
 })
@@ -65,7 +65,7 @@ export class ApplicationRequestComponent implements OnInit {
   };
 
   // الكليات التي لديها 5 فرق دراسية
-  fiveYearFaculties: string[] = ['كلية الهندسة بالمطرية', 'كلية الهندسة بحلوان', 'كلية الطب'];
+  fiveYearFaculties: string[] = ['كلية الفنون والفنون التطبيقية', 'كلية طب الأسنان' ,'كلية الهندسة', 'كلية العلاج الطبيعي' , 'كلية الهندسة بالمطرية', 'كلية الهندسة بحلوان', 'كلية الطب'];
   facultySelected: WritableSignal<string | null> = signal(null);
   levels: Signal<{ value: string; label: string }[]> = computed(() => {
     const faculty = this.facultySelected();
@@ -81,6 +81,58 @@ export class ApplicationRequestComponent implements OnInit {
       { value: 'third', label: 'الثالثة' }, { value: 'fourth', label: 'الرابعة' }
     ];
   });
+
+
+nameOfUniversities = [
+  { value: '1', label: 'جامعة حلوان' },
+  { value: '2', label: 'جامعه حلوان الاهلية' },
+  { value: '3', label: 'جامعه حلوان التكنولوجية' }
+];
+
+facultiesMap = {
+  '1': [
+    'كلية الآداب',
+    'كلية الاقتصاد المنزلي',
+    'كلية التربية',
+    'كلية التمريض',
+    'كلية الحاسبات والذكاء الاصطناعي',
+    'كلية الخدمة الاجتماعية',
+    'كلية الصيدلة',
+    'كلية الطب',
+    'كلية العلاج الطبيعي',
+    'كلية العلوم',
+    'كلية الفنون التطبيقية',
+    'كلية الفنون الجميلة',
+    'كلية التربية الرياضية بنين',
+    'كلية التربية الرياضية بنات',
+    'كلية الهندسة بالمطرية',
+    'كلية الهندسة بحلوان',
+    'كلية التجارة وإدارة الأعمال',
+    'كلية الحقوق',
+    'كلية التربية الموسيقية',
+    'كلية التربية الفنية',
+    'كلية السياحة والفنادق',
+    'كلية التعليم الصناعي',
+    'المعهد القومي للملكية الفكرية'
+  ],
+  '2': [
+    'كلية العلاج الطبيعي',
+    'كلية العلوم',
+    'كلية العلوم الإنسانية والتجارة وإدارة الأعمال',
+    'كلية الفنون والفنون التطبيقية',
+    'كلية الهندسة',
+    'كلية تكنولوجيا العلوم الصحية التطبيقية',
+    'كلية طب الأسنان',
+    'كلية علوم الحاسب وتكنولوجيا المعلومات'
+  ],
+  '3': [
+    'كلية تكنولوجيا الصناعة والطاقة'
+  ]
+};
+
+faculties: string[] = []; // هتتغير حسب اختيار الجامعة
+
+
 
   countries = countries;
   selectedCountry: WritableSignal<string | null> = signal(null);
@@ -107,7 +159,7 @@ export class ApplicationRequestComponent implements OnInit {
       dateOfBirth: [null, Validators.required],
       gender: [null, Validators.required],
       religion: [null, Validators.required],
-      placeOfBirth: [null, Validators.required]
+      placeOfBirth: [null, Validators.required],
     });
 
     this.familyInfoGroup = this.fb.group({
@@ -124,6 +176,7 @@ export class ApplicationRequestComponent implements OnInit {
     });
 
     this.academicInfoGroup = this.fb.group({
+      universityId: [null , Validators.required],
       faculty: [null, Validators.required],
       level: [null, Validators.required],
       previousAcademicYearGpa: [null],
@@ -150,7 +203,6 @@ export class ApplicationRequestComponent implements OnInit {
       password: [null, [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
       rePassword: [null, Validators.required],
       role: ['USER'],
-      universityId: ['1'],
       status: [2],
       securityCheck: ['PENDING'],
       confirmDataAccuracy: [true, Validators.requiredTrue]
@@ -318,7 +370,8 @@ export class ApplicationRequestComponent implements OnInit {
               dateOfBirth: res.data.dateOfBirth,
               gender: res.data.gender,
               religion: res.data.religion,
-              placeOfBirth: res.data.placeOfBirth
+              placeOfBirth: res.data.placeOfBirth,
+              
             });
             this.familyInfoGroup.patchValue({
               fatherName: res.data.fatherName,
@@ -333,6 +386,7 @@ export class ApplicationRequestComponent implements OnInit {
               familyAbroad: res.data.familyAbroad
             });
             this.academicInfoGroup.patchValue({
+              universityId: res.data.universityId,
               faculty: res.data.faculty,
               level: res.data.level,
               previousAcademicYearGpa: res.data.previousAcademicYearGpa,

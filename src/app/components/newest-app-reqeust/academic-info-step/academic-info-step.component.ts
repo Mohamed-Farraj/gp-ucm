@@ -1,19 +1,35 @@
-import { NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-academic-info-step',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [NgFor,ReactiveFormsModule],
   templateUrl: './academic-info-step.component.html',
   styleUrl: './academic-info-step.component.scss'
 })
-export class AcademicInfoStepComponent {
+export class AcademicInfoStepComponent implements OnInit {
 
   @Input() formGroup!: FormGroup;
   @Input() studentType: 'new' | 'old' | null = null;
   @Input() levels: any[] = [];
+  @Input() faculties: any[] = [];
+  @Input() nameOfUniversities: any[] = [];
+  @Input() facultiesMap: any = {};
+
+
+   ngOnInit(): void {
+
+    this.formGroup.get('universityId')?.valueChanges.subscribe(selectedUniversity => {
+    this.faculties = this.facultiesMap[String(selectedUniversity) as keyof typeof this.facultiesMap] || [];
+    this.formGroup.get('faculty')?.setValue('');
+  });
+  }
+
+  get universityId() {
+    return this.formGroup?.get('universityId');
+  }
   get faculty() {
     return this.formGroup?.get('faculty');
   }
