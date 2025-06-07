@@ -5,10 +5,21 @@
     <!-- الرقم القومي -->
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">الرقم القومي</label>
-      <input formControlName="nationalId" type="text" class="form-control rounded-lg shadow-sm" />
-      <div *ngIf="nationalId?.invalid && ( nationalId?.touched)" class="text-danger mt-1">
-        <p class="m-0" *ngIf="nationalId?.hasError('required')">الرقم القومي مطلوب</p>
-        <p class="m-0" *ngIf="nationalId?.hasError('pattern')">يجب أن يكون 14 رقمًا</p>
+      <input
+        formControlName="nationalId"
+        type="text"
+        class="form-control rounded-lg shadow-sm"
+      />
+      <div
+        *ngIf="nationalId?.invalid && nationalId?.touched"
+        class="text-danger mt-1"
+      >
+        <p class="m-0" *ngIf="nationalId?.hasError('required')">
+          الرقم القومي مطلوب
+        </p>
+        <p class="m-0" *ngIf="nationalId?.hasError('pattern')">
+          يجب أن يكون 14 رقمًا
+        </p>
       </div>
       <small class="text-muted">يستخدم لاستخراج البيانات الأخرى</small>
     </div>
@@ -16,35 +27,72 @@
     <!-- الاسم الأول -->
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">الاسم الأول</label>
-      <input formControlName="firstName" type="text" class="form-control rounded-lg shadow-sm" />
-      <div *ngIf="firstName?.invalid && (firstName?.touched)" class="text-danger mt-1">
-        <p class="m-0" *ngIf="firstName?.hasError('required')">الاسم الأول مطلوب</p>
+      <input
+        formControlName="firstName"
+        type="text"
+        class="form-control rounded-lg shadow-sm"
+      />
+      <div
+        *ngIf="firstName?.invalid && firstName?.touched"
+        class="text-danger mt-1"
+      >
+        <p class="m-0" *ngIf="firstName?.hasError('required')">
+          الاسم الأول مطلوب
+        </p>
       </div>
     </div>
 
     <!-- الاسم الثاني -->
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">الاسم الثاني</label>
-      <input formControlName="lastName" type="text" class="form-control rounded-lg shadow-sm" />
-      <div *ngIf="lastName?.invalid && (lastName?.touched)" class="text-danger mt-1">
-        <p class="m-0" *ngIf="lastName?.hasError('required')">الاسم الثاني مطلوب</p>
+      <input
+        formControlName="lastName"
+        type="text"
+        class="form-control rounded-lg shadow-sm"
+      />
+      <div
+        *ngIf="lastName?.invalid && lastName?.touched"
+        class="text-danger mt-1"
+      >
+        <p class="m-0" *ngIf="lastName?.hasError('required')">
+          الاسم الثاني مطلوب
+        </p>
       </div>
     </div>
 
     <div class="flex flex-col">
       <label class="mb-2 font-semibold"> كود الطالب</label>
-      <input formControlName="studentCode" type="text" class="form-control rounded-lg shadow-sm" />
-      <div *ngIf="studentCode?.invalid && (studentCode?.touched)" class="text-danger mt-1">
-        <p class="m-0" *ngIf="studentCode?.hasError('required')">  كود الطالب مطلوب</p>
+      <input
+        formControlName="studentCode"
+        type="text"
+        class="form-control rounded-lg shadow-sm"
+      />
+      <div
+        *ngIf="studentCode?.invalid && studentCode?.touched"
+        class="text-danger mt-1"
+      >
+        <p class="m-0" *ngIf="studentCode?.hasError('required')">
+          كود الطالب مطلوب
+        </p>
       </div>
     </div>
 
     <!-- تاريخ الميلاد -->
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">تاريخ الميلاد</label>
-      <input formControlName="dateOfBirth" type="date" readonly class="form-control rounded-lg shadow-sm" />
-      <div *ngIf="dateOfBirth?.invalid && (dateOfBirth?.touched)" class="text-danger mt-1">
-        <p class="m-0" *ngIf="dateOfBirth?.hasError('required')">تاريخ الميلاد مطلوب</p>
+      <input
+        formControlName="dateOfBirth"
+        type="date"
+        readonly
+        class="form-control rounded-lg shadow-sm"
+      />
+      <div
+        *ngIf="dateOfBirth?.invalid && dateOfBirth?.touched"
+        class="text-danger mt-1"
+      >
+        <p class="m-0" *ngIf="dateOfBirth?.hasError('required')">
+          تاريخ الميلاد مطلوب
+        </p>
       </div>
       <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
     </div>
@@ -52,7 +100,10 @@
     <!-- محل الميلاد -->
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">محل الميلاد</label>
-      <select formControlName="placeOfBirth" class="form-select rounded-lg shadow-sm">
+      <select
+        formControlName="placeOfBirth"
+        class="form-select rounded-lg shadow-sm"
+      >
         <option value="">اختر</option>
         <option value="القاهرة">القاهرة</option>
         <option value="دمياط">دمياط</option>
@@ -82,8 +133,13 @@
         <option value="سيناء">سيناء</option>
         <option value="السويس">السويس</option>
       </select>
-      <div *ngIf="placeOfBirth?.invalid && (placeOfBirth?.touched)" class="text-danger mt-1">
-        <p class="m-0" *ngIf="placeOfBirth?.hasError('required')">محل الميلاد مطلوب</p>
+      <div
+        *ngIf="placeOfBirth?.invalid && placeOfBirth?.touched"
+        class="text-danger mt-1"
+      >
+        <p class="m-0" *ngIf="placeOfBirth?.hasError('required')">
+          محل الميلاد مطلوب
+        </p>
       </div>
       <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
     </div>
@@ -96,7 +152,7 @@
         <option value="MALE">ذكر</option>
         <option value="FEMALE">أنثى</option>
       </select>
-      <div *ngIf="gender?.invalid && (gender?.touched)" class="text-danger mt-1">
+      <div *ngIf="gender?.invalid && gender?.touched" class="text-danger mt-1">
         <p class="m-0" *ngIf="gender?.hasError('required')">النوع مطلوب</p>
       </div>
       <small class="text-muted">يتم استخراجه تلقائياً من الرقم القومي</small>
@@ -105,19 +161,22 @@
     <!-- الديانة -->
     <div class="flex flex-col">
       <label class="mb-2 font-semibold">الديانة</label>
-      <select formControlName="religion" class="form-select rounded-lg shadow-sm">
+      <select
+        formControlName="religion"
+        class="form-select rounded-lg shadow-sm"
+      >
         <option value="">اختر</option>
         <option value="MUSLIM">مسلم</option>
         <option value="CHRISTIAN">مسيحي</option>
       </select>
-      <div *ngIf="religion?.invalid && (religion?.touched)" class="text-danger mt-1">
+      <div
+        *ngIf="religion?.invalid && religion?.touched"
+        class="text-danger mt-1"
+      >
         <p class="m-0" *ngIf="religion?.hasError('required')">الديانة مطلوبة</p>
       </div>
     </div>
 
-
-
+   
   </div>
-
-  
-  </div>
+</div>
