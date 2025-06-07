@@ -3,7 +3,7 @@
     <div style="height: 90px"></div>
     <section class="bg-white shadow-lg container mx-auto my-5 p-4 rounded-4">
       <div class="flex flex-col">
-        <div class="title fw-bold border-bottom mb-4">
+        <div class="title  fw-bold border-bottom mb-4">
           <p>
             @if(!isEditMode) {
               <h2 class="text-black p-3 font-semibold">تقديم طلب الالتحاق</h2>
@@ -155,7 +155,7 @@
             <mat-horizontal-stepper
               
               #stepperMobile
-              class="bg-white p-4 w-100"
+              class="bg-white w-100"
               labelPosition="bottom"
               [linear]="true"
             >
@@ -179,14 +179,17 @@
                 <div *ngIf="familyInfoGroup.invalid && familyInfoGroup.touched" class="text-danger mt-2">
                   <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
                 </div>
-                <div class="d-flex justify-content-between w-100">
-                  <button class="btn btn-main m-1" matStepperPrevious>
+ <div class="d-flex justify-content-between w-100">
+                  <button class="btn btn-main  me-1" matStepperPrevious>
                     <i class="fa-solid fa-forward"></i>  السابق  
                   </button>
-                  <button class="btn btn-main m-1" matStepperNext [disabled]="familyInfoGroup.invalid">
+                  <button class="btn btn-main " matStepperNext [disabled]="familyInfoGroup.invalid">
                     التالي <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
+
+
+
               </mat-step>
               <mat-step [stepControl]="academicInfoGroup">
                 <ng-template matStepLabel></ng-template>
@@ -200,10 +203,10 @@
                 </div>
                 <div class="d-flex justify-content-between w-100">
                  
-                  <button class="btn btn-main m-1" matStepperPrevious>
+                  <button class="btn btn-main me-1" matStepperPrevious>
                     <i class="fa-solid fa-forward"></i> السابق 
                   </button>
-                  <button class="btn btn-main m-1" matStepperNext [disabled]="academicInfoGroup.invalid">
+                  <button class="btn btn-main " matStepperNext [disabled]="academicInfoGroup.invalid">
                     التالي <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>
@@ -223,10 +226,10 @@
                 </div>
                 <div class="d-flex justify-content-between w-100">
                 
-                  <button class="btn btn-main m-1" matStepperPrevious>
+                  <button class="btn btn-main me-1" matStepperPrevious>
                     <i class="fa-solid fa-forward"></i> السابق 
                   </button>
-                  <button class="btn btn-main m-1" matStepperNext [disabled]="contactInfoGroup.invalid">
+                  <button class="btn btn-main" matStepperNext [disabled]="contactInfoGroup.invalid">
                     التالي <i class="fa-solid fa-backward"></i>
                   </button>
                 </div>

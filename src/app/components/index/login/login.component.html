@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <button class="btn btn-lg btn-main w-100 fs-6">تسجيل الدخول</button>
+            <button [disabled]="!loginForm.valid" class="btn btn-lg btn-main w-100 fs-6">تسجيل الدخول</button>
           </div>
           <!-- <div class="input-group mb-3">
             <button class="btn btn-lg btn-light w-100 fs-6"><img src="images/google.png" style="width:1.25rem" class="me-2"><small>تسجيل الدخول باستخدام Google</small></button>
