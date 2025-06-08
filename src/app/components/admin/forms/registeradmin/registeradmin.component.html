@@ -1,81 +1,63 @@
-<!-- admin-form.component.html -->
-  <div class="container ">
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      <div class="admin-form-card">
-        <div class="logo-container">
-          <div class="logo">
-            <i class="fa-solid fa-user-tie"></i>       
-             </div>
-        </div>
-        <h2 class="text-center">Create Admin Account</h2>
-        
-        <form [formGroup]="adminForm" (ngSubmit)="onSubmit()" class="mt-4">
-          <div class="form-floating mb-4">
-            <input 
-              type="text" 
-              class="form-control" 
-              id="username" 
-              placeholder="Username"
-              formControlName="username"
-              [ngClass]="{'is-invalid': adminForm.get('username')?.invalid && adminForm.get('username')?.touched}">
-            <label for="username">Username</label>
-            @if (adminForm.get('username')?.invalid && adminForm.get('username')?.touched) {
-              <div class="invalid-feedback">
-                @if (adminForm.get('username')?.errors?.['required']) {
-                  Username is required
-                } @else if (adminForm.get('username')?.errors?.['minlength']) {
-                  Username must be at least 4 characters
-                }
-              </div>
-            }
-          </div>
-          
-          <div class="form-floating mb-4">
-            <input 
-              type="password" 
-              class="form-control" 
-              id="password" 
-              placeholder="Password"
-              formControlName="password"
-              [ngClass]="{'is-invalid': adminForm.get('password')?.invalid && adminForm.get('password')?.touched}">
-            <label for="password">Password</label>
-            @if (adminForm.get('password')?.invalid && adminForm.get('password')?.touched) {
-              <div class="invalid-feedback">
-                @if (adminForm.get('password')?.errors?.['required']) {
-                  Password is required
-                } @else if (adminForm.get('password')?.errors?.['minlength']) {
-                  Password must be at least 8 characters
-                }
-              </div>
-            }
-          </div>
-          
-          <div class="form-floating mb-4">
-            <select 
-              class="form-select" 
-              id="role" 
-              formControlName="role"
-              [ngClass]="{'is-invalid': adminForm.get('role')?.invalid && adminForm.get('role')?.touched}">
-              <option value="" disabled selected>Select role</option>
-              @for (option of roleOptions; track option.id) {
-                <option [value]="option.name">{{ option.name }}</option>
-              }
-            </select>
-            <label for="role">Admin Role</label>
-            @if (adminForm.get('role')?.invalid && adminForm.get('role')?.touched) {
-              <div class="invalid-feedback">
-                Please select an admin role
-              </div>
-            }
-          </div>
-          
-          <div class="d-grid">
-            <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
-          </div>
-        </form>
-      </div>
-    </div>
+<section class="premium-card my-4 p-4" dir="rtl">
+  <div class="card-header d-flex align-items-center justify-content-between mb-4">
+    <h4 class="section-title">اضافه مشرف وصلاحياته</h4>
+    <button 
+    *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+      type="button" 
+      (click)="openDialog()"
+      class="btn-add"
+    >
+      <i class="fas fa-calendar-plus me-2"></i>اضافة مشرف
+    </button>
   </div>
-</div>
-
+  
+  <div class="table-responsive">
+    <table class="premium-table">
+      <thead>
+        <tr>
+          <th scope="col">  البريد الالكتروني</th>
+          <th scope="col">  الدور</th>
+          <th scope="col"> الصلاحيات</th>
+          <th scope="col" class="text-center">إجراءات</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (admins.length > 0) { 
+          @for (item of admins; track $index) {
+            <tr>
+              <td>{{item.username}}</td>
+              <td>{{item.role}}</td>
+             <td>{{ getPrivilegeNames(item.privileges) }}</td>
+              <td class="actions-cell">
+                <button 
+                  type="button" 
+                  (click)="openPrivDialog(item.userID)"
+                  class="btn-edit"
+                >
+                  <i class="fas fa-edit me-1"></i>اضافة صلاحيات
+                </button>
+                <!-- <button 
+                *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')"
+                  type="button" 
+                  (click)="deleteDeadline(item.id)"
+                  class="btn-delete-text"
+                >
+                  <i class="fas fa-trash-alt me-1"></i>حذف
+                </button> -->
+              </td>
+            </tr>
+          }
+        } @else {
+          <tr>
+            <td colspan="4" class="empty-state">
+              <div>
+                <i class="far fa-calendar-times fa-2x mb-3"></i>
+                <p>لا توجد مواعيد تقديم حاليًا</p>
+              </div>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,0 +1,73 @@
+<section class="container px-4 py-5 rounded-4" dir="rtl">
+
+
+  <h5 class="mb-5 ">اضافة مدير</h5>
+  <form [formGroup]="adminForm" class="w-100" (ngSubmit)="onSubmit()" >
+    <div class="mb-5">
+        <label for="username">البريد الالكتروني</label>
+       <input 
+              type="email" 
+              class="form-control" 
+              id="username" 
+              formControlName="username"
+              [ngClass]="{'is-invalid': adminForm.get('username')?.invalid && adminForm.get('username')?.touched}">
+            
+            @if (adminForm.get('username')?.invalid && adminForm.get('username')?.touched) {
+              <div class="invalid-feedback">
+                @if (adminForm.get('username')?.errors?.['required']) {
+                  Username is required
+                } @else if (adminForm.get('username')?.errors?.['email']) {
+                   must be a valid email address
+                }
+              </div>
+            }
+    </div>
+    <div class="mb-5">
+           <label for="password">الرقم السري</label>
+    <input 
+              type="password" 
+              class="form-control" 
+              id="password" 
+              placeholder="Password"
+              formControlName="password"
+              [ngClass]="{'is-invalid': adminForm.get('password')?.invalid && adminForm.get('password')?.touched}">
+         
+            @if (adminForm.get('password')?.invalid && adminForm.get('password')?.touched) {
+              <div class="invalid-feedback">
+                @if (adminForm.get('password')?.errors?.['required']) {
+                  Password is required
+                } @else if (adminForm.get('password')?.errors?.['pattern']) {
+                    <p class="m-0 text-xs">
+                كلمة المرور يجب أن تتكون من 8 أحرف على الأقل، وتحتوي على:
+                حرف كبير، حرف صغير، رقم، ورمز خاص (!#$%^&*)
+              </p>
+                }
+              </div>
+            }
+    </div>
+    <div class="mb-5">
+         <label for="role">الصلاحيات</label>
+  <select
+    class="form-select"
+    id="role"
+    formControlName="role"
+    [ngClass]="{'is-invalid': adminForm.get('role')?.invalid && adminForm.get('role')?.touched}">
+    <option value="" disabled>Select role</option>
+    @for (option of roleOptions; track option.id) {
+      <option [value]="option.name">{{ option.name }}</option>
+    }
+  </select>
+ 
+  @if (adminForm.get('role')?.invalid && adminForm.get('role')?.touched) {
+    <div class="invalid-feedback">
+      Please select at least one admin role
+    </div>
+  }
+</div>
+       <button type="submit"
+      class="btn-main me-3 ">اضافه</button>
+    <button type="button" (click)="onClose()"
+      class="btn-main-delete ">الغاء</button>
+   
+  </form>
+</section>
