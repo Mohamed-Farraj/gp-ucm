@@ -17,5 +17,10 @@ createAdminAcc(data:object):Observable<any>{
 
 }
 
+getAllAdmins():Observable<any>{
+
+  return this._HttpClient.get(`${environment.baseUrl}/admin/all-admins`)
+
+}
 
 }

@@ -1,0 +1,30 @@
+<section class="container px-4 py-5 rounded-4" dir="rtl">
+
+
+  <h5 class="mb-5 ">اضافة صلاحيات</h5>
+  <form [formGroup]="privForm" class="w-100" (ngSubmit)="onSubmit()" >
+   <div class="mb-5">
+<ng-select
+  [items]="Privilegeives"
+  bindLabel="privilegeName"   
+  bindValue="id"              
+  [multiple]="true"
+  [closeOnSelect]="false"
+  formControlName="privilegeIds"
+  placeholder="اختر الصلاحيات">
+</ng-select>
+
+@if (privForm.get('privilegeIds')?.invalid && privForm.get('privilegeIds')?.touched) {
+  <div class="invalid-feedback">
+    يجب اختيار صلاحية واحدة على الأقل
+  </div>
+}
+
+</div>
+    <button type="submit"
+      class="btn-main me-3 ">اضافه</button>
+    <button type="button" (click)="onClose()"
+      class="btn-main-delete ">الغاء</button>
+   
+  </form>
+</section>
