@@ -43,7 +43,8 @@ import { ActivationEnd, NavigationEnd, Router, RouterLink, RouterLinkActive, Rou
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    NgStyle
+    NgStyle,
+    MatTooltipModule
   ],
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'] // تم تصحيح الاسم هنا

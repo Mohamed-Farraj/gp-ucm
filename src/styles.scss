@@ -254,3 +254,36 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+
+
+// styles.scss
+
+.cdk-overlay-container .mat-mdc-tooltip {
+  // font-size: 16px !important;
+  // font-weight: bold !important;
+  padding: 5px 5px !important;
+  background-color:#202123 !important; // زي ChatGPT
+  // color: #fff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  max-width: 300px !important;
+  text-align: center !important;
+  line-height: 1.6 !important;
+  opacity: 1 !important;
+}
+
+// styles.scss
+.mdc-tooltip__surface {
+    font-family: 'cairo' !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  padding: 5px 10px !important;
+  background-color: transparent !important; // زي ChatGPT
+  color: white !important;
+  border-radius: 10px !important;
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  max-width: 300px !important;
+  text-align: center !important;
+  line-height: 1.6 !important;
+  opacity: 1 !important;
+}

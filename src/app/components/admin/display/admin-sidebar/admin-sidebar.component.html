@@ -61,9 +61,8 @@
   <section dir="rtl" style="padding-inline-end: 80px">
     
     <section
-      [ngStyle]="{'transform': 'scale(' + sidebarScale + ')'}"
-      class="position-fixed fixed-top sidebar gap-3 gap-lg-4 px-3 py-3 d-flex flex-column"
-      [class.collapsed]="isCollapsed"
+      style="height: 100vh; overflow-y: auto;"
+      class="position-fixed fixed-top sidebar gap-3 gap-lg-4 px-2 py-3 d-flex flex-column collapsed"
     >
       <button class="toggle-btn btn"
               type="button" data-bs-toggle="offcanvas"
@@ -76,6 +75,7 @@
         <div>
           <div
             class="list-group d-flex flex-column gap-2"
+            style="height: 100%;"
             id="list-tab"
             role="tablist"
           >
@@ -86,6 +86,8 @@
               routerLinkActive="active"
               [class.active]="activeTab === item.id"
               (click)="setActiveTab(item.id)"
+              [matTooltip]="item.label"
+              matTooltipPosition="right"
             >
               <i class="fa-solid fa-2xl" [ngClass]="item.icon"></i>
               <span class="fs-3" [ngClass]="{ collapsed: isCollapsed }">
@@ -94,7 +96,9 @@
             </a>
 
             <a
-              class="btn btn-outline-danger d-flex align-items-center gap-3 rounded rounded-4"
+              class="btn btn-outline-danger d-flex align-items-center gap-3 rounded rounded-4 "
+              matTooltip=" تسجيل الخروج"
+                matTooltipPosition="right"
               (click)="_AuthService.logout()"
             >
               <i class="fa-solid fa-2x fa-arrow-right-from-bracket"></i>

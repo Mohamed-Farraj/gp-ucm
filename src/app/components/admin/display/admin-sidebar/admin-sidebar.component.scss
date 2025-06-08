@@ -67,7 +67,12 @@ h4{color:var(--main-color)}
     max-width: 350px; 
     // aspect-ratio: 400 / 895;
     transform-origin: top center;
+      scrollbar-width: none;       /* Firefox */
+     -ms-overflow-style: none;    /* IE and Edge */
   }
+  .sidebar::-webkit-scrollbar {
+  display: none;               /* Chrome, Safari, Opera */
+}
 
   
   .sidebar.collapsed {
@@ -99,5 +104,17 @@ h4{color:var(--main-color)}
     color:white
   }
  
+
+  ::ng-deep .mat-tooltip {
+  font-size: 16px;       // حجم أكبر
+  font-weight: bold;     // بولد
+  padding: 10px 14px;    // مسافة داخلية
+  background-color: red; // لون خلفية (زي ChatGPT)
+  color: white;          // لون النص
+  border-radius: 8px;    // زوايا ناعمة
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); // ظل ناعم
+  max-width: 300px;      // عشان لو المحتوى طويل
+  text-align: center;    // توسيط النص
+}
   
   
