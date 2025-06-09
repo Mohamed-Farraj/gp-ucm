@@ -25,9 +25,9 @@
         @if (admins.length > 0) { 
           @for (item of admins; track $index) {
             <tr>
-              <td>{{item.username}}</td>
-              <td>{{item.role}}</td>
-            <td>
+              <td class="fw-bold">{{item.username}}</td>
+              <td class="fw-medium">{{item.role}}</td>
+            <td class="fw-medium text-s">
 
   <div *ngFor="let priv of item.privileges">
     {{ privilegeNames[priv.name] || priv.name }}
@@ -42,12 +42,12 @@
                   (click)="openPrivDialog(item.userID , item)"
                   class="btn-edit "
                 >
-                  <i class="fas fa-edit me-1"></i>اضف او تعديل
+                  <i class="fas fa-edit me-1"></i>اضافة او تعديل
                 </button>
                 <button 
                   type="button" 
                   (click)="openRevokePrivDialog(item.userID , item)"
-                  class="btn-edit"
+                  class="btn-revoke "
                 >
                   <i class="fas fa-minus me-1"></i>الغاء صلاحية  
                 </button>
@@ -55,7 +55,7 @@
                  <button 
                   type="button" 
                   (click)="revokeAllPrivileges(item.userID)"
-                  class="btn-edit"
+                  class=" btn-revoke-all"
                 >
                   <i class="fas fa-ban me-1"></i> الغاء الكل   
                 </button>
