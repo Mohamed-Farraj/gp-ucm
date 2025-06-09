@@ -255,3 +255,58 @@
   }
   
   /* To load font awesome if you're not already using it */
+// SCSS Example
+/* تصميم بسيط وبريميم متماشي مع الصفحة */
+.actions-cell button {
+  border: none;
+  border-radius: 5px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 2px;
+  font-family: inherit;
+}
+
+/* زر الإضافة/التعديل - Navy */
+.btn-edit {
+  background-color: #0f172a;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #1e293b;
+  opacity: 0.9;
+}
+
+/* زر إلغاء الصلاحية - Navy فاتح */
+.btn-revoke {
+  background-color: #334155;
+  color: white;
+}
+
+.btn-revoke:hover {
+  background-color: #475569;
+  opacity: 0.9;
+}
+
+/* زر إلغاء الكل - رمادي هادئ */
+.btn-revoke-all {
+  background-color: #6b7280;
+  color: white;
+}
+
+.btn-revoke-all:hover {
+  background-color: #4b5563;
+  opacity: 0.9;
+}
+
+/* الأيقونات */
+.actions-cell button i {
+  margin-left: 4px;
+}
+
+.text-s{
+  font-size: 15px;
+}
