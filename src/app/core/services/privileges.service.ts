@@ -18,7 +18,7 @@ export class PrivilegesService {
 
   revokePrivilegesFormUser(data:object): Observable<any> //revoke privileges
   {
-    return this._HttpClient.post(`${environment.baseUrl}/admin/privileges/revoke` , data)
+    return this._HttpClient.put(`${environment.baseUrl}/admin/privileges/revoke` , data)
   }
 
   revokeAllPrivilegesFormUser(id:number): Observable<any> //delete privileges

@@ -33,6 +33,13 @@ export class registeradminComponent implements OnInit {
     public  dialog = inject(MatDialog);
 
 
+
+
+ privilegeNames: { [key: string]: string } = {
+  ACCESS_ACCOMMODATION: 'الوصول إلى السكن',
+  ACCESS_ASSIGNMENT: 'الوصول إلى المهام',
+  // زود أي صلاحيات تانية
+};
      ngOnInit(): void {
     this.getAllAdmins();
   }
@@ -67,8 +74,17 @@ export class registeradminComponent implements OnInit {
 
 getPrivilegeNames(privileges: any[]): string {
   if (!privileges || !Array.isArray(privileges)) return '';
-  return privileges.map(p => p.name || p.privilegeName || '').join(', ');
+  return privileges
+    .map(p => this.privilegeNames[p.name] || p.name || '')
+    .join(', ');
 }
+
+
+// loadprivilege(userId: number, admin: Iadmin , revokeMode = true) {
+//     admin = admin;
+//     this.openRevokePrivDialog( userId, admin , revokeMode);
+//   }
+
 
 
   // revokePrivilegeFormUser() {
@@ -95,6 +111,20 @@ getPrivilegeNames(privileges: any[]): string {
   
 
 
+  revokeAllPrivileges(id: number) {
+    this._Privi.revokeAllPrivilegesFormUser(id).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.getAllAdmins()
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+
+
 
   openDialog(admin?: Iadmin): void {
       const dialogRef = this.dialog.open(CreateAdminFormComponent, {
@@ -113,20 +143,38 @@ getPrivilegeNames(privileges: any[]): string {
 
 
 
-    openPrivDialog( userId?: number): void {
-      const dialogRef = this.dialog.open(AddPrivFormComponent, {
-        width: '50%', // Set the width of the dialog
-         data: { userId },
-      
-        panelClass: 'custom-dialog-container'
-  
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.getAllAdmins(); // Refresh the list after the dialog is closed
-        }
-      });
-    }
+openPrivDialog(userId: number, admin?: Iadmin) : void {
+  const dialogRef = this.dialog.open(AddPrivFormComponent, {
+    width: '50%',
+    data: {
+      userId,
+      admin,
+      privilegeIds: admin?.privileges?.map(p => p.id) || [],
+      revokeMode: false
+    },
+    panelClass: 'custom-dialog-container'
+  });
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result) this.getAllAdmins();
+  });
+}
+
+openRevokePrivDialog(userId: number, admin?: Iadmin ) : void {
+  const dialogRef = this.dialog.open(AddPrivFormComponent, {
+    width: '50%',
+    data: {
+      userId,
+      admin,
+      privilegeIds: [], // فاضي
+      revokeMode: true
+    },
+    panelClass: 'custom-dialog-container'
+  });
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result) this.getAllAdmins();
+  });
+}
+
+
 
 }
