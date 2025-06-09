@@ -18,7 +18,7 @@
           <th scope="col">  البريد الالكتروني</th>
           <th scope="col">  الدور</th>
           <th scope="col"> الصلاحيات</th>
-          <th scope="col" class="text-center">إجراءات</th>
+          <th scope="col" class="text-center">التحكم في الصلاحيات</th>
         </tr>
       </thead>
       <tbody>
@@ -27,15 +27,39 @@
             <tr>
               <td>{{item.username}}</td>
               <td>{{item.role}}</td>
-             <td>{{ getPrivilegeNames(item.privileges) }}</td>
+            <td>
+
+  <div *ngFor="let priv of item.privileges">
+    {{ privilegeNames[priv.name] || priv.name }}
+  </div>
+
+
+            </td>
+
               <td class="actions-cell">
                 <button 
                   type="button" 
-                  (click)="openPrivDialog(item.userID)"
+                  (click)="openPrivDialog(item.userID , item)"
+                  class="btn-edit "
+                >
+                  <i class="fas fa-edit me-1"></i>اضف او تعديل
+                </button>
+                <button 
+                  type="button" 
+                  (click)="openRevokePrivDialog(item.userID , item)"
                   class="btn-edit"
                 >
-                  <i class="fas fa-edit me-1"></i>اضافة صلاحيات
+                  <i class="fas fa-minus me-1"></i>الغاء صلاحية  
                 </button>
+
+                 <button 
+                  type="button" 
+                  (click)="revokeAllPrivileges(item.userID)"
+                  class="btn-edit"
+                >
+                  <i class="fas fa-ban me-1"></i> الغاء الكل   
+                </button>
+
                 <!-- <button 
                 *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')"
                   type="button" 
