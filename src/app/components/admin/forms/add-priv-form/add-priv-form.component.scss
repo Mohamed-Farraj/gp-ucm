@@ -11,7 +11,11 @@
     --input-shadow: 0 2px 4px rgba(19, 7, 7, 0.05);
     --form-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
   }
-  
+  ::ng-deep .ng-dropdown-panel {
+  max-height: 250px !important; /* أو الحجم اللي يناسبك */
+  overflow-y: auto !important;
+}
+
   /* Form container styling */
   section.container {
     background-color: white;
