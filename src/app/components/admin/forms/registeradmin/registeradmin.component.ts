@@ -36,9 +36,48 @@ export class registeradminComponent implements OnInit {
 
 
  privilegeNames: { [key: string]: string } = {
-  ACCESS_ACCOMMODATION: 'الوصول إلى السكن',
-  ACCESS_ASSIGNMENT: 'الوصول إلى المهام',
-  // زود أي صلاحيات تانية
+  ACCESS_ADD_ROOMS: 'إضافة غرف',
+  ACCESS_DELETE_ROOMS: 'حذف غرف',
+  ACCESS_VIEW_AVAILABLE_ROOMS: 'عرض الغرف المتاحة',
+  ACCESS_REMOVE_STUDENT_FROM_ROOM: 'إزالة طالب من الغرفة',
+
+  ACCESS_LOGS: 'سجلات النظام',
+
+  ACCESS_ADMISSION_ANALYSIS: 'تحليل القبول',
+
+  ACCESS_EXPORT_ADMISSION: 'تصدير بيانات القبول',
+  ACCESS_EXPORT_SORTED_ADMISSION: 'تصدير القبول المرتب',
+
+  ACCESS_UPLOAD_ADMISSION_SECURITY_CHECK: 'رفع فحص الأمان للقبول',
+  ACCESS_UPLOAD_ADMISSION_STATUS: 'رفع حالة القبول',
+
+  ACCESS_ADD_APPLICATION_DEADLINES: 'إضافة مواعيد التقديم',
+  ACCESS_DELETE_APPLICATION_DEADLINES: 'حذف مواعيد التقديم',
+  ACCESS_UPDATE_APPLICATION_DEADLINES: 'تحديث مواعيد التقديم',
+
+  ACCESS_UPDATE_GUIDELINES: 'تحديث الإرشادات',
+  ACCESS_ADD_GUIDELINES: 'إضافة إرشادات',
+  ACCESS_DELETE_GUIDELINES: 'حذف إرشادات',
+
+  ACCESS_ADD_BUILDINGS: 'إضافة مباني',
+  ACCESS_VIEW_BUILDINGS: 'عرض المباني',
+  ACCESS_DELETE_BUILDINGS: 'حذف مباني',
+
+  ACCESS_MANAGE_MEALS: 'إدارة الوجبات',
+
+  ACCESS_ADD_PENALTY: 'إضافة عقوبة',
+  ACCESS_VIEW_PENALTY: 'عرض العقوبات',
+  ACCESS_DELETE_PENALTY: 'حذف عقوبة',
+
+  ACCESS_UPLOAD_ROOM_ASSIGNMENT: 'رفع توزيع الغرف',
+  ACCESS_EXPORT_AVAILABLE_ROOM: 'تصدير الغرف المتاحة',
+
+  ACCESS_VIEW_ACCEPTED_STUDENTS: 'عرض الطلاب المقبولين',
+
+  ACCESS_ADD_UNIVERSITY: 'إضافة جامعة',
+  ACCESS_DELETE_UNIVERSITY: 'حذف جامعة',
+  ACCESS_UPDATE_UNIVERSITY: 'تحديث بيانات الجامعة',
+  ACCESS_VIEW_UNIVERSITY: 'عرض الجامعات'
 };
      ngOnInit(): void {
     this.getAllAdmins();
