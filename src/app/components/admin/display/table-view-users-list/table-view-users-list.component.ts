@@ -32,13 +32,14 @@ export class TableViewUsersListComponent {
   
       //#region pagination attributes
       selectedAdmissionRequest: any = {};
-      pagedItems: any[] = [];
+      // pagedItems: any[] = [];
       currentPage: number = 1;
       pageSize: number = 20;
       totalPages: number = 0;
       pages: number[] = [];
       currentPagesArray:number[] = [];
       meta: any = {};
+      displayedPages: number[] = [];
       //#endregion
      
         //#region filtration attributes
@@ -99,13 +100,14 @@ export class TableViewUsersListComponent {
         next: (res: any) => {
          
           console.log(res);
-          this.res = res.data;
-          this.meta = res.meta;
+          this.res = res?.data;
+          this.meta = res?.meta;
           this.filteredItems = this.res;
           console.log(this.res);
         if(this.sortControl.value === 'reverse')
           this.res = [...this.res.reverse()];
           this.initPagination();
+          this.updateDisplayedPages();
         },
         error: (err:any) => { console.log(err); },
       });
@@ -126,15 +128,17 @@ export class TableViewUsersListComponent {
   
     onSourceChange(): void {
       if (this.selectedSource === 'all') {
-        this.getApplication();
+        this.applyFilters();
       } else if (this.selectedSource === 'sorted') {
-        this.getSortedApplications();
+          this.selectedStudentTypes = ['old'];
+          this.onStudentTypeChange({ target: { value: 'old', checked: true } });
+          this.applyFilters();
       }
     }
 
     //#region pagination methods
     initPagination(): void {
-      this.totalPages = this.meta.totalPages;
+      this.totalPages = this.meta?.totalPages;
       this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
       this.currentPagesArray = this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
     }
@@ -142,6 +146,7 @@ export class TableViewUsersListComponent {
     changePage(page: number): void {
       if (page < 1 || page > this.totalPages) return;
       this.currentPage = page;
+      this.updateDisplayedPages(); // تحديث الصفحات المعروضة
       if(this.sortControl.value === 'normal') 
         this.getApplication({'filters':this.myFilters,'offset':this.currentPage-1});
       else
@@ -154,6 +159,20 @@ export class TableViewUsersListComponent {
       console.log(this.pagination.getDisplayedPages(this.totalPages, this.currentPage));
       return this.currentPagesArray;
     }
+
+    updateDisplayedPages(): void {
+        // شيك لو إجمالي الصفحات صفر
+              console.log(this.totalPages); // هيتنفذ مرة واحدة بس وقت التحديث
+
+  if (!this.totalPages) {
+    this.displayedPages = [];
+      console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
+      return;
+  }
+  this.displayedPages = this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
+  console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
+  }
+
     //#endregion
   
     onGenderChange(event: any): void {
@@ -184,13 +203,13 @@ export class TableViewUsersListComponent {
 
        onStudentTypeChange(event: any): void {
   const value = event.target.value;
-  if (event.target.checked) {
-    this.selectedStudentTypes.push(value);
-  } else {
-    this.selectedStudentTypes = this.selectedStudentTypes.filter(v => v !== value);
-  }
+
+  // بما إن الراديو دايمًا بيكون واحد بس
+  this.selectedStudentTypes = [value];
+
   this.applyFilters();
 }
+
 
   
     // دالة لتطبيق الفلاتر (البحث وحالة الـ checkboxes)
@@ -236,16 +255,16 @@ export class TableViewUsersListComponent {
       }
 
       // Student Type filter
-if (this.selectedStudentTypes.length > 0) {
-  this.myFilters = {
-    ...this.myFilters,
-    studentType: this.selectedStudentTypes.join(','),
-  };
-} else {
-  if (this.myFilters?.studentType) {
-    delete this.myFilters.studentType;
-  }
-}
+      if (this.selectedStudentTypes.length === 1) {
+          this.myFilters = {
+            ...this.myFilters,
+            studentType: this.selectedStudentTypes.join(','),
+          };
+      } else {
+            if (this.myFilters?.studentType || this.selectedStudentTypes.length === 2) {
+              delete this.myFilters.studentType;
+            }
+      }
 
  
   
@@ -260,7 +279,23 @@ if (this.selectedStudentTypes.length > 0) {
 
 
        if(this.selectedSource == "all")
-      this.getApplication({filters: this.myFilters, offset: this.currentPage - 1});
+       {
+         delete this.myFilters.isSorted;
+         this.getApplication({filters: this.myFilters, offset: this.currentPage - 1});
+       }
+      else if(this.selectedSource == "sorted")
+      {
+            
+          // نضيف isSorted=true لو sorted
+          this.myFilters = {
+            ...this.myFilters,
+            isSorted: true,
+          };
+          this.getApplication({
+            filters: this.myFilters,
+            offset:  this.currentPage -1,
+          });
+      }
 
     
     }

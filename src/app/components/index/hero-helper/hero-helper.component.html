@@ -5,7 +5,12 @@
 <div data-aos="fade-right" class="my-section flex-shrink-1 d-flex gap-3 px-0 px-md-5 py-5 flex-column justify-content-center align-items-center p-0 my-0 col-md-10">
     <div class="w-100 row justify-content-end">
         <div class="logo col-4 col-md-5 col-lg-2">
-            <img src="./assets/light logo.png" class="w-100 img-fluid" alt="" srcset="">
+                    <ng-container *ngIf="local.university$ | async as uni">
+                        <img *ngIf="uni === 'hu'" src="./assets/light logo.png" class="w-100 img-fluid" alt="" srcset="">
+                        <img *ngIf="uni === 'hnu'" src="./assets/hnuLightLogo.png" class="w-100 img-fluid" alt="" srcset="">
+                        <img *ngIf="uni === 'hitu'" src="./assets/hituLightLogo.png" class="w-100 img-fluid" alt="" srcset="">
+                    </ng-container>
+
         </div>
     </div>
     <div class="content gap-3 d-flex flex-grow-1 flex-column w-100 p-2 p-md-5  mx-0 m-md-auto">

@@ -112,13 +112,12 @@
       </div>
 
       <!-- Gender filters -->
-      <div class="col-12 col-md-2">
+      <!-- <div class="col-12 col-md-2">
         <div
           class="btn-group w-100"
           role="group"
           aria-label="Gender filter buttons"
         >
-          <!-- Male -->
           <input
             type="checkbox"
             value="MALE"
@@ -129,7 +128,6 @@
           />
           <label class="btn btn-outline-primary" for="male"> ذكر </label>
 
-          <!-- Female -->
           <input
             type="checkbox"
             value="FEMALE"
@@ -140,49 +138,22 @@
           />
           <label class="btn btn-outline-info" for="female"> أنثى </label>
         </div>
-      </div>
+      </div> -->
 
       <div
-        class="btn-group mb-3 col-md-2"
+        class="btn-group mb-3 col-md-4"
         role="group"
-        aria-label="student Type Toggle"
+        aria-label="Data Source Toggle"
       >
-            <!-- Checkbox لطالب قديم -->
         <input
-          type="checkbox"
-          class="btn-check"
-          id="oldStudent"
-          value="old"
-          (change)="onStudentTypeChange($event)"
+          type="radio"
+          class="btn-check source"
+          name="dataSource"
+          id="allData"
+          [(ngModel)]="selectedSource"
+          value="all"
+          (change)="onSourceChange()"
         />
-        <label class="btn btn-outline-secondary" for="oldStudent">قديم</label>
-
-        <!-- Checkbox لطالب جديد -->
-        <input
-          type="checkbox"
-          class="btn-check"
-          id="newStudent"
-          value="new"
-          (change)="onStudentTypeChange($event)"
-        />
-        <label class="btn btn-outline-secondary" for="newStudent">جديد</label>
-      </div>
-
-
-      <div
-      class="btn-group mb-3 col-md-4"
-      role="group"
-      aria-label="Data Source Toggle"
-      >
-      <input
-        type="radio"
-        class="btn-check source"
-        name="dataSource"
-        id="allData"
-        [(ngModel)]="selectedSource"
-        value="all"
-        (change)="onSourceChange()"
-      />
         <label class="btn btn-outline-primary" for="allData">كل الطلبات</label>
 
         <input
@@ -198,16 +169,46 @@
           >الطلبات مرتبة تبعا للتنسيق</label
         >
       </div>
+
+      <div
+        *ngIf="selectedSource == 'sorted'"
+        class="btn-group mb-3 col-md-2"
+        role="group"
+        aria-label="student Type Toggle"
+      >
+        <!-- radio لطالب قديم -->
+        <input
+          type="radio"
+          class="btn-check"
+          name="studentType"
+          id="oldStudent"
+          value="old"
+          (change)="onStudentTypeChange($event)"
+          checked
+        />
+        <label class="btn btn-outline-dark" for="oldStudent">قدامى</label>
+
+        <!-- radio لطالب جديد -->
+        <input
+          type="radio"
+          class="btn-check"
+          name="studentType"
+          id="newStudent"
+          value="new"
+          (change)="onStudentTypeChange($event)"
+        />
+        <label class="btn btn-outline-dark" for="newStudent">مستجدين</label>
+      </div>
     </div>
   </div>
 
   <h4 class="text-center">
     اجمالي عدد الطلبات:
-    {{ meta.totalElements }}
+    {{ meta?.totalElements }}
   </h4>
 
   <div class="table-responsive overflow-x-auto shadow-lg">
-      <app-ar-table [res]="res"></app-ar-table>
+    <app-ar-table [res]="res"></app-ar-table>
   </div>
 
   <!-- Enhanced Pagination -->
@@ -225,7 +226,7 @@
       </li>
       <li
         class="page-item cursor-pointer"
-        *ngFor="let page of getDisplayedPages()"
+        *ngFor="let page of displayedPages"
         [class.active]="page === currentPage"
       >
         <a

@@ -43,7 +43,7 @@
 
     <section class="mt-5"> <!-- Add margin top for separation -->
       <div class="row g-4"> <!-- Use g-4 for consistent gutters -->
-        @for (item of filteredComplaints; track $index) {
+        @for (item of filteredComplaints | paginate: { itemsPerPage: 10, currentPage: page }; track $index) {
         <div class="col-md-6 complaint-card-col">
           <div class="card h-100 shadow-sm border-0 complaint-card"> <!-- Bootstrap card with full height and custom class -->
             <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center"> <!-- Light header with flex alignment -->
@@ -85,6 +85,26 @@
           </div>
         }
       </div>
+      <pagination-controls 
+  class="mt-3"
+  (pageChange)="page = $event"
+  [maxSize]="5"
+  [responsive]="true"
+  [autoHide]="true"
+  [directionLinks]="true"
+  previousLabel="السابق"
+  nextLabel="التالي"
+  style="
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+  "
+>
+</pagination-controls>
     </section>
   </section>
   
