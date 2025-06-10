@@ -54,7 +54,7 @@ export class AddBuildingComponent {
   
     ngOnInit(): void {
       if (this.data) {
-        const universityId = 1; // أو القيمة اللي تجيبها من API
+        const universityId = this.data.building.university.id; // أو القيمة اللي تجيبها من API
         this.addBuildingForm.patchValue({ universityId });
       }
     }
@@ -64,7 +64,7 @@ export class AddBuildingComponent {
         this.addBuildingForm.patchValue({
           name: this.data.building.name,
           type: this.data.building.type,
-          universityId: [1],
+          universityId: this.data.building.university.id,
 
         });
       }
@@ -95,7 +95,7 @@ export class AddBuildingComponent {
       this.dialogRef.close(false); // Close the dialog without saving
     }
   
-    resetDeadlineForm() {
+    resetaddBuildingForm() {
       this.addBuildingForm.reset();
       this.onClose();
     }

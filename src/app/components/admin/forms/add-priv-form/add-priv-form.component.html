@@ -1,0 +1,80 @@
+<section class="container px-4 py-5 rounded-4" dir="rtl">
+
+
+  <h5 class="mb-5">
+  {{ revokeMode ? 'الغاء صلاحية' : 'اضافة صلاحيات' }}
+</h5>
+
+  <form [formGroup]="privForm" class="w-100" (ngSubmit)="onSubmit()" >
+   <div class="mb-5 pb-5 ">
+<ng-select
+  [items]="Privilegeives"
+  bindLabel="nameAr"
+  bindValue="id"
+  [multiple]="true"
+  [closeOnSelect]="false"
+  formControlName="privilegeIds"
+  placeholder="{{ revokeMode ? 'اختر الصلاحيات المراد الغائها ' : 'اختر الصلاحيات' }}  ">
+</ng-select>
+@if (revokeMode) {
+  <div class="mt-3">
+  <label class="fw-bold">الصلاحيات الحالية:</label>
+  <ng-container *ngIf="(data?.admin?.privileges?.length || 0) > 0; else noPrivs">
+  <span *ngFor="let priv of data?.admin?.privileges || []" class="badge bg-main-navy mx-1">
+    {{ privilegeNames[priv.name] || priv.name }}
+  </span>
+
+
+</ng-container>
+<ng-template #noPrivs>
+  <span class="text-danger">  لا توجد صلاحيات يمكن إلغاؤها لهذا المستخدم.
+  </span>
+</ng-template>
+
+</div>
+}
+
+
+
+@if (!revokeMode) {
+
+ @if (privForm.get('privilegeIds')?.invalid && privForm.get('privilegeIds')?.touched) {
+  <div class="invalid-feedback">
+    يجب اختيار صلاحية واحدة على الأقل
+  </div>
+}
+
+}@else {
+
+  <div class="text-danger mt-2" *ngIf="(data?.admin?.privileges?.length || 0) > 0">
+   @if (privForm.get('privilegeIds')?.invalid && privForm.get('privilegeIds')?.touched) {
+  <div class="invalid-feedback">
+    يجب اختيار صلاحية واحدة على الأقل
+  </div>
+}
+
+  </div>
+}
+ 
+
+
+
+</div>
+  <div class="pt-5 ">
+ <button
+  type="submit"
+  class="btn-main me-3"
+  [disabled]="revokeMode && !(data.admin && data.admin.privileges && data.admin.privileges.length > 0)">
+  {{ revokeMode ? 'حذف الصلاحية' : 'اضافة' }}
+</button>
+
+
+    <button type="button" (click)="onClose()"
+      class="btn-main-delete ">الغاء</button>
+
+  </div>
+     
+
+   
+  </form>
+</section>

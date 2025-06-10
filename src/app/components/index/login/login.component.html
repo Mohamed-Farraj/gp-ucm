@@ -17,7 +17,7 @@
               'is-invalid' : loginForm.get('username')?.errors && loginForm.get('username')?.touched}"
 
                formControlName="username" type="email" class="form-control form-control-lg bg-light fs-6" style="text-align: right;" placeholder="عنوان البريد الإلكتروني">
-            @if(loginForm.get('username')?.errors && loginForm.get('username')?.touched ){
+            <!-- @if(loginForm.get('username')?.errors && loginForm.get('username')?.touched ){
               <div class=" m-1 p-2 text-danger text-danger w-100">
                 @if (loginForm.get('username')?.getError('required') ) {
                               
@@ -27,7 +27,7 @@
   
                 }
               </div>
-            }
+            } -->
           </div>
           <div class="input-group mb-1">
             <div class="input-group">
@@ -50,7 +50,7 @@
                 <i [class]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
               </button>
             </div>
-            @if (loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
+            <!-- @if (loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
               <div class="m-1 p-2 text-danger w-100">
                 @if (loginForm.get('password')?.getError('required')) {
                   
@@ -59,9 +59,9 @@
                   
                 }
               </div>
-            }
+            } --> 
           </div>
-          <div class="input-group mb-5 d-flex justify-content-between">
+          <div class="input-group mb-3  mb-md-5 d-flex justify-content-between">
             <!-- <div class="form-check">
               <input type="checkbox" class="form-check-input" id="formCheck">
               <label for="formCheck" class="form-check-label text-secondary"><small>تذكرني</small></label>
@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <button class="btn btn-lg btn-main w-100 fs-6">تسجيل الدخول</button>
+            <button [disabled]="!loginForm.valid" class="btn btn-lg btn-main w-100 fs-6">تسجيل الدخول</button>
           </div>
           <!-- <div class="input-group mb-3">
             <button class="btn btn-lg btn-light w-100 fs-6"><img src="images/google.png" style="width:1.25rem" class="me-2"><small>تسجيل الدخول باستخدام Google</small></button>

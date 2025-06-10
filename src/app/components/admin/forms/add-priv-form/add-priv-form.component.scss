@@ -1,0 +1,240 @@
+/* Penalties Form Custom Styling */
+:root {
+    --primary-color: #191727;
+    --secondary-color: #202f52;
+    --accent-color: #6366f1;
+    --accent-hover: #4f46e5;
+    --danger-color: #ef4444;
+    --danger-hover: #dc2626;
+    --neutral-bg: #f9fafb;
+    --border-radius: 12px;
+    --input-shadow: 0 2px 4px rgba(19, 7, 7, 0.05);
+    --form-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  }
+  ::ng-deep .ng-dropdown-panel {
+  max-height: 250px !important; /* أو الحجم اللي يناسبك */
+  overflow-y: auto !important;
+}
+
+  /* Form container styling */
+  section.container {
+    background-color: white;
+    box-shadow: var(--form-shadow);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--border-radius);
+  }
+  
+  section.container:hover {
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.12), 0 10px 15px -6px rgba(0, 0, 0, 0.06);
+  }
+  
+  /* Form header styling */
+  section.container h5 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Form elements styling */
+  label {
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .form-control {
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--input-shadow);
+    background-color: var(--neutral-bg);
+    width: 100%;
+  }
+  
+  .form-control:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.25);
+    outline: none;
+  }
+  
+  /* Error message styling */
+  .text-danger {
+    color: var(--danger-color);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: block;
+  }
+  
+  /* Button styling */
+  .btn-main {
+    background: #9e8337;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 0.625rem 1.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .btn-main:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    background: #7c6329;
+  }
+  
+  .btn-main-delete {
+    background-color: #e5e7eb;
+    border: none;
+    color: #4b5563;
+    padding: 0.625rem 1.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .btn-main-delete:hover {
+    background-color: #d1d5db;
+    transform: translateY(-2px);
+  }
+  
+  .btn-main:active, 
+  .btn-main-delete:active {
+    transform: translateY(0);
+  }
+  
+  /* Date input specific styling */
+  input[type="date"] {
+    appearance: none;
+    position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+  }
+  
+  /* RTL specific adjustments */
+  [dir="rtl"] input[type="date"] {
+    background-position: 12px center;
+    padding-right: 1rem;
+    padding-left: 2.5rem;
+  }
+  
+  [dir="rtl"] .me-3 {
+    margin-left: 1rem !important;
+    margin-right: 0 !important;
+  }
+  
+  /* Form bottom area with buttons */
+  form {
+    position: relative;
+  }
+  
+  form > div:last-of-type:not(.mb-5) {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    section.container {
+      padding: 1.5rem !important;
+    }
+    
+    .btn-main,
+    .btn-main-delete {
+      padding: 0.5rem 1.25rem;
+    }
+    
+    .mb-5 {
+      margin-bottom: 1.5rem !important;
+    }
+  }
+  
+  /* Optional: Add this for input placeholder styling */
+  ::placeholder {
+    color: #9ca3af;
+    opacity: 0.7;
+  }
+  
+  /* Focus state for the whole form container */
+  section.container:focus-within {
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.12), 0 10px 15px -6px rgba(0, 0, 0, 0.06);
+  }
+
+  ng-select {
+  width: 100%;
+  direction: rtl; /* للغة العربية */
+  margin-bottom: 10px;
+}
+
+.ng-select .ng-select-container {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1.5px solid #dadada;
+  box-shadow: 0 2px 10px 0 rgba(34, 34, 34, 0.03);
+  background: #fff;
+  transition: border-color 0.2s;
+}
+
+.ng-select .ng-select-container:hover,
+.ng-select.ng-select-focused .ng-select-container {
+  border-color: #7d6aff;
+  box-shadow: 0 4px 18px 0 rgba(125, 106, 255, 0.05);
+}
+
+.ng-select .ng-select-container .ng-value {
+  background: #f5f5ff;
+  border-radius: 16px;
+  margin: 2px 4px;
+  color: #6347eb;
+  padding: 3px 12px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.ng-select .ng-dropdown-panel {
+  border-radius: 10px;
+  box-shadow: 0 2px 18px 0 rgba(34, 34, 34, 0.12);
+}
+
+.ng-select .ng-dropdown-panel .ng-option {
+  font-size: 15px;
+  padding: 8px 18px;
+  border-radius: 8px;
+}
+
+.ng-select .ng-dropdown-panel .ng-option-selected {
+  background: #ece7ff;
+  color: #7d6aff;
+}
+
+.ng-select .ng-select-container .ng-input {
+  font-size: 15px;
+  padding: 7px 0;
+  color: #222;
+}
+
+.invalid-feedback {
+  display: block;
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 2px;
+  text-align: right;
+}
+
+.ng-select .ng-placeholder {
+  color: #999;
+  opacity: 1;
+  font-size: 15px;
+}

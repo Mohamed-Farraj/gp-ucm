@@ -1,112 +1,314 @@
-/* admin-form.component.scss */
-:host {
-    display: block;
-    min-height: 100vh;
-    // background-color: #f5f5f5;
-    padding: 2rem 0;
+::ng-deep .custom-dialog-container .mat-mdc-dialog-surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0px !important;
+    
   }
   
-  .admin-form-card {
+  ::ng-deep .custom-dialog-container .mdc-dialog__surface {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0px !important;
+    
+  }
+  
+  ::ng-deep .custom-dialog-container .mat-mdc-dialog-container {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0px !important;
+    border-radius: 0 !important;
+  }
+
+  /* Premium Deadline Management Table - Modern Simple Design */
+
+/* Card styling */
+.premium-card {
     background-color: white;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 2.5rem;
-    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border: none;
     overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 8px;
-      background: linear-gradient(to right, #9e8337, #111b31);
-    }
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
-  .logo-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
+  .premium-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   }
   
-  .logo {
-    width: 80px;
-    height: 80px;
-    background-color: #111b31;
-    border-radius: 50%;
+  /* Card header styling */
+  .card-header {
+    border: none;
+    background: transparent;
+    padding: 0 0 1rem 0;
+    position: relative;
+  }
+  
+  /* Section title styling */
+  .section-title {
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin: 0;
+    position: relative;
+    padding-right: 1rem;
+  }
+  
+  .section-title::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(180deg, #9e8337, #9e8337);
+    border-radius: 2px;
+  }
+  
+  /* Add button styling */
+  .btn-add {
+    background-color: #9e8337;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: #9e8337;
-    font-size: 2rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
   
-  h2 {
-    color: #111b31;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
+  .btn-add:hover {
+    background-color: #7c6329;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
   }
   
-  .form-floating {
-    .form-control, .form-select {
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      height: 58px;
-      padding: 1.5rem 1rem 0.5rem;
-      transition: all 0.3s ease;
-      
-      &:focus {
-        border-color: #9e8337;
-        box-shadow: 0 0 0 0.25rem rgba(158, 131, 55, 0.25);
-      }
-    }
-    
-    label {
-      padding: 1rem 1rem 0;
-    }
+  .btn-add:active {
+    transform: translateY(0);
   }
   
-  .btn-primary {
-    background-color: #9e8337;
-    border-color: #9e8337;
-    font-weight: 600;
-    padding: 0.75rem 1.5rem;
+  /* Table styling */
+  .table-responsive {
+    overflow-x: auto;
     border-radius: 8px;
-    transition: all 0.3s ease;
-    
-    &:hover, &:focus {
-      background-color: darken(#9e8337, 10%);
-      border-color: darken(#9e8337, 10%);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(158, 131, 55, 0.3);
-    }
-    
-    &:active {
-      transform: translateY(0);
-    }
   }
   
-  .invalid-feedback {
-    font-size: 0.85rem;
+  .premium-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 1rem;
+  }
+  
+  /* Table header */
+  .premium-table thead {
+    background-color: #050f26;
+  }
+  
+  .premium-table th {
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    text-transform: none;
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+  
+  /* Table body */
+  .premium-table tbody td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    transition: background 0.2s ease;
+  }
+  
+  .premium-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .premium-table tbody tr:hover td {
+    background-color: #f8fafc;
+  }
+  
+  /* Action buttons cell */
+  .actions-cell {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  /* Edit button styling */
+  .btn-edit {
+    background-color: #f8fafc;
+    color: #050f26;
+    border: 1px solid #e2e8f0;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
     font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
   }
   
-  // Add animated effects on focus
-  .form-control:focus, .form-select:focus {
-    animation: pulse 1s;
+  .btn-edit:hover {
+    background-color: #050f26;
+    color: white;
+    border-color: #050f26;
   }
   
-  @keyframes pulse {
-    0% {
-      box-shadow: 0 0 0 0 rgba(158, 131, 55, 0.4);
+  /* Delete button styling */
+  .btn-delete-text {
+    background-color: #f8fafc;
+    color: #ef4444;
+    border: 1px solid #e2e8f0;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .btn-delete-text:hover {
+    background-color: #ef4444;
+    color: white;
+    border-color: #ef4444;
+  }
+  
+  /* Empty state styling */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1.5rem !important;
+    color: #94a3b8;
+  }
+  
+  .empty-state div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .empty-state p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  /* RTL specific adjustments */
+  [dir="rtl"] .premium-table th,
+  [dir="rtl"] .premium-table td {
+    text-align: right;
+  }
+  
+  [dir="rtl"] .me-1,
+  [dir="rtl"] .me-2 {
+    margin-left: 0.25rem !important;
+    margin-right: 0 !important;
+  }
+  
+  [dir="rtl"] .me-1 {
+    margin-left: 0.25rem !important;
+  }
+  
+  [dir="rtl"] .me-2 {
+    margin-left: 0.5rem !important;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .premium-card {
+      padding: 1rem !important;
+      margin: 1rem 0 !important;
     }
-    70% {
-      box-shadow: 0 0 0 10px rgba(158, 131, 55, 0);
+    
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start !important;
     }
-    100% {
-      box-shadow: 0 0 0 0 rgba(158, 131, 55, 0);
+    
+    .btn-add {
+      margin-top: 1rem;
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .section-title {
+      width: 100%;
+    }
+    
+    .actions-cell {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: stretch;
+    }
+    
+    .btn-edit, 
+    .btn-delete-text {
+      justify-content: center;
     }
   }
+  
+  /* To load font awesome if you're not already using it */
+// SCSS Example
+/* تصميم بسيط وبريميم متماشي مع الصفحة */
+.actions-cell button {
+  border: none;
+  border-radius: 5px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 2px;
+  font-family: inherit;
+}
+
+/* زر الإضافة/التعديل - Navy */
+.btn-edit {
+  background-color: #0f172a;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #1e293b;
+  opacity: 0.9;
+}
+
+/* زر إلغاء الصلاحية - Navy فاتح */
+.btn-revoke {
+  background-color: #334155;
+  color: white;
+}
+
+.btn-revoke:hover {
+  background-color: #475569;
+  opacity: 0.9;
+}
+
+/* زر إلغاء الكل - رمادي هادئ */
+.btn-revoke-all {
+  background-color: #6b7280;
+  color: white;
+}
+
+.btn-revoke-all:hover {
+  background-color: #4b5563;
+  opacity: 0.9;
+}
+
+/* الأيقونات */
+.actions-cell button i {
+  margin-left: 4px;
+}
+
+.text-s{
+  font-size: 15px;
+}
