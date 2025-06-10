@@ -146,6 +146,7 @@ getPrivilegeNames(privileges: any[]): string {
 openPrivDialog(userId: number, admin?: Iadmin) : void {
   const dialogRef = this.dialog.open(AddPrivFormComponent, {
     width: '50%',
+     
     data: {
       userId,
       admin,
