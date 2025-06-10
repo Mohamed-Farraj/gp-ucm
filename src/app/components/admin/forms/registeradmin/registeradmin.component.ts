@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { create } from 'domain';
 import { AdminService } from '../../../../core/services/admin.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Iadmin } from '../../../../core/interfaces/iadmin';
 import { AuthService } from '../../../../core/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,11 +11,12 @@ import { PrivilegesService } from '../../../../core/services/privileges.service'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AddPrivFormComponent } from '../add-priv-form/add-priv-form.component';
 import { Ipriv } from '../../../../core/interfaces/ipriv';
+import { PaginationService } from '../../../../services/pagination.service';
 
 @Component({
   selector: 'app-registeradmin',
   standalone: true,
-  imports: [CommonModule ,ReactiveFormsModule , NgSelectModule],
+  imports: [CommonModule ,ReactiveFormsModule , NgSelectModule,NgFor],
 templateUrl: './registeradmin.component.html',
   styleUrl: './registeradmin.component.scss'
 })
@@ -31,8 +32,59 @@ export class registeradminComponent implements OnInit {
    private readonly _Privi=inject(PrivilegesService)
     private readonly _formBuilder= inject(FormBuilder)
     public  dialog = inject(MatDialog);
+    private readonly pagination = inject(PaginationService);
 
 
+     //#region pagination attributes
+      selectedAdmissionRequest: any = {};
+      // pagedItems: any[] = [];
+      currentPage: number = 1;
+      pageSize: number = 20;
+      totalPages: number = 0;
+      pages: number[] = [];
+      currentPagesArray:number[] = [];
+      meta: any = {};
+      displayedPages: number[] = [];
+      //#endregion
+
+
+
+      
+    //#region pagination methods
+    initPagination(): void {
+      this.totalPages = this.meta?.totalPages;
+      this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+      this.currentPagesArray = this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
+    }
+  
+    changePage(page: number): void {
+      if (page < 1 || page > this.totalPages) return;
+      this.currentPage = page;
+      this.updateDisplayedPages(); // تحديث الصفحات المعروضة
+      this.getAllAdmins({'offset':this.currentPage-1});
+     
+    }
+  
+    getDisplayedPages(): number[] {
+      console.log(this.pagination.getDisplayedPages(this.totalPages, this.currentPage));
+      return this.currentPagesArray;
+    }
+
+    updateDisplayedPages(): void {
+        // شيك لو إجمالي الصفحات صفر
+              console.log(this.totalPages); // هيتنفذ مرة واحدة بس وقت التحديث
+
+  if (!this.totalPages) {
+    this.displayedPages = [];
+      console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
+      return;
+  }
+  this.displayedPages = this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
+  console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
+  }
+
+    //#endregion
+  
 
 
  privilegeNames: { [key: string]: string } = {
@@ -83,14 +135,18 @@ export class registeradminComponent implements OnInit {
     this.getAllAdmins();
   }
 
-  getAllAdmins(){
-    this._adminService.getAllAdmins().subscribe({
+  getAllAdmins({  offset }: {  offset?: number } = {}){
+    this._adminService.getAllAdmins(offset).subscribe({
       next: (res:any) => {
         console.log("allllllllll adiiiiiiiimn",res);
         if (res.data) {
           this.admins = res.data;
+          this.meta = res?.meta;
           console.log(this.admins);
         }
+        this.initPagination();
+        this.updateDisplayedPages();
+
       },
       error: (err) => {console.log(err);},
     });
@@ -154,7 +210,7 @@ getPrivilegeNames(privileges: any[]): string {
     this._Privi.revokeAllPrivilegesFormUser(id).subscribe({
       next: (res: any) => {
         console.log(res);
-        this.getAllAdmins()
+        this.getAllAdmins({'offset':this.currentPage-1})
       },
       error: (err) => {
         console.log(err);
@@ -175,7 +231,7 @@ getPrivilegeNames(privileges: any[]): string {
   
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.getAllAdmins(); // Refresh the list after the dialog is closed
+          this.getAllAdmins({'offset':this.currentPage-1}); // Refresh the list after the dialog is closed
         }
       });
     }
