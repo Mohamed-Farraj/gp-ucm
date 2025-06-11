@@ -19,7 +19,7 @@ import { NgFor, NgIf } from '@angular/common';
 @Component({
   selector: 'app-application-request',
   standalone: true,
-  imports: [NgIf, NgFor, ReactiveFormsModule, MatStepperModule, BasicInfoStepComponent, FamilyInfoStepComponent, AcademicInfoStepComponent, ContactInfoStepComponent, AccountSetupStepComponent],
+  imports: [NgIf, ReactiveFormsModule, MatStepperModule, BasicInfoStepComponent, FamilyInfoStepComponent, AcademicInfoStepComponent, ContactInfoStepComponent, AccountSetupStepComponent],
   templateUrl: './application-request.component.html',
   styleUrl: './application-request.component.scss'
 })
