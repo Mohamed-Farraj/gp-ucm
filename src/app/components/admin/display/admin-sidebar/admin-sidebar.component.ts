@@ -66,7 +66,7 @@ export class AdminSidebarComponent {
     { id: 'logs', icon: 'fa-folder', label: ' السجل' ,requiredPrivilege: 'ACCESS_LOGS' },
     { id: 'register-admin', icon: 'fa-user-tie', label: ' المشرفين' ,requiredPrivilege: 'ACCESS_VIEW_ADMINS' },
     { id: 'add-university', icon: 'fa-building-columns', label: ' الجامعات' ,requiredPrivilege: 'ACCESS_VIEW_UNIVERSITY' },
-    { id: 'display-appeals', icon: 'fas fa-balance-scale', label: 'التظلمات' },
+    { id: 'display-appeals', icon: 'fas fa-balance-scale', label: 'التظلمات' , requiredPrivilege: 'ACCESS_VIEW_APPEALS' },
 
 
   ];

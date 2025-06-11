@@ -7,11 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Location, NgClass } from '@angular/common';
 import { UsersSideListComponent } from '../users-side-list/users-side-list.component';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-display-appeals',
   standalone: true,
-  imports: [NgClass , UsersSideListComponent],
+  imports: [NgClass , UsersSideListComponent , PrivilegesDirective],
   templateUrl: './display-appeals.component.html',
   styleUrl: './display-appeals.component.scss'
 })

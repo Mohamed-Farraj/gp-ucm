@@ -55,6 +55,7 @@
                 <button
                   (click)="onUpdateAppealStatus(item.id , 'ACCEPTED')"
                   class="btn btn-sm btn-main  appeal-action-btn"
+                  *appPrivileges="'ACCESS_UPDATE_APPEAL_STATUS'"
                 >
                   <i class="fas fa-check me-1"></i> قبول
                 </button>
@@ -62,6 +63,7 @@
                  <button
                   (click)="onUpdateAppealStatus(item.id , 'REJECTED')"
                   class="btn btn-sm btn-danger appeal-action-btn"
+                  *appPrivileges="'ACCESS_UPDATE_APPEAL_STATUS'"
                 >
                    <i class="fas fa-times-circle me-1"></i> رفض
                 </button>
