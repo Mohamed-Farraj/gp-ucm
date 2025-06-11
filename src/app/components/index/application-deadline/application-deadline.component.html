@@ -1,23 +1,24 @@
-<section class="p-md-5 py-5 px-2">
-<h1>مواعيد التقديم للمدن الجامعية</h1>
-<table class="table table-hover">
-    <thead class="">
-      <tr class="">
-        <th scope="col"></th>
-        <th scope="col">من</th>
-        <th scope="col">الي</th>
-      </tr>
-    </thead>
-    <tbody class="">
-      @for (item of res; track $index) 
-      {
-        <tr  class="">
-          <th scope="row">{{item?.studentType}}</th>
-          <td>{{item?.applicationStartDate}}</td>
-          <td>{{item?.applicationEndDate}}</td>
+<section class="bg-white mb-3 p-md-5 py-5 px-2 rounded-5 shadow-sm">
+  <h3 class="mb-4 text-center fw-medium">مواعيد التقديم للمدن الجامعية</h3>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0 rounded-4 overflow-hidden">
+      <thead class="table-light">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">من</th>
+          <th scope="col">الي</th>
         </tr>
-      }
-
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @for (item of res; track $index) 
+        {
+          <tr>
+            <th scope="row" class="fw-semibold">{{item?.studentType}}</th>
+            <td>{{item?.applicationStartDate}}</td>
+            <td>{{item?.applicationEndDate}}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </section>
