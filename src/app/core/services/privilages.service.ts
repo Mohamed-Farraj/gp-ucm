@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -6,6 +7,8 @@ import { Injectable } from '@angular/core';
 export class PrivilagesService {
 
     private privileges: Set<string> = new Set();
+
+    private readonly _AuthService = inject(AuthService)
 
   constructor() {this.loadPrivileges();}
 
@@ -18,6 +21,10 @@ export class PrivilagesService {
   }
 
   hasPrivilege(priv: string): boolean {
+    if(this._AuthService.getRole() === 'ADMIN')
+    {
+      return true
+    }
     return this.privileges.has(priv);
   }
 
