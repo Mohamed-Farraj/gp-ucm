@@ -74,6 +74,8 @@ export class AdminSidebarComponent {
     { id: 'logs', icon: 'fa-folder', label: ' السجل' },
     { id: 'register-admin', icon: 'fa-user-tie', label: ' المشرفين' },
     { id: 'add-university', icon: 'fa-building-columns', label: ' الجامعات' },
+    { id: 'display-appeals', icon: 'fas fa-balance-scale', label: 'التظلمات' },
+
   ];
 
   sidebarScale: number   = 1;

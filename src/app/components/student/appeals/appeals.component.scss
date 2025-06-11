@@ -1,0 +1,267 @@
+/* Appeals Component Styles */
+
+.appeals-card {
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.appeals-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.appeals-textarea {
+  border-radius: 10px;
+  border: 2px solid #e9ecef;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  resize: vertical;
+  min-height: 120px;
+}
+
+.appeals-textarea:focus {
+  border-color: #021120;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.appeals-submit-btn {
+  border-radius: 25px;
+  padding: 12px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  min-width: 150px;
+}
+
+.appeals-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.appeals-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.appeal-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+
+.appeal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+  border-color: #007bff;
+}
+
+.appeal-card-col {
+  margin-bottom: 20px;
+}
+
+.appeal-text {
+  color: #495057;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+.appeal-action-btn {
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.appeal-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-outline-custom-gold {
+  color: #d4af37;
+  border-color: #d4af37;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-custom-gold:hover {
+  background-color: #d4af37;
+  border-color: #d4af37;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+}
+
+/* Custom form styles */
+.form-label {
+  color: #495057;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-control, .form-select {
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Badge styles */
+.badge {
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 500;
+}
+
+.bg-info {
+  background-color: #17a2b8 !important;
+}
+
+/* Card header styles */
+.card-header {
+  border-radius: 12px 12px 0 0 !important;
+  padding: 15px 20px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Animation for form submission */
+@keyframes submitPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.appeals-submit-btn:active {
+  animation: submitPulse 0.3s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .appeal-card-col {
+    margin-bottom: 15px;
+  }
+  
+  .appeals-card .card-body {
+    padding: 15px;
+  }
+  
+  .appeals-textarea {
+    min-height: 100px;
+  }
+  
+  .appeals-submit-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .appeal-action-btn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+}
+
+/* Status indicators */
+.status-pending {
+  color: #ffc107;
+}
+
+.status-under-review {
+  color: #17a2b8;
+}
+
+.status-resolved {
+  color: #28a745;
+}
+
+.status-rejected {
+  color: #dc3545;
+}
+
+/* Loading animation */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Empty state styling */
+.alert-secondary {
+  border-radius: 12px;
+  border: 2px dashed #6c757d;
+  background-color: #f8f9fa;
+  color: #6c757d;
+  padding: 30px;
+  margin: 20px 0;
+}
+
+/* Side content styling */
+.side-content {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.main-content {
+  padding: 0 15px;
+}
+
+/* RTL support enhancements */
+[dir="rtl"] .appeals-card .card-header h4 {
+  text-align: right;
+}
+
+[dir="rtl"] .form-label {
+  text-align: right;
+}
+
+[dir="rtl"] .appeal-text {
+  text-align: right;
+  direction: rtl;
+}
+
+/* Print styles */
+@media print {
+  .appeal-action-btn, .appeals-submit-btn {
+    display: none;
+  }
+  
+  .appeal-card {
+    border: 1px solid #000;
+    break-inside: avoid;
+    margin-bottom: 20px;
+  }
+}
