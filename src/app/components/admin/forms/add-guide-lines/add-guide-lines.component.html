@@ -70,6 +70,7 @@
           (click)="saveGuideline()"
           [disabled]="guidelineForm.invalid || !this.guidelineForm.dirty"
           class="btn-save"
+          *appPrivileges="'ACCESS_ADD_GUIDELINES'"
         >
           <i class="fas fa-save me-2"></i>{{ guidelineExists ? 'تعـديل' : 'حـفظ' }}
         </button>
@@ -77,7 +78,7 @@
         <!-- Delete Button (only shown if a guideline exists) -->
         <button 
           (click)="deleteGuideline()"
-          *ngIf="guidelineExists && !_AuthService.getRole()?.includes('EDIT')"
+          *appPrivileges="'ACCESS_DELETE_GUIDELINES'"
           class="btn-delete-lg"
         >
           <i class="fas fa-trash-alt me-2"></i>حـذف

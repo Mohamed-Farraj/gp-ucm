@@ -7,11 +7,12 @@ import { NgIf } from '@angular/common';
 import { ImplicitReceiver } from '@angular/compiler';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../../../core/services/auth.service';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-add-guide-lines',
   standalone: true,
-  imports: [ReactiveFormsModule , NgIf ],
+  imports: [ReactiveFormsModule , NgIf , PrivilegesDirective ],
   templateUrl: './add-guide-lines.component.html',
   styleUrl: './add-guide-lines.component.scss'
 })

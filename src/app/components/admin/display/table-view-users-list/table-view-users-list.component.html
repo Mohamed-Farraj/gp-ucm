@@ -40,13 +40,14 @@
             type="button"
             class="btn btn-outline-dark flex-fill d-flex justify-content-center align-items-center gap-2"
             (click)="downloadSorted()"
+            *appPrivileges="'ACCESS_EXPORT_SORTED_ADMISSION'"
           >
             <i class="fa-solid fa-download"></i>
             <span>التنسيق</span>
           </button>
 
           <button
-            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            *appPrivileges="'ACCESS_UPLOAD_ADMISSION_STATUS'"
             type="button"
             class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
             (click)="openUploadStatusDialog()"
@@ -56,10 +57,11 @@
           </button>
 
           <button
-            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            *appPrivileges="'ACCESS_UPLOAD_ADMISSION_SECURITY_CHECK'"
             type="button"
             class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
             (click)="openUploadDialog()"
+
           >
             <i class="fa-solid fa-upload"></i>
             <span>الاستعلام الامني</span>
@@ -207,7 +209,7 @@
     {{ meta?.totalElements }}
   </h4>
 
-  <div class="table-responsive overflow-x-auto shadow-lg">
+  <div *appPrivileges="'ACCESS_VIEW_ADMISSION_REQUESTS'" class="table-responsive overflow-x-auto shadow-lg">
     <app-ar-table [res]="res"></app-ar-table>
   </div>
 

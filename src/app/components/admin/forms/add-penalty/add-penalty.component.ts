@@ -9,11 +9,12 @@ import { filter, Subject, takeUntil, tap } from 'rxjs';
 import { DatePipe, NgIf } from '@angular/common';
 import { UsersSideListComponent } from "../../display/users-side-list/users-side-list.component";
 import { AuthService } from '../../../../core/services/auth.service';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-add-penalty',
   standalone: true,
-  imports: [DatePipe, UsersSideListComponent, NgIf],
+  imports: [DatePipe, UsersSideListComponent, NgIf , PrivilegesDirective],
   templateUrl: './add-penalty.component.html',
   styleUrl: './add-penalty.component.scss'
 })

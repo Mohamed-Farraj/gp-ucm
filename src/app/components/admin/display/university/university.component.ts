@@ -5,11 +5,12 @@ import { UniversityService } from '../../../../core/services/university.service'
 import { Iuniversity } from '../../../../core/interfaces/iuniversity';
 import { MatDialog } from '@angular/material/dialog';
 import { UniversityFormComponent } from '../../../admin/forms/university-form/university-form.component';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-university',
   standalone: true,
-  imports: [ReactiveFormsModule  ],
+  imports: [ReactiveFormsModule , PrivilegesDirective ],
   templateUrl: './university.component.html',
   styleUrl: './university.component.scss'
 })

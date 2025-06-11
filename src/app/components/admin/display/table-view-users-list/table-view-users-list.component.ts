@@ -15,11 +15,12 @@ import { ArService } from '../../../../core/services/ar.service';
 import { UploadStatusComponent } from '../../excel/upload-status/upload-status.component';
 import { PaginationService } from '../../../../services/pagination.service';
 import { ArTableComponent } from "../ar-table/ar-table.component";
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-table-view-users-list',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, MatDialogModule, NgIf, FormsModule, NgClass, ArTableComponent],
+  imports: [ReactiveFormsModule, NgFor, MatDialogModule, NgIf, FormsModule, NgClass, ArTableComponent , PrivilegesDirective],
   templateUrl: './table-view-users-list.component.html',
   styleUrl: './table-view-users-list.component.scss'
 })

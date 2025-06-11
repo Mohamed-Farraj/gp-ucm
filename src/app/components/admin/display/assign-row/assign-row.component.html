@@ -17,6 +17,7 @@
 
   <div class="col-4">
     <select
+      *appPrivileges="'ACCESS_ASSIGNMENT'"
       [class.invisible]="!buildingId"
       (change)="selectRoom($event)"
       [disabled]="student?.room"
@@ -45,6 +46,7 @@
       (click)="removeStudentAssign(); $event.stopPropagation()"
       [class.invisible]="!student.room"
       class="rounded-circle btn btn-outline-danger"
+      *appPrivileges="'ACCESS_REMOVE_STUDENT_FROM_ROOM'"
     >
       <i class="fa-solid fa-trash"></i>
     </button>

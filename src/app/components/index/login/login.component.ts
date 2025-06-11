@@ -55,6 +55,9 @@ loginSubmit(){
             }
             if(res?.data?.role.includes('ADMIN'))
             {
+              console.log(res?.privileges);
+               const privileges = res?.data?.privileges.map((p: any) => p?.name);
+              localStorage.setItem('privileges', JSON.stringify(privileges));
               this.router.navigate(['/admin/'])
             }
           }, 1000);
