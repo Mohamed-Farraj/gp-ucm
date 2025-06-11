@@ -9,11 +9,12 @@ import { SharedDataService } from '../../../../core/services/shared-data.service
 import { Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { ArService } from '../../../../core/services/ar.service';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-assign-row',
   standalone: true,
-  imports: [NgFor,NgIf],
+  imports: [NgFor,NgIf,PrivilegesDirective],
   templateUrl: './assign-row.component.html',
   styleUrl: './assign-row.component.scss'
 })

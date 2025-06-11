@@ -34,7 +34,7 @@ export class AddBuildingComponent {
         // Update the form when userData is available
         this.addBuildingForm.patchValue({
           // buildingId: this.buildingData?.id
-          universityId: this.buildingData?.data.building.university.id
+          universityId: this.buildingData?.data?.building?.university.id
         });
       });
     }
@@ -45,7 +45,7 @@ export class AddBuildingComponent {
       wingsCount: ['', Validators.required],
 
       type: ['', Validators.required],
-      universityId: [''],
+      universityId: ['', Validators.required],
       // buildingId: [this.buildingData?.id],
        
     })
@@ -53,10 +53,10 @@ export class AddBuildingComponent {
     
   
     ngOnInit(): void {
-      if (this.data) {
-        const universityId = 1; // أو القيمة اللي تجيبها من API
-        this.addBuildingForm.patchValue({ universityId });
-      }
+      // if (this.data) {
+      //   const universityId = this.data.building.university.id; // أو القيمة اللي تجيبها من API
+      //   this.addBuildingForm.patchValue({ universityId });
+      // }
     }
   
     ngOnChanges(): void {
@@ -64,7 +64,7 @@ export class AddBuildingComponent {
         this.addBuildingForm.patchValue({
           name: this.data.building.name,
           type: this.data.building.type,
-          universityId: [1],
+          universityId: this.data.building.university.id,
 
         });
       }
@@ -95,7 +95,7 @@ export class AddBuildingComponent {
       this.dialogRef.close(false); // Close the dialog without saving
     }
   
-    resetDeadlineForm() {
+    resetaddBuildingForm() {
       this.addBuildingForm.reset();
       this.onClose();
     }

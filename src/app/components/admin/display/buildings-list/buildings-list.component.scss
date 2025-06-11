@@ -53,3 +53,24 @@ h4{color:var(--main-color)}
   .females{
     color: palevioletred;
   }
+
+
+
+  .btn-group :checked + .btn.btn-outline-primary {
+  background-color: var(--main-color) !important;
+  color: #fff !important;
+  border-color: var(--main-color) !important;
+}
+
+/* الحالة الافتراضية */
+.btn-group .btn-outline-primary {
+  border-color: var(--main-color);
+  color: var(--main-color);
+}
+
+/* عند التحويم */
+.btn-group .btn-outline-primary:hover {
+  background-color: #9f833731;
+  color: var(--main-color);
+  border-color: var(--main-color) !important;
+}

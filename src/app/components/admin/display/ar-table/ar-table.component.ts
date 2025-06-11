@@ -4,11 +4,12 @@ import Swal from 'sweetalert2';
 import { ArService } from '../../../../core/services/ar.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { NgIf } from '@angular/common';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-ar-table',
   standalone: true,
-  imports: [NgIf,],
+  imports: [NgIf,PrivilegesDirective],
   templateUrl: './ar-table.component.html',
   styleUrl: './ar-table.component.scss'
 })

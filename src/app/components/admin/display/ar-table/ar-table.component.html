@@ -11,7 +11,7 @@
           <th
             scope="col"
             class="text-center"
-            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            *appPrivileges="'ACCESS_UPDATE_ADMISSION_REQUEST_STATUS'"
           >
             الإجراءات
           </th>
@@ -36,7 +36,7 @@
           <td>{{ item?.residenceAddress }}</td>
           <td>{{ item?.faculty }}</td>
           <td>{{ getLevel(item?.level) }}</td>
-          <td *ngIf="!_AuthService.getRole()?.includes('ViEW')">
+          <td *appPrivileges="'ACCESS_UPDATE_ADMISSION_REQUEST_STATUS'">
             <div class="d-flex flex-wrap gap-2 justify-content-center">
               <button
                 *ngIf="item?.securityCheckStatues === 'ACCEPTED'"

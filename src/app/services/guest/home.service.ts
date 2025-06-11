@@ -14,16 +14,16 @@ export class HomeService {
 
 
   getDeadline():Observable<any> {
-    return this._HttpClient.get(`${environment.baseUrl}/public/all-deadlines/university/1`);
+    return this._HttpClient.get(`${environment.baseUrl}/public/all-deadlines/university/${this.local.get<string>('university')?.length!-1}`);
   }
 
   getGuidlines():Observable<any> {
-    return this._HttpClient.get(`${environment.baseUrl}/public/get-guidelines/1`);
+    return this._HttpClient.get(`${environment.baseUrl}/public/get-guidelines/${this.local.get<string>('university')?.length!-1}`);
   }
 
-  getApplicationStatusById(id:string):Observable<any>
+  getApplicationStatusById(uid:number,id:string):Observable<any>
   {
-    return this._HttpClient.get(`${environment.baseUrl}/user/admission-requests/1/status?userId=${id}`);
+    return this._HttpClient.get(`${environment.baseUrl}/user/admission-requests/${uid}/status?userId=${id}`);
   }
   getApplicationStatusByNationalId(id:string):Observable<any>
   {

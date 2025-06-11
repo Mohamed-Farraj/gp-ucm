@@ -14,11 +14,12 @@ import { ArService } from '../../../../core/services/ar.service';
 import { UploadFormComponent } from '../../excel/upload-form/upload-form.component';
 import { UploadAssignRoomsComponent } from '../../excel/upload-assign-rooms/upload-assign-rooms.component';
 import { PaginationService } from '../../../../services/pagination.service';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-assign-rooms',
   standalone: true,
-  imports: [NgFor, NgIf,NgClass, FormsModule, ReactiveFormsModule, AssignRowComponent],
+  imports: [NgFor, NgIf,NgClass, FormsModule, ReactiveFormsModule, AssignRowComponent,PrivilegesDirective],
   templateUrl: './assign-rooms.component.html',
   styleUrl: './assign-rooms.component.scss'
 })
@@ -67,6 +68,7 @@ export class AssignRoomsComponent {
     private readonly _BuildingsService = inject(BuildingsService)
     private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
     autoAssignBtn: boolean = true;
+  displayedPages: number[] = [];
     constructor() {
       this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
         console.log('Received data:', data);
@@ -105,7 +107,8 @@ export class AssignRoomsComponent {
   
     ngOnInit(): void {
      this.getApplications();
-  
+     this.updateDisplayedPages();
+
       // الاشتراك في تغييرات حقل البحث باستخدام Reactive Form مع debounceTime
       this.searchControl.valueChanges.pipe(
         debounceTime(1000)
@@ -171,7 +174,7 @@ export class AssignRoomsComponent {
 
     //#region pagination methods
     initPagination(): void {
-      this.totalPages = this.meta.totalPages;
+      this.totalPages = this.meta?.totalPages;
       this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
       console.log('totalPages',this.pages);
     }
@@ -317,7 +320,18 @@ onGenderChange(event: any): void {
         //     });
         //   }
   
-   
+   updateDisplayedPages(): void {
+        // شيك لو إجمالي الصفحات صفر
+              console.log(this.totalPages); // هيتنفذ مرة واحدة بس وقت التحديث
+
+  if (!this.totalPages) {
+    this.displayedPages = [];
+      console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
+      return;
+  }
+  this.displayedPages = this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
+  console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
+  }
         
         autoAssignRoom(item: any): void {
           this._BuildingsService.autoAssignRoom(item.userId, "DORM").subscribe({
