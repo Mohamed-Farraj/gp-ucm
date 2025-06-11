@@ -1,0 +1,101 @@
+<section class="row justify-content-center py-4">
+  <section *ngIf="isAdmin" class="col-md-3 py-3 px-3 side-content">
+    <app-users-side-list></app-users-side-list>
+  </section>
+  <section class="col-11 col-sm-10 col-md-9 col-lg-8 main-content"> 
+
+    <section *ngIf="!isAdmin" class="card shadow-sm border-0 appeals-card" dir="rtl"> 
+      <div class="card-header bg-main-navy text-white border-0"> 
+        <h4 class="card-title h5 mb-0"><i class="fas fa-balance-scale me-2"></i>التظلمات</h4>
+      </div>
+
+      <div class="card-body p-4"> 
+        <form [formGroup]="appealForm">
+          <div class="mb-4"> 
+            <label for="reason" class="form-label fw-semibold mb-2">نص التظلم:</label> 
+            <textarea
+              id="reason"
+              class="form-control form-control-lg appeals-textarea" 
+              formControlName="reason"
+              rows="8" 
+              placeholder="أدخل نص التظلم هنا..."
+            ></textarea>
+          
+             <div *ngIf="appealForm.get('reason')?.invalid && appealForm.get('reason')?.touched" class="invalid-feedback d-block mt-2">
+                <i class="fas fa-times-circle me-1"></i> نص التظلم مطلوب.
+             </div>
+          </div>
+
+          <div class="text-center mt-4 pt-3 border-top"> 
+            <button
+              type="submit"
+              (click)="submitAppeal()"
+              [disabled]="appealForm.invalid"
+              class="btn bg-main-navy btn-lg text-white appeals-submit-btn"
+            >
+              <i class="fas fa-gavel me-2"></i> إرسال التظلم
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="mt-5">
+      <div class="row g-4">
+        @for (item of filteredAppeals; track $index) {
+        <div class="col-md-6 appeal-card-col">
+          <div class="card h-100 shadow-sm border-0 appeal-card">
+            <div class="card-header bg-light border-bottom d-flex justify-content-between align-items-center">
+              <span class="text-muted lg fw-bold">
+                <i class="fas fa-balance-scale  me-1"></i> 
+              </span>
+              <!-- <span class="text-muted small fw-bold">
+                 <i class="far fa-clock me-1"></i> {{ item.createdAt | date : "dd/MM/yyyy, hh:mm a" }}
+              </span> -->
+            </div>
+            <div class="card-body d-flex flex-column">
+              <div class="mb-2">
+              <span 
+  class="badge mb-2"
+  [ngClass]="{
+    'bg-warning text-dark': item.status === 'UNDER_REVIEW',
+    'bg-success': item.status === 'ACCEPTED',
+    'bg-info text-dark': item.status !== 'UNDER_REVIEW' && item.status !== 'ACCEPTED'
+  }"
+>
+  <i class="fas fa-tag me-1"></i>
+  {{ item.status }}
+</span>
+
+              </div>
+              <p class="card-text appeal-text mb-4 flex-grow-1">
+                {{ item.reason }}
+              </p>
+              <div class="mt-auto d-flex justify-content-end gap-2">
+                <button
+                  (click)="readMore(item.reason)"
+                  class="btn btn-outline-custom-gold"
+                >
+                  <i class="far fa-eye me-1"></i> عرض التظلم
+                </button>
+                <button
+                  (click)="deleteAppeal(item.id)"
+                  class="btn btn-sm btn-danger appeal-action-btn"
+                >
+                   <i class="far fa-trash-alt me-1"></i> مسح
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        } @empty {
+          <div class="col-12">
+            <div class="alert alert-secondary text-center" role="alert">
+              <i class="fas fa-info-circle me-2"></i> لا توجد تظلمات لعرضها حاليًا.
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+  </section>
+</section>

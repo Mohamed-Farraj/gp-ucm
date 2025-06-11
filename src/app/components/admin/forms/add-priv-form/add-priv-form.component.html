@@ -6,7 +6,7 @@
 </h5>
 
   <form [formGroup]="privForm" class="w-100" (ngSubmit)="onSubmit()" >
-   <div class="mb-5 pb-5 ">
+   <div class=" ">
 <ng-select
   [items]="Privilegeives"
   bindLabel="nameAr"
@@ -17,7 +17,8 @@
   placeholder="{{ revokeMode ? 'اختر الصلاحيات المراد الغائها ' : 'اختر الصلاحيات' }}  ">
 </ng-select>
 @if (revokeMode) {
-  <div class="mt-3">
+  <div style="height: 250px;"></div>
+  <div class="">
   <label class="fw-bold">الصلاحيات الحالية:</label>
   <ng-container *ngIf="(data?.admin?.privileges?.length || 0) > 0; else noPrivs">
   <span *ngFor="let priv of data?.admin?.privileges || []" class="badge bg-main-navy mx-1">
@@ -56,11 +57,13 @@
   </div>
 }
  
+@if (!revokeMode) {
+  <div style="height: 150px;"></div>
+}
 
-<div style="height: 150px;"></div>
 
 </div>
-  <div class="pt-5 ">
+  <div class=" ">
  <button
   type="submit"
   class="btn-main me-3"

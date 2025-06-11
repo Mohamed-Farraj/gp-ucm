@@ -42,6 +42,11 @@
 
 
     <section class="mt-5"> <!-- Add margin top for separation -->
+         <div class="row mb-4">
+    <div class="col-12">
+      <h2 class="dashboard-title">  الشكاوي</h2>
+    </div>
+  </div>
       <div class="row g-4"> <!-- Use g-4 for consistent gutters -->
         @for (item of filteredComplaints | paginate: { itemsPerPage: 10, currentPage: page }; track $index) {
         <div class="col-md-6 complaint-card-col">

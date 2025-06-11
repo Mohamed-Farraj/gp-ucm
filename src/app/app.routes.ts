@@ -38,6 +38,8 @@ import { registeradminComponent } from './components/admin/forms/registeradmin/r
 import {  UniversityComponent } from './components/admin/display/university/university.component';
 import { ForgotpasswordComponent } from './components/password-recovery/forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './components/password-recovery/resetpassword/resetpassword.component';
+import { AppealsComponent } from './components/student/appeals/appeals.component';
+import { DisplayAppealsComponent } from './components/admin/display/display-appeals/display-appeals.component';
 
 export const routes: Routes = [
 
@@ -64,6 +66,7 @@ export const routes: Routes = [
         {path:"user-dashboard",component:UserDashboardComponent,},
         {path:"complaints",component:DisplayComplaintsComponent},
         {path:"app-request",component:ApplicationRequestComponent},
+        {path:"appeals",component:AppealsComponent},
 
     ]},
     {path:"hnu",component:HnuLayoutComponent,children:[
@@ -85,6 +88,8 @@ export const routes: Routes = [
         {path:'logs',component:LogsComponent},
         {path:'register-admin',component:registeradminComponent,},
         {path:'add-university',component:UniversityComponent,},
+        {path:"display-appeals",component:DisplayAppealsComponent},
+
 
         {path:'',component: BuildingsListComponent, outlet: 'side' },
 
