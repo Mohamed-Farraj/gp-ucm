@@ -11,25 +11,26 @@ export class GuidelinsService {
   private readonly _HttpClient = inject(HttpClient)
 
 
-  setguideForm(uid:number,data:object): Observable<any>
-  {
-   return this._HttpClient.post(`${environment.baseUrl}/admin/edit/add-guidelines/${uid}` , data)
- 
+ setguideForm(uid: number, data: FormData): Observable<any> {
+    return this._HttpClient.post(`${environment.baseUrl}/admin/add-guidelines/${uid}`, data);
   }
 
-  getGuidelines(uid:number = 1): Observable<any> {
+  // جلب الإرشادات (عادي GET)
+  getGuidelines(uid: number = 1): Observable<any> {
     return this._HttpClient.get(`${environment.baseUrl}/public/get-guidelines/${uid}`);
   }
 
-
-  deleteGuideline(uid:number,id: number): Observable<any> 
-  {
+  // حذف إرشادات (عادي DELETE)
+  deleteGuideline(uid: number, id: number): Observable<any> {
     return this._HttpClient.delete(`${environment.baseUrl}/admin/delete-guidelines?universityId=${uid}&guidelineId=${id}`);
   }
 
-
-  updateGuideline(uid:number,id: number, data: object): Observable<any>
-  {
-    return this._HttpClient.put(`${environment.baseUrl}/admin/edit/update-guidelines?universityId=${uid}&guidelineId=${id}`, data);
+  // تعديل إرشادات (لو فيها ميديا برضو FormData - والطريقة لازم تكون PUT أو POST حسب اللي في الباك)
+  updateGuideline(uid: number, id: number, data: FormData): Observable<any> {
+    // ملاحظة: خلي بالك من الـ URL لازم يكون ? بدل =
+    return this._HttpClient.put(
+      `${environment.baseUrl}/admin/update-guidelines?universityId=${uid}&guidelineId=${id}`, 
+      data
+    );
   }
 }

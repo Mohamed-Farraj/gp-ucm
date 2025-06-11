@@ -1,17 +1,18 @@
-<section class="my-section p-md-5 py-5 px-2">
-  <h1>تعليمات القبول</h1>
+<section class="bg-white p-md-5 py-5 px-2 rounded-5 shadow-sm">
+  <h3 class="mb-4 text-center fw-medium">           التعليمات و الإرشادات
+</h3>
   <div class="accordion fs-5 lh-lg" id="accordionExample">
-    <div class="accordion-item p-md-5 px-2">
+    <div class="accordion-item border-0 rounded-4 overflow-hidden shadow-sm">
       <h2 class="accordion-header">
         <button
-          class="accordion-button fs-2 rounded-pill"
+          class="accordion-button fs-3 rounded-pill"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseOne"
           aria-expanded="true"
           aria-controls="collapseOne"
         >
-          التعليمات و الارشادات
+          التعليمات و الإرشادات
         </button>
       </h2>
       <div
@@ -19,8 +20,35 @@
         class="accordion-collapse collapse show"
         data-bs-parent="#accordionExample"
       >
-        <div *ngIf="res[0]?.guidelines" class="accordion-body">
-          {{ res[0]?.guidelines }}
+        <div class="accordion-body py-4 px-3">
+          <!-- نص التعليمات -->
+          <div *ngIf="res[0]?.guidelines" class="mb-4">
+            {{ res[0]?.guidelines }}
+          </div>
+          <!-- ميديا: صورة أو ملف -->
+          <div *ngIf="res[0]?.media" class="text-center mt-4">
+            <ng-container [ngSwitch]="getFileType(res[0].media)">
+              <!-- صورة -->
+              <img
+                *ngSwitchCase="'image'"
+                [src]="res[0].media"
+                alt="المرفق"
+                class="img-fluid rounded-3 mb-3 shadow-sm"
+                style="max-width:300px; max-height:200px;"
+              />
+              <!-- ملف غير الصورة -->
+              <a
+                *ngSwitchDefault
+                [href]="res[0].media"
+                target="_blank"
+                class="btn btn-main fw-bold px-4 py-2 rounded-pill"
+                download
+              >
+                <i class="fas fa-download me-2"></i>
+                تحميل المرفق
+              </a>
+            </ng-container>
+          </div>
         </div>
       </div>
     </div>
