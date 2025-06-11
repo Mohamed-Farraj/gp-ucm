@@ -1,4 +1,4 @@
-<section>
+<section >
   <div class="container-fluid py-3">
     <div class="row g-3">
       <!-- Search input -->
@@ -65,7 +65,7 @@
       <div class="col-12 col-md-2">
         <div class="d-flex gap-2">
           <button
-            *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+            *appPrivileges="'ACCESS_UPLOAD_ROOM_ASSIGNMENT'"
             type="button"
             class="btn btn-outline-success flex-fill d-flex justify-content-center align-items-center gap-2"
             (click)="openUploadDialog()"
@@ -115,11 +115,13 @@
             (click)="autoAssignRoom(item);$event.stopPropagation()"
              [disabled]="item?.room"
              type="button"
-             class="btn btn-success">
+             class="btn btn-success"
+             *appPrivileges="'ACCESS_ASSIGNMENT'"
+             >
               تسكين
           </button>
         </td>
-          <td class="py-0" *ngIf="!_AuthService.getRole()?.includes('ViEW')">
+          <td class="py-0" >
             <app-assign-row [student]="item" [resBuildings]="resBuildings" (roomAssigned)="onRoomAssigned(item);"></app-assign-row>
           </td>
         </tr>

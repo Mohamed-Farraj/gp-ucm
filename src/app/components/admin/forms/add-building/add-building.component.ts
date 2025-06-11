@@ -34,7 +34,7 @@ export class AddBuildingComponent {
         // Update the form when userData is available
         this.addBuildingForm.patchValue({
           // buildingId: this.buildingData?.id
-          universityId: this.buildingData?.data.building.university.id
+          universityId: this.buildingData?.data?.building?.university.id
         });
       });
     }
@@ -45,7 +45,7 @@ export class AddBuildingComponent {
       wingsCount: ['', Validators.required],
 
       type: ['', Validators.required],
-      universityId: ['1', Validators.required],
+      universityId: ['', Validators.required],
       // buildingId: [this.buildingData?.id],
        
     })
@@ -53,10 +53,10 @@ export class AddBuildingComponent {
     
   
     ngOnInit(): void {
-      if (this.data) {
-        const universityId = this.data.building.university.id; // أو القيمة اللي تجيبها من API
-        this.addBuildingForm.patchValue({ universityId });
-      }
+      // if (this.data) {
+      //   const universityId = this.data.building.university.id; // أو القيمة اللي تجيبها من API
+      //   this.addBuildingForm.patchValue({ universityId });
+      // }
     }
   
     ngOnChanges(): void {

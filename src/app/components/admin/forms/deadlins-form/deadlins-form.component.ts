@@ -8,10 +8,11 @@ import { EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../../../core/services/auth.service';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 @Component({
   selector: 'app-deadlins-form',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf,PrivilegesDirective],
   templateUrl: './deadlins-form.component.html',
   styleUrl: './deadlins-form.component.scss'
 })

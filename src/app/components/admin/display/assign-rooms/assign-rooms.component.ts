@@ -14,11 +14,12 @@ import { ArService } from '../../../../core/services/ar.service';
 import { UploadFormComponent } from '../../excel/upload-form/upload-form.component';
 import { UploadAssignRoomsComponent } from '../../excel/upload-assign-rooms/upload-assign-rooms.component';
 import { PaginationService } from '../../../../services/pagination.service';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-assign-rooms',
   standalone: true,
-  imports: [NgFor, NgIf,NgClass, FormsModule, ReactiveFormsModule, AssignRowComponent],
+  imports: [NgFor, NgIf,NgClass, FormsModule, ReactiveFormsModule, AssignRowComponent,PrivilegesDirective],
   templateUrl: './assign-rooms.component.html',
   styleUrl: './assign-rooms.component.scss'
 })

@@ -5,6 +5,7 @@
       type="button" 
       (click)="openDialog()"
       class="btn-add"
+      *appPrivileges="'ACCESS_ADD_UNIVERSITY'"
     >
       <i class="fas fa-calendar-plus me-2"></i> اضافة جامعة
     </button>
@@ -31,6 +32,7 @@
                   type="button" 
                   (click)="loaduniversity(item)"
                   class="btn-edit"
+                  *appPrivileges="'ACCESS_UPDATE_UNIVERSITY'"
                 >
                   <i class="fas fa-edit me-1"></i>تعديل
                 </button>
@@ -38,6 +40,7 @@
                   type="button" 
                   (click)="deleteUniversity(item.id)"
                   class="btn-delete-text"
+                  *appPrivileges="'ACCESS_DELETE_UNIVERSITY'"
                 >
                   <i class="fas fa-trash-alt me-1"></i>حذف
                 </button> -->

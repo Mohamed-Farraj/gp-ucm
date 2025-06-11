@@ -30,7 +30,7 @@
             role="tablist"
           >
             <a
-              *ngFor="let item of navItems"
+              *ngFor="let item of filteredNavItems"
               class="d-flex cursor-pointer align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
               [class.active]="activeTab === item.id"
               (click)="setActiveTab(item.id)"
@@ -80,7 +80,7 @@
             role="tablist"
           >
             <a
-              *ngFor="let item of navItems"
+              *ngFor="let item of filteredNavItems"
               class="d-flex cursor-pointer align-items-center gap-3 rounded rounded-4 list-group-item list-group-item-action"
               routerLink="{{item.id}}"
               routerLinkActive="active"

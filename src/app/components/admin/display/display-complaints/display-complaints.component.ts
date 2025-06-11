@@ -10,11 +10,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { userInfo } from 'os';
 import { AuthService } from '../../../../core/services/auth.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-display-complaints',
   standalone: true,
-  imports: [DatePipe, NgIf, UsersSideListComponent , ReactiveFormsModule ,NgxPaginationModule] ,
+  imports: [ PrivilegesDirective , DatePipe, NgIf, UsersSideListComponent , ReactiveFormsModule ,NgxPaginationModule] ,
   templateUrl: './display-complaints.component.html',
   styleUrl: './display-complaints.component.scss'
 })

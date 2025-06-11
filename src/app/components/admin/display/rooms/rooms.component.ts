@@ -11,11 +11,12 @@ import { Irooms } from '../../../../core/interfaces/irooms';
 import { AddBuildingComponent } from '../../forms/add-building/add-building.component';
 import { Ibuilding } from '../../../../core/interfaces/ibuilding';
 import { AuthService } from '../../../../core/services/auth.service';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-rooms',
   standalone: true,
-  imports: [NgIf, BuildingsListComponent],
+  imports: [NgIf, BuildingsListComponent , PrivilegesDirective],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.scss'
 })

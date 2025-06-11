@@ -306,6 +306,7 @@
             class="btn-main-gold rounded-pill btn-md mx-auto"
             (click)="onDownload()"
             [disabled]="isDownloading"
+            *appPrivileges="'ACCESS_EXPORT_ADMISSION'"
           >
             <span *ngIf="!isDownloading">تحميل ملف الاكسيل</span>
             <span *ngIf="isDownloading">
