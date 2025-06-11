@@ -69,6 +69,11 @@ export class AddGuideLinesComponent implements OnInit {
 
 
 
+selectedFile: File | null = null;
+
+onFileSelected(event: any) {
+  this.selectedFile = event.target.files[0];
+}
 
  
 
@@ -102,49 +107,51 @@ export class AddGuideLinesComponent implements OnInit {
 
   // Save or update the guideline
   saveGuideline(): void {
-    if (this.guidelineForm.invalid) return;
+  if (this.guidelineForm.invalid) return;
 
-    const text = this.guidelineForm.value;
-    if (this.guidelineExists) {
-      // Update the existing guideline
-      this._GuidelinsService.updateGuideline(this.uid,this.id,text).subscribe({
-        next: (response) => {
-          this.Toast.fire({
-            icon: 'success',
-            title: 'تـم  تعديل الارشادات',
-          })   
-          console.log('Guideline updated:', response);
-         this.guidelineForm.markAsPristine();
+  // جهز form data
+  const formData = new FormData();
+  formData.append('guidelines', this.guidelineForm.get('guidelines')?.value);
 
-        },
-
-
-        error: (error) => {
-          console.error('Error updating guideline:', error);
-        },
-      });
-    } else {
-      // Create a new guideline
-      this._GuidelinsService.setguideForm(this.uid,this.guidelineForm.value).subscribe({
-        next: (response:any) => {
-          console.log('resssss:', response);
-          this.id = response.data.guideLinesId; 
-            this.Toast.fire({
-            icon: 'success',
-            title: 'تـم اضـافه الارشادات',
-          })   
-          console.log('Guideline created:', response);
-
-          
-          this.guidelineExists = true; // Update the state
-            this.guidelineForm.markAsPristine();
-        },
-        error: (error) => {
-          console.error('Error creating guideline:', error);
-        },
-      });
-    }
+  if (this.selectedFile) {
+    formData.append('media', this.selectedFile);
   }
+
+  if (this.guidelineExists) {
+    // Update the existing guideline
+    this._GuidelinsService.updateGuideline(this.uid, this.id, formData).subscribe({
+      next: (response) => {
+        this.Toast.fire({
+          icon: 'success',
+          title: 'تـم  تعديل الارشادات',
+        });
+        console.log('Guideline updated:', response);
+        this.guidelineForm.markAsPristine();
+      },
+      error: (error) => {
+        console.error('Error updating guideline:', error);
+      },
+    });
+  } else {
+    // Create a new guideline
+    this._GuidelinsService.setguideForm(this.uid, formData).subscribe({
+      next: (response: any) => {
+        this.id = response.data.guideLinesId;
+        this.Toast.fire({
+          icon: 'success',
+          title: 'تـم اضـافه الارشادات',
+        });
+        console.log('Guideline created:', response);
+        this.guidelineExists = true;
+        this.guidelineForm.markAsPristine();
+      },
+      error: (error) => {
+        console.error('Error creating guideline:', error);
+      },
+    });
+  }
+}
+
 
   // Delete the guidelineهل أنت متأكد؟
 

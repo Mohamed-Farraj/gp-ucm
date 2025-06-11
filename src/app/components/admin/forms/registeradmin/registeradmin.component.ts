@@ -129,7 +129,15 @@ export class registeradminComponent implements OnInit {
   ACCESS_ADD_UNIVERSITY: 'إضافة جامعة',
   ACCESS_DELETE_UNIVERSITY: 'حذف جامعة',
   ACCESS_UPDATE_UNIVERSITY: 'تحديث بيانات الجامعة',
-  ACCESS_VIEW_UNIVERSITY: 'عرض الجامعات'
+  ACCESS_VIEW_UNIVERSITY: 'عرض الجامعات',
+
+  ACCESS_VIEW_APPEALS: 'عرض التظلمات',
+  ACCESS_UPDATE_APPEAL_STATUS: 'تحديث حالة التظلم',
+  ACCESS_VIEW_COMPLAINTS: 'عرض الشكاوى',
+  ACCESS_DELETE_COMPLAINTS: 'حذف الشكاوى',
+  ACCESS_VIEW_ADMISSION_REQUESTS: 'عرض طلبات الالتحاق',
+  ACCESS_VIEW_ADMINS: 'عرض المشرفين',
+  ACCESS_UPDATE_ADMISSION_REQUEST_STATUS: 'تحديث حالة طلب الالتحاق',
 };
      ngOnInit(): void {
     this.getAllAdmins();

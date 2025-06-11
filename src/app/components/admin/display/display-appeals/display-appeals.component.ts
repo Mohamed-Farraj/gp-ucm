@@ -8,11 +8,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { Location, NgClass } from '@angular/common';
 import { UsersSideListComponent } from '../users-side-list/users-side-list.component';
 import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-display-appeals',
   standalone: true,
-  imports: [NgClass , UsersSideListComponent , PrivilegesDirective],
+  imports: [NgClass , UsersSideListComponent , PrivilegesDirective, NgxPaginationModule],
   templateUrl: './display-appeals.component.html',
   styleUrl: './display-appeals.component.scss'
 })
@@ -27,6 +28,8 @@ export class DisplayAppealsComponent {
   Appeals: any[] = [];
   filteredAppeals: any[] = [];
   selected: any;
+  page: number = 1; // الصفحة الحالية
+
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
   constructor(private cd: ChangeDetectorRef) {
     this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
