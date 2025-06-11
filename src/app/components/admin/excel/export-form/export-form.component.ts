@@ -3,11 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { ExcelService } from '../../../../core/services/excel.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KeyValuePipe, NgFor, NgIf } from '@angular/common';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-export-form',
   standalone: true,
-  imports: [FormsModule,NgIf,NgFor,KeyValuePipe],
+  imports: [FormsModule,NgIf,NgFor,KeyValuePipe , PrivilegesDirective],
   templateUrl: './export-form.component.html',
   styleUrls: ['./export-form.component.scss']
 })

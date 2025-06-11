@@ -1,11 +1,12 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ExcelService } from '../../../../core/services/excel.service';
 import { NgClass, NgIf } from '@angular/common';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-upload-assign-rooms',
   standalone: true,
-  imports: [NgIf,NgClass],
+  imports: [NgIf,NgClass , PrivilegesDirective],
   templateUrl: './upload-assign-rooms.component.html',
   styleUrl: './upload-assign-rooms.component.scss'
 })

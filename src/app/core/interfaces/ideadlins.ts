@@ -6,6 +6,7 @@ export interface Ideadlins
   applicationEndDate: string;
   studentType: string;
   universityResponseDTO: UniversityResponseDTO;
+  uid: number;
 }
 
 interface UniversityResponseDTO {

@@ -1,9 +1,9 @@
-<section>
+<!-- <section>
   <div class="air air1"></div>
   <div class="air air2"></div>
   <div class="air air3"></div>
   <div class="air air4"></div>
-</section>
+</section> -->
 <footer dir="rtl" class="py-5">
   <div style="width: 90%" class="m-auto">
     <div class="row justify-content-between w-100">
@@ -15,7 +15,7 @@
       </div>
       <!-- Modified Button Section -->
       <div class="col-md-4 col-lg-3 text-center">
-        <button class="btn btn-main p-3 p-lg-4 rounded rounded-5 border-0">
+        <button  routerLink="/guest/app-request"  class="btn btn-main p-3 p-lg-4 rounded rounded-5 border-0">
           <span class="btn-text">سجل الان</span>
         </button>
       </div>
@@ -32,10 +32,10 @@
             <a class="nav-link active" aria-current="page" href="#">الرئيسية</a>
           </li>
           <li class="nav-item fs-3">
-            <a class="nav-link" href="#">الاستعلام</a>
+            <a class="nav-link"  [routerLink]="['/']" [fragment]="'acceptanceStatus'">الاستعلام</a>
           </li>
           <li class="nav-item fs-3">
-            <a class="nav-link" href="#">الارشادات</a>
+            <a class="nav-link" [routerLink]="['/']" [fragment]="'guidlines'">الارشادات</a>
           </li>
         </ul>
       </nav>

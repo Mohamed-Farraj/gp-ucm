@@ -28,22 +28,14 @@ import { ActivationEnd, NavigationEnd, Router, RouterLink, RouterLinkActive, Rou
   imports: [
     NgClass,
     MatTooltipModule,
-    ArDisplayComponent,
     NgIf,
     NgFor,
     ReactiveFormsModule,
-    AddGuideLinesComponent,
-    AdminLandingPageComponent,
-    DeadlinsFormComponent,
-    AddPenaltyComponent,
-    UsersSideListComponent,
-    DisplayComplaintsComponent,
-    BuildingsListComponent,
-    RoomsComponent,
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    NgStyle
+    NgStyle,
+    MatTooltipModule
   ],
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'] // تم تصحيح الاسم هنا
@@ -63,20 +55,23 @@ export class AdminSidebarComponent {
   objectData: any ;
   navItems = [
     { id: 'home', icon: 'fa-chart-line', label: 'لوحة التحكم' },
-    { id: 'ar', icon: 'fa-user', label: 'طلبات الألتحاق' },
-    { id: 'penalty', icon: 'fa-triangle-exclamation', label: 'الجزاءات و العقوبات' },
+    { id: 'ar', icon: 'fa-user', label: 'طلبات الألتحاق', requiredPrivilege: 'ACCESS_VIEW_ADMISSION_REQUESTS' },
+    { id: 'penalty', icon: 'fa-triangle-exclamation', label: 'الجزاءات و العقوبات'  ,requiredPrivilege: 'ACCESS_VIEW_PENALTY'},
     { id: 'complaints', icon: 'fa-face-angry', label: 'الشكاوى' },
-    { id: 'buildings', icon: 'fa-building', label: 'المباني و الغرف' },
-    { id: 'assign-to-rooms', icon: 'fa-person-shelter', label: ' التسكين ' },
+    { id: 'buildings', icon: 'fa-building', label: 'المباني و الغرف' ,requiredPrivilege: 'ACCESS_VIEW_BUILDINGS' },
+    { id: 'assign-to-rooms', icon: 'fa-person-shelter', label: ' التسكين ' ,requiredPrivilege: 'ACCESS_VIEW_ADMISSION_REQUESTS' },
     { id: 'guidelines', icon: 'fa-rectangle-list', label: 'الإرشادات' },
     { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
-    { id: 'meals', icon: 'fa-utensils', label: ' الوجبات' },
-    { id: 'logs', icon: 'fa-folder', label: ' السجل' },
-    { id: 'register-admin', icon: 'fa-user-tie', label: ' المشرفين' },
-    { id: 'add-university', icon: 'fa-building-columns', label: ' الجامعات' },
+    { id: 'meals', icon: 'fa-utensils', label: ' الوجبات' ,requiredPrivilege: 'ACCESS_MANAGE_MEALS' },
+    { id: 'logs', icon: 'fa-folder', label: ' السجل' ,requiredPrivilege: 'ACCESS_LOGS' },
+    { id: 'register-admin', icon: 'fa-user-tie', label: ' المشرفين' ,requiredPrivilege: 'ACCESS_VIEW_ADMINS' },
+    { id: 'add-university', icon: 'fa-building-columns', label: ' الجامعات' ,requiredPrivilege: 'ACCESS_VIEW_UNIVERSITY' },
     { id: 'display-appeals', icon: 'fas fa-balance-scale', label: 'التظلمات' },
 
+
   ];
+    private privileges: Set<string> = new Set();
+filteredNavItems : any = [];
 
   sidebarScale: number   = 1;
   @HostListener('window:resize')
@@ -131,22 +126,28 @@ getActiveTab() {
 
   ngOnInit(): void {
 
-    if(this._AuthService.getRole()?.includes('ViEW')|| this._AuthService.getRole()?.includes('EDIT'))
-    {
-      this.navItems = [
-        { id: 'home', icon: 'fa-chart-line', label: 'لوحة التحكم' },
-        { id: 'ar', icon: 'fa-user', label: 'طلبات الألتحاق' },
-        { id: 'penalty', icon: 'fa-triangle-exclamation', label: 'الجزاءات و العقوبات' },
-        { id: 'complaints', icon: 'fa-face-angry', label: 'الشكاوى' },
-        { id: 'buildings', icon: 'fa-building', label: 'المباني و الغرف' },
-        { id: 'assign-to-rooms', icon: 'fa-person-shelter', label: ' التسكين ' },
-        { id: 'guidelines', icon: 'fa-rectangle-list', label: 'الإرشادات' },
-        { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
-      ];
+    if(this._AuthService.getRole()=="ADMIN"){
+      this.filteredNavItems = [...this.navItems]
+    }
+    else{
+        this.loadPrivileges();
+  this.filteredNavItems = this.navItems.filter(item => {
+    return (
+      !item.requiredPrivilege || this.privileges.has(item.requiredPrivilege)
+    );
+  });
+
     }
     
   }
 
+
+  loadPrivileges() {
+    const saved = localStorage.getItem('privileges');
+    if (saved) {
+      this.privileges = new Set(JSON.parse(saved));
+    }
+  }
 
   getAnalysis() {
     this.objectData = {

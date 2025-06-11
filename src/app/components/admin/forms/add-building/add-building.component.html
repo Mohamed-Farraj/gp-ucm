@@ -3,6 +3,48 @@
   <form [formGroup]="addBuildingForm" class="w-100" (ngSubmit)="onSubmit()" novalidate>
     
     <!-- Floating label for name field -->
+    
+    <div
+  style="width: 100%"
+  class="btn-group mx-auto my-3"
+  role="group"
+  aria-label="Basic radio toggle button group"
+>
+  <input
+    type="radio"
+    class="btn-check"
+    id="btnradioAdd1"
+    autocomplete="off"
+    [value]="1"
+    checked
+    formControlName="universityId"
+
+  />
+  <label class="btn btn-outline-primary" for="btnradioAdd1">حلوان</label>
+
+  <input
+    type="radio"
+    class="btn-check"
+    id="btnradioAdd2"
+    [value]="2"
+    autocomplete="off"
+    formControlName="universityId"
+
+  />
+  <label class="btn btn-outline-primary" for="btnradioAdd2">حلوان الاهلية</label>
+
+  <input
+    type="radio"
+    class="btn-check"
+    id="btnradioAdd3"
+    [value]="3"
+    autocomplete="off"
+    formControlName="universityId"
+
+  />
+  <label class="btn btn-outline-primary" for="btnradioAdd3">حلوان التكنولوجية</label>
+    </div>
+
     <div class="form-floating mb-4">
       <input 
         type="text" 

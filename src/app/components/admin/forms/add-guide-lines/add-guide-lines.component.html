@@ -1,6 +1,42 @@
 <section class="premium-card my-4 p-4" dir="rtl">
-  <div class="card-header mb-4">
+  <div class="card-header mb-4 d-flex justify-content-between">
     <h4 class="section-title">أضف الإرشادات</h4>
+    <div
+    class="btn-group"
+    role="group"
+    aria-label="Basic radio toggle button group"
+  >
+    <input
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio1"
+      autocomplete="off"
+      (change)="fetchGuideline(1)"
+      checked
+    />
+    <label class="btn btn-outline-primary" for="btnradio1">حلوان</label>
+
+    <input
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio2"
+      (change)="fetchGuideline(2)"
+      autocomplete="off"
+    />
+    <label class="btn btn-outline-primary" for="btnradio2">حلوان الاهلية</label>
+
+    <input
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio3"
+      (change)="fetchGuideline(3)"
+      autocomplete="off"
+    />
+    <label class="btn btn-outline-primary" for="btnradio3">حلوان التكنولوجية</label>
+  </div>
   </div>
   
   <div class="card-body">
@@ -34,6 +70,7 @@
           (click)="saveGuideline()"
           [disabled]="guidelineForm.invalid || !this.guidelineForm.dirty"
           class="btn-save"
+          *appPrivileges="'ACCESS_ADD_GUIDELINES'"
         >
           <i class="fas fa-save me-2"></i>{{ guidelineExists ? 'تعـديل' : 'حـفظ' }}
         </button>
@@ -41,7 +78,7 @@
         <!-- Delete Button (only shown if a guideline exists) -->
         <button 
           (click)="deleteGuideline()"
-          *ngIf="guidelineExists && !_AuthService.getRole()?.includes('EDIT')"
+          *appPrivileges="'ACCESS_DELETE_GUIDELINES'"
           class="btn-delete-lg"
         >
           <i class="fas fa-trash-alt me-2"></i>حـذف

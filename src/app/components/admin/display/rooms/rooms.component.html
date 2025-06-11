@@ -64,25 +64,31 @@
           </div>
         </div>
 
-        <div *ngIf="!_AuthService.getRole()?.includes('ViEW')" class="border-top pt-3">
+        <div  class="border-top pt-3">
           <h6 class="text-muted mb-3">اجراءات:</h6>
           <div class="row">
             <div class="col-sm-6 d-flex gap-3">
-              <button (click)="openBuildingDialog()" class="btn btn-primary">
+              <button
+               (click)="openBuildingDialog()"
+                class="btn btn-primary"
+                 *appPrivileges="'ACCESS_ADD_BUILDINGS'"
+                 >
                 اضافة مبنى
               </button>
+
               <button
                 (click)="openDialog()"
                 [disabled]="!selectedBuilding"
                 [class.btndisabled]="!selectedBuilding"
                 class="btn btn-success"
+                *appPrivileges="'ACCESS_ADD_ROOMS'"
               >
                 اضافة غرفه
               </button>
             </div>
             <div class="col-sm-6 d-flex justify-content-end">
               <button
-               *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')"
+               *appPrivileges="'ACCESS_DELETE_BUILDINGS'"
                 (click)="
                   deleteBuilding(
                     selectedBuilding?.university?.id,
@@ -100,8 +106,8 @@
         </div>
       </div>
     </div>
-    <section *ngIf="selectedBuilding">
-      <table class="table m-auto table-hover">
+    <section *ngIf="selectedBuilding" >
+      <table  class="table m-auto table-hover">
         <thead class="">
           <tr class="">
             <th scope="col">الغرفة</th>
@@ -116,7 +122,7 @@
             <th scope="col">المبنى</th>
             
             <!-- <th scope="col">تعديل</th> -->
-            <th *ngIf="!_AuthService.getRole()?.includes('ViEW') && !_AuthService.getRole()?.includes('EDIT')" scope="col">حذف</th>
+            <th *appPrivileges="'ACCESS_DELETE_ROOMS'" scope="col">حذف</th>
           </tr>
         </thead>
         <tbody class="">
@@ -137,10 +143,11 @@
                 تعديل
               </button>
             </td> -->
-            <td *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')">
+            <td *appPrivileges="'ACCESS_DELETE_ROOMS'">
               <button
                 (click)="deleteRoom(item?.building?.id, item?.id)"
                 class="btn px-4 rounded rounded-pill btn-danger"
+                *appPrivileges="'ACCESS_DELETE_ROOMS'"
               >
                 حذف
               </button>

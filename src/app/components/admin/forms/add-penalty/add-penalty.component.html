@@ -7,7 +7,7 @@
       <div class="card-header d-flex align-items-center justify-content-between mb-4">
         <h4 class="section-title">الجزاءات</h4>
         <button
-        *ngIf="!_AuthService.getRole()?.includes('ViEW')"
+          *appPrivileges="'ACCESS_ADD_PENALTY'"
           [disabled]="!userData"
           type="button"
           (click)="openDialog()"
@@ -39,7 +39,7 @@
                   <td>{{ item.dateIssued | date : "yyyy/MM/dd" }}</td>
                   <td class="text-center">
                     <button
-                    *ngIf="!_AuthService.getRole()?.includes('ViEW')&& !_AuthService.getRole()?.includes('EDIT')"
+                    *appPrivileges="'ACCESS_DELETE_PENALTY'"
                       type="button"
                       (click)="deletePenalty(item.id)"
                       class="btn-delete"

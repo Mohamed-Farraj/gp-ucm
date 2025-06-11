@@ -9,11 +9,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { userInfo } from 'os';
 import { AuthService } from '../../../../core/services/auth.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-display-complaints',
   standalone: true,
-  imports: [DatePipe, NgIf, UsersSideListComponent , ReactiveFormsModule ] ,
+  imports: [ PrivilegesDirective , DatePipe, NgIf, UsersSideListComponent , ReactiveFormsModule ,NgxPaginationModule] ,
   templateUrl: './display-complaints.component.html',
   styleUrl: './display-complaints.component.scss'
 })
@@ -27,6 +29,7 @@ export class DisplayComplaintsComponent implements OnInit {
   private readonly location = inject(Location)
   complaints: any[] = [];
   filteredComplaints: any[] = [];
+  page: number = 1; // الصفحة الحالية
   selected: any;
   isAdmin: boolean = false;
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير

@@ -19,6 +19,7 @@ export class AcceptanceStatusComponent {
   @ViewChild('pending') pending!:ElementRef;
   @ViewChild('cstm') cstm!:ElementRef;
   @Input() state : string = 'nid';
+  @Input() data : any;
   studentId:string="";
   isvalid:boolean=false;
   hiderule:boolean = true;
@@ -127,7 +128,7 @@ export class AcceptanceStatusComponent {
   askForUid()
    {
     console.log(this.studentId);
-    this._call.getApplicationStatusById(localStorage.getItem('Uid')!).subscribe({
+    this._call.getApplicationStatusById(this.data.uid,this.data.id).subscribe({
       next:(resdata:any)=>{
         this.apirespons=resdata;
         this.userN = this.apirespons?.data

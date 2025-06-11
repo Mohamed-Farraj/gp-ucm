@@ -1,4 +1,4 @@
-<section class="home position-relative">
+<section class="home position-relative overflow-hidden">
   <section class="background">
     <swiper-container
       class="mySwiper w-100 h-100"
@@ -71,7 +71,7 @@
               (local.university$ | async) !== null &&
               (local.university$ | async) !== 'hu'
           }"
-          src="./assets/dark logo.png"
+          src="./assets/logo.png"
           (click)="addUniversity('hu')"
           class="logo-item scale"
           alt=""
@@ -92,7 +92,16 @@
       </div>
     </div>
 
-    <div data-aos="fade-down" class="next">
+    <div *ngIf="(local.university$ | async) as university" data-aos="fade-down" class="">
+      <button
+        class="nav-link"
+        class="p-2 btn btn-outline-light"
+        (click)="changUni()"
+      >
+        تغيير الجامعة
+      </button>
+    </div>
+    <div *ngIf="(local.university$ | async) as university" data-aos="fade-down" class="next ">
       <button
         class="nav-link"
         [routerLink]="['/']"

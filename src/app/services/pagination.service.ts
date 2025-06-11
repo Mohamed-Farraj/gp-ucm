@@ -12,7 +12,7 @@ export class PaginationService {
     
       getDisplayedPages(totalPages:number, currentPage: number): number[] {
         let startPage: number, endPage: number;
-        
+        if (totalPages === 0) return [];
         if (totalPages <= 5) {
           startPage = 1;
           endPage = totalPages;

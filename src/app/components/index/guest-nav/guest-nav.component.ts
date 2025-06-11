@@ -20,7 +20,12 @@ export class GuestNavComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     if (isPlatformBrowser(this._PLATFORM_ID)) {
+
+             this.handleScrollOrResize();
+
+
       if (localStorage.getItem('userToken')) {
         this.isLoggedIn = true;
         this.role = localStorage.getItem('role') || '';
@@ -28,16 +33,23 @@ export class GuestNavComponent implements OnInit {
     }
   }
 
-  @HostListener('window:scroll') onScroll(){
-    if (window.scrollY > 80) {
-      this.el.nativeElement.classList.remove('scrolled', 'additional-class');
+  @HostListener('window:resize')
+  @HostListener('window:scroll') 
+  onScroll(){
+      this.handleScrollOrResize();
+}
 
-  }
+private handleScrollOrResize(): void {
+  if (!this.el) return;
 
-  else{
+  const isMobileOrTablet = window.innerWidth <= 991;
+  if (window.scrollY > 80 || isMobileOrTablet) {
+    this.el.nativeElement.classList.remove('scrolled', 'additional-class');
+  } else {
     this.el.nativeElement.classList.add('scrolled', 'additional-class');
   }
 }
+
 toggleMenu() {
 this.isMenuCollapsed = !this.isMenuCollapsed;
 }

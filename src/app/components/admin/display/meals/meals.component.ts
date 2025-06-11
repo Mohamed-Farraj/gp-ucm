@@ -5,11 +5,12 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MealformComponent } from '../../forms/mealform/mealform.component';
 import { MealsService } from '../../../../core/services/meals.service';
 import { ToastrService } from 'ngx-toastr';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-meals',
   standalone: true,
-  imports: [],
+  imports: [PrivilegesDirective],
   templateUrl: './meals.component.html',
   styleUrl: './meals.component.scss'
 })

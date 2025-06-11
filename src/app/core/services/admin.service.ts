@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +17,14 @@ createAdminAcc(data:object):Observable<any>{
 
 }
 
-getAllAdmins():Observable<any>{
-
-  return this._HttpClient.get(`${environment.baseUrl}/admin/all-admins`)
+getAllAdmins(offset?:number):Observable<any>{
+let httpParams = new HttpParams({ fromObject:  {} });
+    httpParams = httpParams.append('offset', offset ?? 0);
+    httpParams = httpParams.append('limit', 10);
+    console.log('params in service',offset);
+  return this._HttpClient.get(`${environment.baseUrl}/admin/all-admins`, {
+      params: httpParams
+    });
 
 }
 
