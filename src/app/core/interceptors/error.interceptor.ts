@@ -36,11 +36,21 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       } else if (err.error?.message) {
         message = err.error.message;
       }
+
+      if (err.status === 404) {
+        
+      } 
   
-      Toast.fire({
-        icon: 'error',
-        title: message,
-      });
+      else
+      {
+        Toast.fire({
+          icon: 'error',
+          title: message,
+        });
+
+      }
+      
+  
   
       return throwError(() => err);
     })

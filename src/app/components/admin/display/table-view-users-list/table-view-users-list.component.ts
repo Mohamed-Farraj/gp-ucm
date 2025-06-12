@@ -220,12 +220,16 @@ export class TableViewUsersListComponent {
       // تطبيق فلترة البحث
       const searchText = this.searchControl.value;
       if (searchText) {
-        const searchLower = searchText.toLowerCase();
-        filtered = filtered.filter((item: any) =>
-          (item.firstName && item.firstName.toLowerCase().includes(searchLower)) ||
-          (item.lastName && item.lastName.toLowerCase().includes(searchLower)) ||
-          (item.nationalId && item.nationalId.toLowerCase().includes(searchLower))
-        );
+         this.myFilters = {
+          ...this.myFilters,        
+          search: searchText, 
+        };
+      }
+      if(!searchText){
+        // إزالة الفلتر عند عدم وجود حالات مختارة
+        if (this.myFilters?.search) {
+          delete this.myFilters.search;
+        }
       }
     
       // تطبيق فلترة الـ checkbox لحالة status

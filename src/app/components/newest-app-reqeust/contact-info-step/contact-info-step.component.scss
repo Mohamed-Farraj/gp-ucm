@@ -1,0 +1,53 @@
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+  overflow: visible !important; /* مهم جداً */
+}
+
+.info-icon {
+  color: #111b30;
+  cursor: pointer;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.info-icon:hover {
+  color: #111b30;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 220px;
+  background-color: #111b30;
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  padding: 12px 15px;
+  position: absolute;
+  z-index: 1000;
+  left: -240px;  /* خليها تطلع من الشمال */
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+  font-size: 13px;
+  line-height: 1.4;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* السهم يطلع من يمين التولتيب */
+.tooltip::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -16px;
+  transform: translateY(-50%);
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent transparent #111b30;
+}
+
+.tooltip-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}

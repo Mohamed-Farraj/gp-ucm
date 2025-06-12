@@ -57,8 +57,8 @@ export class AdminSidebarComponent {
     { id: 'home', icon: 'fa-chart-line', label: 'لوحة التحكم' },
     { id: 'ar', icon: 'fa-user', label: 'طلبات الألتحاق', requiredPrivilege: 'ACCESS_VIEW_ADMISSION_REQUESTS' },
     { id: 'penalty', icon: 'fa-triangle-exclamation', label: 'الجزاءات و العقوبات'  ,requiredPrivilege: 'ACCESS_VIEW_PENALTY'},
-    { id: 'complaints', icon: 'fa-face-angry', label: 'الشكاوى' },
-    { id: 'buildings', icon: 'fa-building', label: 'المباني و الغرف' ,requiredPrivilege: 'ACCESS_VIEW_BUILDINGS' },
+    { id: 'complaints', icon: 'fa-face-angry', label: 'الشكاوى' ,requiredPrivilege: 'ACCESS_VIEW_COMPLAINTS' },
+    { id: 'buildings', icon: 'fa-building', label: 'المباني و الغرف'  },
     { id: 'assign-to-rooms', icon: 'fa-person-shelter', label: ' التسكين ' ,requiredPrivilege: 'ACCESS_VIEW_ADMISSION_REQUESTS' },
     { id: 'guidelines', icon: 'fa-rectangle-list', label: 'الإرشادات' },
     { id: 'deadline', icon: 'fa-calendar-days', label: 'مواعيد التقديم' },
@@ -66,7 +66,7 @@ export class AdminSidebarComponent {
     { id: 'logs', icon: 'fa-folder', label: ' السجل' ,requiredPrivilege: 'ACCESS_LOGS' },
     { id: 'register-admin', icon: 'fa-user-tie', label: ' المشرفين' ,requiredPrivilege: 'ACCESS_VIEW_ADMINS' },
     { id: 'add-university', icon: 'fa-building-columns', label: ' الجامعات' ,requiredPrivilege: 'ACCESS_VIEW_UNIVERSITY' },
-    { id: 'display-appeals', icon: 'fas fa-balance-scale', label: 'التظلمات' },
+    { id: 'display-appeals', icon: 'fas fa-balance-scale', label: 'التظلمات' , requiredPrivilege: 'ACCESS_VIEW_APPEALS' },
 
 
   ];

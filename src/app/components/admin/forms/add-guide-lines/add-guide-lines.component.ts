@@ -1,6 +1,6 @@
 import { GuidelinsService } from '../../../../core/services/guidelins.service';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HomeService } from '../../../../services/guest/home.service';
 import { NgIf } from '@angular/common';
@@ -43,7 +43,13 @@ export class AddGuideLinesComponent implements OnInit {
     })
 
   guidelineForm:FormGroup= this._formBuilder.group({
-    guidelines: ['', Validators.required],
+    guidelines: [
+      Validators.required,
+      Validators.pattern(/^(?!.*(select|insert|update|delete|drop|;|--|<|>)).*$/i),
+      (control: AbstractControl) => {
+        return (control.value || '').trim().length === 0 ? { whitespace: true } : null;
+      }
+    ],
         file:[null]
   })
 

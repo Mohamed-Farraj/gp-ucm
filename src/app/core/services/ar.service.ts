@@ -23,6 +23,11 @@ export class ArService {
       params: httpParams
     });
   }
+
+  searchApplications()
+  {
+    
+  }
   
   
   DecideArState(UId:number,Status:string,message?:string):Observable<any>{
