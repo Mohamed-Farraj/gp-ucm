@@ -28,27 +28,32 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   
       if (err.status === 401 || err.status === 403) {
         message = 'هذا المستخدم غير مسموح له بهذا الاجراء';
-  
-        // ✅ Redirect to login page if 401
-        if (err.status === 401) {
-          router.logout();
-        }
-      } else if (err.error?.message) {
-        message = err.error.message;
-      }
-
-      if (err.status === 404) {
-        
-      } 
-  
-      else
-      {
         Toast.fire({
           icon: 'error',
           title: message,
         });
-
+        // ✅ Redirect to login page if 401
+        if (err.status === 401) {
+          router.logout();
+        }
+      }  
+      
+      if (err.error?.message) {
+        message = err.error?.message;
+        console.log('interceptor err.error.message', err.error?.message);
+        Toast.fire({
+          icon: 'error',
+          title: message,
+        });
       }
+
+      if (err.status != 404) {
+        Toast.fire({
+          icon: 'error',
+          title: message,
+        });
+      } 
+  
       
   
   

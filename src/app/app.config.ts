@@ -35,7 +35,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideCharts(withDefaultRegisterables()),
     provideStore(
-      {}
+      
     ),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
 ]

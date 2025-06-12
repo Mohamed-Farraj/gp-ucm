@@ -616,10 +616,10 @@ this.academicInfoGroup.patchValue({
         },
         error: (err: HttpErrorResponse) => {
           console.error('خطأ في تحديث البيانات:', err);
-          this.Toast.fire({
-            icon: 'error',
-            title: err.message || 'حدث خطأ أثناء تحديث البيانات',
-          });
+          // this.Toast.fire({
+          //   icon: 'error',
+          //   title: err.message || 'حدث خطأ أثناء تحديث البيانات',
+          // });
         }
       });
     }
