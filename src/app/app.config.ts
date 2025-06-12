@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, isDevMode } from '@angular/core';
 import { provideRouter, withHashLocation, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -15,23 +15,28 @@ import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import {MatStepperModule} from '@angular/material/stepper';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes , withHashLocation(), withInMemoryScrolling({scrollPositionRestoration:"top",anchorScrolling: 'enabled',}) , withViewTransitions()),
-     provideClientHydration(),
-     provideHttpClient(withFetch(),withInterceptors([headerInterceptor,errorInterceptor,successInterceptor,loadingInterceptor])),
-     provideAnimations() ,
-     {
-      provide: STEPPER_GLOBAL_OPTIONS,
-      useValue: { displayDefaultIndicatorType: false, showError: true }
+    provideRouter(routes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: "top", anchorScrolling: 'enabled', }), withViewTransitions()),
+    provideClientHydration(),
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor, errorInterceptor, successInterceptor, loadingInterceptor])),
+    provideAnimations(),
+    {
+        provide: STEPPER_GLOBAL_OPTIONS,
+        useValue: { displayDefaultIndicatorType: false, showError: true }
     },
-     provideToastr(),
-     importProvidersFrom(NgxSpinnerModule),
-     provideAnimationsAsync(),
-     provideAnimationsAsync(),
-     provideAnimationsAsync(),
-     provideCharts(withDefaultRegisterables()),
-     
-    ]
+    provideToastr(),
+    importProvidersFrom(NgxSpinnerModule),
+    provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideCharts(withDefaultRegisterables()),
+    provideStore(
+      {}
+    ),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+]
 };
