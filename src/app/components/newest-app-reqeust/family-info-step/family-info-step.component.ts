@@ -10,6 +10,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class FamilyInfoStepComponent {
   @Input() formGroup!: FormGroup;
+  @Input() onFileSelected: (event: any) => void = (event: any) => {};
   get fatherName() { return this.formGroup?.get('fatherName'); }
   get fatherNationalId() { return this.formGroup?.get('fatherNationalId'); }
   get fatherOccupation() { return this.formGroup?.get('fatherOccupation'); }
@@ -21,6 +22,7 @@ export class FamilyInfoStepComponent {
   get guardianNationalId() { return this.formGroup?.get('guardianNationalId'); }
   get parentsStatus() { return this.formGroup?.get('parentsStatus'); }
   get familyAbroad() { return this.formGroup?.get('familyAbroad'); }
+  get media() { return this.formGroup?.get('media'); }
 
 
 }
