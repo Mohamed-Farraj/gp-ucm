@@ -3,7 +3,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { SharedDataService } from '../../../core/services/shared-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { FormBuilder, FormGroup, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AppealsService } from '../../../core/services/appeals.service';
 import { DatePipe, Location, NgClass, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
@@ -41,7 +41,16 @@ export class AppealsComponent {
     });
   }
   appealForm :FormGroup = this._formBuilder.group({
-    reason: ['', Validators.required],   
+     reason: [
+    '', 
+    [
+      Validators.required,
+      Validators.pattern(/^(?!.*(select|insert|update|delete|drop|;|--|<|>)).*$/i),
+      (control: AbstractControl) => {
+        return (control.value || '').trim().length === 0 ? { whitespace: true } : null;
+      }
+    ]
+  ]
   });
 
 
