@@ -38,7 +38,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         }
       }  
       
-      if (err.error?.message) {
+      if (err.error?.message && err.status != 404) {
         message = err.error?.message;
         console.log('interceptor err.error.message', err.error?.message);
         Toast.fire({
