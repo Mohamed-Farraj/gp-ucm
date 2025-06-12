@@ -177,7 +177,8 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
       guardianNationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
       guardianPhoneNumber: [null, [Validators.required ,  Validators.pattern(/^01[0-25]\d{8}$/)] ],
       parentsStatus: [null, Validators.required],
-      familyAbroad: [null]
+      familyAbroad: [null],
+      media: [null]
     });
 
     this.academicInfoGroup = this.fb.group({
@@ -279,6 +280,20 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
     }
     return g.get('password')?.value === g.get('rePassword')?.value ? null : { mismatch: true };
   }
+
+
+
+  selectedFile: File | null = null;
+
+onFileSelected(event: any) {
+  this.selectedFile = event.target.files[0];
+}
+
+
+
+
+
+
 
   extractDataFromNationalId(nationalId: string) {
     if (nationalId && nationalId.length === 14) {
@@ -388,7 +403,8 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
               guardianRelationship: res.data.guardianRelationship,
               guardianPhoneNumber: res.data.guardianPhoneNumber,
               parentsStatus: res.data.parentsStatus,
-              familyAbroad: res.data.familyAbroad
+              familyAbroad: res.data.familyAbroad,
+              media: res.data.media
             });
            this.academicInfoGroup.patchValue({
   universityId: res.data.university.id
