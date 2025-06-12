@@ -64,9 +64,11 @@ export const routes: Routes = [
     {path:"hu",component:HuLayoutComponent, canActivate:[authGuard] ,children:[
         {path:"",redirectTo:"user-dashboard",pathMatch:"full"},
         {path:"user-dashboard",component:UserDashboardComponent,},
+        {path:"details/:id",component:ArDisplayComponent},
         {path:"complaints",component:DisplayComplaintsComponent},
         {path:"app-request",component:ApplicationRequestComponent},
         {path:"appeals",component:AppealsComponent},
+
 
     ]},
     {path:"hnu",component:HnuLayoutComponent,children:[
