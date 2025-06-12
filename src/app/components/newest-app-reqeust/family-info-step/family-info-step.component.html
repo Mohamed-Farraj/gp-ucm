@@ -19,7 +19,7 @@
       <!-- رقم قومي للأب -->
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">رقم قومي للأب</label>
-        <input formControlName="fatherNationalId" type="text" class="form-control rounded-lg  shadow-sm" />
+        <input formControlName="fatherNationalId" type="text" class="form-control rounded-lg  shadow-sm" maxlength="14" />
         @if (fatherNationalId?.errors && (fatherNationalId?.touched)) {
           <div class="text-danger mt-1">
             @if (fatherNationalId?.hasError('required')) {
@@ -47,12 +47,23 @@
   
       <!-- موبايل الأب -->
       <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">موبايل الأب</label>
-        <input formControlName="fatherPhoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
-        @if (fatherPhoneNumber?.errors && (fatherPhoneNumber?.touched)) {
+        <label class=" mb-2 font-semibold">موبايل الأب
+           <div class="tooltip-container">
+                        <i class="fas fa-info-circle info-icon"></i>
+                        <div class="tooltip">
+                            الرقم يجب أن يكون مصري ويبدأ بـ 01 متبوعاً بـ 9 أرقام
+                        </div>
+                    </div>
+        </label>
+        <input formControlName="fatherPhoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" maxlength="11" placeholder="01xxxxxxxxx"  />
+         @if (fatherPhoneNumber?.errors && (fatherPhoneNumber?.touched)) {
           <div class="text-danger mt-1">
             @if (fatherPhoneNumber?.hasError('required')) {
-              <p class="m-0">رقم موبايل الأب مطلوب</p>
+              <p class="m-0">رقم الموبايل مطلوب</p>
+            } @else if (fatherPhoneNumber?.hasError('pattern')) {
+               <p class="m-0">صيغة رقم الموبايل غير صحيحة يجب ان يكون رقم مصري يبدأ بـ 01</p>
+            } @else if (fatherPhoneNumber?.hasError('fatherPhoneNumber')) {
+               <p class="m-0">رقم الموبايل غير صحيح</p>
             }
           </div>
         }
@@ -84,22 +95,33 @@
       </div>
   
       <!-- موبايل ولي الأمر -->
-      <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">موبايل ولي الأمر</label>
-        <input formControlName="guardianPhoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
-        @if (guardianPhoneNumber?.errors && ( guardianPhoneNumber?.touched)) {
-          <div class="text-danger mt-1">
-            @if (guardianPhoneNumber?.hasError('required')) {
-              <p class="m-0">رقم موبايل ولي الأمر مطلوب</p>
-            }
-          </div>
-        }
-      </div>
+        <div class="flex flex-col">
+          <label class=" mb-2 font-semibold">موبايل ولي الأمر 
+             <div class="tooltip-container">
+                        <i class="fas fa-info-circle info-icon"></i>
+                        <div class="tooltip">
+                            الرقم يجب أن يكون مصري ويبدأ بـ 01 متبوعاً بـ 9 أرقام
+                        </div>
+                    </div>
+          </label>
+          <input formControlName="guardianPhoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" placeholder="01xxxxxxxxx" maxlength="11"/>
+            @if (guardianPhoneNumber?.errors && (guardianPhoneNumber?.touched)) {
+            <div class="text-danger mt-1">
+              @if (guardianPhoneNumber?.hasError('required')) {
+                <p class="m-0">رقم الموبايل مطلوب</p>
+              } @else if (guardianPhoneNumber?.hasError('pattern')) {
+                <p class="m-0">صيغة رقم الموبايل غير صحيحة يجب ان يكون رقم مصري يبدأ بـ 01</p>
+              } @else if (guardianPhoneNumber?.hasError('guardianPhoneNumber')) {
+                <p class="m-0">رقم الموبايل غير صحيح</p>
+              }
+            </div>
+          }
+        </div>
   
       <!-- رقم قومي لولي الأمر -->
       <div class="flex flex-col">
         <label class=" mb-2 font-semibold">رقم قومي لولي الأمر</label>
-        <input formControlName="guardianNationalId" type="text" class="form-control rounded-lg  shadow-sm" />
+        <input formControlName="guardianNationalId" type="text" class="form-control rounded-lg  shadow-sm"  maxlength="14"/>
         @if (guardianNationalId?.errors && (guardianNationalId?.touched)) {
           <div class="text-danger mt-1">
             @if (guardianNationalId?.hasError('required')) {

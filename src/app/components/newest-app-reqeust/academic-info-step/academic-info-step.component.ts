@@ -17,6 +17,7 @@ export class AcademicInfoStepComponent implements OnInit {
   @Input() faculties: any[] = [];
   @Input() nameOfUniversities: any[] = [];
   @Input() facultiesMap: any = {};
+  @Input() pendingFaculty: string | null = null;
 
 
    ngOnInit(): void {

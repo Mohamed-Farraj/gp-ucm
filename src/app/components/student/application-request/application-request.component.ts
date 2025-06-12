@@ -44,6 +44,7 @@ export class ApplicationRequestComponent implements OnInit {
   showPasswordFields = true;
   studentType: 'old' | 'new' | null = null;
   activeButton: 'old' | 'new' | null = null;
+  pendingFaculty: string | null = null;
 
   // FormGroups لكل خطوة
   personalInfoGroup: FormGroup;
@@ -152,8 +153,10 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
   constructor(private fb: FormBuilder) {
     // تهيئة FormGroups لكل خطوة
     this.personalInfoGroup = this.fb.group({
-      firstName: [null, Validators.required],
-      lastName: [null, Validators.required],
+      firstName: [null, [Validators.required ,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
+    (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
+      lastName: [null, [Validators.required,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
+    (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
       studentCode: [null, Validators.required],
       nationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
       dateOfBirth: [null, Validators.required],
@@ -163,14 +166,16 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
     });
 
     this.familyInfoGroup = this.fb.group({
-      fatherName: [null, Validators.required],
+      fatherName: [null, [Validators.required ,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
+    (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
       fatherNationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
       fatherOccupation: [null, Validators.required],
-      fatherPhoneNumber: [null, Validators.required],
-      guardianName: [null, Validators.required],
+      fatherPhoneNumber: [null, [Validators.required ,  Validators.pattern(/^01[0-25]\d{8}$/)]],
+      guardianName: [null, [Validators.required ,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
+    (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
       guardianRelationship: [null, Validators.required],
       guardianNationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
-      guardianPhoneNumber: [null, Validators.required],
+      guardianPhoneNumber: [null, [Validators.required ,  Validators.pattern(/^01[0-25]\d{8}$/)] ],
       parentsStatus: [null, Validators.required],
       familyAbroad: [null]
     });
@@ -190,7 +195,7 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
 
     this.contactInfoGroup = this.fb.group({
       mobileNumber: [null, [Validators.required, Validators.pattern(/^01[0-25]\d{8}$/)]],
-      phoneNumber: [null , [Validators.required , Validators.pattern(/^0[2-9]\d{1,2}\d{6,7}$/)]] ,
+      phoneNumber: [null , [ Validators.pattern(/^0[2-9]\d{1,2}\d{6,7}$/)]] ,
       residenceAddress: [null, Validators.required],
       detailedAddress: [null, Validators.required],
       country: [null],
@@ -385,19 +390,34 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
               parentsStatus: res.data.parentsStatus,
               familyAbroad: res.data.familyAbroad
             });
-            this.academicInfoGroup.patchValue({
-              universityId: res.data.universityId,
-              faculty: res.data.faculty,
-              level: res.data.level,
-              previousAcademicYearGpa: res.data.previousAcademicYearGpa,
-              totalGradesHighSchool: res.data.totalGradesHighSchool,
-              secondaryDivision: res.data.secondaryDivision,
-              housingInPreviousYears: res.data.housingInPreviousYears,
-              annualGrade: res.data.annualGrade, 
-              houseTypeName: res.data.houseTypeName,
-              wantFood: res.data.wantFood
+           this.academicInfoGroup.patchValue({
+  universityId: res.data.university.id
+});
 
-            });
+// 1. عبّي قائمة الكليات بناءً على الجامعة المختارة:
+const universityIdStr = String(res.data.university.id);
+this.faculties = (this.facultiesMap as any)[universityIdStr] || [];
+
+// 2. اتأكد إن الكلية اللي جاية من الـ API موجودة فعلاً في الـ faculties الجديدة:
+const selectedFaculty = this.faculties.find(f => f.trim() === res.data.faculty.trim()) || '';
+
+// 3. اعمل patchValue للكلية بعد ما تظبط قائمة الكليات:
+this.academicInfoGroup.patchValue({
+  faculty: selectedFaculty
+});
+
+// كمل باقي القيم زي ما تحب...
+this.academicInfoGroup.patchValue({
+  level: res.data.level,
+  previousAcademicYearGpa: res.data.previousAcademicYearGpa,
+  totalGradesHighSchool: res.data.totalGradesHighSchool,
+  secondaryDivision: res.data.secondaryDivision,
+  housingInPreviousYears: res.data.housingInPreviousYears,
+  annualGrade: res.data.annualGrade, 
+  houseTypeName: res.data.houseTypeName,
+  wantFood: res.data.wantFood
+});
+
             this.contactInfoGroup.patchValue({
               mobileNumber: res.data.mobileNumber,
               phoneNumber: res.data.phoneNumber,

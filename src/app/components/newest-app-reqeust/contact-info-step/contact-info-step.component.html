@@ -85,8 +85,15 @@
   
       <!-- الموبايل -->
       <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">الموبايل</label>
-        <input formControlName="mobileNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
+        <label class=" mb-2 font-semibold">الموبايل
+           <div class="tooltip-container">
+                        <i class="fas fa-info-circle info-icon"></i>
+                        <div class="tooltip">
+                            الرقم يجب أن يكون مصري ويبدأ بـ 01 متبوعاً بـ 9 أرقام
+                        </div>
+                    </div>
+        </label>
+        <input formControlName="mobileNumber" type="tel" class="form-control rounded-lg  shadow-sm" maxlength="11" />
         <!-- Validation for mobileNumber -->
          @if (mobileNumber?.errors && (mobileNumber?.touched)) {
           <div class="text-danger mt-1">
@@ -102,8 +109,15 @@
       </div>
 
       <div class="flex flex-col">
-        <label class=" mb-2 font-semibold">التليفون</label>
-        <input formControlName="phoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" />
+        <label class=" mb-2 font-semibold">التليفون 
+           <div class="tooltip-container">
+                        <i class="fas fa-info-circle info-icon"></i>
+                        <div class="tooltip">
+يجب ان يبدأ بـكود المحافظة مثل 02               
+         </div>
+                    </div>
+        </label>
+        <input formControlName="phoneNumber" type="tel" class="form-control rounded-lg  shadow-sm" maxlength="10"/>
         <!-- Validation for phoneNumber -->
          @if (phoneNumber?.errors && (phoneNumber?.touched)) {
           <div class="text-danger mt-1">
