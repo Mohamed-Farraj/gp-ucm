@@ -15,8 +15,7 @@ import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import {MatStepperModule} from '@angular/material/stepper';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { provideStore } from '@ngrx/store';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,9 +33,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideAnimationsAsync(),
     provideCharts(withDefaultRegisterables()),
-    provideStore(
-      
-    ),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+
 ]
 };
