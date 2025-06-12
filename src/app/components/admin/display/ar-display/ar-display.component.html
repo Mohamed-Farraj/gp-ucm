@@ -1,4 +1,4 @@
-<div class="container-fluid py-4">
+<div class="container-fluid py-4" dir="rtl">
   @if (applicationRequest) {
   <section class="row">
     <section class="col-md-12">
@@ -345,7 +345,7 @@
           </div>
           
           <!-- معلومات أمنية وملاحظات -->
-          <div class="section-container">
+          <div class="section-container" *ngIf="_AuthService.getRole() !='USER'">
             <h4 class="section-title border-bottom pb-2 mb-3">معلومات إضافية</h4>
             
             <!-- صف: حالة الفحص الأمني -->
@@ -369,7 +369,11 @@
     </section>
     
     <!-- Buttons Section -->
-    <div class="d-flex justify-content-center gap-3 mt-4 mb-4">
+     <div *ngIf="_AuthService.getRole() !='USER'">
+    <div
+     *appPrivileges="'ACCESS_UPDATE_ADMISSION_REQUEST_STATUS'"
+      class="d-flex justify-content-center gap-3 mt-4 mb-4"
+      >
       <button *ngIf="applicationRequest?.securityCheckStatues === 'ACCEPTED'" [class.d-none]="applicationRequest?.status === 'ACCEPTED'" (click)="confirmation(applicationRequest?.userId,'ACCEPTED',applicationRequest)" class="btn btn-success px-4 py-2">
         <i class="fa-solid fa-check me-2"></i> قبول الطلب
       </button>
@@ -380,6 +384,8 @@
         <i class="fa-solid fa-clock me-2"></i> تحت المراجعة
       </button>
     </div>
+         </div>
+
   </section>
   }
 </div>

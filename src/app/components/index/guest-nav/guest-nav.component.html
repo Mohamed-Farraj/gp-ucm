@@ -22,9 +22,12 @@
             <a class="nav-link" aria-current="page" routerLink="/admin" >لوحة تحكم المشرف</a>
           </li>
           }
-          <li data-aos="fade-down" class="nav-item">
-            <a class="nav-link " routerLink="/guest/app-request" >طلب الالتحاق</a>
-          </li>
+          @if (!role.includes('ADMIN')) 
+          {    
+            <li data-aos="fade-down" class="nav-item">
+              <a class="nav-link " routerLink="/guest/app-request" >طلب الالتحاق</a>
+            </li>
+          }
           <li data-aos="fade-down" class="nav-item">
             <a class="nav-link" [routerLink]="['/']" [fragment]="'application-deadline'">مواعيد التقديم</a>
           </li>
