@@ -41,8 +41,9 @@ export class AddBuildingComponent {
 
     addBuildingForm:FormGroup= this._formBuilder.group({
       name: ['', Validators.required],
-      floorsCount: ['', Validators.required],
-      wingsCount: ['', Validators.required],
+    floorsCount: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+wingsCount: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+
 
       type: ['', Validators.required],
       universityId: ['', Validators.required],

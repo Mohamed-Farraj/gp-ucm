@@ -208,10 +208,10 @@ deleteGuideline(): void {
   Swal.fire({
     title: 'هل أنت متأكد؟',
     text: 'لن تتمكن من التراجع عن هذا',
-    icon: 'warning',
+    icon: 'question',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#750202',
+    confirmButtonColor: '#e12e2e',
+    cancelButtonColor: '#111b31',
     confirmButtonText: 'نعم، احذفه',
     cancelButtonText:'تراجع'
   }).then((result) => {
