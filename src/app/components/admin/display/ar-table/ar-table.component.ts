@@ -94,8 +94,8 @@ export class ArTableComponent {
             title: "هل انت متأكد؟",
             icon: "warning" as const,
             showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
+            confirmButtonColor: "#e12e2e",
+            cancelButtonColor: "#111b31",
             cancelButtonText: "الغاء",
             allowOutsideClick: () => !Swal.isLoading()
         };
