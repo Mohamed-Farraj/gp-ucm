@@ -45,7 +45,13 @@ export class AddRoomComponent {
       wing: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]],
       bedCount: ['', Validators.required],
       // occupiedBeds: ['', Validators.required],
-      capacity: ['', Validators.required],
+     capacity: [
+  '',
+  [
+    Validators.required,
+    Validators.pattern(/^\d+$/) // يسمح فقط بأرقام موجبة (بدون فاصلة عشرية)
+  ]
+],
       // currentOccupancy: ['', Validators.required],
       type: ['', Validators.required],
       status: ['', Validators.required],

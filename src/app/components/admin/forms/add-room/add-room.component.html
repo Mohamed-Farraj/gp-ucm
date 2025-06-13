@@ -100,18 +100,23 @@
 
     <!-- Capacity with floating label -->
     <div class="form-floating mb-4">
+      
       <input
-        type="text"
+        type="number"
         id="capacity"
         class="form-control"
-        placeholder=" "
+        placeholder=""
         formControlName="capacity"
         [ngClass]="{
           'is-valid': addRoomForm.get('capacity')?.valid && addRoomForm.get('capacity')?.touched,
           'is-invalid': addRoomForm.get('capacity')?.invalid && addRoomForm.get('capacity')?.touched
         }"
+
+        
       />
-      <label for="capacity">الكثافة</label>
+      
+      <label for="capacity">الكثافة 
+      </label>
 
     </div>
 
