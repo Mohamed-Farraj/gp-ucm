@@ -17,7 +17,7 @@ token:string = '';
     if (localStorage.getItem('userToken') !== null) {
       this.token = localStorage.getItem('userToken')!;
     }
-   return this._HttpClient.post(`${environment.baseUrl}/admin/edit/application-deadline/${uid}` , data)
+   return this._HttpClient.post(`${environment.baseUrl}/admin/application-deadline/${uid}` , data)
  
   }
 
