@@ -69,6 +69,10 @@ export class AssignRoomsComponent {
     private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
     autoAssignBtn: boolean = true;
   displayedPages: number[] = [];
+  filters: { filters?: any; offset?: number | undefined; } | undefined;
+  currentPagesArray: number[] = [];
+  myFilters: any;
+  selectedStudentTypes: any[] =[];
     constructor() {
       this.dataService.currentStudentData.pipe(takeUntil(this.destroy$)).subscribe(data => {
         console.log('Received data:', data);
@@ -106,7 +110,8 @@ export class AssignRoomsComponent {
   
   
     ngOnInit(): void {
-     this.getApplications();
+      this.myFilters = {status:'ACCEPTED'};
+     this.getApplications({'filters':this.myFilters,'offset':this.currentPage-1});
      this.updateDisplayedPages();
 
       // الاشتراك في تغييرات حقل البحث باستخدام Reactive Form مع debounceTime
@@ -122,15 +127,15 @@ export class AssignRoomsComponent {
       });
     }
 
-    getApplications(offset?: number)
+    getApplications({ filters, offset }: { filters?: any, offset?: number } = {})
     {
-       this.ar.getSortedApplications().subscribe({
+       this.ar.getApplications(filters,offset).subscribe({
         next: (res: any) => {
           this.getBuildings();
           console.log(res);
           this.sourceData = res.data;
-          this.mixedItems = [ ...res.data.oldStudents, ...res.data.newStudents ];
-          this.res = [ ...res.data.oldStudents ];
+          // this.mixedItems = [ ...res.data.oldStudents, ...res.data.newStudents ];
+          this.res = res.data;
           this.filteredItems = this.res;
           console.log(this.res);
           this.meta = res.meta;
@@ -176,32 +181,41 @@ export class AssignRoomsComponent {
     initPagination(): void {
       this.totalPages = this.meta?.totalPages;
       this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-      console.log('totalPages',this.pages);
+      this.currentPagesArray = this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
+       this.updateDisplayedPages();
     }
   
-    // دالة لتحديث العناصر المعروضة حسب الصفحة الحالية
-    updatePagedItems(): void {
-      const start = (this.currentPage - 1) * this.pageSize;
-      // استخدم المصفوفة المفلترة لو موجودة، وإلا استخدم this.res
-      const dataToPaginate = this.filteredItems ? this.filteredItems : this.res;
-      this.pagedItems = dataToPaginate.slice(start, start + this.pageSize);
-    }
-    
-  
-    // تغيير الصفحة عند الضغط على رقم الصفحة أو Previous/Next
     changePage(page: number): void {
       if (page < 1 || page > this.totalPages) return;
       this.currentPage = page;
-      this.getApplications(this.currentPage-1);
+      this.updateDisplayedPages(); // تحديث الصفحات المعروضة
+      if(this.sortControl.value === 'normal') 
+        this.getApplications({'filters':this.myFilters,'offset':this.currentPage-1});
+      else
+      {
+        this.getApplications({'filters':this.myFilters,'offset':this.totalPages-this.currentPage});
+      }
     }
   
-    // دالة لحساب الصفحات للعرض (اختياري)
     getDisplayedPages(): number[] {
       console.log(this.pagination.getDisplayedPages(this.totalPages, this.currentPage));
-      return this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
+      return this.currentPagesArray;
     }
+
+    updateDisplayedPages(): void {
+        // شيك لو إجمالي الصفحات صفر
+              console.log(this.totalPages); // هيتنفذ مرة واحدة بس وقت التحديث
+
+  if (!this.totalPages) {
+    this.displayedPages = [];
+      console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
+      return;
+  }
+  this.displayedPages = this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
+  console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
+  }
+
     //#endregion
-  
   
     handleClick(student: any): void {
       console.log(student);
@@ -247,47 +261,46 @@ onGenderChange(event: any): void {
   
     // دالة لتطبيق الفلاتر (البحث وحالة الـ checkboxes)
     applyFilters(): void {
-      let filtered = this.mixedItems; // البيانات الأصلية
 
-      // لو مفيش ولا فلتر متطبق (لا بحث ولا جندر)، ارجع للسورس فقط
-  if (!this.searchControl.value && this.selectedGenders.length === 0) {
-      filtered = this.selectedSource === 'old' 
-      ? [...this.sourceData.oldStudents] 
-      : [...this.sourceData.newStudents];
-  } else 
-  // لو في فلاتر مفعّلة، فلتر من mixedItems
-  filtered = [...this.mixedItems];
-    
-      // تطبيق فلترة البحث
+       // تطبيق فلترة البحث
       const searchText = this.searchControl.value;
       if (searchText) {
-        const searchLower = searchText.toLowerCase();
-        filtered = filtered.filter((item: any) =>
-          (item.firstName && item.firstName.toLowerCase().includes(searchLower)) ||
-          (item.lastName && item.lastName.toLowerCase().includes(searchLower)) ||
-          (item.nationalId && item.nationalId.toLowerCase().includes(searchLower))
-        );
+         this.myFilters = {
+          ...this.myFilters,        
+          search: searchText, 
+        };
+      }
+      if(!searchText){
+        // إزالة الفلتر عند عدم وجود حالات مختارة
+        if (this.myFilters?.search) {
+          delete this.myFilters.search;
+        }
       }
     
 
-      // Gender filter
-  if (this.selectedGenders.length > 0) {
-    filtered = filtered.filter((item: any) => 
-      this.selectedGenders.includes(item.gender)
-    );
-  }
-  
+      // Student Type filter
+      if (this.selectedStudentTypes.length === 1) {
+          this.myFilters = {
+            ...this.myFilters,
+            studentType: this.selectedStudentTypes.join(','),
+          };
+      } else {
+            if (this.myFilters?.studentType || this.selectedStudentTypes.length === 2) {
+              delete this.myFilters.studentType;
+            }
+      }
 
-  
-      this.res = [...filtered];
-    
-      // إعادة تعيين Pagination بناءً على النتائج المفلترة
-      this.currentPage = 1;
-      this.totalPages = Math.ceil(filtered.length / this.pageSize);
-      this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-      this.updatePagedItems();
+      this.getApplications({'filters':this.myFilters,'offset':this.currentPage-1}); 
+      
     }
 
+          onStudentTypeChange(event: any): void {
+  const value = event.target.value;
+
+  this.selectedStudentTypes = [value];
+
+  this.applyFilters();
+}
 
 
        openUploadDialog():void{
@@ -299,7 +312,7 @@ onGenderChange(event: any): void {
           });
       
           dialogRef.afterClosed().subscribe((result:any) => {
-            this.getApplications();
+            this.getApplications({'filters':this.myFilters,'offset':this.currentPage-1});
             if (result) {
               // this.getDeadLine(); // Refresh the list after the dialog is closed
             }
@@ -320,23 +333,11 @@ onGenderChange(event: any): void {
         //     });
         //   }
   
-   updateDisplayedPages(): void {
-        // شيك لو إجمالي الصفحات صفر
-              console.log(this.totalPages); // هيتنفذ مرة واحدة بس وقت التحديث
-
-  if (!this.totalPages) {
-    this.displayedPages = [];
-      console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
-      return;
-  }
-  this.displayedPages = this.pagination.getDisplayedPages(this.totalPages, this.currentPage);
-  console.log(this.displayedPages); // هيتنفذ مرة واحدة بس وقت التحديث
-  }
         
         autoAssignRoom(item: any): void {
           this._BuildingsService.autoAssignRoom(item.userId, "DORM").subscribe({
             next: (res: any) => {
-              this.getApplications();
+              this.getApplications({'filters':this.myFilters,'offset':this.currentPage-1}); 
               console.log(res);
             },
             error: (err: any) => {
@@ -346,9 +347,10 @@ onGenderChange(event: any): void {
         }
 
         onRoomAssigned(item: any): void {
-          this.getApplications();
+          this.getApplications({'filters':this.myFilters,'offset':this.currentPage-1});
         }
  
+
 
     ngOnDestroy(): void {
       this.destroy$.next();

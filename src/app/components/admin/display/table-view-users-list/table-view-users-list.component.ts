@@ -129,8 +129,10 @@ export class TableViewUsersListComponent {
   
     onSourceChange(): void {
       if (this.selectedSource === 'all') {
+        this.currentPage = 1;
         this.applyFilters();
       } else if (this.selectedSource === 'sorted') {
+          this.currentPage = 1;
           this.selectedStudentTypes = ['old'];
           this.onStudentTypeChange({ target: { value: 'old', checked: true } });
           this.applyFilters();
@@ -342,13 +344,15 @@ export class TableViewUsersListComponent {
       dialogRef.afterClosed().subscribe((result:any) => {
         console.log("result",result);
         if (result) {
-          this.getApplication();
+          this.getApplication({
+            filters: this.myFilters,
+            offset:  this.currentPage -1,
+          });
         }
       });
 
       
     }
-
 
     openUploadStatusDialog():void{
       const dialogRef = this.dialog.open(UploadStatusComponent, {
@@ -362,7 +366,10 @@ export class TableViewUsersListComponent {
       dialogRef.afterClosed().subscribe((result:any) => {
         console.log("result",result);
         if (result) {
-          this.getApplication();
+          this.getApplication({
+            filters: this.myFilters,
+            offset:  this.currentPage -1,
+          });
         }
       });
 
