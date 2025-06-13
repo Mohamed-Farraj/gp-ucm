@@ -7,22 +7,26 @@ import { SharedDataService } from '../../../../core/services/shared-data.service
 import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArService } from '../../../../core/services/ar.service';
+import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
 
 
 @Component({
   selector: 'app-ar-display',
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf , PrivilegesDirective],
   templateUrl: './ar-display.component.html',
   styleUrl: './ar-display.component.scss'
 })
 export class ArDisplayComponent {
 
-  private readonly _AuthService = inject(AuthService);
+  public readonly _AuthService = inject(AuthService);
   private readonly router = inject(ActivatedRoute);
   private readonly  ar = inject(ArService);
   private readonly dataService = inject(SharedDataService);
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
+
+
+
 
    Toast = Swal.mixin({
     toast: true,
@@ -150,7 +154,9 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
  }
 
  getUser(){
-  this.ar.getSpecificApplication(this.getIdFromRoute()).subscribe({
+  if(this._AuthService.getRole() === 'USER')
+  {
+    this.ar.getArById(this.getIdFromRoute()).subscribe({
     next: (response) => {
       console.log('Operation succeeded:', response);
       this.applicationRequest = response?.data;
@@ -163,6 +169,25 @@ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
       })   
     },
   })
+  }
+  else
+  {
+    this.ar.getSpecificApplication(this.getIdFromRoute()).subscribe({
+    next: (response) => {
+      console.log('Operation succeeded:', response);
+      this.applicationRequest = response?.data;
+    },
+    error: (err) => {
+      console.error('Operation failed:', err);
+      this.Toast.fire({
+        icon: 'error',
+        title: err.error.message,
+      })   
+    },
+  })
+}
+
+  
  }
 
  getIdFromRoute():number

@@ -57,6 +57,7 @@ this.isMenuCollapsed = !this.isMenuCollapsed;
 loggout(){
   this.auth.logout();
   this.isLoggedIn = false;
+  this.role = '';
 }
 
 

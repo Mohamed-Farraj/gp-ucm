@@ -606,7 +606,7 @@ this.academicInfoGroup.patchValue({
           console.log(err);
           this.Toast.fire({
             icon: 'error',
-            title: err.message,
+            title: err?.error?.message,
           });
         }
       });

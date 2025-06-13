@@ -27,6 +27,7 @@ export class ArTableComponent {
     }
 
     
+
     DecideAr(id:number = -1,status:string = 'UNDER_REVIEW',item?:any, message?:string) {
       if (id === -1) 
         {

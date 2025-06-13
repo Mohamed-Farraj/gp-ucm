@@ -1,8 +1,10 @@
 <section class="row justify-content-center py-4">
-  <section *ngIf="isAdmin" class="col-md-3 py-3 px-3 side-content">
-    <app-users-side-list></app-users-side-list>
+  <section *appPrivileges="'ACCESS_VIEW_ADMISSION_REQUESTS'" class="col-md-3 py-3 px-3 side-content">
+    <div *ngIf="isAdmin" >
+      <app-users-side-list></app-users-side-list>
+    </div>
   </section>
-  <section class="col-11 col-sm-10 col-md-9 col-lg-8 main-content"> 
+  <section class="col-11 col-sm-10 col-md-9 col-lg-8 flex-grow-1 main-content"> 
 
     <section *ngIf="!isAdmin" class="card shadow-sm border-0 appeals-card" dir="rtl"> 
       <div class="card-header bg-main-navy text-white border-0"> 
