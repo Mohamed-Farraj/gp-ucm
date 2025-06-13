@@ -89,42 +89,85 @@ export class RoomsComponent {
     });
   }
 
-  deleteRoom(buildingId:number,roomId: number)
-  {
-    this.buildingRoomService.deleteRoom(buildingId,roomId).subscribe({
-      next: (response: any) => {
-        console.log('Room deleted:', response);
-        this.getAllRooms(this.selectedBuilding.id); 
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
-    });
-  }
-
-  deleteBuilding(universityId:number,buildingId :number)
-  {
-    if(this.rooms.length == 0)
-    {
-    this.buildingRoomService.deleteBuilding(universityId,buildingId).subscribe({
-      next: (response: any) => {
-        console.log('Building deleted:', response);
-        this.dataService.changeBuildingData(null); // حذف المبنى من الخا��ية التي تمتلكها
-        this.dataService.notifyBuildingsChanged();
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
-    });
-  }
-  else{
-    Swal.fire({
-      icon:"error",
-      text:"يجب ان يكون المبنى خالي من الغرف اولا"
+ deleteRoom(buildingId: number, roomId: number) {
+  Swal.fire({
+    title: 'هل أنت متأكد؟',
+    text: 'لن تتمكن من التراجع عن هذا',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#e12e2e',
+    cancelButtonColor: '#111b31',
+    confirmButtonText: 'نعم، احذفه',
+    cancelButtonText: 'تراجع'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.buildingRoomService.deleteRoom(buildingId, roomId).subscribe({
+        next: (response: any) => {
+          console.log('Room deleted:', response);
+          this.getAllRooms(this.selectedBuilding.id);
+          Swal.fire({
+            title: 'تم الحذف!',
+            text: 'تم حذف الغرفة بنجاح.',
+            icon: 'success'
+          });
+        },
+        error: (error: any) => {
+          console.error(error);
+          Swal.fire({
+            title: 'خطأ!',
+            text: 'حدث خطأ أثناء الحذف.',
+            icon: 'error'
+          });
+        }
+      });
     }
-    )
+  });
+}
+
+
+deleteBuilding(universityId: number, buildingId: number) {
+  if (this.rooms.length == 0) {
+    Swal.fire({
+      title: 'هل أنت متأكد؟',
+      text: 'لن تتمكن من التراجع عن هذا',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#e12e2e',
+      cancelButtonColor: '#111b31',
+      confirmButtonText: 'نعم، احذفه',
+      cancelButtonText: 'تراجع'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.buildingRoomService.deleteBuilding(universityId, buildingId).subscribe({
+          next: (response: any) => {
+            console.log('Building deleted:', response);
+            this.dataService.changeBuildingData(null); // حذف المبنى من الذاكرة أو البيانات المعروضة
+            this.dataService.notifyBuildingsChanged();
+            Swal.fire({
+              icon: 'success',
+              title: 'تم الحذف!',
+              text: 'تم حذف المبنى بنجاح.'
+            });
+          },
+          error: (error: any) => {
+            console.error(error);
+            Swal.fire({
+              icon: 'error',
+              title: 'خطأ',
+              text: 'حدث خطأ أثناء حذف المبنى.'
+            });
+          }
+        });
+      }
+    });
+  } else {
+    Swal.fire({
+      icon: "error",
+      text: "يجب أن يكون المبنى خالي من الغرف أولاً"
+    });
   }
 }
+
 
 openDialog(): void {
       const dialogRef = this.dialog.open(AddRoomComponent, {
