@@ -48,6 +48,8 @@
         class="form-control"
         placeholder=" "
         formControlName="wing"
+                maxlength="10"
+
         [ngClass]="{
           'is-valid': addRoomForm.get('wing')?.valid && addRoomForm.get('wing')?.touched,
           'is-invalid': addRoomForm.get('wing')?.invalid && addRoomForm.get('wing')?.touched && addRoomForm.get('wing')?.errors?.['pattern']
