@@ -358,9 +358,15 @@
             
             <!-- صف: الملاحظات -->
             <div class="mb-4 row" >
-              <label class="col-sm-2 col-form-label fw-bold">ملاحظات</label>
+              <label class="col-sm-2 col-form-label fw-bold">ملاحظات الفحص الامني</label>
               <div class="col-sm-10">
                 <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.notes || 'لا توجد ملاحظات' }}</p>
+              </div>
+            </div>
+            <div class="mb-4 row" >
+              <label class="col-sm-2 col-form-label fw-bold">ملاحظات حالة الطلب</label>
+              <div class="col-sm-10">
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.admissionRequestStatusNotes || 'لا توجد ملاحظات' }}</p>
               </div>
             </div>
           </div>

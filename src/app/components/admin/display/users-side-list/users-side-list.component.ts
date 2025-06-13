@@ -4,6 +4,7 @@ import { SharedDataService } from '../../../../core/services/shared-data.service
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { AuthService } from '../../../../core/services/auth.service';
 import { NgClass, NgFor } from '@angular/common';
+import { ArService } from '../../../../core/services/ar.service';
 
 @Component({
   selector: 'app-users-side-list',
@@ -16,6 +17,7 @@ export class UsersSideListComponent {
   //#region attributes
   res: any[] = []; // البيانات الأصلية
 
+        myFilters: any = {};
 
       //#region pagination attributes
     selectedAdmissionRequest: any = {};
@@ -41,6 +43,7 @@ export class UsersSideListComponent {
 
   private readonly dataService = inject(SharedDataService);
   private readonly _AuthService = inject(AuthService);
+  private readonly ar = inject(ArService);
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
 
   constructor() {
@@ -70,10 +73,10 @@ export class UsersSideListComponent {
 
 
   
-  getApplication(offset?: number) {
+  getApplication({ filters, offset }: { filters?: any, offset?: number } = {}) {
 
 
-    this._AuthService.getApplications(offset).subscribe({
+    this.ar.getApplications(filters,offset).subscribe({
       next: (res: any) => {
        
         console.log(res);
@@ -110,7 +113,7 @@ export class UsersSideListComponent {
     changePage(page: number): void {
       if (page < 1 || page > this.totalPages) return;
       this.currentPage = page;
-      this.getApplication(this.currentPage-1);
+      this.getApplication({filters:this.myFilters ,offset:this.currentPage-1});
     }
   
     // دالة لحساب الصفحات للعرض (اختياري)
@@ -172,19 +175,30 @@ export class UsersSideListComponent {
   
     // تطبيق فلترة البحث
     const searchText = this.searchControl.value;
-    if (searchText) {
-      const searchLower = searchText.toLowerCase();
-      filtered = filtered.filter((item: any) =>
-        (item.firstName && item.firstName.toLowerCase().includes(searchLower)) ||
-        (item.lastName && item.lastName.toLowerCase().includes(searchLower)) ||
-        (item.nationalId && item.nationalId.toLowerCase().includes(searchLower))
-      );
-    }
+      if (searchText) {
+         this.myFilters = {
+          ...this.myFilters,        
+          search: searchText, 
+        };
+      }
+      if(!searchText){
+        // إزالة الفلتر عند عدم وجود حالات مختارة
+        if (this.myFilters?.search) {
+          delete this.myFilters.search;
+        }
+      }
   
-    // تطبيق فلترة الـ checkbox لحالة status
-    if (this.selectedStatuses.length > 0) {
-      filtered = filtered.filter((item: any) => this.selectedStatuses.includes(item.status));
-    }
+      // Student Type filter
+      if (this.selectedStatuses.length === 1) {
+          this.myFilters = {
+            ...this.myFilters,
+            status: this.selectedStatuses.join(','),
+          };
+      } else {
+            if (this.myFilters?.status || this.selectedStatuses.length === 2) {
+              delete this.myFilters.status;
+            }
+      }
   
    
 
@@ -196,7 +210,8 @@ export class UsersSideListComponent {
      }
     // احفظ النتيجة المفلترة في this.filteredItems
 
-    this.filteredItems = filtered;
+    this.getApplication({filters:this.myFilters ,offset:this.currentPage-1});
+
   
     // إعادة تعيين Pagination بناءً على النتائج المفلترة
     this.currentPage = 1;

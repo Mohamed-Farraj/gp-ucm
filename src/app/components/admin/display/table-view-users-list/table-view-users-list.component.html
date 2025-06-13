@@ -2,7 +2,7 @@
   <div class="container-fluid py-3">
     <div class="row g-3 justify-content-center">
       <!-- Search input -->
-      <div class="col-12 col-md-4">
+      <div *ngIf="selectedSource != 'sorted'" class="col-12 col-md-4">
         <div class="input-group">
           <input
             type="text"
@@ -70,7 +70,7 @@
       </div>
 
       <!-- Status filters -->
-      <div class="col-12 col-md-4">
+      <div *ngIf="selectedSource != 'sorted'" class="col-12 col-md-4">
         <div
           class="btn-group w-100"
           role="group"

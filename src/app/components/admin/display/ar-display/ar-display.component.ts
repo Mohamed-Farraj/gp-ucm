@@ -39,103 +39,99 @@ export class ArDisplayComponent {
     timer: 1500,
     timerProgressBar: true,
   })
-    confirmation(id: number = -1, status: string = 'UNDER_REVIEW', item?: any) {
-          const procedure = status === 'ACCEPTED' ? 'قبول' : 
-                           (status === 'UNDER_REVIEW' ? 'مراجعة' : 'رفض');
-          
-          const commonSwalConfig = {
-              title: "هل انت متأكد؟",
-              icon: "warning" as const,
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              cancelButtonText: "الغاء",
-              allowOutsideClick: () => !Swal.isLoading()
-          };
-      
-          if (status === 'REJECTED') {
-              Swal.fire({
-                  ...commonSwalConfig,
-                  title: "ادخل سبب رفض هذا الطلب",
-                  input: "text",
-                  inputAttributes: {
-                      autocapitalize: "off"
-                  },
-                  confirmButtonText: `${procedure} هذا الطلب؟`,
-                  preConfirm: (reason) => {
-                      if (!reason) {
-                          Swal.showValidationMessage('يجب ادخال سبب الرفض');
-                          return false;
-                      }
-                      return reason;
-                  }
-              }).then((result) => {
-                  if (result.isConfirmed) {
-                    console.log("thats a rejection reason",result.value);
-                      this.DecideAr(id, status);
-                  }
-              });
-          } else {
-              Swal.fire({
-                  ...commonSwalConfig,
-                  confirmButtonText: `${procedure} هذا الطلب؟`,
-              }).then((result) => {
-                  if (result.isConfirmed) {
-                      this.DecideAr(id, status);
-                  }
-              });
-          }
-      }
-DecideAr(id:number = -1,status:string = 'UNDER_REVIEW') {
-  if (id === -1) 
-    {
-      this.Toast.fire({
-      icon: 'error',
-      title: 'حدث خطأ في اختيار رقم المستخدم',
-    })   
+        confirmation(id: number = -1, status: string = 'UNDER_REVIEW', item?: any) {
+        const procedure = status === 'ACCEPTED' ? 'قبول' : 
+                         (status === 'UNDER_REVIEW' ? 'مراجعة' : 'رفض');
+        
+        const commonSwalConfig = {
+            title: "هل انت متأكد؟",
+            icon: "warning" as const,
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "الغاء",
+            allowOutsideClick: () => !Swal.isLoading()
+        };
+    
+        if (status === 'REJECTED') {
+            Swal.fire({
+                ...commonSwalConfig,
+                title: "ادخل سبب رفض هذا الطلب",
+                input: "text",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
+                confirmButtonText: `${procedure} هذا الطلب؟`,
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('يجب ادخال سبب الرفض');
+                        return false;
+                    }
+                    return reason;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  console.log("thats a rejection reason",result.value);
+                    this.DecideAr(id, status, item,result.value);
+                }
+            });
+        } else {
+            Swal.fire({
+                ...commonSwalConfig,
+                confirmButtonText: `${procedure} هذا الطلب؟`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.DecideAr(id, status, item);
+                }
+            });
+        }
     }
-    else{
 
-      this._AuthService.DecideArState(id, status).subscribe({
-        next: (response) => {
-          console.log('Operation succeeded:', response);
-          this.applicationRequest.status = status;
-          this.getUser();
-          if (status === 'UNDER_REVIEW' ) {
-            this.Toast.fire({
-              icon: 'success',
-              title: 'هذا الطلب تحت المراجعة',
-            })   
-          }
-          else if (status === 'ACCEPTED' ) {
-            this.Toast.fire({
-              icon: 'success',
-              title: 'قد تم قبول الطلب بنجاح',
-            })   
-          }
-          else if (status === 'REJECTED' ) {
-            this.Toast.fire({
-              icon: 'success',
-              title: 'قد تم رفض الطلب بنجاح',
-            })   
-          }
-
-          
-        },
-        error: (err) => {
-          console.error('Operation failed:', err);
+ DecideAr(id:number = -1,status:string = 'UNDER_REVIEW',item?:any, message?:string) {
+      if (id === -1) 
+        {
           this.Toast.fire({
-            icon: 'error',
-            title: err.error.message,
-          })   
-        },
-      });
-
-     
-
-
+          icon: 'error',
+          title: 'حدث خطأ في اختيار رقم المستخدم',
+        })   
+        }
+        else{
+    
+          this._AuthService.DecideArState(id, status,message ).subscribe({
+            next: (response) => {
+              console.log('Operation succeeded:', response);
+              item.status = status;
+              this.getUser();
+              if (status === 'UNDER_REVIEW' ) {
+                this.Toast.fire({
+                  icon: 'success',
+                  title: 'هذا الطلب تحت المراجعة',
+                })   
+              }
+              
+              else if (status === 'ACCEPTED' ) {
+                this.Toast.fire({
+                  icon: 'success',
+                  title: 'قد تم قبول الطلب بنجاح',
+                })   
+              }
+              else if (status === 'REJECTED' ) {
+                this.Toast.fire({
+                  icon: 'success',
+                  title: 'قد تم رفض الطلب بنجاح',
+                })   
+              }
+            },
+            error: (err) => {
+              console.error('Operation failed:', err);
+              this.Toast.fire({
+                icon: 'error',
+                title: err.error.message,
+              })   
+            },
+          });
+        }
     }
-}
 
  @Input() selectedAdmissionRequest :any = {};
   applicationRequest :any = {};
