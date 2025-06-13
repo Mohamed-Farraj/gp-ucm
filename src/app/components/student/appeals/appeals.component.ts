@@ -8,11 +8,12 @@ import { AppealsService } from '../../../core/services/appeals.service';
 import { DatePipe, Location, NgClass, NgIf } from '@angular/common';
 import Swal from 'sweetalert2';
 import { UsersSideListComponent } from '../../admin/display/users-side-list/users-side-list.component';
+import { PrivilegesDirective } from '../../../core/directives/privileges.directive';
 
 @Component({
   selector: 'app-appeals',
   standalone: true,
-  imports: [DatePipe, NgIf, UsersSideListComponent , ReactiveFormsModule , NgClass],
+  imports: [PrivilegesDirective,DatePipe, NgIf, UsersSideListComponent , ReactiveFormsModule , NgClass],
   templateUrl: './appeals.component.html',
   styleUrl: './appeals.component.scss'
 })
