@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { NgIf } from '@angular/common';
 import { AuthService } from '../../../../core/services/auth.service';
 import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-deadlins-form',
   standalone: true,
@@ -55,18 +56,40 @@ export class DeadlinsFormComponent  implements OnInit{
     this.openDialog(deadline);
   }
 
-  deleteDeadline(id: number) {
-    this._deadlineService.deleteDeadLine(this.uid,id).subscribe({
-      next: (res: any) => {
-  
-        // Remove the deleted deadline from the local array
-        this.deadlines = this.deadlines.filter(deadline => deadline.id !== id);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+ deleteDeadline(id: number) {
+  Swal.fire({
+    title: 'هل أنت متأكد؟',
+    text: 'لن تتمكن من التراجع عن هذا',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#e12e2e',
+    cancelButtonColor: '#111b31',
+    confirmButtonText: 'نعم، احذفه',
+    cancelButtonText: 'تراجع'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this._deadlineService.deleteDeadLine(this.uid, id).subscribe({
+        next: (res: any) => {
+          // Remove the deleted deadline from the local array
+          this.deadlines = this.deadlines.filter(deadline => deadline.id !== id);
+          Swal.fire({
+            title: 'تم الحذف!',
+            text: 'تم حذف الموعد النهائي بنجاح.',
+            icon: 'success'
+          });
+        },
+        error: (err) => {
+          console.log(err);
+          Swal.fire({
+            title: 'خطأ!',
+            text: 'حدث خطأ أثناء الحذف.',
+            icon: 'error'
+          });
+        },
+      });
+    }
+  });
+}
 
   updateDeadline(id:number , deadline: Ideadlins) {
     this._deadlineService.updateDeadLine(this.uid,id,deadline).subscribe({

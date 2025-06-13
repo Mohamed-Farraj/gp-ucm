@@ -151,17 +151,41 @@ export class DisplayComplaintsComponent implements OnInit {
   }
 
 
-  deleteComplaint(id:number){
-    this.complaintsService.deleteComplaint(id).subscribe({
-      next: (response: any) => {
-        console.log('complaint deleted', response);
-        this.ngOnInit();
-      },
-      error: (error: any) => {
-        console.error(error);
-      }
+ deleteComplaint(id: number) {
+  Swal.fire({
+    title: 'هل أنت متأكد؟',
+    text: 'لن تتمكن من التراجع عن هذا',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#e12e2e',
+    cancelButtonColor: '#111b31',
+    confirmButtonText: 'نعم، احذفه',
+    cancelButtonText: 'تراجع'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.complaintsService.deleteComplaint(id).subscribe({
+        next: (response: any) => {
+          console.log('complaint deleted', response);
+          Swal.fire({
+            title: 'تم الحذف!',
+            text: 'تم حذف الشكوى بنجاح.',
+            icon: 'success'
+          });
+          this.ngOnInit();
+        },
+        error: (error: any) => {
+          console.error(error);
+          Swal.fire({
+            title: 'خطأ!',
+            text: 'حدث خطأ أثناء الحذف.',
+            icon: 'error'
+          });
+        }
+      });
+    }
   });
 }
+
 
 
   ngOnDestroy() {

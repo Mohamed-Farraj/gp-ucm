@@ -10,6 +10,7 @@ import { DatePipe, NgIf } from '@angular/common';
 import { UsersSideListComponent } from "../../display/users-side-list/users-side-list.component";
 import { AuthService } from '../../../../core/services/auth.service';
 import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-penalty',
@@ -100,18 +101,40 @@ export class AddPenaltyComponent  {
     }
   
     deletePenalty(id: number) {
+  Swal.fire({
+    title: 'هل أنت متأكد؟',
+    text: 'لن تتمكن من التراجع عن هذا',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#e12e2e',
+    cancelButtonColor: '#111b31',
+    confirmButtonText: 'نعم، احذفه',
+    cancelButtonText: 'تراجع'
+  }).then((result) => {
+    if (result.isConfirmed) {
       this._PenaltyService.deletePenalty(id).subscribe({
         next: (res: any) => {
           console.log(res);
-          // Remove the deleted deadline from the local array
-          this.penalties = this.penalties.filter(penalty  => penalty.id !== id);
+          this.penalties = this.penalties.filter(penalty => penalty.id !== id);
+          Swal.fire({
+            title: 'تم الحذف!',
+            text: 'تم حذف العقوبة بنجاح.',
+            icon: 'success'
+          });
         },
         error: (err) => {
           console.log(err);
+          Swal.fire({
+            title: 'خطأ!',
+            text: 'حدث خطأ أثناء الحذف.',
+            icon: 'error'
+          });
         },
       });
     }
-  
+  });
+}
+
     // updateDeadline(id:number , deadline: Ideadlins) {
     //   this._PenaltyService.updateDeadLine(id,deadline).subscribe({
     //     next: (res:any) => {
