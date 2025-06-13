@@ -47,6 +47,7 @@ export class BuildingsListComponent {
     private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
     private readonly dataService = inject(SharedDataService);
     private readonly _BuildingsService = inject(BuildingsService);
+    uid: number = 1;
 
     constructor() {
       this.dataService.currentBuildingData.pipe(takeUntil(this.destroy$)).subscribe(data => {
@@ -89,7 +90,7 @@ export class BuildingsListComponent {
 
       this.dataService.buildingsUpdated$.pipe(takeUntil(this.destroy$)).subscribe((updated) => {
         if (updated) {
-          this.getBuildings(); // ⬅️ إعادة تحميل البيانات
+          this.getBuildings(this.uid); // ⬅️ إعادة تحميل البيانات
         }
       });
   
@@ -104,6 +105,11 @@ export class BuildingsListComponent {
       ).subscribe(() => {
         this.applyFilters();
       });
+    }
+
+    changeUniversity(uid:number){
+      this.uid = uid;
+      this.getBuildings(uid);
     }
   
    
