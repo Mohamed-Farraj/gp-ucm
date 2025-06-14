@@ -1,3 +1,4 @@
+import { PrivilegesService } from './../../../../core/services/privileges.service';
 import { Component, inject, signal } from '@angular/core';
 import { debounceTime, Subject, takeUntil } from 'rxjs';
 import { SharedDataService } from '../../../../core/services/shared-data.service';
@@ -16,6 +17,7 @@ import { UploadStatusComponent } from '../../excel/upload-status/upload-status.c
 import { PaginationService } from '../../../../services/pagination.service';
 import { ArTableComponent } from "../ar-table/ar-table.component";
 import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
+import { PrivilagesService } from '../../../../core/services/privilages.service';
 
 @Component({
   selector: 'app-table-view-users-list',
@@ -67,6 +69,7 @@ export class TableViewUsersListComponent {
     private readonly excel = inject(ExcelService);
     private readonly dialog = inject(MatDialog);
     private readonly pagination = inject(PaginationService);
+    private readonly _Privileges = inject(PrivilagesService); 
     private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
   
     constructor() {
@@ -78,7 +81,10 @@ export class TableViewUsersListComponent {
   
   
     ngOnInit(): void {
+
+
       this.getApplication();
+      this._Privileges.setPrivileges();
 
       // الاشتراك في تغييرات حقل البحث باستخدام Reactive Form مع debounceTime
       this.searchControl.valueChanges.pipe(

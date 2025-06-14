@@ -3,6 +3,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions, ChartType } from 'chart.js';
 import { ArService } from '../../../../core/services/ar.service';
 import { NgIf } from '@angular/common';
+import { PrivilagesService } from '../../../../core/services/privilages.service';
 
 // Define interfaces for better type safety
 interface GenderData {
@@ -28,9 +29,11 @@ export class AdminLandingPageComponent {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
   @Input() data: ChartData = {};
   private readonly ar = inject(ArService)
+    private readonly _Privileges = inject(PrivilagesService); 
 
 
   ngOnInit(): void {
+      this._Privileges.setPrivileges();
 
     this.ar.getArStatistics().subscribe({
       next: (res:any) => {this.data = res?.data; console.log(this.data);},
