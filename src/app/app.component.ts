@@ -14,7 +14,16 @@ import * as AOS from 'aos';
 export class AppComponent {
   title = 'gp-ucm';
   ngOnInit(): void {
-    
-      AOS.init();
-  }
+  AOS.init({
+    once: false,      // خليها حسب ما تحب: false = يكرر عند كل scroll, true = مرة واحدة
+    startEvent: 'DOMContentLoaded', // يخليه يبدأ بعد تحميل الصفحة
+    duration: 800,     // مدة الـ animation
+    easing: 'ease-in-out' // شكل الحركة
+  });
+
+  // أضمن إنه يعمل refresh بعد ما Angular يرندر
+  setTimeout(() => {
+    AOS.refresh();
+  }, 100);
+}
 }
