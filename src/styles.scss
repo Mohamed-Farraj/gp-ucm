@@ -184,6 +184,10 @@ a:hover {
   cursor: pointer;
   transition: all 0.5s;
 }
+.btn-main-gold:disabled{
+  background-color: #ccc !important;
+  cursor: not-allowed !important;
+}
 .btn-main-delete {
   background-color: var(--delete-main-color);
   padding: .4375rem 1.25rem;
