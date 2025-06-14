@@ -103,7 +103,8 @@ resetFileInput() {
 
   fetchGuideline(uid: number): void {
   this.uid = uid;
-            this.resetFileInput()
+  this.resetFileInput()
+  this.selectedFile = null;
 
   this._GuidelinsService.getGuidelines(this.uid).subscribe({
     next: (response: any) => {
@@ -229,6 +230,8 @@ deleteGuideline(): void {
           this.guidelineExists = false;
           this.fetchGuideline(this.uid);
           this.guidelineForm.reset();
+        this.selectedFile = null;
+
         },
         error: (error) => {
           Swal.fire({
