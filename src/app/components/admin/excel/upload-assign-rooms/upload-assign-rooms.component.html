@@ -45,11 +45,62 @@
     <div style="background-color: rgba(159, 132, 55, 0.2); border: none;" class="alert  mt-3 text-center">
         <strong>ملاحظة:</strong> يجب أن يتطابق ملف تسكين الطلبه المراد رفعه مع القالب المرفق.
     </div>
+    <div class="d-flex gap-2 justify-content-center align-items-center">
+     <p class="m-0"> اختر الجامعة :</p>
+    <div
+    class="btn-group my-1"
+    role="group"
+    aria-label="Basic radio toggle button group"
+  >
+    <input
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio1"
+      autocomplete="off"
+       (change)="changeUniversity(1)"
+      checked
+    />
+    <label class="btn btn-outline-primary" for="btnradio1">حلوان</label>
+
+    <input
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio2"
+       (change)="changeUniversity(2)"
+      autocomplete="off"
+    />
+    <label class="btn btn-outline-primary" for="btnradio2">حلوان الاهلية</label>
+
+    <input
+      type="radio"
+      class="btn-check"
+      name="btnradio"
+      id="btnradio3"
+      (change)="changeUniversity(3)"
+      autocomplete="off"
+    />
+    <label class="btn btn-outline-primary" for="btnradio3">حلوان التكنولوجية</label>
+  </div>
+</div>
     <div *appPrivileges="'ACCESS_EXPORT_AVAILABLE_ROOM'" class="d-flex gap-3 justify-content-center p-4">
-      <button (click)="downloadDormTemp()" class=" btn-main-gold rounded rounded-pill">
+      <select
+      (change)="selectBuilding($event)"
+      (click)="$event.stopPropagation()"
+      class="form-select"
+      [value]="buildingId || ''"
+      style="width:fit-content; white-space: nowrap; text-overflow: ellipsis;"
+    >
+      <option disabled value="" hidden>اختر مبني</option>
+      <option *ngFor="let item of resBuildings" [value]="item.id">
+        {{ item.name }}
+      </option>
+    </select>
+      <button  [disabled]="!buildingId" (click)="downloadDormTemp()" class=" btn-main-gold rounded rounded-pill">
         تحميل قالب التسكين عادي
       </button>
-      <button (click)="downloadSingleTemp()" class=" btn-main-gold rounded rounded-pill">
+      <button [disabled]="!buildingId"  (click)="downloadSingleTemp()" class=" btn-main-gold rounded rounded-pill">
         تحميل قالب التسكين مميز
       </button>
     </div>

@@ -1,17 +1,19 @@
 import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { ExcelService } from '../../../../core/services/excel.service';
-import { NgClass, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { PrivilegesDirective } from '../../../../core/directives/privileges.directive';
+import { BuildingsService } from '../../../../core/services/buildings.service';
 
 @Component({
   selector: 'app-upload-assign-rooms',
   standalone: true,
-  imports: [NgIf,NgClass , PrivilegesDirective],
+  imports: [ NgFor ,NgIf,NgClass , PrivilegesDirective],
   templateUrl: './upload-assign-rooms.component.html',
   styleUrl: './upload-assign-rooms.component.scss'
 })
 export class UploadAssignRoomsComponent {
 excel = inject(ExcelService);
+_BuildingsService = inject(BuildingsService); 
 
   // Add these properties to your component class
 isUploading = false;
@@ -25,7 +27,15 @@ allowedTypes = [
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 
   'application/vnd.ms-excel'
 ];
+  resBuildings: any;
+  filteredItems: any;
+  res: any;
+  uid: number = 1;
 
+
+  ngOnInit() {
+    this.getBuildings();
+  } 
 
 
 // دالة السحب فوق المنطقة
@@ -127,7 +137,7 @@ uploadFile(event: any) {
 
 downloadDormTemp() {
   // Subscribe to the observable that downloads the template file
-  this.excel.downloadAssignRoomsTemplate('18','DORM').subscribe({
+  this.excel.downloadAssignRoomsTemplate(this.buildingId,'DORM').subscribe({
     // Handle the response when it is received
     next: (response: Blob) => {
       // Create a link to download the file
@@ -143,9 +153,32 @@ downloadDormTemp() {
   });
 
 }
+changeUniversity(uid:number){
+      this.uid = uid;
+      this.getBuildings(uid);
+    }
+      buildingId:any;
+  selectBuilding(e:any|null){
+        setTimeout(() => {
+          const selectedValue = (e.target as HTMLSelectElement).value;
+          this.buildingId = selectedValue;
+      }, 50);
+      }
+getBuildings(uid:number = 1): void {
+      this._BuildingsService.getAllBuildings(uid).subscribe({
+        next: (res: any) => {
+         
+          console.log('building result',res);
+          this.resBuildings = res.data;
+          console.log(this.res);
+        },
+        error: (err) => { console.log(err); },
+      });
+    }
+    
 downloadSingleTemp() {
   // Subscribe to the observable that downloads the template file
-  this.excel.downloadAssignRoomsTemplate('18','SINGLE').subscribe({
+  this.excel.downloadAssignRoomsTemplate(this.buildingId,'SINGLE').subscribe({
     // Handle the response when it is received
     next: (response: Blob) => {
       // Create a link to download the file
