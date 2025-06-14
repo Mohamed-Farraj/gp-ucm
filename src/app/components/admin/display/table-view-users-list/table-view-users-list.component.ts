@@ -84,7 +84,7 @@ export class TableViewUsersListComponent {
 
 
       this.getApplication();
-      this._Privileges.setPrivileges();
+      // this._Privileges.setPrivileges();
 
       // الاشتراك في تغييرات حقل البحث باستخدام Reactive Form مع debounceTime
       this.searchControl.valueChanges.pipe(

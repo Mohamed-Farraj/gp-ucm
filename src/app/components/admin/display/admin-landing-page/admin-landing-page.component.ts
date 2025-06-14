@@ -33,7 +33,7 @@ export class AdminLandingPageComponent {
 
 
   ngOnInit(): void {
-      this._Privileges.setPrivileges();
+      // this._Privileges.setPrivileges();
 
     this.ar.getArStatistics().subscribe({
       next: (res:any) => {this.data = res?.data; console.log(this.data);},
