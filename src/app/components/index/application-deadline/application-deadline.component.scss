@@ -39,3 +39,24 @@ section
 .table-hover tbody tr:hover {
     transform: translateY(-2px); /* Optional hover lift effect */
 }
+
+  /* To load font awesome if you're not already using it */
+
+  /* يخلي الأعمدة ما تلفش النص */
+.custom-table-sm td, .custom-table-sm th {
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+/* في الشاشات الصغيرة يصغر الخط ويخلي الأعمدة تلف لو المساحة قليلة */
+@media (max-width: 575.98px) {
+  .custom-table-sm td, .custom-table-sm th {
+    font-size: 14px;
+    white-space: normal; /* يسمح باللف في الضرورة */
+    word-break: break-word;
+    font-weight: bold;
+  }
+  .custom-table-sm th[scope="row"] {
+    min-width: 80px;
+  }
+}
