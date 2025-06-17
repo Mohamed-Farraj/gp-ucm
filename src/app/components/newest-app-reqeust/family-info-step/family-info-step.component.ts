@@ -10,7 +10,17 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class FamilyInfoStepComponent {
   @Input() formGroup!: FormGroup;
-  @Input() onFileSelected: (event: any) => void = (event: any) => {};
+ @Input() onFileSelected!: (file: File) => void;
+
+handleFileInput(event: any) {
+  const file = event.target.files[0];
+  if (file && this.onFileSelected) {
+    this.onFileSelected(file); // بعت الملف نفسه للـ parent
+  }
+}
+
+  
+
   get fatherName() { return this.formGroup?.get('fatherName'); }
   get fatherNationalId() { return this.formGroup?.get('fatherNationalId'); }
   get fatherOccupation() { return this.formGroup?.get('fatherOccupation'); }
