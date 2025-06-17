@@ -10,7 +10,7 @@ export class LogService {
   constructor(private http: HttpClient) { }
 
   getLogs() {
-    return this.http.get(`${environment.baseUrl}/admin/get-logs`);
+    return this.http.get(`${environment.baseUrl}/admin/edit/get-logs`);
   }
 
 
