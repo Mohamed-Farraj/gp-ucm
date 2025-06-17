@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 import { Router } from '@angular/router';
 import { SharedDataService } from './shared-data.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Form } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,7 @@ export class AuthService {
   }
 
 
-  setRegisterForm(data:object):Observable<any>
+  setRegisterForm(data:FormData):Observable<any>
   {
    return this._HttpClient.post(`${environment.baseUrl}/public/register` , data)
   }

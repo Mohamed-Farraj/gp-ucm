@@ -209,7 +209,7 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
       password: [null, [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]],
       rePassword: [null, Validators.required],
       role: ['USER'],
-      status: [2],
+      status: ['UNDER_REVIEW'],
       securityCheck: ['PENDING'],
       confirmDataAccuracy: [true, Validators.requiredTrue]
     }, { validators: this.passwordConfirmation.bind(this) });
@@ -283,10 +283,11 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
 
 
 
-  selectedFile: File | null = null;
+ selectedFile: File | null = null;
 
 onFileSelected(event: any) {
   this.selectedFile = event.target.files[0];
+  this.AppRequest.patchValue({ media: this.selectedFile });
 }
 
 
@@ -580,12 +581,33 @@ this.academicInfoGroup.patchValue({
   registerSubmit() {
     if (this.AppRequest.valid) {
       // تحويل البيانات المتداخلة إلى هيكل مسطح للإرسال
-      const formData = this.flattenFormData(this.AppRequest.value);
+      const plainObject = this.flattenFormData(this.AppRequest.value);
+
+    // 2. جهز FormData
+    const formData = new FormData();
+
+    // 3. لف على كل key وضيفه في FormData (مع التحويل اللازم)
+    Object.keys(plainObject).forEach(key => {
+      // لو فيه فايل
+      if (key === 'media' && plainObject[key]) {
+        formData.append(key, plainObject[key]); // نوعه file
+      }
+      // لو boolean ابعته كـ string
+      else if (typeof plainObject[key] === 'boolean') {
+        formData.append(key, plainObject[key] ? 'true' : 'false');
+      }
+      // لو قيمة موجودة و مش null
+      else if (plainObject[key] !== null && plainObject[key] !== undefined) {
+        formData.append(key, plainObject[key]);
+      }
+      // لو القيمة null سيبها مش لازم تبعتها
+    });
+
       console.log('Form Data to submit:', formData);
       this._AuthService.setRegisterForm(formData).subscribe({
         next: (res: any) => {
-          if (res.body.success === false) {
-            this.errmsg = res.body.message;
+          if (res.success === false) {
+            this.errmsg = res.message;
             console.log(res);
             this.Toast.fire({
               icon: 'error',
