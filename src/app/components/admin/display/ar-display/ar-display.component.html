@@ -303,7 +303,7 @@
               </div>
               <label class="col-sm-2 col-form-label fw-bold">حالة الوالدين</label>
               <div class="col-sm-4">
-                <p class="form-control-plaintext border-bottom border-light-subtle pb-1">{{ applicationRequest?.parentsStatus }}</p>
+                <p class="form-control-plaintext border-bottom border-light-subtle pb-1"> {{ parentsStatusMap[applicationRequest?.parentsStatus] || 'غير محدد' }}</p>
               </div>
             </div>
             

@@ -26,6 +26,14 @@ export class ArDisplayComponent {
   private destroy$ = new Subject<void>(); // Subject لتتبع التدمير
 
 
+  parentsStatusMap: { [key: string]: string } = {
+  ALIVE: 'على قيد الحياة',
+  FATHER_DECEASED: 'الأب متوفى',
+  MOTHER_DECEASED: 'الأم متوفاة',
+  BOTH_DECEASED: 'الوالدين متوفيين',
+  DIVORCED: 'منفصلين'
+};
+
 
 
    Toast = Swal.mixin({
