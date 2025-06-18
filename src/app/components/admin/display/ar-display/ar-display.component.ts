@@ -149,6 +149,27 @@ export class ArDisplayComponent {
 
  }
 
+downloadMedia() {
+  this.ar.getMediaByName(this.applicationRequest.media).subscribe({
+    next: (response: Blob) => {
+      const blob = new Blob([response], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      console.log(url,blob);
+
+      // فتح الملف في تاب جديدة
+      window.open(url, '_blank');
+    },
+    error: (err) => {
+      console.error('Operation failed:', err);
+      this.Toast.fire({
+        icon: 'error',
+        title: err.error?.message || 'حدث خطأ أثناء تحميل الملف',
+      });
+    },
+  });
+}
+
+
  getUser(){
   if(this._AuthService.getRole() === 'USER')
   {
