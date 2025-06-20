@@ -59,6 +59,13 @@ export class ArService {
   {
     return this._HttpClient.get(`${environment.baseUrl}/user/admission-requests/${id}`);
   }
+
+  getMediaByName(name:string):Observable<any>
+  {
+    return this._HttpClient.get(`${environment.baseUrl}/public/media/users/${name}`, {
+    responseType: 'blob'
+  });
+  }
   
   updateAr(id:number,data:object):Observable<any>
   {

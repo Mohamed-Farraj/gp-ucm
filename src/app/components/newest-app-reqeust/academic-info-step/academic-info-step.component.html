@@ -45,12 +45,13 @@
   <!-- اختيار الجامعة -->
    <div class="flex flex-col">
      <label for="university">اختر الجامعة:</label>
-  <select id="university" formControlName="universityId" class="form-select rounded-lg shadow-sm">
-    <option value="" disabled>-- اختر الجامعة --</option>
-    <option *ngFor="let uni of nameOfUniversities" [value]="uni.value">
-      {{ uni.label }}
-    </option>
-  </select>
+ <select id="university" formControlName="universityId" class="form-select rounded-lg shadow-sm">
+  <option [ngValue]="null" disabled>-- اختر الجامعة --</option>
+  <option *ngFor="let uni of nameOfUniversities" [ngValue]="uni.value">
+    {{ uni.label }}
+  </option>
+</select>
+
    @if (universityId?.errors && (universityId?.touched)) {
           <div class="text-danger mt-1">
             @if (universityId?.hasError('required')) {

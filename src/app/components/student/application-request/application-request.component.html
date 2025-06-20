@@ -179,6 +179,7 @@
                 <ng-template matStepLabel></ng-template>
                 <app-family-info-step
                   [formGroup]="familyInfoGroup"
+                  [onFileSelected]="onFileSelected"
                 ></app-family-info-step>
                 <div *ngIf="familyInfoGroup.invalid && familyInfoGroup.touched" class="text-danger mt-2">
                   <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
@@ -204,8 +205,7 @@
                   [nameOfUniversities]="nameOfUniversities"
                   [facultiesMap]="facultiesMap"
                   [studentType]="studentType"
-                  onFileSelected="onFileSelected($event)"
-                ></app-academic-info-step>
+                  ></app-academic-info-step>
                 <div *ngIf="academicInfoGroup.invalid && academicInfoGroup.touched" class="text-danger mt-2">
                   <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
                 </div>

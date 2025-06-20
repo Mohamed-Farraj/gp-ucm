@@ -68,23 +68,23 @@
       <div #no class="alert alert-danger rounded-pill text-center w-75" role="alert">
         @if(!isRejectd){ هذا الرقم غير مسجل بالنظام }
         @else{
-          <h6>{{ userN }}</h6>
+          <!-- <h6>{{ userN }}</h6> -->
           <h3>قد تم رفض الطلب</h3>
         }
       </div>
 
       <div #yes class="alert alert-success rounded-pill text-center w-75" role="alert">
-        <h6>{{ userN }}</h6>
+        <!-- <h6>{{ userN }}</h6> -->
         <h3>تم قبول الطلب</h3>
       </div>
 
       <div #pending class="alert alert-warning rounded-pill text-center w-75" role="alert">
-        <h6>{{ userN }}</h6>
+        <!-- <h6>{{ userN }}</h6> -->
         <h3>تحت المراجعة</h3>
       </div>
 
       <div #cstm class="alert alert-light rounded-pill text-center w-75" role="alert">
-        <h6>{{ userN }}</h6>
+        <!-- <h6>{{ userN }}</h6> -->
         <h3>{{ alertmsg }}</h3>
       </div>
     </div>
