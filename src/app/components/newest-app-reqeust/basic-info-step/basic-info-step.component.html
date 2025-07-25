@@ -27,24 +27,24 @@
 
     <!-- الاسم الأول -->
     <div class="flex flex-col">
-      <label class="mb-2 font-semibold">الاسم الأول</label>
+      <label class="mb-2 font-semibold">الاسم بالكامل</label>
       <input
-        formControlName="firstName"
+        formControlName="fullName"
         type="text"
         class="form-control rounded-lg shadow-sm"
       />
       <div
-        *ngIf="firstName?.invalid && firstName?.touched"
+        *ngIf="fullName?.invalid && fullName?.touched"
         class="text-danger mt-1"
       >
-        <p class="m-0" *ngIf="firstName?.hasError('required')">
-          الاسم الأول مطلوب
+        <p class="m-0" *ngIf="fullName?.hasError('required')">
+          الاسم  مطلوب
         </p>
       </div>
     </div>
 
     <!-- الاسم الثاني -->
-    <div class="flex flex-col">
+    <!-- <div class="flex flex-col">
       <label class="mb-2 font-semibold">الاسم الثاني</label>
       <input
         formControlName="lastName"
@@ -59,7 +59,7 @@
           الاسم الثاني مطلوب
         </p>
       </div>
-    </div>
+    </div> -->
 
     <div class="flex flex-col">
       <label class="mb-2 font-semibold"> كود الطالب</label>

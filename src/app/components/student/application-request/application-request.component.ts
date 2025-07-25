@@ -153,11 +153,11 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
   constructor(private fb: FormBuilder) {
     // تهيئة FormGroups لكل خطوة
     this.personalInfoGroup = this.fb.group({
-      firstName: [null, [Validators.required ,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
+      fullName: [null, [Validators.required ,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
     (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
-      lastName: [null, [Validators.required,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
-    (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
-      studentCode: [null, Validators.required],
+    //   lastName: [null, [Validators.required,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
+    // (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
+    //   studentCode: [null, Validators.required],
       nationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
       dateOfBirth: [null, Validators.required],
       gender: [null, Validators.required],
@@ -382,9 +382,9 @@ onFileSelected = (file: File) => {
 
             // تعبئة النماذج الفرعية بالبيانات
             this.personalInfoGroup.patchValue({
-              firstName: res.data.firstName,
+              fullName: res.data.fullName,
               studentCode: res.data.studentCode,
-              lastName: res.data.lastName,
+              // lastName: res.data.lastName,
               nationalId: res.data.nationalId,
               dateOfBirth: res.data.dateOfBirth,
               gender: res.data.gender,

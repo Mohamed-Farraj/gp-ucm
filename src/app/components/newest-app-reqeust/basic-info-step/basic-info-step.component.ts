@@ -24,12 +24,12 @@ export class BasicInfoStepComponent implements OnInit {
   { value: '2', label: 'جامعه حلوان الاهلية' },
   { value: '3', label: 'جامعه حلوان التكنولوجية' }
 ];
-  get firstName() {
-    return this.formGroup?.get('firstName');
+  get fullName() {
+    return this.formGroup?.get('fullName');
   }
-  get lastName() {
-    return this.formGroup?.get('lastName');
-  }
+  // get lastName() {
+  //   return this.formGroup?.get('lastName');
+  // }
 
   get studentCode() {
     return this.formGroup?.get('studentCode');
