@@ -11,6 +11,8 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 })
 export class BasicInfoStepComponent implements OnInit {
   @Input() formGroup!: FormGroup;
+  @Input() selectedNationality: 'LOCAL' | 'EXPATRIATE' | null = null;
+
   ngOnInit(): void {
     // فحص للتأكد من أن formGroup تم تمريره
     if (!this.formGroup) {
@@ -33,6 +35,10 @@ export class BasicInfoStepComponent implements OnInit {
 
   get studentCode() {
     return this.formGroup?.get('studentCode');
+  }
+
+  get passportNumber() {
+    return this.formGroup?.get('passportNumber');
   }
   get dateOfBirth() {
     return this.formGroup?.get('dateOfBirth');
