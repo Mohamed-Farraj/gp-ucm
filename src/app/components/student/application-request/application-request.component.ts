@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal, computed, Signal, inject, OnInit, HostListener } from '@angular/core';
+import { Component, signal, WritableSignal, computed, Signal, inject, OnInit, HostListener, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
@@ -14,7 +14,8 @@ import { AcademicInfoStepComponent } from "../../newest-app-reqeust/academic-inf
 import { ContactInfoStepComponent } from "../../newest-app-reqeust/contact-info-step/contact-info-step.component";
 import { AccountSetupStepComponent } from "../../newest-app-reqeust/account-setup-step/account-setup-step.component";
 import { MatStepperModule } from '@angular/material/stepper';
-import { NgFor, NgIf } from '@angular/common';
+import { isPlatformBrowser, NgFor, NgIf } from '@angular/common';
+import { HomeService } from '../../../services/guest/home.service';
 
 @Component({
   selector: 'app-application-request',
@@ -152,7 +153,7 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
 
   isMobile = window.innerWidth < 768;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private _HomeService : HomeService) {
     // تهيئة FormGroups لكل خطوة
     this.personalInfoGroup = this.fb.group({
       fullName: [null, [Validators.required ,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
@@ -268,9 +269,43 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
       this.accountSetupGroup.get('rePassword')?.updateValueAndValidity();
     });
   }
-
+  res:any[] = [];
+  isUser:boolean = false
+  isUniversity:boolean = false
+today = new Date();
+validPeriodsExist = false;
+  private readonly _PLATFORM_ID = inject(PLATFORM_ID)
   ngOnInit(): void {
+    this.getDeadline();
     this.loadUserData();
+  }
+  getDeadline()
+  {
+        if (isPlatformBrowser(this._PLATFORM_ID))
+        {
+          this.isUser = !!localStorage.getItem('Uid');
+          this.isUniversity = !!localStorage.getItem('university');  
+        }
+
+    if(!this.isUser)
+{
+    this._HomeService.getDeadline().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.res = res.data;
+        console.log(this.res);
+          this.validPeriodsExist = this.res.some((app:any) => {
+    const start = new Date(app.applicationStartDate);
+    const end = new Date(app.applicationEndDate);
+    return this.today >= start && this.today <= end;
+          });
+          console.log(this.validPeriodsExist);
+        },
+      error: (err) => {console.log(err);},
+    });
+
+}
+
   }
 
   @HostListener('window:resize', ['$event'])

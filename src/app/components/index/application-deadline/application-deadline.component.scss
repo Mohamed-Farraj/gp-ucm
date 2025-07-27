@@ -51,7 +51,7 @@ section
 /* في الشاشات الصغيرة يصغر الخط ويخلي الأعمدة تلف لو المساحة قليلة */
 @media (max-width: 575.98px) {
   .custom-table-sm td, .custom-table-sm th {
-    font-size: 14px;
+    font-size: 14px !important;
     white-space: normal; /* يسمح باللف في الضرورة */
     word-break: break-word;
     font-weight: bold;
