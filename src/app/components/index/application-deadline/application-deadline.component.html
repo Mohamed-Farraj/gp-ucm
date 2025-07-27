@@ -3,19 +3,19 @@
  <div class="table-responsive">
   <table class="table table-hover align-middle mb-0 rounded-4 overflow-hidden custom-table-sm">
     <thead class="table-light">
-      <tr>
+      <tr >
         <th scope="col"></th>
-        <th scope="col">من</th>
-        <th scope="col">الي</th>
+        <th class="fs-5" scope="col">من</th>
+        <th class="fs-5" scope="col">الي</th>
       </tr>
     </thead>
     <tbody>
       @for (item of res; track $index) 
       {
         <tr>
-          <th scope="row" class="fw-semibold">{{item?.studentType}}</th>
-          <td>{{item?.applicationStartDate}}</td>
-          <td>{{item?.applicationEndDate}}</td>
+          <th scope="row" class="fw-semibold fs-5">{{item?.studentType}}</th>
+          <td class="fs-5" >{{item?.applicationStartDate}}</td>
+          <td class="fs-5" >{{item?.applicationEndDate}}</td>
         </tr>
       }
     </tbody>

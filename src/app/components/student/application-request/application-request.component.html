@@ -1,3 +1,5 @@
+@if(validPeriodsExist || isUser)
+{
 <section class="outlet-container">
   <div dir="rtl" class="my-container">
     <div style="height: 90px"></div>
@@ -283,3 +285,26 @@
     </section>
   </div>
 </section>
+}
+@else {
+<section class="outlet-container">
+  <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="alert alert-secondary text-center shadow-sm" role="alert" style="font-size: 1.2rem;">
+        @if(isUniversity)
+        {
+          التقديم مغلق حاليا للجامعة المختارة
+          <i class="fas fa-info-circle me-2"></i>
+        }
+        @else {
+          برجاء اختيار جامعة من الصفحة الرئيسية
+          <br>
+          <a href="#" class="btn btn-main">الصفحة الرئيسية</a>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+
+}
