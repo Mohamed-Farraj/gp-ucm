@@ -19,7 +19,7 @@
               طلب الالتحاق" لحفظ التغييرات }
           </p>
         </div>
-        <div class="mb-3 row border-bottom p-2">
+        <div class="mb-3 row p-2">
           <div class="d-flex flex-wrap justify-content-start gap-2">
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
               <button
@@ -46,12 +46,74 @@
               </button>
             </div>
           </div>
-          
-       
 
+<!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2">
+  <div class="d-flex gap-2">
+    <button
+      type="button"
+      class="btn w-100"
+      [class.btn-main]="selectedNationality === 'egyptian'"
+      [class.btn-outline-secondary]="selectedNationality !== 'egyptian'"
+      (click)="selectNationality('egyptian')"
+    >
+      <span class="d-none d-sm-inline">مصري</span>
+      <span class="d-inline d-sm-none">مصري</span>
+    </button>
+    <button
+      type="button"
+      class="btn w-100"
+      [class.btn-main]="selectedNationality === 'foreigner'"
+      [class.btn-outline-secondary]="selectedNationality !== 'foreigner'"
+      (click)="selectNationality('foreigner')"
+    >
+      <span class="d-none d-sm-inline">وافد</span>
+      <span class="d-inline d-sm-none">وافد</span>
+    </button>
+  </div>
+</div> -->
+
+
+
+
+
+
+          
         </div>
         @if (studentType !== null) {
         <form [formGroup]="AppRequest">
+
+
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-2 border-bottom">
+    <div class="d-flex gap-2">
+     <button
+  type="button"
+  class="btn w-100"
+  [class.btn-main]="AppRequest.get('personalInfo.studentType')?.value === 'LOCAL'"
+  [class.btn-outline-secondary]="AppRequest.get('personalInfo.studentType')?.value !== 'LOCAL'"
+  (click)="selectNationality('LOCAL')"
+>
+  <span class="d-none d-sm-inline">مصري</span>
+  <span class="d-inline d-sm-none">مصري</span>
+</button>
+
+<button
+  type="button"
+  class="btn w-100"
+  [class.btn-main]="AppRequest.get('personalInfo.studentType')?.value === 'EXPATRIATE'"
+  [class.btn-outline-secondary]="AppRequest.get('personalInfo.studentType')?.value !== 'EXPATRIATE'"
+  (click)="selectNationality('EXPATRIATE')"
+>
+  <span class="d-none d-sm-inline">وافد</span>
+  <span class="d-inline d-sm-none">وافد</span>
+</button>
+
+    </div>
+  </div>
+
+
+
+
+
           <div class="flex flex-col">
             <!-- Vertical stepper for large screens -->
             <!-- <mat-vertical-stepper
@@ -169,6 +231,8 @@
                 <ng-template matStepLabel></ng-template>
                 <app-basic-info-step
                   [formGroup]="personalInfoGroup"
+                  [selectedNationality]="studentNationality"
+
                 ></app-basic-info-step>
                 <div *ngIf="personalInfoGroup.invalid && personalInfoGroup.touched" class="text-danger mt-2">
                   <p>يرجى ملء جميع الحقول المطلوبة في هذه الخطوة.</p>
