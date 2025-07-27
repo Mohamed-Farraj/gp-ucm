@@ -193,9 +193,10 @@
             formControlName="previousAcademicYearGpa"
             type="number"
             class="form-control rounded-lg  shadow-sm"
-            placeholder="4.0"
+            placeholder="100%"
             min="0"
-            max="4.0"
+            max="100"
+            step="0.01"
           />
           @if (previousAcademicYearGpa?.errors && (previousAcademicYearGpa?.touched)) {
             <div class="text-danger mt-1">

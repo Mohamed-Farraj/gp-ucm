@@ -2,8 +2,9 @@
   <div [formGroup]="formGroup" class="flex flex-col gap-4">
     <h1 class="text-main mb-3 font-semibold">بيانات شخصية</h1>
 
-    <!-- الرقم القومي -->
-    <div class="flex flex-col">
+    @if (selectedNationality === 'LOCAL') { 
+       <!-- الرقم القومي -->
+      <div class="flex flex-col">
       <label class="mb-2 font-semibold">الرقم القومي</label>
       <input
         formControlName="nationalId"
@@ -24,27 +25,50 @@
       </div>
       <small class="text-muted">يستخدم لاستخراج البيانات الأخرى</small>
     </div>
-
-    <!-- الاسم الأول -->
-    <div class="flex flex-col">
-      <label class="mb-2 font-semibold">الاسم الأول</label>
+    }
+  
+    @if (selectedNationality === 'EXPATRIATE') {
+       <div class="flex flex-col">
+      <label class="mb-2 font-semibold"> رقم جواز السفر</label>
       <input
-        formControlName="firstName"
+        formControlName="passportNumber"
         type="text"
         class="form-control rounded-lg shadow-sm"
       />
       <div
-        *ngIf="firstName?.invalid && firstName?.touched"
+        *ngIf="passportNumber?.invalid && passportNumber?.touched"
         class="text-danger mt-1"
       >
-        <p class="m-0" *ngIf="firstName?.hasError('required')">
-          الاسم الأول مطلوب
+        <p class="m-0" *ngIf="nationalId?.hasError('required')">
+          رقم جواز السفر  مطلوب
+        </p>
+       
+      </div>
+    </div>
+    }
+
+
+
+    <!-- الاسم الأول -->
+    <div class="flex flex-col">
+      <label class="mb-2 font-semibold">الاسم رباعي باللغة العربية</label>
+      <input
+        formControlName="fullName"
+        type="text"
+        class="form-control rounded-lg shadow-sm"
+      />
+      <div
+        *ngIf="fullName?.invalid && fullName?.touched"
+        class="text-danger mt-1"
+      >
+        <p class="m-0" *ngIf="fullName?.hasError('required')">
+          الاسم  مطلوب
         </p>
       </div>
     </div>
 
     <!-- الاسم الثاني -->
-    <div class="flex flex-col">
+    <!-- <div class="flex flex-col">
       <label class="mb-2 font-semibold">الاسم الثاني</label>
       <input
         formControlName="lastName"
@@ -59,23 +83,33 @@
           الاسم الثاني مطلوب
         </p>
       </div>
-    </div>
+    </div> -->
 
     <div class="flex flex-col">
-      <label class="mb-2 font-semibold"> كود الطالب</label>
+
+      <label class="mb-2 font-semibold"> كود الطالب 
+              <span class="info-inline">
+    <i class="fa fa-info-circle"></i>  غير مطلوب لطلاب الفرقة الأولى 
+
+  </span>
+      </label>
       <input
         formControlName="studentCode"
         type="text"
         class="form-control rounded-lg shadow-sm"
       />
-      <div
+      <!-- <div
         *ngIf="studentCode?.invalid && studentCode?.touched"
         class="text-danger mt-1"
       >
         <p class="m-0" *ngIf="studentCode?.hasError('required')">
           كود الطالب مطلوب
         </p>
-      </div>
+      </div> -->
+
+
+ 
+
     </div>
 
     <!-- تاريخ الميلاد -->
@@ -84,7 +118,6 @@
       <input
         formControlName="dateOfBirth"
         type="date"
-        readonly
         class="form-control rounded-lg shadow-sm"
       />
       <div

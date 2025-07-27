@@ -43,6 +43,8 @@ export class ApplicationRequestComponent implements OnInit {
   isEditMode = false;
   showPasswordFields = true;
   studentType: 'old' | 'new' | null = null;
+  studentNationality: 'LOCAL' | 'EXPATRIATE' = 'LOCAL';
+
   activeButton: 'old' | 'new' | null = null;
   pendingFaculty: string | null = null;
 
@@ -153,16 +155,18 @@ faculties: string[] = []; // هتتغير حسب اختيار الجامعة
   constructor(private fb: FormBuilder) {
     // تهيئة FormGroups لكل خطوة
     this.personalInfoGroup = this.fb.group({
-      firstName: [null, [Validators.required ,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
+      fullName: [null, [Validators.required ,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
     (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
-      lastName: [null, [Validators.required,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
-    (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
-      studentCode: [null, Validators.required],
+    //   lastName: [null, [Validators.required,   Validators.pattern(/^[\u0600-\u06FFa-zA-Z\s\-']+$/),
+    // (control: AbstractControl) => (control.value || '').trim().length === 0 ? { whitespace: true } : null]],
+      studentCode: [null],
       nationalId: [null, [Validators.required, Validators.pattern(/^\d{14}$/)]],
       dateOfBirth: [null, Validators.required],
       gender: [null, Validators.required],
       religion: [null, Validators.required],
       placeOfBirth: [null, Validators.required],
+      studentType: [null, Validators.required],
+      passportNumber: [null ,[Validators.required]],
     });
 
     this.familyInfoGroup = this.fb.group({
@@ -382,14 +386,15 @@ onFileSelected = (file: File) => {
 
             // تعبئة النماذج الفرعية بالبيانات
             this.personalInfoGroup.patchValue({
-              firstName: res.data.firstName,
+              fullName: res.data.fullName,
               studentCode: res.data.studentCode,
-              lastName: res.data.lastName,
+              // lastName: res.data.lastName,
               nationalId: res.data.nationalId,
               dateOfBirth: res.data.dateOfBirth,
               gender: res.data.gender,
               religion: res.data.religion,
               placeOfBirth: res.data.placeOfBirth,
+              passportNumber: res.data.passportNumber,
               
             });
             this.familyInfoGroup.patchValue({
@@ -680,4 +685,39 @@ console.log('media value:', this.selectedFile); // أو plainObject.media
     });
     return result;
   }
+
+//   selectedNationality: 'LOCAL' | 'EXPATRIATE' = 'LOCAL';
+
+// selectNationality(type: 'LOCAL' | 'EXPATRIATE') {
+//   this.selectedNationality = type;
+// }
+
+
+
+//الجزء الخاص بجنسيه الطالب
+selectNationality(type: 'LOCAL' | 'EXPATRIATE') {
+  this.studentNationality = type;
+  this.AppRequest.get('personalInfo.studentType')?.setValue(type);
+
+  const nationalIdControl = this.personalInfoGroup.get('nationalId');
+  const passportNumberControl = this.personalInfoGroup.get('passportNumber');
+
+  if (type === 'LOCAL') {
+    // مصري: الرقم القومي مطلوب، جواز السفر غير مطلوب
+    nationalIdControl?.setValidators([Validators.required, Validators.pattern(/^\d{14}$/)]);
+    passportNumberControl?.clearValidators();
+    passportNumberControl?.setValue(null);
+  } else {
+    // وافد: جواز السفر مطلوب، الرقم القومي غير مطلوب
+    passportNumberControl?.setValidators([Validators.required]);
+    nationalIdControl?.clearValidators();
+    nationalIdControl?.setValue(null);
+  }
+
+  nationalIdControl?.updateValueAndValidity();
+  passportNumberControl?.updateValueAndValidity();
+}
+
+
+
 }
